@@ -1,0 +1,22 @@
+<content>
+/* The content of this file is used to choose the styles in the wEditor.
+Its content should also exist in the main.css file */
+h3{
+    margin-bottom: 0;
+}
+.variation_color{
+    color: <RENDER_VALUE what="variation>title"/>;
+}
+
+p{
+    font-weight: normal;
+    line-height: 16px;
+    text-align: left;
+    text-indent: 2px;
+}
+.box{
+    display:block;
+    border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+    width:200px;
+}
+</content>

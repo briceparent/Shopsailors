@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <base href="{browser>base}" />
+    <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" media="screen" type="text/css" href="/sh_browser/singles/browser.css" />
+    <RENDER_SCRIPT file="PROTOTYPE" direct="direct"/>
+    <RENDER_SCRIPT file="SCRIPTACULOUSONLY" direct="direct"/>
+    <script type="text/javascript" src="/sh_browser/singles/browser.js"/>
+    <script type="text/javascript">
+        var previousContents = Array();
+        var lastOpenedFolder = '';
+        var browserSession = '<RENDER_VALUE what="browser>session"/>';
+        
+        var showContentLink = '<RENDER_VALUE what="links>showContent"/>';
+        var renameLink = '<RENDER_VALUE what="links>rename"/>';
+        var deleteLink = '<RENDER_VALUE what="links>delete"/>';
+        var addFolderLink = '<RENDER_VALUE what="links>addFolder"/>';
+        var deleteFolderLink = '<RENDER_VALUE what="links>deleteFolder"/>';
+        var renameFolderLink = '<RENDER_VALUE what="links>renameFolder"/>';
+        
+        var updatingI18n = "<RENDER_VALUE what="i18n>updating"/>";
+        var reallyDeleteI18n = '<RENDER_VALUE what="i18n>reallyDeleteThisFile"/>';
+        var couldNotDeleteFileI18n = '<RENDER_VALUE what="i18n>fileCoundntBeDeleted"/>';
+        var newFolderNameI18n = "<RENDER_VALUE what="i18n>newFolderName"/>";
+        var folderNameI18n = "<RENDER_VALUE what="i18n>folderName"/>";
+        var folderNewNameI18n = "<RENDER_VALUE what="i18n>folderNewName"/>";
+        var confirmDeleteI18n = '<RENDER_VALUE what="i18n>reallyDeleteThisFolder"/>';
+
+        var returnNeeded = '<RENDER_VALUE what="browser>doAction"/>';
+        var returnMethod = '<RENDER_VALUE what="browser>action"/>';
+        var returnParam = '<RENDER_VALUE what="browser>element"/>';
+        
+        /*
+        function returnElement(name) {
+            if('<RENDER_VALUE what="browser>doAction"/>'){
+                cpt = '<RENDER_VALUE what="browser>id"/>';
+                window.opener.<RENDER_VALUE what="browser>action"/>(name,cpt);
+                window.close ();
+            }else{
+            }
+        }
+        */
+    </script>
+</head>
+<body class="browser_container">
+    <div>
+        <div id="folders">
+            <RENDER_LOOP what="folder">
+                <nobr>
+                    <div class="pointer" name="{folder>name}" onclick="showContent('{folder>path}');">
+                        <RENDER_VALUE what="folder>indent"/>
+                        <img src="{folder>image}" title="Icone Dossier" alt="{folder>name}"/>
+                        <RENDER_VALUE what="folder>name"/>
+                    </div>
+                </nobr>
+            </RENDER_LOOP>
+        </div>
+        <div id="images">                    
+        </div>
+        <script type="text/javascript">
+            showContent('<RENDER_VALUE what="browser>initFolder"/>');
+        </script>
+    </div>
+</body>
+</html>

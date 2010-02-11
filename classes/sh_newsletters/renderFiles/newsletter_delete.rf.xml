@@ -1,0 +1,9 @@
+<div>
+    <RENDER_NOTIF size="M" title="Confirmation de suppression">
+        Vous êtes sur le point de supprimer une newsletter de votre site.<br />
+        <RENDER_FORM id="confirmNLDeletion">
+            <input type="submit" name="ok" value="Supprimer"/>
+            <input type="submit" name="cancel" value="Annuler"/>
+        </RENDER_FORM>
+    </RENDER_NOTIF>
+</div>

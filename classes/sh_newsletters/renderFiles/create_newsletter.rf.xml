@@ -1,0 +1,76 @@
+<div id="form_box_container">
+    <RENDER_JS>
+        function createNewsletter(){
+            var oneIsChecked = false;
+            $$('.cb_newsletters').each(
+                function(element){
+                    if(element.checked){
+                        oneIsChecked = true;
+                    }
+                }
+            );
+            if(oneIsChecked){
+                $('create_newsletter').submit();
+            }else{
+                alert('<RENDER_VALUE what="i18n>select1AtLeast"/>');
+            }
+        }
+    </RENDER_JS>
+    <RENDER_FORM id="create_newsletter">
+        <div class="form_box_container">
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>createNewsletter_title"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>newsletterTitle"/>
+                    <RENDER_HELP what="{i18n>newsletterTitle_explanations}"/>
+                    <br />
+                    <input class="inputForm" name="title" value="{content>title}"/>
+                </div>
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>newsletterDate"/>
+                    <br />
+                    <RENDER_DATEPICKER from="(0,0,1)" to="(0,2,0)" name="date" value="{content>date}"/>
+                    <RENDER_HELP what="{i18n>newsletterDate_explanations}"/>
+                    <br />
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>editNewsletter_params"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="formContent">
+                    Choix du modèle de newsletter
+                    <select name="model">
+                        <RENDER_LOOP what="models">
+                            <option value="{models>name}">
+                                <RENDER_VALUE what="models>name"/>
+                            </option>
+                        </RENDER_LOOP>
+                    </select>
+                </div>
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>newsletterType"/>
+                    <br />
+                    <RENDER_LOOP what="newsletters">
+                        <RENDER_CHECKBOX class="cb_newsletters" text="{newsletters>name}" name="newsletters[{newsletters>id}]" help="{newsletters>description}"/>
+                    </RENDER_LOOP>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+            <RENDER_VALUE what="addToForm>content"/>
+            <RENDER_LOOP what="classes">
+                <input type="hidden" name="classes[{classes>name}]" value="{classes>name}"/>
+            </RENDER_LOOP>
+            <input type="button" value="{i18n>createNewsletter}" onclick="createNewsletter();"/>
+        </div>
+    </RENDER_FORM>
+</div>

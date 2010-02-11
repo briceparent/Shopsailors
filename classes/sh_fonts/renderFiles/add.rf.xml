@@ -1,0 +1,10 @@
+<div>
+  <RENDER_FORM method="post" action="{font>addlink}" id="addFont" enctype="multipart/form-data" >
+    <input type="hidden" name="MAX_FILE_SIZE" value="3500000" />
+    <RENDER_VALUE what="i18n>truetype"/><br />
+    <RENDER_VALUE what="i18n>copyright"/><br /><br />
+    <RENDER_VALUE what="i18n>fileorzip"/><br />
+    <RENDER_VALUE what="i18n>addText"/> :  <input type="file" id="font" name="font"/><br />
+    <input type="submit" value="{i18n>send}"/>
+</RENDER_FORM>
+</div>

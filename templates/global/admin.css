@@ -1,0 +1,758 @@
+/* Shopsailors' CSS File */
+/* UTF-8 Check : à  ç  é  è  */
+
+/*CSS control panel*/
+
+#admin_box {
+    position:absolute;
+    background-color:transparent;
+    width:240px;
+    top:0px;
+    left:0px;
+    margin:0;
+	z-index: 100;
+	color: black;
+}
+#admin_panelTop{
+  background: transparent url(admin/panel_title.png) no-repeat center top;
+  height: 57px;
+  width: 240px;
+}
+.adminPanel_titleText{
+  text-align: center;
+  font-weight: bold;
+  font-size: 110%;
+  padding-top: 19px;
+  color: #666666;
+}
+.adminPanel_closeText{
+  text-align: center;
+  font-weight: bold;
+  font-size: 110%;
+  padding-top: 19px;
+  color: #666666;
+}
+#adminPanel_bottom{
+  background: transparent url(admin/panel_close.png) no-repeat center top;
+  height: 72px;
+  width: 240px;
+}
+#admin_box a, #admin_box .falseLink {
+    text-decoration: none;
+    color: inherit;
+}
+#admin_box a:hover, #admin_box .falseLink:hover {
+    text-decoration: underline;
+}
+#admin_box_hideable{
+}
+.admin_titles{
+  text-align: center;
+  font-variant: small-caps;
+  font-size:120%;
+  font-weight: bold;
+}
+.admin_small_vspace{
+  height:8px;
+}
+
+.admin_close{
+  margin:0;
+}
+
+.admin_title_master{
+	background: transparent url(admin/title_master.png) no-repeat center 0;
+	height: 28px; 
+} 
+.admin_title_1{
+	background: transparent url(admin/title_1.png) no-repeat center 0;
+	height: 28px; 
+}  
+.admin_title_2{
+	background: transparent url(admin/title_2.png) no-repeat center 0;
+	height: 28px; 
+}  
+.admin_title_3{
+	background: transparent url(admin/title_3.png) no-repeat center 0;
+	height: 28px; 
+}  
+.admin_title_4{
+	background: transparent url(admin/title_4.png) no-repeat center 0;
+	height: 28px; 
+}  
+.admin_title_5{
+	background: transparent url(admin/title_5.png) no-repeat center 0;
+	height: 28px; 
+}
+
+.admin_contents{
+        width: inherit;        
+        display: inline-block;
+}
+
+.admin_contents span{       
+    display: inline;
+    text-align: left;
+    margin-left: 2px;
+}
+.admin_contents img{
+    margin-left:3px;
+    width:20px;
+    height:20px;
+    vertical-align: middle;
+    display: inline-block; 
+}
+.admin_content_master{
+	background: transparent url(/templates/global/admin/content_master.png) repeat-y center 0;
+}
+.admin_content_1{
+	background: transparent url(/templates/global/admin/content_1.png) repeat-y center 0;  
+}
+.admin_content_2{
+	background: transparent url(admin/content_2.png) repeat-y center 0;
+}
+.admin_content_3{
+	background: transparent url(admin/content_3.png) repeat-y center 0;
+}
+.admin_content_4{
+	background: transparent url(admin/content_4.png) repeat-y center 0;  
+}
+
+.admin_content_5{
+	background: transparent url(admin/content_5.png) repeat-y center 0;  
+}
+
+
+/*ALL ADMIN BOXES*/
+  
+/*
+#menuEditor_container{
+  margin-top: 15px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  color: #333333;
+}
+#menuEditor_container a{
+  color: #333333;
+}
+*/
+.bg_admin{
+  background: #ffffff url(admin/bg_admin.png) repeat center top;
+}
+  /* Conteneurs et boîtes*/
+  #form_box_container, .form_box_container{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width:100%;
+    color: #333333;
+  }
+  #form_box_container input, .form_box_container input{
+    border: 1px solid #666666;
+  }
+  #form_box_container textarea, .form_box_container textarea{
+    border: 1px solid #666666;
+  }
+  #form_box_container a{
+    color: #333333;
+  }
+  #form_box_container>div, .form_box_container>div, #form_box_container>.adminPlugin>div, .form_box_container>.adminPlugin>div{
+    width: 100%;
+  }
+  #form_box_top, .form_box_top{
+    background: transparent url(admin/form_box_top.png) no-repeat center top;
+    height: 46px;
+    width: 400px;
+  }
+  #form_box_middle, .form_box_middle{
+    background: transparent url(admin/form_box_middle.png) repeat-y center top;
+    width: 400px;
+  }
+  #form_box_bottom, .form_box_bottom{
+    background: transparent url(admin/form_box_bottom.png) no-repeat center top;
+    height: 23px;
+    width: 400px;
+    padding-top: 15px;
+  }
+
+  /*all boxes content: text, titles, link...*/
+  .form_box_content{
+    padding: 3px 10px 3px 10px;
+    color: #333333;
+  }
+  .form_box_content a{
+    color: #333333;
+  }
+  .formContent{
+    margin-left: auto;
+    margin-right: auto;
+    width: 375px;
+    text-align: left;
+    padding-top: 10px;
+  }
+  .formContent a:link, .formContent a:visited, .formContent a:hover, .formContent a:active{
+    color: #333333;
+  }
+  .formContent ul{
+    margin: 0;
+  }
+  #formContent input, #formContent textarea, .formContent input, .formContent textarea{
+    border: 1px solid #666666;
+  }
+  .box_title{
+    font-size: 120%;
+    padding: 23px 10px 15px 10px;
+    margin: 0;
+    color: #333333;
+    width: 400px;
+    margin-left: auto; 
+    margin-right: auto;
+  }
+  .contentTitle{
+    font-size: 120%;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: #333333;
+  }
+  .content_edit{
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+  }
+.browser_imageSelector{
+  cursor: pointer;
+}
+  /*CSS EDIT MENU*/
+
+  .section{
+    background: transparent url(admin/admin_box_grip.png) no-repeat center top;
+    height: 120px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+  }
+  .section input{
+    border: 1px solid #666666;
+    margin-left: 8px;
+    margin-top: 5px;
+  }
+  #absent, .absent {
+    background: transparent url(admin/admin_box_action.png) no-repeat center top;
+    height: 180px;
+    width: 400px;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  #absent input{
+    border: 1px solid #666666;
+  }
+  .removeSection img{
+  }
+  .removeSection{
+    margin-top: 85px;
+    margin-left: 360px; 
+    position: absolute;
+    cursor: pointer;
+  }
+
+  #absent h3,.absent h3{
+    font-size: 120%;
+    padding: 23px 10px 10px 10px;
+    margin: 0;
+  }
+.editMenu_activate table.form_checkbox{
+  margin-left: auto; 
+  margin-right: auto;
+  font-weight: bold;
+}
+.editMenu_buttonTitle{
+    font-size: 110%;
+    font-weight: bold;
+    color: #333333;
+    text-align: left;
+    padding-top: 15px;
+    margin-left: 8px;
+    cursor: move;
+  }
+  .editMenu_linkContainer{
+    margin-top: 10px;
+    margin-left: 8px;
+  }
+  .editMenu_linkTitle{
+    font-weight: bold;
+  }
+h3 span{
+  cursor: pointer;
+}
+.params{
+  margin: 3px 10px 3px 10px;
+}
+.params img{
+  vertical-align:middle;
+  cursor:pointer;
+}
+h3 img{
+}
+
+.inputParams{
+  width:300px;
+}
+
+div.lineitem {
+  text-align:left;
+  margin:3px 5px 3px 5px;
+  background-color: #FFF;
+  cursor: move;
+  width:480px;
+}
+
+.inplaceeditor-form{
+  display: inline;
+}
+
+/*CSS du formulaire d'administration des templates*/
+
+.no-margin{
+	margin: 0;
+}
+.params2{
+  padding: 3px 10px 3px 10px;
+  font-weight: bold;
+  color: #333333;
+}
+.params3{
+  padding: 3px 10px 3px 10px;
+  font-weight: bold;
+  color: #333333;
+  display: block;
+}
+.params3 img{
+  height: 5%; 
+}
+.formContentGrey{
+  background-color: #cccccc;
+  width: 315px;
+  height: 30px;
+  margin-left: 5px;
+}
+.formContentGrey div{
+  padding-left: 7px;
+  padding-top: 2px;
+}
+.devise{
+  margin-left: 5px;
+  font-size: 150%;
+}
+
+.textAreaForm{
+  width: 370px;
+  height: 75px;
+}
+.textAreaForm_3lines{
+  width: 370px;
+  height: 55px;
+}
+.textAreaShort{
+  width: 375px;
+  height: 45px;
+}
+.inputForm{
+  width: 370px;
+}
+.form_i18n_input{
+    width:275px;
+}
+.form_i18n_textarea{
+    width:275px;
+    height:80px;
+}
+.threeLines{
+  height: 55px;
+}
+.inputImageSrc{
+  width: 150px;
+}
+.inline{
+  display: inline;
+}
+#diapo_submit{
+  margin-left: 163px;
+}
+.preview_image{
+  margin-top: 10px;
+}
+.preview_image img{
+  cursor: pointer;
+  width: 250px;
+  height: 250px;
+}
+.formSubmitContainer{
+  width: 400px;
+  text-align: center;
+  margin-left: 10px;
+}
+
+/*CSS du formulaire de traduction*/
+
+.defaultLang_text{
+    font-style: italic;
+}
+.inputTranslation{
+  width: 300px;
+}
+.inputTextarea{
+  width: 300px;
+  height: 100px;
+}
+.pictoForm img{
+  width: 20px;
+  vertical-align: top;
+}
+.pictoForm{
+  vertical-align: top;
+}
+.originalText{
+ color: #666666;
+}
+.paddingTop_10px{
+  padding-top: 10px;
+}
+
+/* Formulaire de gestion des stocks */
+
+.categoryName{
+  color: #333333;
+  font-weight: bold;
+  font-size: 120%;
+}
+.inputQuantity{
+  width: 80px;
+}
+.textAlign_center{
+  text-align: center;
+}
+.tableForm{
+  width: 375px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.form_messageContainer{
+  width: 100%;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.form_messageContainer div{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.form_message_top{
+  background: transparent url(admin/form_message_top) no-repeat center top;
+  width: 400px;
+  height: 30px;
+}
+.form_message_middle{
+  background: transparent url(admin/form_message_middle) repeat-y center top;
+  width: 400px;
+}
+.form_message_bottom{
+  background: transparent url(admin/form_message_bottom) no-repeat center top;
+  width: 400px;
+  height: 30px;
+}
+.messageContainer{
+  width: 360px;
+  text-align: center;
+}
+
+/* EDIT SHOP PARAMS*/
+
+  /* edit bill */
+  .bill_defaultArea img{
+    width: 370px;
+    border: 1px solid #666666;
+}
+
+/* Formulaire selection langues */
+
+.i18n_viewer img{
+  width: 30px;
+  margin-left: 5px; 
+}
+
+.unroller{
+  background: transparent url(admin/button_updown.png) no-repeat left top;
+  padding-left: 16px;
+}
+
+.listProduct_detailLink img{
+  width: 25px;
+}
+
+/* Choix du template*/
+
+.templateSelector_elements{
+  margin-top: 15px;
+  margin-right: 25px;
+  float: left;
+  text-align: justify;
+}
+
+.template_mini{
+  width: 155px;
+}
+.template_mini img{
+  width: 155px;
+  height: 106px;
+}
+
+.logoSelector img{
+  cursor: pointer;
+}
+/*Article Directory*/
+.showList_activeList{
+  font-weight: bold;
+}
+.showList_inactiveList{
+  font-weight: bold;
+  margin-top: 10px;
+}
+.showList_inactiveList_description{
+  margin-top: 5px;
+}
+.showList_articles li{
+  margin-top: 4px;
+}
+/* EDIT/CREATE list of article */
+#shortList_active{
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+    width:360px;
+    border:1px solid #333333;
+    background-color: #cccccc;
+    padding: 3px;
+}
+.shortList_listName{
+  font-weight: bold;
+  margin-top: 4px;
+}
+ul#shortList_activeElements{
+    margin: 0px;
+    padding: 0px;
+    background-color: transparent;
+}
+.shortList_element{
+    list-style-type:none;
+    border:1px solid grey;
+    margin: 5px;
+    padding: 3px;
+    width:330px;
+    height: 21px;
+    background-color:#FFF;
+}
+.shortList_element img{
+    width:24px;
+    position:absolute;
+    right:0px;
+    top:0;
+}
+
+/* EDIT SHIP MODES*/
+.paymentMode{
+  margin-bottom: 20px;
+}
+.payment_mode_top{
+  background: transparent url(admin/ship_mode_top.png) no-repeat center top;
+  width: 380px;
+  height: 16px;
+}
+.payment_mode_middle{
+  background: transparent url(admin/ship_mode_middle.png) repeat-y center top;
+  width: 380px;
+}
+.payment_mode_bottom{
+  background: transparent url(admin/ship_mode_bottom.png) no-repeat center top;
+  width: 380px;
+  height: 16px;
+}
+.payment_global{
+  margin-left: 5px;
+  margin-top: 5px;
+}
+.payment_logoSelector{
+}
+.payment_logoImage{
+  cursor: pointer;
+  margin-top: 5px;
+}
+.payment_logoImage img{
+  width: 100px;
+}
+.payment_description textarea{
+  width: 350px;
+  height: 40px;
+}
+.payment_delete{
+  margin-top: 15px;
+}
+
+.payment_delete input{
+  font-weight: bold;
+  color: #990000;
+  font-size: 90%;
+  border: none;
+}
+
+/* EDIT SHIP MODES*/
+.shipMode{
+  margin-bottom: 20px;
+}
+.ship_mode_top{
+  background: transparent url(admin/ship_mode_top.png) no-repeat center top;
+  width: 380px;
+  height: 16px;
+}
+.ship_mode_middle{
+  background: transparent url(admin/ship_mode_middle.png) repeat-y center top;
+  width: 380px;
+}
+.ship_mode_bottom{
+  background: transparent url(admin/ship_mode_bottom.png) no-repeat center top;
+  width: 380px;
+  height: 16px;
+}
+.ship_providerName{
+  margin-left: 5px;
+}
+.ship_global{
+  margin-left: 5px;
+  margin-top: 5px;
+}
+.ship_logoSelector{
+}
+.ship_logoImage{
+  cursor: pointer;
+  width: 50%;
+  margin-top: 5px;
+}
+.ship_price input{
+  width: 50px;
+}
+.ship_description textarea{
+  width: 350px;
+  height: 40px;
+}
+.ship_delete{
+  margin-top: 15px;
+}
+
+.ship_delete input{
+  font-weight: bold;
+  color: #990000;
+  font-size: 90%;
+  border: none;
+}
+
+.ship_come_top{
+  background: transparent url(admin/ship_come_top.png) no-repeat center top;
+  width: 380px;
+  height: 16px;
+}
+.ship_come_middle{
+  background: transparent url(admin/ship_come_middle.png) repeat-y center top;
+  width: 380px;
+}
+.ship_come_bottom{
+  background: transparent url(admin/ship_come_bottom.png) no-repeat center top;
+  width: 380px;
+  height: 16px;
+}
+.ship_address{
+  margin-left: 5px;
+}
+.ship_address textarea{
+  width: 350px;
+  height: 80px;
+}
+.ship_addressPrice input{
+  width: 50px;
+}
+.ship_addMode{
+  text-align: center;
+  margin-bottom: 15px;
+}
+.shipMode_rules{
+  margin-top: 15px;
+}
+
+/* Edit Legacy */
+.edit_legacyContainer{
+  padding-top: 20px;
+}
+/* Forum Parameters */
+.forum_createRights{
+  height: 70px;
+}
+.forum_createCat_legend{
+  border: 1px dashed #333333;
+  font-style: italic;
+}
+.forum_createCat_legend div{
+  padding: 2px 2px 2px 2px;
+}
+.forum_createCat_legend img{
+  width: 20px;
+  height: 20px;
+}
+
+/*Mulitiple image selector*/
+
+.mis_deleteCursor{
+    cursor:url(/images/shared/icons/bank1/trash_cursor.png),auto;
+}
+.mis_imagesContainer{
+    width:370px;
+    height:110px;
+    margin:5px;
+    overflow:auto;
+}
+.mis_pictoAdd{
+    position:absolute;
+    margin-left:350px;
+    margin-top:-20px;
+}
+.mis_pictoAdd img{
+    margin-top:10px;
+    margin-left: 5px;
+    width: 25px;
+    cursor: pointer;
+}
+
+/*COMON*/
+.greyBorder{
+  border: 1px solid #666666;
+}
+.borderLeft{
+  border-left: 1px solid #666666;
+}
+.borderRight{
+  border-right: 1px solid #666666;
+}
+.borderTop{
+  border-top: 1px solid #666666;
+}
+.borderBottom{
+  border-bottom: 1px solid #666666;
+}
+
+.tinyMCE_advanced{
+    height:450px;
+}

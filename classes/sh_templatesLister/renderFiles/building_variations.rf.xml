@@ -1,0 +1,29 @@
+<div>
+    <RENDER_LOOP what="images">
+        Image : 
+        <RENDER_VALUE what="images>name"/>
+        <RENDER_LOOP what="variations">
+            <span id="variation_{variations>id}" style="background-color:{variations>color};">&#160;</span>&#160;
+
+        </RENDER_LOOP>
+    </RENDER_LOOP>
+#330000
+#663300
+#cc9933
+#666600
+#336600
+#333300
+#006600
+#006633
+#336666
+#006666
+#003366
+#003366
+#000066
+#330066
+#330066
+#660066
+#660033
+#660033
+#333333
+</div>

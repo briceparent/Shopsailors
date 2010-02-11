@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<album showbuttons="yes" showtitles="yes" randomstart="yes" timer="5" aligntitles="bottom" alignbuttons="bottom" transition="blur" speed="20">
+<img src="/var/www/dev/websailors_fr/images/bigband_aix/musiciens/Ubuntu_wallpaper.jpg" title="Ubuntu_wallpaper" />
+<img src="/var/www/dev/websailors_fr/images/bigband_aix/musiciens/delices.png" title="delices" />
+<img src="/var/www/dev/websailors_fr/images/bigband_aix/musiciens/jardin_ldvc.jpg" title="jardin_ldvc" />
+</album>

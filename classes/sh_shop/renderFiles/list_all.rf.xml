@@ -1,0 +1,87 @@
+<div>
+    <RENDER_JS>
+        function switch_state(id){
+            new Ajax.Request(
+                '<RENDER_VALUE what="pages>switchState"/>',
+                {
+                    method:'get' ,
+                    parameters: {id: id},
+                    onSuccess: function(transport) {
+                        $('checkbox_' + id).value =  transport.responseText;
+                    }
+                }
+            );
+        }
+    </RENDER_JS>
+    <RENDER_FORM id="shopListProducts">
+        <div class="form_box_container">
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>showAllProductsCategories_title"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="form_box_content">
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>selectAcategory"/>
+                        <RENDER_HELP what="{i18n>chooseAcategory}"/>
+                    </div>
+                    <div class="form_box_content">
+                        <div class="formContent">
+                            <RENDER_LOOP what="categories">
+                                <a href="{categories>link}">
+                                    <RENDER_VALUE what="categories>name"/>&#160;
+                                </a><br />&#160;<br />
+                            </RENDER_LOOP>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+        </div>
+        <RENDER_IFSET what="products>0">
+            <div class="form_box_container">
+                <div class="form_box_top">
+                    <h3 class="box_title">
+                        <RENDER_VALUE what="i18n>showAllProducts_title"/>
+                    </h3>
+                </div>
+                <div class="form_box_middle">
+                    <div class="form_box_content">
+                        <div class="formContent">
+                            <RENDER_VALUE what="i18n>showAllProducts_activate_products"/>
+                            <RENDER_HELP what="{i18n>activate_products_from_list}"/>
+                        </div>
+                            <div class="form_box_content">
+                                <div class="formContent">
+                                    <table>
+                                        <RENDER_LOOP what="products">
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" state="{products>state}" id="checkbox_{products>id}" onchange="switch_state('{products>id}')"/>
+                                                </td>
+                                                <td>
+                                                    <RENDER_VALUE what="products>name"/>
+                                                </td>
+                                                <td>
+                                                    <RENDER_VALUE what="categories>category_{products>category}"/>
+                                                </td>
+                                                <td class="listProduct_detailLink">
+                                                    <a href="{products>link}">
+                                                        <img src="/images/shared/icons/bank1/picto_modify.png" alt="view_product_details" title="{i18n>showAllProducts_linktext}"/>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </RENDER_LOOP>
+                                    </table>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="form_box_bottom">
+                </div>
+            </div>
+        </RENDER_IFSET>
+    </RENDER_FORM>
+</div>

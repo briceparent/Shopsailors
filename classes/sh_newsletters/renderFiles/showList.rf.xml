@@ -1,0 +1,47 @@
+<div class="marginTop_20px">
+    <div class="news_subscribe">
+        <RENDER_VALUE what="i18n>news_suscribe"/>&#160;
+        <a href="{subscribe>link}">
+            <RENDER_VALUE what="i18n>subscribe_here"/>
+        </a>
+    </div>
+    <div class="newsList">
+        <div class="newsList_title">
+            <h3>
+                <RENDER_VALUE what="i18n>newsList"/>
+            </h3>
+        </div>
+        <RENDER_IFNOTSET what="newsletters>noneSent">
+            <RENDER_IFSET what="intro>show">
+                <div class="newsList_intro">
+                    <RENDER_VALUE what="intro>content"/>
+                </div>
+            </RENDER_IFSET>
+            <div class="newsList_list">
+                <RENDER_LOOP what="monthes">
+                    <div class="nl_oneMonth_name">
+                        <RENDER_VALUE what="monthes>name"/>
+                    </div>
+                    <ul>
+                    <RENDER_LOOP what="newsletters">
+                        <li class="nl_list_oneLine">
+                            <a href="{newsletters>link}">
+                                <RENDER_VALUE what="newsletters>date"/>&#160;-&#160;<RENDER_VALUE what="newsletters>title"/>
+                            </a>
+                        </li>
+                    </RENDER_LOOP>
+                    </ul>
+                </RENDER_LOOP>
+            </div>
+        </RENDER_IFNOTSET>
+        <RENDER_IFSET what="newsletters>noneSent">
+            <RENDER_VALUE what="i18n>noneSent"/>
+        </RENDER_IFSET>
+    </div>
+    <div class="news_unsubscribe">
+        <RENDER_VALUE what="i18n>news_unsuscribe"/>&#160;
+        <a href="{unsubscribe>link}">
+            <RENDER_VALUE what="i18n>unsubscribe_here"/>
+        </a>
+    </div>
+</div>

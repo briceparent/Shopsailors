@@ -1,0 +1,30 @@
+<div>
+    <RENDER_FORM id="searcherManager" >
+        <div class="form_box_container">
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>managerTitle"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="formContent">
+                    <RENDER_CHECKBOX text="{i18n>activated}" name="activated" state="{activated>checked}"/>
+                </div>
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>ifNotActivated"/>
+                </div>
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>scopes"/><br />
+                    <RENDER_LOOP what="scopes">
+                        <RENDER_CHECKBOX text="{scopes>name}" name="scopes[{scopes>scope}]" state="{scopes>state}"/><br />
+                    </RENDER_LOOP>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+            <input type="submit" value="envoyer"/>
+        </div>
+    </RENDER_FORM>
+    <RENDER_BROWSER folder="lvdc/chefs" typesList="png,jpg,jpeg"/>
+    <RENDER_MULTIPLEIMAGESSELECTOR/>
+</div>

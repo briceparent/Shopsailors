@@ -1,0 +1,82 @@
+<div>
+    <RENDER_FORM method="post" action="" id="categoryEditor" >
+        <div class="form_box_container">
+            <RENDER_IFSET what="message>content">
+                <div class="form_messageContainer">
+                    <div class="form_message_top">
+                    </div>
+                    <div class="form_message_middle">
+                        <div class="messageContainer">
+                            <div class="message">
+                                <RENDER_VALUE what="message>content"/>
+                            </div>
+                            <div class="link">
+                                <a href="{message>link}">
+                                    <RENDER_VALUE what="message>link"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form_message_bottom">
+                    </div>
+                </div>
+            </RENDER_IFSET>
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>categoryEditor_title"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>categoryEditor_name"/><br />
+                    <RENDER_I18NINPUT class="sh_shop" i18n="{category>name}" name="{inputs>name}"/>
+                </div>
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>categoryEditor_description"/>
+                    <RENDER_HELP what="{i18n>categoryEditor_descriptionExplanation}"/>
+                    <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_shop" i18n="{category>description}" name="{inputs>description}"/>
+                </div>
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>categoryEditor_shortDescription"/>
+                    <RENDER_HELP what="{i18n>categoryEditor_shortDescriptionExplanation}"/>
+                    <RENDER_I18NINPUT class="sh_shop" i18n="{category>shortDescription}" name="{inputs>shortDescription}"/>
+                </div>
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>categoryEditor_image"/>
+                    <RENDER_HELP what="{i18n>categoryEditor_imageExplanation}"/>
+                    <div class="preview_image">
+                        <img src="{category>image}" onclick="{category>onClickReplaceImage}" alt="{i18n>categoryEditor_clickHere}"/>
+                        <input type="hidden" name="{inputs>image}" value="{category>image}" id="{inputs>image}"/>
+                    </div>
+                </div>
+                <div class="formContent">
+                    <RENDER_CHECKBOX help="{i18n>categoryEditor_activateCategoryExplanation}" text="{i18n>categoryEditor_activateCategory}" name="{category>active}" state="{category>active}" checked="checked"/>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+            <RENDER_IFSET what="category>isowned">
+                <div class="form_box_top">
+                    <h3 class="box_title">
+                        <RENDER_VALUE what="i18n>categoryEditor_categoriesTitle"/>
+                    </h3>
+                </div>
+                <div class="form_box_middle">
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>categoryEditor_categoriesExplanantion"/>
+                        <RENDER_LOOP what="categories">
+                            <div>
+                                <RENDER_CHECKBOX text="{categories>name}" name="{categories>inputName}" state="{categories>checked}"/>
+                            </div>
+                        </RENDER_LOOP>
+                    </div>
+                </div>
+                <div class="form_box_bottom">
+                </div>
+            </RENDER_IFSET>
+            <div class="formSubmitContainer">
+                <input type="submit" value="Enregistrer"/>
+            </div>
+        </div>
+    </RENDER_FORM>
+</div>

@@ -1,0 +1,7 @@
+<?php
+$message = array(
+	'fr_FR' => 'Les images envoyées dans ce dossier sont automatiquement redimensionnées en 100px par 100px.<br />
+Si les images originales ne sont pas carrées, deux bandes transparent horizontales ou verticales sont ajoutées pour obtenir un carré.',
+	'en_GB' => 'The images that are sent into this folder are resized to 100px X 100px.<br />
+If the original image is not a square, two trasnparent borders are added horizontally or vertically to make it a square.',
+);

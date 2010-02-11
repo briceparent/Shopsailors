@@ -1,0 +1,5 @@
+<div class="wEditor">
+    <RENDER_TAG type="textarea" what="textarea>args">
+        <RENDER_VALUE what="textarea>content"/>
+    </RENDER_TAG>
+</div>

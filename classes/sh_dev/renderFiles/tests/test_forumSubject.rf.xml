@@ -1,0 +1,67 @@
+<div class="forumContainer">
+	<h1><RENDER_VALUE what="forum>SubjectName"/></h1>
+	<div class="forum_bgTop">
+	</div>
+	<div class="forum_bgMiddle">
+		<table cellspacing="0" class="forum_table">
+			<RENDER_LOOP what="forum_content">
+				<tr>
+					<td class="forum_userInfo bg_forum forum_borderBottom">
+						<div class="">
+							<img src="{forum_content>userPicture}" alt="{forum_content>userName}" title="{forum_content>userName}"/><br />
+							<RENDER_VALUE what="forum_content>userName"/>
+							<RENDER_IFSET what="rights_topic>blockUser">
+								<div class="forum_blockUser">
+									<a href="forum>blockUser"><RENDER_VALUE what="i18n2>blockUser"/></a>
+								</div>
+							</RENDER_IFSET>
+						</div>
+					</td>
+					<td class="bg_forum forum_borderLeft forum_borderBottom">
+						<div class="forum_abuse">
+							<a href=""><img src="/images/shared/icons/bank1/picto_caution_small.png" alt="{i18n2>forum_abuse}" title="{i18n2>forum_abuse}"/></a>
+						</div>
+						<div class="forum_infoContent">
+							<span class="forum_postDate">
+								-&#160;<RENDER_VALUE what="i18n2>posted"/>&#160;
+								<RENDER_VALUE what="forum_content>postDate"/>&#160;
+								<RENDER_VALUE what="i18n2>at"/>&#160;
+								<RENDER_VALUE what="forum_content>postHour"/>&#160;-
+							</span>
+							<span class="forum_postTitle">
+								<RENDER_VALUE what="forum_content>postTitle"/>
+							</span>
+						</div>
+						<div class="forum_content">
+							<RENDER_VALUE what="forum_content>content"/>
+							<RENDER_IFSET what="rights_topic>blockPost">
+								<div class="forum_blockPost">
+									<a href="forum>blockPost"><RENDER_VALUE what="i18n2>blockPost"/></a>
+								</div>
+							</RENDER_IFSET>
+						</div>
+					</td>
+				</tr>
+			</RENDER_LOOP>
+			<RENDER_IFSET what="rights_topic>post">
+				<tr>
+					<td class="forum_userInfo"></td>
+					<td class="forum_tinyContainer forum_borderLeft">
+						<RENDER_FORM id="forum_post">
+							<div>
+								<RENDER_WEDITOR type="forum" value="ofrifj if j i" style="width: 100%" name="post"/>
+							</div>
+							<RENDER_CAPTCHA what="forum_post"/>
+							<input type="submit"/>
+						</RENDER_FORM>
+					</td>
+				</tr>
+			</RENDER_IFSET>
+		</table>
+	</div>
+	<div class="forum_bgBottom">
+	</div>
+	<div class="forum_explanation">
+		<RENDER_VALUE what="i18n2>forum_explanation"/>
+	</div>
+</div>

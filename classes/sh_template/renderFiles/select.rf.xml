@@ -1,0 +1,64 @@
+<div id="menuEditor_container">
+    <RENDER_JS>
+        function changeTemplate(){
+            checkedList=$$('input:checked');
+            checked = checkedList[0].value;
+            if('<RENDER_VALUE what="template>original"/>' != checked){
+                /*alert("<RENDER_VALUE what="i18n>templateWasChanged"/>");*/
+                $('templateChooser').submit();
+            }
+        }
+    </RENDER_JS>
+    <RENDER_FORM id="templateChooser">
+        <div id="myRet"> </div>
+        <div class="form_box_container">
+            <RENDER_IFSET what="template>changed">
+                <div class="form_box_top">
+                    <h3 class="box_title"><RENDER_VALUE what="i18n>templateWasChanged_title"/></h3>
+                </div>
+                <div class="form_box_middle">
+                    <div class="form_box_content">
+                        <div class="formContent" style="text-align:center;">
+                            <img src="/images/shared/icons/bank1/picto_caution.png" alt=""/>
+                        </div>
+                        <div class="formContent">
+                            <RENDER_VALUE what="i18n>templateWasChanged"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form_box_bottom">
+                </div>
+            </RENDER_IFSET>
+            <div class="form_box_top">
+                <h3 class="box_title"><RENDER_VALUE what="i18n>titleTemplateSelector"/></h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="form_box_content">
+                    <div class="formContent">
+                        <RENDER_TABLE what="templates" cols="2" cellspacing="0">
+                            <div class="templateSelector_elements">
+                                <div>
+                                    <RENDER_RADIOBOX text="{templates>name}" name="template" state="{templates>state}" value="{templates>completeName}"/>
+                                    <RENDER_IFSET what="templates>firstSlide">
+                                        <a class="lightwindow page-options" href="{templates>firstSlide}" rel="templates[{templates>completeName}]" style="width:80px;">
+                                            <img src="/images/templates/{templates>completeName}/template_mini.png" alt="{templates>name}" title="{templates>name}"/>
+                                        </a>
+                                        <RENDER_LOOP what="slides">
+                                            <a class="lightwindow hidden" href="{slides>src}" rel="templates[{templates>completeName}]" style="width:20px;"></a>
+                                        </RENDER_LOOP>
+                                    </RENDER_IFSET>
+                                    <RENDER_IFNOTSET what="templates>firstSlide">
+                                        <img src="/images/templates/{templates>completeName}/template_mini.png" alt="{templates>name}" title="{templates>name}"/>
+                                    </RENDER_IFNOTSET>
+                                </div>
+                            </div>
+                        </RENDER_TABLE>
+                    </div>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+            <input type="button" value="{i18n>save}" onclick="changeTemplate();"/>
+        </div>
+    </RENDER_FORM>
+</div>

@@ -1,0 +1,7 @@
+<div class="templateList">
+    <RENDER_LOOP what="templates">
+       <a href="{templates>link}">
+           <img src="{templates>thumbnail}" alt="{templates>name}" title="{templates>name} - {templates>description}" />
+       </a>
+    </RENDER_LOOP>
+</div>

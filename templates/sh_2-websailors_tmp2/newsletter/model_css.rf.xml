@@ -1,0 +1,24 @@
+<div bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" align="center">
+    <NORENDER>Global table</NORENDER>
+    <table style="width:600px;border:0;" align="center" cellpadding="0" cellspacing="0">
+        <tr height="150" width="600" background="/images/template/variation/nl_bg_top.png">
+            <td style="width:4px;">&#160;</td>
+            <td style="width:600px;text-align:center;">
+                <a href="http://dev.websailors.fr/index.php">
+                    <img style="border:0;width:390px;height:130px;" src="http://dev.websailors.fr/images/site/logo/rectangular.png" alt="Websailors"/>
+                </a>
+            </td>
+            <td style="width:4px;">&#160;</td>
+        </tr>
+        <tr background="http://dev.websailors.fr/images/template/variation/nl_bg_middle.png">
+            <td>&#160;</td>
+            <td>
+                <div style="text-align:right;margin-bottom:4px;">Newsletter du <RENDER_VALUE what="content>date"/></div>
+                <div>Entrez votre texte ici</div>
+                <RENDER_VALUE what="content>plugins"/>
+                <div>Entrez votre texte2 ici</div>
+            </td>
+            <td>&#160;</td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,493 @@
+/* Shopsailors' CSS File */
+/* UTF-8 Check : à  ç  é  è  */
+
+body{
+    text-align: justify;
+}
+p{
+    text-align: inherit;
+    margin-top: inherit;
+}
+/* page de connexion: container */
+
+.bg_identification_top{
+    background: transparent url(admin/websailors_notification_top.png) no-repeat center top;
+    width: 433px;
+    height: 70px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bg_identification_middle{
+    background: transparent url(admin/websailors_notification_middle.png) repeat-y center top;
+    width: 433px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bg_identification_bottom{
+    background: transparent url(admin/websailors_notification_bottom.png) no-repeat center top;
+    width: 433px;
+    height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#connection_mainContainer{
+    text-align: center;
+    width: 100%;
+    color: #333333;
+    margin-top: 10px;
+}
+#connection_mainContainer div{
+    margin-left: auto;
+    margin-right: auto;
+}
+#connection_mainContainer input, #connection_mainContainer textarea{
+    border: 1px solid #333333;
+}
+#connection_mainContainer .captchaAdmin img{
+    border: 1px solid #333333;
+}
+.errorLogin{
+    width: 400px;
+    text-align: left;
+}
+/* page de connexion: identification */
+
+#clientConnection{
+  text-align: center;
+}
+.clientConnection_title{
+    text-align: center;
+    font-size: 120%;
+    font-weight:bold;
+}
+.adminConnection_firefox{
+    text-align: center;
+    font-weight:bold;
+    margin-top: 10px;
+}
+.clientConnection_input{
+    margin: inherit;
+}
+.pictoConnection{
+    width: 20px;
+}
+.id_mdp_text{
+    margin-top:7px;
+}
+/* page de connexion: lien pour créer un compte */
+
+#createAccountLink{
+    text-align: center;
+    padding-top: 10px;
+    margin-left: 150px;
+    width: 100%;
+    color: #333333;
+}
+#createAccountLink a{
+    color: #333333;
+}
+
+/* page de création de compte */
+
+.createAccount_mainContainer{
+  width: 100%;
+  color: #333333;
+  margin-top: 10px;
+}
+.createAccount_mainContainer .captchaAdmin{
+  color: #333333;
+}
+.captchaAdmin img{
+  border: 1px solid #333333;
+}
+.createAccount_mainContainer input{
+    border: 1px solid #333333;
+    width: 200px;
+}
+.adminLink a{
+    color: #333333;
+}
+.createAccount_mainContainer textarea{
+    border: 1px solid #333333;
+    width: 200px;
+    height: 50px;
+}
+.createAccount_mainContainer .captcha_image{
+    border: 1px solid #333333;
+}
+
+.createAccount_contents{
+    margin-left: 20px;
+    padding-top: 10px;
+    width: 400px;
+}
+
+.createAccount_title{
+    text-align: center;
+    font-size: 120%;
+    font-weight:bold;
+}
+.formAccount_captcha img{
+    border: 1px solid #333333;
+}
+.partTitle{
+    font-size: 110%;
+    font-weight:bold;
+    padding-top: 10px;
+}
+
+.submitAccount{
+    text-align: center;
+    margin-top: 15px;
+}
+.submitAccount input{
+    width: 100px;
+}
+#sendMailConfirm{
+    font-style: italic;
+    font-size: 50%;
+    text-align: center;
+    margin-top: 4px;
+}
+
+.noteText{
+    font-style: italic;
+    font-size: 80%;
+}
+.alertError{
+    color: #660000;
+    font-size: 110%;
+    font-weight: bold;
+    text-align: center;
+}
+
+.accountConfirm{
+    color: #333333;
+    font-size: 110%;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Connexion reussie */
+
+#connection_succefull{
+    font-size: 110%;
+    font-weight: bold;
+    text-align: center;
+    width: 370px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #333333;
+}
+.connection_infos{
+	margin-top: 10px;
+	font-weight: normal;
+	font-style: italic;
+}
+.failuresAttempts{
+	padding-top: 5px;
+	font-weight: bold;
+}
+.connection_failure{
+	width: 100%;
+	margin-top: 5px;
+}
+/* Message page d'erreur */
+.errorMessage_container{
+    margin-top: 40px;
+    text-align: center;
+    width: 433px;
+    color: #333333;
+    font-size: 120%;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+}
+.errorMessage_container div{
+    margin-left: auto;
+    margin-right: auto;
+}
+.error_top{
+    background: transparent url(admin/websailors_notification_top.png) repeat-y center top;
+    width: 433px;
+    height: 70px;
+}
+.error_middle{
+    background: transparent url(admin/websailors_notification_middle.png) repeat-y center top;
+    width: 433px;
+}
+.error_bottom{
+    background: transparent url(admin/websailors_notification_bottom.png) repeat-y center top;
+    width: 433px;
+    height: 30px;
+}
+.error_content{
+    width: 410px;
+}
+
+.nobr{
+    white-space: nowrap;
+}
+
+input[type=text]{
+    width: 150px;
+}
+.pointer{
+    cursor: pointer;
+}
+.noDisplay{
+    display:none;
+}
+
+/* Default templates listing style */
+
+#templateLister{
+    text-align: center;
+    width: 850px;
+}
+.templateDescription{
+    text-align: justify;
+    font-weight: bold;
+    width: 500px;
+    color: #333333;
+    margin-top: 5px;
+    margin-right: auto;
+    margin-left: auto;
+}
+#listerSlideShow{
+    width: 500px;
+    margin-right: auto;
+    margin-left: auto;
+}
+#templateLister table{
+    border-collapse:collapse;
+}
+#templateLister td{
+    padding:0;margin:0;
+}
+#templateLister .thumb{
+    width:100px
+}
+#templateLister .textLeftBackground{
+    width:30px;
+    height:100px;
+    background:transparent url(/templates/preview/images/summary_bg_left.png) no-repeat right top;
+}
+#templateLister .textRightBackground{
+    padding-right:15px;
+    height:100px;
+    background:transparent url(/templates/preview/images/summary_bg_right.png) no-repeat right top;
+}
+#templateLister .linkImage{
+    height:100px;
+    width:80px;
+}
+.templateList{
+    text-align: center;
+}
+.templateList img{
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+/* Css RENDER CHECKBOX */
+.form_checkbox td input{
+    margin: 0;
+    padding: 0;
+    width: auto;
+    height: auto;
+    border: none;
+}
+.form_checkbox td{
+    vertical-align: top;
+}
+.form_checkbox .form{
+    vertical-align: top;
+}
+.form_elementTd{
+    width: 10px;
+}
+
+input[type='submit'], input[type='button']{
+    cursor: pointer;
+    border: 1px solid #666666;
+}
+.cart_save input{
+    border: inherit;
+}
+.shop_pictoTable input{
+    border: inherit;
+}
+.cart_goToCommand input{
+    border: inherit;
+}
+
+.marginTop_10px{
+    margin-top: 10px;
+}
+.marginTop_20px{
+    margin-top: 20px;
+}
+.marginLeft_5px{
+    margin-left: 5px;
+}
+.marginBottom_5px{
+    margin-bottom: 5px;
+}
+.spacer, .clearBoth, .noFloat, .clear{
+    clear: both;
+}
+
+.falseLink{
+    cursor: pointer;
+    text-decoration: underline;
+}
+.verticalAlign_top{
+    vertical-align: top;
+}
+.helpToolTip{
+    margin-left: 4px;
+    margin-right: 4px;
+}
+.render_help_explanation{
+  color: #333333;
+  font-size: 10px;
+}
+.render_help_explanation div{
+  width: 400px;
+  text-align: justify;
+}
+
+/* Classes global */
+
+.inputCaptcha input{
+    width: 60px;
+    height: 70px;
+    border: 1px solid red;
+}
+
+img.showBackground, .showBackground img{
+    border:1px solid black;
+    background:transparent url(/images/shared/icons/bank1/transparent_bg.png) repeat top left;
+}
+
+.right{
+    text-align: right;
+}
+
+.center{
+        text-align: center;
+}
+
+.left{
+text-align: left;
+}
+
+.formAccount_error{
+    color: #990000;
+    font-weight: bold;
+}
+
+.bold{ /* Elements affichés en gras (mots clés) */
+    font-weight: bold;
+}
+
+.italic{ /* Elements affichés en italic */
+    font-style: italic;
+}
+
+.halfSize{
+    width:50%;
+}
+
+.hideLink, .hideLink a{
+    text-decoration:inherit;
+    color:inherit;
+}
+.nav_square35{
+    height: 35px;
+    width: 35px;
+}
+
+.nowrap{
+    white-space: nowrap;
+}
+.noBorder, .noBorder img, .noBorder input{
+    border: none;
+}
+ul{
+    color: inherit;
+}
+.cursorArrow{
+    cursor: inherit;
+}
+.bgBlack{
+    background-color: #000000;
+}
+.bgWhite{
+    background-color: #ffffff;
+}
+.bgInherit{
+    background-color: inherit;
+}
+.borderBottom_white{
+    border-bottom: 1px solid #ffffff; 
+}
+.borderLeft_white{
+    border-left: 1px solid #ffffff; 
+}
+
+.no-margin{
+    margin:0;
+}
+.noMargin{
+    margin:0;
+}
+.marginTop_5px{
+    margin-top: 5px;
+}
+.marginTop_10px{
+    margin-top: 10px;
+}
+.marginTop_15px{
+    margin-top: 15px;
+}
+.marginTop_20px{
+    margin-top: 15px;
+}
+.marginBottom_5px{
+margin-bottom: 5px;
+}
+.marginBottom_10px{
+margin-bottom: 10px;
+}
+.marginBottom_15px{
+margin-bottom: 15px;
+}
+.paddingTop_10px{
+padding-top: 10px;;
+}
+
+.verticalAlignCenter{
+vertical-align: center;
+}
+.verticalAlignTop{
+vertical-align: top;
+}
+.verticalAlignBottom{
+vertical-align: bottom;
+}
+
+.position_absolute{
+	position: absolute;
+}
+.borderGray_cc{
+	border: 1px solid #cccccc;
+}
+.borderGray_66{
+	border: 1px solid #666666;
+}

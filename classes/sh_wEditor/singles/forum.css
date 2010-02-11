@@ -1,0 +1,84 @@
+/*Default forum CSS*/
+
+.forum_table{
+	width: 100%;
+}
+
+.forum_table tr td{
+	vertical-align: top;
+}
+
+.bg_forum{
+background: transparent url(/images/shared/icons/bg_forum.png) repeat center top;
+}
+.forum_infoContent{
+	padding: 0px 5px 5px 5px;
+	width: 730px;
+}
+.forum_abuse{
+	position: absolute;
+	margin-left: 745px;
+}
+.forum_postDate{
+	font-weight: bold;
+	font-style: italic;
+	color: #666666;
+	width: 100%;
+}
+.forum_postTitle{
+	font-weight: bold;
+	font-style: italic;
+	color: <RENDER_VALUE what="variation>globalText"/>;
+}
+.forum_content{
+	vertical-align: top;
+	padding: 0px 10px 0px 5px;
+}
+.forum_blockUser{
+	font-weight: bold;
+	color: #990000;
+	text-decoration: none;
+	margin-top: 5px;
+}
+.forum_blockUser a{
+	color: #990000;
+	text-decoration: none;
+}
+.forum_blockComment{
+	font-weight: bold;
+	color: #990000;
+}
+.forum_blockComment a{
+	color: #990000;
+	text-decoration: none;
+}
+.forum_userInfo{
+	color: <RENDER_VALUE what="variation>globalText"/>;
+	width: 100px;
+	text-align: left;
+	padding: 5px;
+	text-align: center;
+	font-weight: bold;
+}
+.forum_userInfo img{
+	height: 30px;
+	width: 30px;
+}
+.forum_tinyTable{
+	width: 100%;
+}
+.forum_tinyContainer{
+}
+.forum_explanation{
+	text-align: center;
+	font-weight: bold;
+	color: #333333;
+}
+.forum_explanation a{
+	color: #333333;
+}
+
+blockquote{
+    font-style: italic;
+    border: 1px solid red;
+}

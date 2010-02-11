@@ -1,0 +1,45 @@
+<div class="forumContainer">
+	<h1><RENDER_VALUE what="i18n2>newTopic"/></h1>
+	<div class="forum_createTopic_bgTop">
+	</div>
+	<div class="forum_createTopic_bgMiddle">
+		<div class="forum_topicTitle">
+			<RENDER_VALUE what="i18n2>forum_topicTitle"/><br />
+			<input  name="forum_topicTitle" value="{forum>forum_topicTitle}"/>
+		</div>
+		<div class="forum_topicCat">
+			<RENDER_VALUE what="i18n2>forum_topicCat"/>
+		</div>
+		<div class="forum_topicCatList">
+			<select>
+				<RENDER_LOOP what="forum_categories">
+					<option>
+						<RENDER_VALUE what="forum_categories>name"/>
+					</option>
+				</RENDER_LOOP>
+			</select>
+		</div>
+		<div class="forum_topic_firstPost">
+			<RENDER_VALUE what="i18n2>forum_topic_firstPost"/>
+		</div>
+		<table cellspacing="0" class="forum_table">
+			<tr>
+				<td class="forum_userInfo"></td>
+				<td class="forum_tinyContainer forum_borderLeft">
+					<RENDER_FORM id="forum_post">
+						<div>
+							<RENDER_WEDITOR type="forum" value="ofrifj if j i" style="width: 100%" name="post"/>
+						</div>
+						<RENDER_CAPTCHA what="forum_post"/>
+						<input type="submit"/>
+					</RENDER_FORM>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="forum_createTopic_bgBottom">
+	</div>
+	<div class="forum_createTopic_validation">
+		<input type="submit" value="{i18n2>forum_createTopic_validation}"/>
+	</div>
+</div>

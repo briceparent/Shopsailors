@@ -1,0 +1,72 @@
+<div class="multipleImagesSelector" style="width:370px;border:1px dotted grey;">
+    <input type="hidden" id="product_images_input_{mis>uid}" name="{mis>name}" value="{mis>value}"/>
+    <div class="mis_pictoAdd" onclick="product_addImage_{mis>uid}();">
+        <img src="/images/shared/icons/bank1/picto_add.png"/>
+    </div>
+    <div id="product_images_{mis>uid}" class="mis_imagesContainer">
+    </div>
+    <script type="text/javascript">
+        var productImages_<RENDER_VALUE what="mis>uid"/> = new Array();
+        var productImagesNames_<RENDER_VALUE what="mis>uid"/> = new Array();
+        root = '';
+        function product_addImage_<RENDER_VALUE what="mis>uid"/>(){
+            popupBrowser.parameters.set('type','url');
+            popupBrowser.parameters.set('folder','shop');
+            popupBrowser.parameters.set('action','product_addImage_callBack_<RENDER_VALUE what="mis>uid"/>');
+            popupBrowser.parameters.set('element','0');
+            popupBrowser.open();
+            /*
+            window.open(
+                '/browser/<RENDER_VALUE what="mis>folder"/>/images/product_addImage_callBack_<RENDER_VALUE what="mis>uid"/>/foo/show.php',
+                'sh_browser',
+                config='height=410, width=750, toolbar=no, menubar=no'
+            );
+            */
+        }
+        function product_addImage_callBack_<RENDER_VALUE what="mis>uid"/>(image,element){
+            for (oneImage in productImages_<RENDER_VALUE what="mis>uid"/>) {
+                if (productImages_<RENDER_VALUE what="mis>uid"/>[oneImage] == image) {
+                    return true;
+                }
+            }
+            cpt = productImages_<RENDER_VALUE what="mis>uid"/>.length;
+            productImages_<RENDER_VALUE what="mis>uid"/>[cpt] = image;
+            productImagesNames_<RENDER_VALUE what="mis>uid"/>[cpt] = "draggable_image_<RENDER_VALUE what="mis>uid"/>_" + cpt;
+            product_updateImages_<RENDER_VALUE what="mis>uid"/>();
+        }
+
+        function product_updateImages_<RENDER_VALUE what="mis>uid"/>(){
+            separator = '';
+            $('product_images_<RENDER_VALUE what="mis>uid"/>').innerHTML = "";
+            $('product_images_input_<RENDER_VALUE what="mis>uid"/>').value = '';
+            productImages_<RENDER_VALUE what="mis>uid"/>.each(function(image, index){
+                id = productImagesNames_<RENDER_VALUE what="mis>uid"/>[index]
+                $('product_images_<RENDER_VALUE what="mis>uid"/>').innerHTML += '<span id="' + id + '" class="draggable_images mis_deleteCursor" onclick="product_removeImage_{mis>uid}(\'' + index + '\')"><img src="' + image + '" style="width:50px;margin-right:2px;"/></span>';
+                $('product_images_input_<RENDER_VALUE what="mis>uid"/>').value += separator + image;
+                separator = '|';
+            });
+        }
+
+        function product_removeImage_<RENDER_VALUE what="mis>uid"/>(image){
+            cpt = 0;
+            var newProductImages = new Array();
+            var newProductImagesNames = new Array();
+            productImages_<RENDER_VALUE what="mis>uid"/>.each(function(actualImage, index){
+                if(index != image){
+                    newProductImages[cpt] = productImages_<RENDER_VALUE what="mis>uid"/>[index];
+                    newProductImagesNames[cpt] = productImagesNames_<RENDER_VALUE what="mis>uid"/>[index];
+                    cpt++;
+                }
+            });
+            productImages_<RENDER_VALUE what="mis>uid"/> = newProductImages;
+            productImagesNames_<RENDER_VALUE what="mis>uid"/> = newProductImagesNames;
+            product_updateImages_<RENDER_VALUE what="mis>uid"/>();
+        }
+        <RENDER_LOOP what="images">
+            cpt = productImages_<RENDER_VALUE what="mis>uid"/>.length;
+            productImagesNames_<RENDER_VALUE what="mis>uid"/>[cpt] = "draggable_image_<RENDER_VALUE what="mis>uid"/>_" + cpt;
+            productImages_<RENDER_VALUE what="mis>uid"/>[cpt] = '<RENDER_VALUE what="images>src"/>';
+        </RENDER_LOOP>
+        product_updateImages_<RENDER_VALUE what="mis>uid"/>();
+    </script>
+</div>

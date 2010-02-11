@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Diaporama Inserter</title>
+	<script type="text/javascript" src="/include/tinymce/jscripts/tiny_mce/tiny_mce_popup.js"></script>
+	<script type="text/javascript" src="/include/tinymce/jscripts/tiny_mce/plugins/websailors/js/diaporamaInserter.js"></script>
+	<base target="_self" />
+</head>
+<body>
+<RENDER_LOOP what="diaporamas">
+    <div>
+        <a href="" onclick="javascript:diaporamaInserterDialog.insert('{diaporamas>name}','{diaporamas>width}','{diaporamas>height}');">
+            <RENDER_VALUE what="diaporamas>name"/> (<RENDER_VALUE what="diaporamas>width"/>x<RENDER_VALUE what="diaporamas>height"/>)
+        </a>
+    </div>
+</RENDER_LOOP>
+</body>
+</html>

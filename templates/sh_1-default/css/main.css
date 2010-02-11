@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<content>
+/* Shopsailors' CSS File | Template : <RENDER_VALUE what="template>name"/> | Variation : <RENDER_VALUE what="variation>name"/> */
+
+body{
+    background: #000000 url(/images/template/variation/bg.png) repeat-x 0 top;
+    font-family: Arial,sans-serif;
+    font-size: 12px;
+    color: <RENDER_VALUE what="variation>textColor"/>;
+}
+div#mainContainer{
+    margin-left: auto;
+    margin-right: auto;
+    width: 900px;
+}
+
+
+a:link, a:visited, a:hover, a:active {
+    color: <RENDER_VALUE what="variation>linksColor"/>;
+}
+
+.templateColor{
+    color: <RENDER_VALUE what="variation>color"/>;
+}
+
+.aLink{
+    cursor: pointer;
+}
+
+.falseLink{
+    color: <RENDER_VALUE what="variation>linksColor"/>;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+
+#myMenu{
+	background: transparent url(/images/template/variation/menu_bg.png) repeat-x center top;
+	text-align: center;
+}
+
+img { 
+    border: 0;
+}
+
+#bg_middle{
+	background-color: <RENDER_VALUE what="variation>backgroundColor"/>;
+	width: 900px;
+}
+#hb_top{
+	background: transparent url(/images/template/variation/hb_top.png) no-repeat center top;
+	width: 900px;  
+	height: 213px;
+    text-align:center;
+}
+#hb_middle{
+	width: 900px;  
+	height: 50px;
+}
+#hb_bottom{
+	width: 900px;  
+	height: 38px;
+}
+
+#fg_top{
+	background: transparent url(/images/template/variation/fg_top.png) no-repeat center top;
+	background-color: <RENDER_VALUE what="variation>backgroundColor"/>;
+}
+#content_middle{
+	margin-left: 15px;
+	width: 880px;
+}
+#bb_top{
+	width: 900px;
+	height: 8px;
+}
+#bb_middle{
+	width: 900px;
+    color:white;
+}
+
+.important{
+    color : <RENDER_VALUE what="variation>importantColor"/>;
+}
+
+.oneMenu, .oneContent{
+  margin-left: 15px;
+}
+
+#copyrights{
+    text-align:center;
+    font-size:60%;
+}
+
+.topTitle{
+    background: transparent url(/images/template/logo.png) no-repeat center 0;
+    text-align:center;
+    font-size:140%;
+    color:#FFFFFF;
+    padding-top:165px;
+    height:400px;
+    width:100%;
+	margin-top: 0;
+}
+h1{ /* Grand titre des pages */
+    color: <RENDER_VALUE what="variation>titlesColor"/>;
+    font-weight: bold;
+    font-size: 160%;
+    line-height: 24px;
+    text-align: left;
+	margin-top: 30px;
+}
+
+h2{ /* Petit titre des pages */
+    color: <RENDER_VALUE what="variation>titlesColor"/>;
+    font-weight: bold;
+    font-size: 120%;
+    line-height: 16px;
+    text-align: left;
+    text-indent: 15px;
+}
+h3{
+	margin-bottom: 0;
+}
+
+p{ /* Paragraphes */
+    font-weight: normal;
+    line-height: 16px;
+    text-align: left;
+    text-indent: 2px;
+}
+
+.bold{ /* Elements affichés en gras (mots clés) */
+    font-weight: bold;
+}
+
+.italic{ /* Elements affichés en italic */
+    font-style: italic;
+}
+
+.center{ /* Elements centrés */
+    text-align:center;
+}
+
+.halfSize{
+    width:50%;
+}
+
+.hideLink{
+  text-decoration:inherit;
+  color:inherit;
+}
+
+div.brice_autocomplete {
+  background-color: #FFF;
+  border: 1px solid #888;
+  color: <RENDER_VALUE what="variation>color"/>;
+  position: absolute;
+  width: auto;
+  margin: 0px;
+  padding: 0px;
+}
+
+div.brice_autocomplete ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  max-height: 20em;
+  overflow: auto;
+}
+
+div.brice_autocomplete ul li {
+  list-style-type:none;
+  display: block;
+  margin: 0;
+  padding: 2px;
+  cursor: pointer;
+}
+captcha_image{
+		width:160px;
+		height:35px;
+	    }
+	    .fourFifth{
+	    font-size:80%;
+	    font-style: italic;
+	    }
+	    .whiteText{
+		color: white;
+	    }
+	    .captcha{
+		text-align:left;
+		border: none;
+	    }
+	    .captcha_input{
+	    margin-top: 10px;
+	    }
+	    .marginTop_5px{
+	    margin-top: 5px;
+	    }
+		.captcha_image{
+		width:160px;
+		height:35px;
+	    }
+         .marginTop_15px{
+	    margin-top: 15px;
+	    }
+        .table_description{
+        font-style: italic;
+        color: white;
+        font-size: 80%;
+        }
+        .marginBottom_15px{
+        margin-bottom: 15px;
+        }
+</content>

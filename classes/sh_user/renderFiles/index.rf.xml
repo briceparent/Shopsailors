@@ -1,0 +1,46 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+        <style type="text/css">
+        body{
+        }
+        #banner{
+            background:transparent url(<RENDER_VALUE what="banner>image"/>) no-repeat top center;
+            width:400px;
+            height:100px;
+        }
+        #title{
+            margin-top:20px;
+            text-align:center;
+            font-size:160%;
+        }
+        #page_container{
+            background-color:#ccc;
+            width:400px;
+            border:1px solid black;
+            margin: 20px auto 0 auto;
+            padding:5px;
+        }
+        .clientConnection_title{
+            visibility:hidden;
+        }
+        #explanantions{
+            margin:10px;
+            border: 1px solid #666;
+            background-color: #aaa;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="page_container">
+            <div id="banner"></div>
+            <h1 id="title">
+                <RENDER_VALUE what="site>name"/>
+            </h1>
+            <RENDER_VALUE what="page>connectionForm"/>
+            <div id="explanantions">
+                <RENDER_VALUE what="i18n>requires_connection"/>
+            </div>
+        </div>
+    </body>
+</html>

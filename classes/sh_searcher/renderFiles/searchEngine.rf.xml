@@ -1,0 +1,11 @@
+<div id="searcher">
+    <form id="searcher_form" method="get" action="{search>action}">
+        <div>
+            <img src="/images/template/variation/searcher_bgLeft.png" class="searcher_bgLeft" alt="searcher_decoration"/>
+            <input name="value" class="searcher_input" value='{search>active}'/>
+            <img src="/images/template/variation/searcher_bgRight.png" class="searcher_bgRight" alt="searcher_decoration"/>
+            <input type="image" class="searcher_image" name="submit" src="/images/template/picto_search.png" title="{i18n>search_image}"/>
+            <input type="hidden" name="submitImage" value="submit"/>
+        </div>
+    </form>
+</div>

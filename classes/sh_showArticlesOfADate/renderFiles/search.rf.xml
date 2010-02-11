@@ -1,0 +1,15 @@
+<div>
+    <RENDER_IFSET what="previous>value">
+        <RENDER_VALUE what="i18n>yourSearchWas"/>
+        "<RENDER_VALUE what="previous>value"/>"
+        <ul>
+            <RENDER_LOOP what="responses">
+                <li><a href="{responses>link}"><RENDER_VALUE what="responses>title"/></a></li>
+            </RENDER_LOOP>
+        </ul>
+    </RENDER_IFSET>
+    <RENDER_FORM id="searchByDate_form">
+        <RENDER_DATEPICKER name="date_searched" value="{previous>value}"/><br />
+        <input type="submit"/>
+    </RENDER_FORM>
+</div>

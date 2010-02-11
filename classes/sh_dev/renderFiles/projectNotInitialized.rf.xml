@@ -1,0 +1,6 @@
+<div>
+    Le projet <RENDER_VALUE what="projects>name"/> n'est pas initialisé,
+    il n'y a donc aucun révision à afficher.<br /><br />
+    Pour initialiser le projet et commencer les révisions, passez par la commande
+    'Commit' du panneau d'administration.
+</div>

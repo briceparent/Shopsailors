@@ -1,0 +1,421 @@
+<?xml version="1.0"?>
+<content>
+/* Shopsailors' CSS File | Template : <RENDER_VALUE what="template>name"/> | Variation : <RENDER_VALUE what="variation>name"/> */
+/* UTF-8 Check : à  ç  é  è  */
+body{
+	background: #000000 url(/images/template/variation/bg_bg.png) repeat-x 0 0;
+    font-family: Arial,sans-serif;
+    font-size: 12px;
+    color: <RENDER_VALUE what="variation>globalText"/>;
+	margin:0;
+}
+#head{
+	height: 102px;
+	width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.logo{
+	width: 900px;
+	height: 60px;
+	text-align: center;
+}
+.logo img{
+	width: 173px;
+	height: 60px;
+}
+#mainContainer{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    width: 900px;
+}
+.menu1{
+    margin-left: auto;
+    margin-right: auto;
+	text-align: center;
+	width: 900px;
+}
+
+/*Switch list mode icon*/
+.icon_display{
+	position: absolute;
+	margin-left: 820px;
+}
+.icon_display img{
+	height: 20px;
+	cursor: pointer;
+	margin-right: 4px;
+	margin-top: 2px;
+}
+
+/*Search results: articles*/
+
+.search_results_type_name{
+	margin-top: 20px;
+    font-weight: bold;
+    font-size: 110%;
+}
+.searcher_oneArticle_descContainer{
+    vertical-align: top;
+}
+.searcher_oneArticle_image{
+	vertical-align: top;
+	margin-right: 5px;
+	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+}
+.articleResult_title a{
+	color: #ffffff;
+	font-weight: bold;
+}
+.searcher_oneArticle_image img{
+    height: 60px;
+}
+.articleResult_contents{
+	margin-top: 10px;
+	}
+
+/* Champ de connexion */
+
+#connectionContainer{
+	height: 20px;
+	width: 170px;
+	text-align: left;
+	margin-top: 0px;
+	position: absolute;
+}
+#connectionContainer table{
+	margin-left: 740px;
+	text-align: right;
+	margin-top: 0px;
+}
+.grey_link_connect{
+	color:  <RENDER_VALUE what="variation>connectLinkColor"/>;
+}
+.grey_link{
+	color: #333333;
+	margin-top:2px;
+	margin-bottom:2px;
+}
+.grey_link_line{
+	color: #333333;
+	margin-top:5px;
+}
+
+
+
+/* flags */
+.pictoFlagsContainer{
+text-align: left;
+width: 150px;
+height: 20px;
+padding-top: 7px;
+position: absolute;
+}
+.pictoFlags{
+width: 20px;
+margin-right: 4px;
+cursor: pointer;
+}
+
+/*contenus de droite de la page*/
+
+#page_content{
+margin-top: 20px;
+padding-top: 0px;
+width: 600px;
+}
+.content_middle{
+	margin-top: 14px;
+	width: 660px;
+}
+/*Boîtes de menus gauche: conteneurs*/
+
+ .contentTable{
+	width: 250px;
+	margin: inherit;
+}
+ .boxleft_content{
+	width: 220px;
+}
+ #left_boxes{
+}
+.contentTable tr{
+vertical-align: top;
+margin: inherit;
+}
+.box_top{
+	background: transparent url(/images/template/bg_content_top.png) repeat center top;
+	height: 5px;
+	width: 210px;
+	margin-top: 10px;
+}
+.box_middle{
+	background: transparent url(/images/template/bg_content_middle.png) repeat center top;
+	width: 210px;
+}
+.box_bottom_margin{
+	height: 35px;
+}
+/* Boite de menu gauche: PLUGIN */
+.pluginClassTitle{
+	font-weight: bold;
+	font-size: 120%;
+	text-align: center;
+	color:  <RENDER_VALUE what="variation>globalText"/>;
+}
+.pluginClassSubTitle{
+	font-weight: bold;
+	font-size: 90%;
+	text-align: left;
+	padding-top: 5px;
+	color:  <RENDER_VALUE what="variation>globalText"/>;
+}
+.pluginClassContent{
+	margin-left: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.pluginClassLinks{
+	margin-left: 15px;
+	padding-top: 5px;
+	color: <RENDER_VALUE what="variation>globalText"/>;
+}
+.inputBoxLeft{
+	margin-top: 5px;
+	font-style: italic;
+	width: 160px;
+	border: 1px solid  <RENDER_VALUE what="variation>borderColor"/>;
+}
+.checkboxBoxLeft{
+	margin-top: 5px;
+	color: <RENDER_VALUE what="variation>globalText"/>;
+}
+.pluginClassListbox{
+	margin-top: 5px;
+}
+.pluginClassRadio{
+	margin-top: 5px;
+	color: <RENDER_VALUE what="variation>globalText"/>;
+}
+.pluginClassCheckbox{
+	margin-top: 5px;
+	color: <RENDER_VALUE what="variation>globalText"/>;
+}
+.FormBoxSubmitContainer {
+	padding-top: 10px;
+	text-align: center;
+
+}
+
+ /* Page de contact */
+ 
+#contact{
+	width: 350px;
+	color: <RENDER_VALUE what="variation>contactColor"/>;
+}
+.contact_intro{
+	text-align: left;
+	margin-right: inherit;
+	margin-left: inherit;
+}
+#contact h3{
+	margin-bottom: 2px;
+	padding-top: 10px;
+	font-size: 120%;
+}
+#contactData_container{
+	margin-top: 15px;
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+}
+#sendMailForm_container{
+	text-align: center;
+	margin-top: 10px;
+	color: <RENDER_VALUE what="variation>globalText"/>;
+}
+#sendMailForm_container table{
+	margin-right: auto;
+	margin-left: auto;
+}
+.contactMail_link{
+	color: <RENDER_VALUE what="variation>contactColor"/>;
+}
+.sendmailContent {
+	margin-left: 1px;
+ }
+.sendmailInput input {
+	width: 150px;
+ }
+ .sendMail_txtArea{
+	 margin-top: 5px;
+ }
+ #bg_sendmailMiddle{
+	 background: transparent url(/images/template/bg_content_middle.png) repeat center top;
+	 width: 356px;
+ }
+ #bg_sendmailTop{
+	 background: transparent url(/images/template/bg_content_top.png) repeat center top;
+	 width: 356px;
+	 height: 5px;
+ }
+.mailContent{
+	height: 140px;
+	width: 340px;
+}
+.contact_submitCaptcha{
+	margin-top: 15px;
+	padding-bottom: 10px;
+}
+
+
+/*ADMIN: edtion d'un nouvel article*/
+
+.content_edit_shorter{
+	margin-left: auto;
+	margin-right: auto;
+	width: 600px;
+}
+
+
+.content_edit_shorter textarea{
+	width: 400px;
+}
+
+
+/*général: all templates*/
+
+.topTitle{
+    /*background: transparent url(/images/template/logo.png) no-repeat center 0;*/
+    text-align:left;
+    font-size:120%;
+    color:  <RENDER_VALUE what="variation>topTitle"/>;
+    width:100%;
+	padding-top: 30px;
+}
+
+h1{ /* Grand titre des pages */
+    color:   <RENDER_VALUE what="variation>title"/>;
+    font-weight: bold;
+    font-size: 120%;
+    line-height: 24px;
+    text-align: left;
+	margin-top: inherit;
+}
+
+h2{ /* Petit titre des pages */
+    color: <RENDER_VALUE what="variation>titlesColor"/>;
+    font-weight: bold;
+    font-size: 120%;
+    line-height: 16px;
+    text-align: left;
+    text-indent: 15px;
+}
+h3{
+	margin-top: 0px;
+	margin-bottom: 0;
+}
+
+p{ /* Paragraphes */
+    font-weight: normal;
+    line-height: 16px;
+    text-align: left;
+    text-indent: 2px;
+}
+
+#copyrights{
+    text-align:center;
+    font-size:60%;
+}
+
+
+.important{
+    color : <RENDER_VALUE what="variation>importantColor"/>;
+}
+
+.bold{ /* Elements affichés en gras (mots clés) */
+    font-weight: bold;
+}
+
+.italic{ /* Elements affichés en italic */
+    font-style: italic;
+}
+
+.center{ /* Elements centrés */
+    text-align:center;
+}
+
+.halfSize{
+    width:50%;
+}
+
+.hideLink{
+  text-decoration:inherit;
+  color:inherit;
+}
+
+captcha_image{
+		width:160px;
+		height:35px;
+	    }
+	    .fourFifth{
+	    font-size:80%;
+	    font-style: italic;
+	    }
+	    .whiteText{
+		color: black;
+	    }
+	    .captcha{
+		text-align:left;
+		border: none;
+	    }
+	    .captcha_input{
+	    margin-top: 10px;
+	    }
+	    .marginTop_5px{
+	    margin-top: 5px;
+	    }
+		.captcha_image{
+		width:160px;
+		height:35px;
+	    }
+         .marginTop_15px{
+	    margin-top: 15px;
+	    }
+        .table_description{
+        font-style: italic;
+        color: white;
+        font-size: 80%;
+        }
+        .marginBottom_15px{
+        margin-bottom: 15px;
+        }
+		
+	
+
+
+a:link, a:visited, a:hover, a:active {
+    color: <RENDER_VALUE what="variation>linksColor"/>;
+}
+
+.templateColor{
+    color: <RENDER_VALUE what="variation>color"/>;
+}
+
+.aLink{
+    cursor: pointer;
+}
+
+.falseLink{
+    color: <RENDER_VALUE what="variation>linksColor"/>;
+    cursor: pointer;
+    text-decoration: underline;
+}
+img { 
+    border: 0;
+}
+.position_absolute{
+	position: absolute;
+}
+</content>

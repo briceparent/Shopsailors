@@ -1,0 +1,13 @@
+<div class="createAccount_mainContainer">
+    <div class="bg_identification_top">
+    </div>
+    <div class="bg_identification_middle">
+        <div class="createAccount_contents">
+            <div class="alertError">
+               <RENDER_VALUE what="i18n>accountCreationFailed"/>
+            </div>
+        </div>
+    </div>
+    <div class="bg_identification_bottom">
+    </div>
+</div>

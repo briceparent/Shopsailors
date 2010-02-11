@@ -1,0 +1,8 @@
+<?php
+$message = array(
+	'fr_FR' => 'Pour changer cette image, il suffit d\'envoyer la nouvelle
+    dans ce dossier. Elle sera retaillée et renommée automatiquement.<br /><br />
+<span style="color:red">Attention: </span>L\'image originale sera remplacée par
+celle que vous enverrez, et les modifications sont apportées immédiatement, que
+vous validiez le formulaire qui a appelé cette page ou pas.',
+);

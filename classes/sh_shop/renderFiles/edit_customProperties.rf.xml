@@ -1,0 +1,95 @@
+<div>
+    <RENDER_FORM id="shopCustomPropertiesEditor" >
+        <div class="form_box_container">
+            <NORENDER>Existing custom properties</NORENDER>
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>customPropertiesEditor_title"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>categoryEditor_name"/><br />
+                    <RENDER_I18NINPUT class="sh_shop" i18n="{category>name}" name="{inputs>name}"/>
+                </div>
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>categoryEditor_description"/>
+                    <RENDER_HELP what="{i18n>categoryEditor_descriptionExplanation}"/>
+                    <RENDER_I18NTEXTAREA class="sh_shop" i18n="{category>description}" name="{inputs>description}"/>
+                </div>
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>categoryEditor_shortDescription"/>
+                    <RENDER_HELP what="{i18n>categoryEditor_shortDescriptionExplanation}"/>
+                    <RENDER_I18NINPUT class="sh_shop" i18n="{category>shortDescription}" name="{inputs>shortDescription}"/>
+                </div>
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>categoryEditor_image"/>
+                    <RENDER_HELP what="{i18n>categoryEditor_imageExplanation}"/>
+                    <div class="preview_image">
+                        <img src="{category>image}" onclick="{category>onClickReplaceImage}" alt="{i18n>categoryEditor_image}"/>
+                        <input type="hidden" name="{inputs>image}" value="{category>image}" id="{inputs>image}"/>
+                    </div>
+                </div>
+                <div class="formContent">
+                    <RENDER_CHECKBOX help="{i18n>categoryEditor_activateCategoryExplanation}" text="{i18n>categoryEditor_activateCategory}" name="{category>active}" state="{category>active}" checked="checked"/>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+            <NORENDER>New custom property</NORENDER>
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>addCustomPropertiesEditor_title"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>customPropertyName"/>
+                    <RENDER_HELP what="{i18n>customPropertyName_explanation}"/><br />
+                    <RENDER_I18NINPUT class="sh_shop" i18n="{customProperty>name}" name="name"/>
+                </div>
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>customPropertyType"/>
+                    <RENDER_HELP what="{i18n>customPropertyType_explanation}"/><br />
+                    <select name="type" onchange="cp_showHideList(this.value)">
+                        <option value="text">
+                            <RENDER_VALUE what="i18n>customPropertyType_text"/>
+                        </option>
+                        <option value="bool">
+                            <RENDER_VALUE what="i18n>customPropertyType_bool"/>
+                        </option>
+                        <option value="list">
+                            <RENDER_VALUE what="i18n>customPropertyType_list"/>
+                        </option>
+                        <option value="listOrText">
+                            <RENDER_VALUE what="i18n>customPropertyType_listOrText"/>
+                        </option>
+                    </select>
+                </div>
+                <div class="formContent" id="customPropertyList">
+                    <RENDER_VALUE what="i18n>customPropertyList"/>
+                    <RENDER_HELP what="{i18n>customPropertyList_explanation}"/><br />
+                    <RENDER_I18NTEXTAREA class="sh_shop" i18n="{customProperty>list}" name="list"/>
+                </div>
+                <script type="text/javascript">
+                    function cp_showHideList(type){
+                        if(type=="list" || type=="listOrText"){
+                            $('customPropertyList').show();
+                        }else{
+                            $('customPropertyList').hide();
+                        }
+                    }
+                    cp_showHideList('<RENDER_VALUE what="default>type"/>');
+                </script>
+                <div class="formContent">
+                    <RENDER_CHECKBOX text="{i18n>customPropertyActive}" help="{i18n>customPropertyActive_explanation}" name="active" state="{customProperty>active}"/>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+            <div class="formSubmitContainer">
+                <input type="submit" value="Enregistrer"/>
+            </div>
+        </div>
+    </RENDER_FORM>
+</div>

@@ -1,0 +1,13 @@
+<div id="templateLister">
+    <img src="{variations}" title="Variations" alt="variation"/>
+    <div id="listerSlideShow">
+        <RENDER_DIAPORAMAFROMLIST manual="manual" class="diapo_500_550" background="{background}">
+            <RENDER_LOOP what="slides">
+                <RENDER_VALUE what="slides>src"/>|
+            </RENDER_LOOP>
+        </RENDER_DIAPORAMAFROMLIST>
+    </div>
+    <div class="templateDescription">
+        <RENDER_VALUE what="description"/>
+    </div>
+</div>

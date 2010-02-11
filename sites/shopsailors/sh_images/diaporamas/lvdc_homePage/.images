@@ -1,0 +1,96 @@
+<?php
+/**
+  * Copyright Shopsailors (2009)
+  *
+  * briceparent@free.fr
+  *
+  * This file is a part of a computer program whose purpose is to create,
+  * administrate and use a shop over the web.
+  *
+  * This software is governed by the CeCILL license under French law and
+  * abiding by the rules of distribution of free software.  You can  use,
+  * modify and/ or redistribute the software under the terms of the CeCILL
+  * license as circulated by CEA, CNRS and INRIA at the following URL
+  * "http://www.cecill.info".
+  *
+  * As a counterpart to the access to the source code and  rights to copy,
+  * modify and redistribute granted by the license, users are provided only
+  * with a limited warranty  and the software's author,  the holder of the
+  * economic rights,  and the successive licensors  have only  limited
+  * liability.
+  *
+  * In this respect, the user's attention is drawn to the risks associated
+  * with loading,  using,  modifying and/or developing or reproducing the
+  * software by the user in light of its specific status of free software,
+  * that may mean  that it is complicated to manipulate,  and  that  also
+  * therefore means  that it is reserved for developers  and  experienced
+  * professionals having in-depth computer knowledge. Users are therefore
+  * encouraged to load and test the software's suitability as regards their
+  * requirements in conditions enabling the security of their systems and/or
+  * data to be ensured and,  more generally, to use and operate it in the
+  * same conditions as regards security.
+  *
+  * The fact that you are presently reading this means that you have had
+  * knowledge of the CeCILL license and that you accept its terms.
+ **/
+
+/**
+  * This file was generated automatically by the Shopsailors engine.
+ **/
+if(!defined('SH_MARKER')){
+    header('location: directCallForbidden.php');
+}
+
+$values = array (
+  'images' => 
+  array (
+    0 => 
+    array (
+      'src' => '/sites/websailors/sh_images/diaporamas/lvdc_homePage/DSC_0427.png',
+    ),
+    1 => 
+    array (
+      'src' => '/sites/websailors/sh_images/diaporamas/lvdc_homePage/DSC_0428.png',
+    ),
+    2 => 
+    array (
+      'src' => '/sites/websailors/sh_images/diaporamas/lvdc_homePage/DSC_0429.png',
+    ),
+    3 => 
+    array (
+      'src' => '/sites/websailors/sh_images/diaporamas/lvdc_homePage/DSC_0432.png',
+    ),
+    4 => 
+    array (
+      'src' => '/sites/websailors/sh_images/diaporamas/lvdc_homePage/DSC_0433.png',
+    ),
+    5 => 
+    array (
+      'src' => '/sites/websailors/sh_images/diaporamas/lvdc_homePage/DSC_0444.png',
+    ),
+    6 => 
+    array (
+      'src' => '/sites/websailors/sh_images/diaporamas/lvdc_homePage/DSC_0450.png',
+    ),
+    7 => 
+    array (
+      'src' => '/sites/websailors/sh_images/diaporamas/lvdc_homePage/DSC_0455.png',
+    ),
+    8 => 
+    array (
+      'src' => '/sites/websailors/sh_images/diaporamas/lvdc_homePage/DSC_0461.png',
+    ),
+    9 => 
+    array (
+      'src' => '/sites/websailors/sh_images/diaporamas/lvdc_homePage/DSC_0466.png',
+    ),
+    10 => 
+    array (
+      'src' => '/sites/websailors/sh_images/diaporamas/lvdc_homePage/DSC_0467.png',
+    ),
+    11 => 
+    array (
+      'src' => '/sites/websailors/sh_images/diaporamas/lvdc_homePage/DSC_0468.png',
+    ),
+  ),
+);

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="/" />
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" media="screen" type="text/css" href="/sh_i18n/singles/style.css" />
+        <RENDER_SCRIPT file="PROTOTYPE" absolute="absolute"/>
+        <script type="text/javascript">
+            function submit_checkbox(){
+                checked=$$('input:checked');
+                html = '';
+                values = '';
+                separator = '';
+                checked.each(function(s){
+                    html += '<img src="{flags>root}' + s.name + '.png" alt="'+s.name+'" title="'+s.name+'"/>';
+                    values += separator + s.name ;
+                    separator = ',';
+                });
+                html += '<input type="hidden" name="{selector>id}_values" value="'+ values + '"/>';
+                window.opener.submitI18n('<RENDER_VALUE what="selector>id"/>',html);
+                window.close();
+            }
+            function submit_radio(){
+                checkedList=$$('input:checked');
+                checked = checkedList[0].value;
+                html = '<img src="{flags>root}' + checked + '.png" alt="'+checked+'" title="'+checked+'"/>';
+                html += '<input type="hidden" name="{selector>id}_value" value="'+ checked + '"/>';
+
+                window.opener.submitI18n('<RENDER_VALUE what="selector>id"/>',html);
+                window.close();
+            }
+        </script>
+    </head>
+    <body>
+        <div class="get_selectorContainer">
+            <div class="selector_top">
+            </div>
+            <div class="selector_middle">
+                <div class="langSelector_title">
+                    <RENDER_IFSET what="params>checkboxTitle">
+                        <RENDER_VALUE what="i18n>titleCheckbox"/>
+                    </RENDER_IFSET>
+                    <RENDER_IFSET what="params>radioTitle">
+                    <RENDER_VALUE what="i18n>titleRadio"/>
+                    </RENDER_IFSET>
+                </div>
+                <div class="langSelector_contents">
+                    <table>
+                        <RENDER_FORM id="i18n_changer">
+                            <RENDER_LOOP what="langs">
+                                <tr>
+                                    <td class="tdInput">
+                                        <input type="{params>type}" name="{langs>inputName}" value="{langs>language}" state="{langs>state}"/>
+                                    </td>
+                                    <td class="tdImage">
+                                        <img src="{langs>flag}" alt="{lang>description}"/>
+                                    </td>
+                                    <td class="tdText">
+                                        <RENDER_VALUE what="langs>languageName"/>
+                                    </td>
+                                </tr>
+                            </RENDER_LOOP>
+                            <tr>
+                                <td colspan="3" class="selectLangSubmitContainer">
+                                    <input type="submit" value="ok"/>
+                                </td>
+                            </tr>
+                        </RENDER_FORM>
+                    </table>
+                </div>
+            </div>
+            <div class="selector_bottom">
+            </div>
+        </div>
+    </body>
+</html>

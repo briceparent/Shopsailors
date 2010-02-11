@@ -1,0 +1,215 @@
+
+body{
+	background-color: #cccccc;
+	color: #333333;
+	font-size: 12px;
+	font-family: arial;
+}
+.browser_container{
+	background:transparent url(/templates/global/admin/sh_browser/bcg_browser.png) no-repeat 0 0;
+	font-size: 12px;
+}
+#folders{
+	position: absolute;
+	overflow:auto;
+	width: 186px;
+	height: 340px;
+	top:60px;
+	left:10px;
+}
+#images_list{
+	position: absolute;
+	overflow:auto;
+	width: 510px;
+	height: 340px;
+	left:215px;
+	top:60px;
+}
+#folder{
+	position: absolute;
+	width: 510px;
+	height: 30px;
+	left:215px;
+	top:15px;
+	font-size: 18px;
+	font-weight:bold;
+}
+#folders img, #folder img{
+	margin-right:5px;
+}
+#menu{
+	position: absolute;
+	width: 510px;
+	height: 30px;
+	left:175px;
+	top:18px;
+	text-align:right;
+}
+#menu img{
+	margin-left:10px;
+}
+table{
+	width:100%;
+	border:0;
+	font-size:inherit;
+}
+.mini{
+	background-color:#BBB;
+	width: 40px;
+	height: 40px;
+}
+.desc{
+	background-color:#BBB;
+	width:420px;
+	vertical-align:middle;
+}
+.pointer{
+	cursor:pointer;
+}
+div.pointer:hover{
+	font-weight:bold;
+}
+ul{
+}
+#images
+	{
+	height:380px;
+    width: 500px;
+	overflow:auto;
+}
+
+
+.oneElement{
+  cursor:pointer;
+  height:85px;
+  width: 480px;
+}
+
+/*Image editor*/
+
+.editImage_container{
+	background:transparent url(/templates/global/admin/sh_browser/bg_edit_image.png) no-repeat 0 0;
+	font-size: 12px;
+	background-color: #cccccc;
+	color: #333333;
+}
+.editImage_square{
+	background:transparent url(/templates/global/admin/sh_browser/browser_square.png) no-repeat 0 0;
+	font-size: 12px;
+	background-color: #cccccc;
+	color: #333333;
+	margin-top: 0px;
+}
+.editImage_image{
+	width:375px;
+	height:375px;
+	text-align:center;
+	vertical-align: middle;
+}
+.editImage_actionsTop{
+	padding-left: 30px;
+	padding-top: 45px;
+	vertical-align: top;
+}
+
+.editImage_actionsMid{
+	padding-left: 30px;
+	padding-top: 45px;
+	vertical-align: middle;
+}
+
+.editImage_input input{
+	margin-right: 10px;
+	margin-top: 10px;
+}
+.actionsTitle{
+	font-size: 115%;
+	font-weight: bold;
+}
+.actionsOption{
+	color: #333333;
+	font-size: 105%;
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+.actionsOption ul{
+	padding-left: 20px;
+	margin-top: 0px;
+}
+
+.actionsOption li{
+	padding-top: 5px;
+}
+
+.actionsOption a{
+	color: #333333;
+	font-size: 105%;
+	font-weight: bold;
+}
+
+.actionsOption div{
+}
+#hImage{
+	width : 375px;
+}
+#vImage{
+	height : 375px;
+}
+.theImage{
+	border: 1px solid black;
+}
+
+/*Image editor: crop*/
+#mask{
+	position:  absolute;
+	border: solid 1px #000000;
+	background-color: rgba(150,150,256,0.3);
+	overflow:hidden;
+	cursor:move;
+}
+#mask div{
+	position:absolute;
+	background-color:rgba(150,150,150,0.4);
+	width:20px;
+	height:20px;
+}
+#mask div#tl{
+	border-right: solid 1px #666666;
+	border-bottom: solid 1px #666666;
+	top:0;
+	left:0;
+	cursor:nw-resize;
+}
+#mask div#tr{
+	border-left: solid 1px #666666;
+	border-bottom: solid 1px #666666;
+	top:0;
+	right:0;
+	cursor:ne-resize;
+}
+#mask div#bl{
+	border-right: solid 1px #666666;
+	border-top: solid 1px #666666;
+	bottom:0;
+	left:0;
+	cursor:sw-resize;
+}
+#mask div#br{
+	border-left: solid 1px #666666;
+	border-top: solid 1px #666666;
+	bottom:0;
+	right:0;
+	cursor:se-resize;
+}
+#editedImage{
+	border:1px solid black;
+}
+/*Edit Image: rotation*/
+.rotate img{
+	border: 1px solid #666666;
+	cursor: pointer;
+}
+.rotate div{
+	padding-top: 10px;
+}

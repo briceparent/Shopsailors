@@ -1,0 +1,54 @@
+
+/* Popup selection langues */
+
+body{
+        font-size: 12px;
+    }
+
+.get_selectorContainer{
+	width: 433px;
+}
+ .selector_top{
+	background: transparent url(/templates/global/admin/websailors_notification_top.png) no-repeat center top;
+	width: 433px;
+	height: 70px;
+ }
+ .selector_middle{
+	background: transparent url(/templates/global/admin/websailors_notification_middle.png) repeat-y center top;
+	width: 433px;
+    height: 250px;
+     overflow: auto;
+
+ }
+ .selector_bottom{
+	background: transparent url(/templates/global/admin/websailors_notification_bottom.png) no-repeat center top;
+	width: 433px;
+	height: 30px;
+ }
+ .langSelector_contents{
+     padding-left: 10px;
+     margin: inherit;
+     text-align: center;
+     overflow: auto;
+ }
+ .langSelector_title{
+     font-weight: bold;
+     color: #333333;
+     font-size: 120%;
+     text-align: center;
+ }
+ .langSelector_contents img{
+     width: 30px;
+ }
+ .langSelector_contents td{
+     text-align: left;
+ }
+ .tdInput{
+     width: 35px;
+ }
+ .tdImage{
+     width: 30px;
+ }
+ .selectLangSubmitContainer{
+     text-align: center;
+ }

@@ -1,0 +1,114 @@
+/* Shopsailors' CSS File */
+/* UTF-8 Check : à  ç  é  è  */
+
+/* Diaporama */
+ul.crossfade {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	position: relative;
+	width:100%;
+}
+ul.crossfade img{
+	width:100%;
+}
+ul.crossfade li{
+	position:absolute;
+    top:0;
+    left:0;
+}
+
+.diapo_background{
+    position:absolute;
+}
+.diapo_background img{
+    width:100%;
+    height:100%;
+}
+
+/* Diaporama */
+.diapo_75, .diapo_75 div, .diapo_75 img {
+	width:75px;
+    height:75px;
+}
+.diapo_100, .diapo_100 div, .diapo_100 img {
+	width:100px;
+    height:100px;
+}
+.diapo_150, .diapo_150 div, .diapo_150 img {
+	width:150px;
+    height:150px;
+}
+.diapo_200, .diapo_200 div, .diapo_200 img {
+	width:200px;
+    height:200px;
+}
+.diapo_300, .diapo_300 div, .diapo_300 img {
+	width:300px;
+    height:300px;
+}
+.diapo_400, .diapo_400 div, .diapo_400 img {
+	width:400px;
+    height:400px;
+}
+
+.diapo_500, .diapo_500 div, .diapo_500 img {
+	width:500px;
+    height:500px;
+}
+.diapo_500_550, .diapo_500_550 div, .diapo_500_550 img {
+	width:500px;
+    height:550px;
+}
+
+.diapo_controls{
+	padding-top: 2px;
+	margin-left: 10px;
+	position: relative;
+	width:100%;
+}
+.control {
+	position: absolute;
+	z-index: 100;
+	cursor: pointer;
+	font-size: 1.3em;
+	font-weight: bold;
+	color: #999;
+}
+.bg_diapo_control{
+	left: 0;
+	bottom: 0;
+}
+.bg_diapo_control img{
+	height: 24px;
+	width: 80px;
+}
+.control-previous {
+	left: 4px;
+	bottom: 4px;
+}
+.control-play{
+    left:30px;
+    bottom:4px;
+}
+.control-next {
+	left: 60px;
+	bottom: 4px;
+}
+.diapo_controls_top{
+	left: 10px;
+	top: 10px;
+}
+.control-previous img{
+	height: 15px;
+	width: 15px;
+}
+.control-play img{
+    height: 15px;
+	width: 20px;
+}
+.control-next img{
+	width: 15px;
+	height: 15px;
+}
+

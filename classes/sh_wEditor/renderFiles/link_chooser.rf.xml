@@ -1,0 +1,78 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+    <head>
+        <title>Websailors</title>
+        <base href="/"/>
+        <meta name="description" content="Websailors"/>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" media="screen" type="text/css" href="/templates/global/admin.css"></link>
+        <link rel="stylesheet" media="screen" type="text/css" href="/CSS/default/main.css"></link>
+        <RENDER_SCRIPT file="PROTOTYPE" direct="direct"/>
+        <script type="text/javascript">
+            function send(){
+                $$('input.page').each(function(s) {
+                    if(s.checked){
+                        chosenValue=s.value;
+                    }
+                });
+                if(chosenValue == "hardLink"){
+                    chosenValue = $('hardLink_value').value;
+                }
+                textValue = $('hardLink_value').innerHTML;
+                /*alert(chosenValue);*/
+                window.opener.tinymce_insertLink(chosenValue);
+                window.close ();
+            }
+        </script>
+        <style type="text/css">
+            table{
+                font-size:  inherit;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="width:100%;height:100%;overflow:auto;" class="bg_admin">
+           <RENDER_FORM action="javascript:send()" id="chooseLink" >
+                <div class="form_box_container">
+                    <div class="form_box_top">
+                        <h3 class="box_title">
+                            <RENDER_VALUE what="i18n>chooseLinkTitle"/>
+                        </h3>
+                    </div>
+                    <div class="form_box_middle">
+                        <div class="form_box_content">
+                            <div class="formContent">
+                                <RENDER_LOOP what="classes">
+                                    <div onclick="$('class_{classes>name}').toggle();" style="cursor:pointer;font-weight:bold;">
+                                        <RENDER_VALUE what="classes>description"/>
+                                    </div>
+                                    <div class="index_class" id="class_{classes>name}" style="display:none">
+                                        <RENDER_LOOP what="elements">
+                                            <div>
+                                                <input type="radio" class="page" name="page" state="{elements>state}" value="{elements>address}"/>
+                                                <RENDER_VALUE what="elements>value"/>
+                                            </div>
+                                            <RENDER_IFSET what="classes>unfolded">
+                                                <script type="text/javascript">
+                                                    $('class_<RENDER_VALUE what="classes>name"/>').toggle();
+                                                </script>
+                                            </RENDER_IFSET>
+                                        </RENDER_LOOP>
+                                    </div>
+                                </RENDER_LOOP>
+                                <div>
+                                <input name="page" type="radio" class="page" id="hardLink" value="hardLink"/>
+                                <span onclick="$('hardLink').checked=true;">
+                                    Lien: <input name="hardLink" id="hardLink_value" style="width:300px;"/>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form_box_bottom">
+                    </div>
+                <input type="submit" value="{i18n>validate}"/>
+                </div>
+            </RENDER_FORM>
+        </div>
+    </body>
+</html>

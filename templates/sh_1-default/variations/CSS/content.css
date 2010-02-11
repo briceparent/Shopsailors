@@ -1,0 +1,51 @@
+.mainTitle{ /* Grand titre des pages */
+    color: #800040;
+}
+
+.title{ /* Petit titre des pages */
+    color: #3f3f3c;
+}
+
+p{ /* Paragraphes */
+    color: #3f3f3c;
+}
+
+.red{ /* Elements affichés en couleur */
+    color: #800040;
+}
+
+.agendaElement{ /*Contour des elements de la liste dans l'agenda*/
+    border: 1px solid #800040;
+}
+
+div.brice_autocomplete {
+  background-color: white;
+  border: 1px solid #888;
+}
+
+div.brice_autocomplete ul li.selected {
+    background-color: #ffb;
+}
+
+.oneLeftModule_top{
+  background: transparent url(../images/box-top.png) 0 0 no-repeat;
+}
+.oneLeftModule_middle{
+  background: transparent url(../images/box-middle.png) 0 0 repeat-y;
+}
+.oneLeftModule_bottom{
+  background: transparent url(../images/box-bottom.png) 0 0 no-repeat;
+}
+
+.oneLeftModule_listElement, .oneLeftModule_listElement a{
+  margin-top:5px;
+  color: black;
+  text-decoration:none;
+}
+
+
+.floatingBox a{
+    color: black;
+}
+
+

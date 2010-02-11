@@ -1,0 +1,5 @@
+<RENDER_NOTIF id="" title="" type="" size="M">
+    <div class="bold">
+        <RENDER_VALUE what="i18n>mailSent"/>
+    </div>
+</RENDER_NOTIF>

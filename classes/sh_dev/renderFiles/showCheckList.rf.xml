@@ -1,0 +1,18 @@
+<div class="checkList">
+    <RENDER_DEBUGALL/>
+    <table>
+        <RENDER_LOOP what="general">
+            <tr>
+                <td>
+                    <RENDER_IFSET what="general>cb">
+                        <input type="checkbox"/>
+                    </RENDER_IFSET>
+                </td>
+                <td>
+                    <RENDER_VALUE what="general>name"/>
+                </td>
+            </tr>
+        </RENDER_LOOP>
+    </table>
+
+</div>

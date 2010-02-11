@@ -1,0 +1,13 @@
+<?php
+$message = array(
+	'fr_FR' => 'Ce dossier contient toutes les images concernant votre boutique.<br />
+	Celles-ci sont rangées dans des sous-dossiers.<br /><br />
+	Les sous-dossiers "products" et "categories" contiennent respectivement les images principales des produits et catégories.
+	Le fait d\'ajouter une image dans un de ces dossier les retaille automatiquement.<br />
+	Pour les images complémentaires, et en plus haute qualité, il suffit de les ajouter dans le dossier high_quality.',
+	'en_GB' => 'This folder contains all the images used in your e-shop.<br />
+	They are plced into sub folders.<br /><br />
+	The "products" and "categories" sub folders contain the main images. Adding images in that folders will automatically
+	resize them to fit the required dimensions.<br />
+	For the other images, like high quality ones, you just have to send them into the "high_quality" sub folder.',
+);

@@ -1,0 +1,23 @@
+<div>
+    <RENDER_NOTIF size="M" title="Newsletter enregistrée avec succès">
+        <div>
+            <RENDER_VALUE what="i18n>newsletter_saved_successfully"/>
+        </div>
+        <RENDER_IFSET what="newsletter>toBeSent">
+            Date d'envoi : <RENDER_VALUE what="newsletter>sendDate"/>
+        </RENDER_IFSET>
+        <RENDER_IFSET what="newsletter>noSendingDate">
+            L'envoi de cette newsletter n'étant pas encore planifié, vous pouvez
+            revenir l'éditer autant que vous le voulez.<br /><br />
+            Quand elle sera prête à être envoyée, il vous suffira alors de faire:
+            Newsletters -> Voir les newsletters... , de la choisir dans la liste
+            des newsletters non envoyées encliquant sur Modifier.<br />
+            Il ne vous restera alors qu'à choisir une date d'envoi, et à cocher
+            la case l'autorisant.
+        </RENDER_IFSET>
+        <RENDER_IFSET what="newsletter>alreadySent">
+            La newsletter ayant déjà été envoyée, ce n'est que son affichage sur
+            le site qui est modifié.
+        </RENDER_IFSET>
+    </RENDER_NOTIF>
+</div>

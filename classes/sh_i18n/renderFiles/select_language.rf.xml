@@ -1,0 +1,9 @@
+<div class="pictoFlagsContainer">
+    <RENDER_LOOP what="language">
+        <span>
+            <a href="{language>link}">
+                <img src="{language>image}" class="pictoFlags" alt="{language>desc}" title="{language>desc}"/>
+            </a>
+        </span>
+    </RENDER_LOOP>
+</div>

@@ -1,0 +1,14 @@
+<div>
+    <RENDER_FORM method="post" action="" id="addButton" enctype="multipart/form-data" >
+        <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+        Le zip contient au minimum un fichier nommé normal.png.<br />
+        Il peut contenir en plus :
+        <ul>
+            <li>Un fichier nommé first.png</li>
+            <li>Un fichier nommé last.png</li>
+            <li>Un fichier de paramètres nommé params.php</li>
+        </ul>
+        Zip :  <input type="file" id="button" name="button"/><br />
+        <input type="submit" value="Envoyer"/>
+    </RENDER_FORM>
+</div>

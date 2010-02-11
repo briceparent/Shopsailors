@@ -1,0 +1,85 @@
+<html xml:lang="fr">
+    <head>
+        <RENDER_VALUE what="head>content"/>
+    </head>
+    <RENDER_TAG type="body" what="body>data">
+        <div id="mainContainer">
+            <table cellspacing="0">
+                <tr>
+                    <td class="header_leftContent">
+                        <div class="pictoFlagsContainer">
+                            <RENDER_VALUE what="language>selector"/>
+                        </div>
+                        <RENDER_IFSET what="connect>link">
+                            <div id="connectionContainer">
+                                <a href="{connect>link}" class="grey_link_connect">
+                                    <RENDER_VALUE what="i18n>connectAccountClient"/>
+                                </a>
+                            </div>
+                        </RENDER_IFSET>
+                        <RENDER_IFSET what="disconnect>link">
+                            <div id="connectionContainer">
+                                <a href="{disconnect>link}" class="grey_link_connect">
+                                    <RENDER_VALUE what="i18n>disconnectAccountClient"/>
+                                </a>
+                            </div>
+                        </RENDER_IFSET>
+                        <h1 class="topTitle">
+                            <RENDER_VALUE what="body>headline"/><br />
+                        </h1>
+                        <div class="logo">
+                            <img src="/images/site/logo/rectangular.png" alt="logo" title=""/>
+                        </div>
+                        <div class="menu1">
+                            <RENDER_VALUE what="body>menu_1"/>
+                        </div>
+                    </td>
+                    <td class="header_rightContent">
+                        <div id="globalImage">
+                            <div class="bg_globalImage">
+                                <img src="{body>global_image}" class="{global_image>class}" alt="global_image" title="global_image"/>
+                            </div>
+                        </div>
+                        <div class="searcherContainer">
+                            <RENDER_VALUE what="body>searchEngine"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <RENDER_VALUE what="body>beginning"/>
+            <div class="content_middle">
+                <RENDER_IFSET what="body>title">
+                    <h1>
+                        <RENDER_VALUE what="body>title"/>
+                    </h1>
+                </RENDER_IFSET>
+                <RENDER_VALUE what="body>content"/>
+                <div class="clearBoth">&#160;</div>
+            </div>
+            <div class="menu2">
+                <RENDER_VALUE what="body>menu_1"/>
+            </div>
+        </div>
+        <div class="bottom_bar">
+            <div class="bottom_band">
+                <RENDER_IFSET what="connect>link">
+                    <div id="connectionContainer_bottom">
+                        <a href="{connect>link}" class="grey_link_connect">
+                            <RENDER_VALUE what="i18n>connectAccountClient"/>
+                        </a>
+                    </div>
+                </RENDER_IFSET>
+                <RENDER_IFSET what="disconnect>link">
+                    <div id="connectionContainer_bottom">
+                        <a href="{disconnect>link}" class="grey_link_connect">
+                            <RENDER_VALUE what="i18n>disconnectAccountClient"/>
+                        </a>
+                    </div>
+                </RENDER_IFSET>
+                <div id="copyrights">
+                    <RENDER_VALUE what="body>copyrights"/>
+                </div>
+            </div>
+        </div>
+    </RENDER_TAG>
+</html>

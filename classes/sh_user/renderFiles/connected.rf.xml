@@ -1,0 +1,60 @@
+<div>
+    <div class="bg_identification_top">
+    </div>
+    <div class="bg_identification_middle">
+        <div id="connection_succefull">
+            <RENDER_VALUE what="i18n>hello"/>&#160;
+            <RENDER_VALUE what="user>lastname"/>&#160;
+            <RENDER_VALUE what="user>name"/>
+            <br />
+            <RENDER_IFSET what="connected>asUser">
+                <RENDER_VALUE what="i18n>connected"/>
+            </RENDER_IFSET>
+            <RENDER_IFSET what="connected>asAdmin">
+                <RENDER_VALUE what="i18n>connectedAsAdmin"/>
+            </RENDER_IFSET>
+            <RENDER_IFSET what="connected>asMaster">
+                <RENDER_VALUE what="i18n>connectedAsMaster"/>
+            </RENDER_IFSET>
+            <RENDER_IFSET what="user>hasBeenConnected">
+                <div class="connection_infos">
+                    <RENDER_VALUE what="i18n>lastConnexion"/><br />
+                    <RENDER_VALUE what="i18n>lastConnexionDate"/>
+                    <RENDER_VALUE what="lastConnection>date"/>&#160;
+                    <RENDER_VALUE what="i18n>lastConnexionTime"/>
+                    <RENDER_VALUE what="lastConnection>time"/><br />
+                    <RENDER_VALUE what="i18n>lastConnexionSite"/>
+                    <RENDER_VALUE what="lastConnection>site"/>
+                </div>
+            </RENDER_IFSET>
+        </div>
+    </div>
+    <div class="bg_identification_bottom">
+    </div>
+    <RENDER_IFSET what="show>failures">
+        <div class="marginTop_10px">
+            <RENDER_NOTIF size="M" title="{i18n>failuresTitle}" type="alert">
+                <div class="failuresAttempts">
+                    <RENDER_VALUE what="i18n>failuresAttempts"/>
+                    <RENDER_VALUE what="count>failures"/>
+                </div>
+                <table class="connection_failure" cellspacing="0" cellpadding="4">
+                    <tr>
+                        <th class="alert-left alert-top alert-bottom"><RENDER_VALUE what="i18n>failuresDate"/></th>
+                        <th class="alert-left alert-top alert-bottom"><RENDER_VALUE what="i18n>failuresTime"/></th>
+                        <th class="alert-left alert-top alert-bottom"><RENDER_VALUE what="i18n>failuresSite"/></th>
+                        <th class="alert-left alert-top alert-right alert-bottom"><RENDER_VALUE what="i18n>failuresIp"/></th>
+                    </tr>
+                    <RENDER_LOOP what="failures">
+                        <tr>
+                            <td class="alert-left alert-bottom"><RENDER_VALUE what="failures>date"/></td>
+                            <td class="alert-left alert-bottom"><RENDER_VALUE what="failures>time"/></td>
+                            <td class="alert-left alert-bottom"><RENDER_VALUE what="failures>site"/></td>
+                            <td class="alert-left alert-bottom alert-right"><RENDER_VALUE what="failures>ip"/></td>
+                        </tr>
+                    </RENDER_LOOP>
+                </table>
+            </RENDER_NOTIF>
+        </div>
+    </RENDER_IFSET>
+</div>

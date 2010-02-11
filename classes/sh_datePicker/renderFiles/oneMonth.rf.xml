@@ -1,0 +1,25 @@
+<div class="oneDatePicker_month">
+    <table cellspacing="0">
+        <tr class="oneDatePicker_days">
+            <td><RENDER_VALUE what="i18n>day_1"/></td>
+            <td><RENDER_VALUE what="i18n>day_2"/></td>
+            <td><RENDER_VALUE what="i18n>day_3"/></td>
+            <td><RENDER_VALUE what="i18n>day_4"/></td>
+            <td><RENDER_VALUE what="i18n>day_5"/></td>
+            <td><RENDER_VALUE what="i18n>day_6"/></td>
+            <td><RENDER_VALUE what="i18n>day_7"/></td>
+        </tr>
+        <RENDER_TABLE what="dates" cols="7" opened="opened">
+            <RENDER_IFSET what="dates>selectable">
+                <div class="oneDatePicker_select {dates>class}" onclick="dp_select('{dp>picker}','{dates>complete}','{dates>year}','{dates>month}','{dates>day}')">
+                    <RENDER_VALUE what="dates>day_short"/>
+                </div>
+            </RENDER_IFSET>
+            <RENDER_IFNOTSET what="dates>selectable">
+                <div class="oneDatePicker_noSelect {dates>class}">
+                    <RENDER_VALUE what="dates>day_short"/>
+                </div>
+            </RENDER_IFNOTSET>
+        </RENDER_TABLE>
+    </table>
+</div>

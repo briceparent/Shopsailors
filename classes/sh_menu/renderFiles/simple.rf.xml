@@ -1,0 +1,77 @@
+<div id="form_box_container">
+    <RENDER_FORM id="menuEditor" >
+        <div id="container">
+            <div class="form_box_container">
+                <div class="form_box_top">
+                    <h3 class="box_title">
+                        <RENDER_VALUE what="i18n>actionOnMenu"/>
+                        <RENDER_HELP what="{i18n>menuExplanation}"/>
+                    </h3>
+                </div>
+                <div class="form_box_middle">
+                    <div class="formContent">
+                        <div class="editMenu_activate">
+                            <RENDER_CHECKBOX text="{i18n>menuState}" name="menuState" state="{menu>state}"/>
+                        </div>
+                        <input type="hidden" name="menuId" id="menuId" value="{menu>id}"/>
+                        <RENDER_VALUE what="i18n>chooseFont"/>
+                        <RENDER_FONTSELECTOR id="font" name="font" csv="{fonts>allowed}" value="{font>actual}"/>
+                    </div>
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>textHeight"/><br />
+                        <select name="textHeight" id="textHeight">
+                            <RENDER_LOOP what="textHeights">
+                                <option state="{textHeights>state}">
+                                    <RENDER_VALUE what="textHeights>height"/>
+                                </option>
+                            </RENDER_LOOP>
+                        </select>
+                        <input type="button" value="{i18n>textHeight_preview}" onClick="createTextPreview();"/>
+                        <div id="textPreview_div" style="display:none;">
+                            <img src="" id="textPreview" style="border:1px solid grey;"/>
+                        </div>
+                    </div>
+                    <div class="formContent">
+                        <div style="text-align: center;">
+                            <input type="button" onclick="menus_addEntry();" value="{i18n>add_entry}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form_box_bottom">
+                </div>
+            </div>
+            <div id="editMenu_waiting" style="display:none;">
+                <img src="/images/shared/icons/bank1/sh_loading_small.gif" style="vertical-align:middle;"/>
+                <RENDER_VALUE what="i18n>waiting"/>
+            </div>
+            <div id="menu_imagesUpdater"></div>
+                <RENDER_LOOP what="sections">
+                    <div id="category_{sections>category}" class="section">
+                        <div class="removeSection" onclick="removeSection('category_{sections>category}')">
+                            <img src="/images/shared/icons/cancel.png" alt="{i18n>deleteMenu}"/>
+                        </div>
+                        <div id="params_{sections>category}" class="params">
+                            <div class="editMenu_buttonTitle">
+                                <RENDER_VALUE what="i18n>menuName"/>
+                            </div>
+                            <RENDER_I18NINPUT class="sh_menu" i18n="{sections>title}" name="categories[{sections>category}][name]"/>
+                            <div class="editMenu_linkContainer">
+                                <span class="editMenu_linkTitle">
+                                <RENDER_VALUE what="i18n>menuLink"/>
+                                </span>
+                                <span id="visibleLink_{sections>category}">
+                                    <RENDER_VALUE what="sections>link"/>
+                                </span>&#160;&#160;
+                                <a href="JAVASCRIPT:inPlaceChangeLink('{sections>category}','{sections>link}')" class="grey_link_line">
+                                    <RENDER_VALUE what="i18n>modifyLink"/>
+                                </a>
+                            </div>
+                            <input type="hidden" name="categories[{sections>category}][link]" id="link_{sections>category}" value="{sections>link}"/>
+                        </div>
+                    </div>
+                </RENDER_LOOP>
+            <div id="menu_imagesUpdater2"></div>
+            <input type="button" onclick="menus_submit();" value="{i18n>save}"/>
+        </div>
+    </RENDER_FORM>
+</div>

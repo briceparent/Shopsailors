@@ -1,0 +1,12 @@
+<div>
+    <form id="projectChooser">
+        Vous pouvez choisir l'un des projets suivants :
+        <ul>
+        <RENDER_LOOP what="projects">
+            <li>
+                <a href="{links>toHere}?project={projects>id}"><RENDER_VALUE what="projects>name"/></a>
+            </li>
+        </RENDER_LOOP>
+        </ul>
+    </form>
+</div>

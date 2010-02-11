@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <link rel="stylesheet" media="screen" type="text/css" href="/sh_browser/singles/browser.css" />
+        <link rel="stylesheet" media="screen" type="text/css" href="/templates/global/global.css" />
+        <RENDER_SCRIPT file="PROTOTYPE" direct="direct"/>
+        <RENDER_SCRIPT file="SCRIPTACULOUSONLY" direct="direct"/>
+        <script type="text/javascript" src="/sh_browser/singles/croper.js"/>
+    </head>
+    <body class="editImage_container">
+        <script type="text/javascript" src="/sh_helpToolTips/singles/wz_tooltip/wz_tooltip.js"/>
+        <script type="text/javascript" src="/sh_helpToolTips/singles/wz_tooltip/tip_balloon.js"/>
+        <table>
+            <tr>
+                <td class="editImage_image">
+                    <img src="{img>src}" id='editedImage' alt="The image" onload="crop_prepareDrawing(this);"/>
+                </td>
+                <td class="editImage_actionsTop">
+                    <div class="actionsTitle">
+                        <RENDER_VALUE what="i18n>edtiImage_cropTitle"/>
+                    </div>
+                    <div class="actionsOption">
+                        <RENDER_IFSET what="dimensions>forced">
+                            <RENDER_VALUE what="i18n>crop_dimensionsForced"/>&#160;
+                            <RENDER_VALUE what="dimensions>forcedX"/>&#160;x&#160;<RENDER_VALUE what="dimensions>forcedY"/>&#160;
+                            <RENDER_VALUE what="i18n>crop_pixels"/>
+                            <RENDER_HELP what="{i18n>forced_dimensions_explanation}"/>
+                        </RENDER_IFSET>
+                        <RENDER_IFSET what="dimensions>max">
+                            <RENDER_VALUE what="i18n>crop_dimensionsMax"/>&#160;
+                            <RENDER_VALUE what="dimensions>forcedX"/>&#160;x&#160;<RENDER_VALUE what="dimensions>forcedY"/>&#160;
+                            <RENDER_VALUE what="i18n>crop_dimensionsMax2"/><br />
+                        </RENDER_IFSET>
+                        <div id="shownDatas" style="display:none;">
+                            <RENDER_VALUE what="i18n>crop_dimensions"/>&#160;
+                            <span id="textWidth"></span>&#160;x&#160;
+                            <span id="textHeight"></span>
+                            <RENDER_VALUE what="i18n>crop_pixels2"/>&#160;
+                            <RENDER_VALUE what="i18n>pixels2"/>
+                        </div>
+                        <div class="editImage_input">
+                            <form action="">
+                                <input name="crop" value="crop" type="hidden"/>
+                                <input name="startX" id="startX" type="hidden"/>
+                                <input name="stopX" id="stopX" type="hidden"/>
+                                <input name="startY" id="startY" type="hidden"/>
+                                <input name="stopY" id="stopY" type="hidden"/>
+                                <input type="submit" name="crop" value="{i18n>crop_validate}"/>
+                                <input type="submit" name="cancel" value="{i18n>cancel}"/>
+                            </form>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div id='mask'>
+            <div id="tl"></div>
+            <div id="tr"></div>
+            <div id="bl"></div>
+            <div id="br"></div>
+        </div>
+    </body>
+</html>

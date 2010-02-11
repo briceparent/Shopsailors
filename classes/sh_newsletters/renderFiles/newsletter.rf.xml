@@ -1,0 +1,8 @@
+<div>
+    <div class="content">
+        <RENDER_VALUE what="newsletter>content"/>
+    </div>
+    <div class="nl_backToList">
+        <a href="{link>news_backToList}" title="{i18n>news_backToList}"><RENDER_VALUE what="i18n>news_backToList"/></a>
+    </div>
+</div>

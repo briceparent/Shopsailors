@@ -1,0 +1,45 @@
+<html xml:lang="fr">
+    <head>
+        <RENDER_VALUE what="head>content"/>
+    </head>
+    <RENDER_TAG type="body" what="body>data">
+        <RENDER_VALUE what="body>beginning"/>
+        <div class="background">
+            <div class="bg_top">
+            <RENDER_VALUE what="language>selector"/>
+            <RENDER_IFSET what="connect>link">
+                <div id="connectionContainer">
+                    <a href="{connect>link}" class=""><RENDER_VALUE what="i18n>connectAccountClient"/></a>
+                </div>
+            </RENDER_IFSET>
+            <RENDER_IFSET what="disconnect>link">
+                <div id="connectionContainer">
+                    <a href="{disconnect>link}" class=""><RENDER_VALUE what="i18n>disconnectAccountClient"/></a>
+                </div>
+            </RENDER_IFSET>
+                <div id="logo2">
+                    <h1 class="topTitle">
+                        <RENDER_VALUE what="body>headline"/>
+                    </h1>
+                    <RENDER_VALUE what="body>menu_1"/>
+                    <RENDER_VALUE what="body>searchEngine"/>
+                </div>
+                <div>
+                    <div id="content_middle">
+                        <RENDER_IFSET what="body>title">
+                            <h1><RENDER_VALUE what="body>title"/></h1>
+                        </RENDER_IFSET>
+                    <RENDER_VALUE what="body>content"/>
+                    </div>
+                </div>
+                <RENDER_VALUE what="body>otherContents"/>
+                <div style="clear: both;" >&#160;</div>
+            </div>
+        </div>
+        <div class="bg_bottom">
+        </div>
+        <div id="copyrights">
+            <RENDER_VALUE what="body>copyrights"/>
+        </div>
+     </RENDER_TAG>
+</html>

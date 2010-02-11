@@ -1,0 +1,26 @@
+<div class="showList_content">
+    <RENDER_LOOP what="contents">
+        <table class="articleResult_contents" cellspacing="0">
+            <tr>
+                <RENDER_IFSET what="contents>image">
+                    <td class="searcher_oneArticle_image">
+                        <a href="{contents>link}">
+                            <img src="{contents>image}" alt="article_preview" title="{contents>title}"/>
+                        </a>
+                    </td>
+                </RENDER_IFSET>
+                <td class="searcher_oneArticle_descContainer">
+                    <div class="articleResult_title">
+                        <a href="{contents>link}">
+                            <RENDER_VALUE what="contents>title"/>
+                        </a>
+                    </div>
+                    <div class="searcher_oneArticle_summary">
+                        <RENDER_VALUE what="contents>summary"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </RENDER_LOOP>
+    <div class="clearBoth">&#160;</div>
+</div>

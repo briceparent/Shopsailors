@@ -1,0 +1,159 @@
+/**             SHOP               */
+.shop_articles_table{
+    width:670px;
+    font-size:100%;
+    border-collapse:collapse;
+}
+.shop_articles_one{
+    border:1px solid black;
+    height:60px;
+}
+.shop_articles_one_image{
+    margin:0 5px 0 0;
+}
+.shop_articles_one_text{
+    vertical-align:top;
+}
+.shop_articles_one_image img{
+    height:60px;
+}
+.shop_articles_table>tr>td{
+    border-top:1px solid black;
+    border-bottom:1px solid black;
+    vertical-align:top;
+}
+.shop_articles_one_description{
+  font-size:85%;
+}
+.shop_articles_one_price{
+  width:75px;
+  text-align:center;
+}
+.shop_articles_one_cart{
+  width: 25px;
+  line-height: 30px;
+}
+.shop_prices{
+  line-height: 30px;
+}
+.shop_votes{
+  margin-top:5px;
+  font-size:80%;
+}
+.shop_articles_one_cart{
+  width: 30px;
+}
+.shop_prices{
+  font-weight:bold;
+  width:100px;
+}
+.shop_feftBorder{
+  border-left:1px solid black;
+}
+.shop_rightBorder{
+  border-right:1px solid black;
+}
+.shop_articles_noBorders{
+  border:0;
+}
+.oneBook_marks{
+    height:auto;
+    height:100px;
+    border-left:1px solid black;
+    text-align:center;
+    padding-left:5px;
+    margin-right:5px;
+}
+.oneBook_note{
+    font-size:80%;
+}
+.oneBook_vote{
+    font-size:80%;
+}
+.oneBook_nbVotes{
+    font-size:60%;
+}
+.oneBook_title{
+  font-weight:bold;
+  font-size:110%;
+}
+.oneBook_author{
+}
+
+
+.book{
+    width:auto;
+    margin:5px;
+}
+.book_image{
+    float:left;
+    margin:0 5px 0 0;
+    height:98px;
+}
+.book_flag, .oneBook_flag{
+}
+.book_marks{
+    float:right;
+    height:auto;
+    height:100px;
+    border-left:1px solid black;
+    text-align:center;
+    padding-left:5px;
+    margin-right:5px;
+}
+.book_note, .book_vote, .book_myVote{
+    font-size:80%;
+}
+
+.book_nbVotes{
+    font-size:60%;
+}
+
+.book_title{
+  font-weight:bold;
+  font-size:120%;
+}
+.book_author{
+  font-weight:bold;
+  font-size:120%;
+}
+.book_publisherName, .book_publishedDate{
+  font-size:50%;
+}
+.book_publicVote{
+  height:10px;
+}
+
+.oneStar{
+  width:14px;
+}
+
+.center{
+    text-align:center;
+}
+
+.floatingBox a{
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+
+.floating400{
+    float:left;
+    width:400px;
+    margin: 5px 10px 5px 10px;
+}
+
+.floating400 div{
+    width:auto;
+}
+
+.floatingBox{
+    float:left;
+    width:48%;
+    margin:10px 1% 10px 1%;
+}
+
+.floatingBox div{
+    width:auto;
+}

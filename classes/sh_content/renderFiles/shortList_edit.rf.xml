@@ -1,0 +1,150 @@
+<div>
+    <div class="form_box_container">
+        <div class="form_box_top">
+            <h3 class="box_title">
+                <RENDER_VALUE what="i18n>contentlisteditor_listsTitle"/>
+            </h3>
+        </div>
+        <div class="form_box_middle">
+            <div class="form_box_content">
+                <div class="formContent">
+                    <RENDER_LOOP what="lists">
+                        <div class="falseLink shortList_listName" onclick="verifyChanges('{lists>link}');">
+                            <RENDER_VALUE what="lists>name"/>
+                        </div>
+                    </RENDER_LOOP>
+                </div>
+            </div>
+        </div>
+        <div class="form_box_bottom">
+        </div>
+    </div>
+    <RENDER_FORM id="contentListEditor">
+        <div class="form_box_container">
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_IFSET what="list>isNew">
+                        <RENDER_VALUE what="list>title"/>
+                    </RENDER_IFSET>
+                    <RENDER_IFNOTSET what="list>isNew">
+                        <RENDER_VALUE what="i18n>contentListEditor_titleBefore"/>
+                        <RENDER_VALUE what="list>title"/>
+                        <RENDER_VALUE what="i18n>contentListEditor_titleAfter"/>
+                    </RENDER_IFNOTSET>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="form_box_content">
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>listName"/>
+                        <div class="inputForm">
+                            <RENDER_I18NINPUT class="sh_content" i18n="{list>name}" name="name"/>
+                        </div>
+                        <div class="formContent">
+                            <RENDER_VALUE what="i18n>listIntro"/><RENDER_HELP what="{i18n>listIntro_explanation}"/><br />
+                            <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_content" i18n="{list>summary}" name="summary"/><br />
+                        </div>
+                        <div class="formContent">
+                            <input type="hidden" id="order" name="order"/>
+                            <RENDER_VALUE what="i18n>contentImage"/>
+                            <RENDER_HELP what="{i18n>contentImage_explanation}"/><br />
+                            <RENDER_IMAGESELECTOR name="image" value="{content>image}" folder="small" style="width:100px;height:100px;"/>
+                        </div>
+                        <div id="shortList_active">
+                            <RENDER_VALUE what="i18n>contentlisteditor_list"/>
+                            <ul id="shortList_activeElements">
+                                <RENDER_LOOP what="activeContents">
+                                    <li id="li_shortList_{activeContents>id}" class="shortList_element pointer">
+                                        <RENDER_VALUE what="activeContents>id"/> - <RENDER_VALUE what="activeContents>title"/>
+                                        <span onclick="removeFromList('li_shortList_{activeContents>id}');">
+                                            <img src="/images/shared/icons/bank1/picto_delete.png"/>
+                                        </span>
+                                    </li>
+                                </RENDER_LOOP>
+                            </ul>
+                        </div>
+                        <script type="text/javascript">
+                            var alreadyListed = new Array();
+                            <RENDER_LOOP what="activeContents">
+                            alreadyListed["li_shortList_<RENDER_VALUE what="activeContents>id"/>"] = true;
+                            </RENDER_LOOP>
+                            function verifyChanges(page){
+                                if(!modified || confirm("<RENDER_VALUE what="i18n>contentlisteditor_confirm"/>")){
+                                    document.location = page;
+                                }
+                            }
+                            function buildSortable(){
+                                Sortable.create("shortList_activeElements",{
+                                    onUpdate: function() {
+                                        modified = true;
+                                        $('order').value = Sortable.sequence('shortList_activeElements').join('-');
+                                    }
+                                });
+                                $('order').value = Sortable.sequence('shortList_activeElements').join('-');
+                            }
+                            function addToList(element){
+                                newName = 'li_' + element.id;
+                                if(alreadyListed[newName] == true){
+                                    alert('L\'element est déjà dans la liste...');
+                                }else{
+                                    modified = true;
+                                    alreadyListed[newName] = true;
+                                    new Effect.Highlight($('shortList_active'),{startcolor:'#99FF99',endcolor:'<RENDER_VALUE what="style>bgColor"/>'});
+                                    removeLink = ' <span onclick="removeFromList(\'' + newName + '\');"><img src="/images/shared/icons/bank1/picto_delete.png"/></span>';
+                                    $('shortList_activeElements').innerHTML += '<li id="' + newName + '" class="shortList_element pointer">' + element.innerHTML + removeLink + '</li>';
+                                    buildSortable();
+                                }
+                            }
+                            function removeFromList(element){
+                                modified = true;
+                                new Effect.Highlight($('shortList_active'),{startcolor:'#FF9999',endcolor:'<RENDER_VALUE what="style>bgColor"/>'});
+                                alreadyListed[element] = false;
+                                $(element).remove();
+                                buildSortable();
+                            }
+                            var modified = false;
+                            buildSortable();
+                        </script>
+                        <RENDER_LOOP what="contents">
+                            <div class="shortList_element pointer" onclick="addToList($('shortList_{contents>id}'));">
+                                <span id="shortList_{contents>id}">
+                                    <RENDER_VALUE what="contents>id"/> - <RENDER_VALUE what="contents>title"/>
+                                </span>
+                            </div>
+                        </RENDER_LOOP>
+                    </div>
+                    </div>
+                </div>
+            <div class="form_box_bottom">
+            </div>
+            <div class="formSubmitContainer">
+                <input type="submit" value="{i18n>save}"/>
+            </div>
+        </div>
+    </RENDER_FORM>
+    <br />
+    <RENDER_FORM id="delete_shortList">
+        <div class="form_box_container">
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>contentlisteditor_deleteTitle"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="form_box_content">
+                    <div class="formContent">
+                        <div style="text-align:center">
+                            <img src="/images/shared/icons/bank1/picto_caution.png"/>
+                        </div>
+                        <RENDER_VALUE what="i18n>contentlisteditor_deleteContent"/><br /><br />
+                        <div class="noBorder" style="text-align:center; border: none;">
+                            <input type="image" class=""  src="images/shared/icons/bank1/picto_delete.png" name="delete_list" alt="{i18n>action_delete}" title="{i18n>action_delete}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+        </div>
+    </RENDER_FORM>
+</div>

@@ -1,0 +1,3 @@
+<?php
+$categories = array (
+);

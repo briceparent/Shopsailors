@@ -1,0 +1,30 @@
+<div id="admin_box">
+    <div id="admin_panelTop" class="admin_title" onmouseup="adminBoxShowHide()">
+        <div class="adminPanel_titleText">
+            <RENDER_VALUE what="i18n>adminPanel_title"/>
+        </div>
+    </div>
+    <div id="admin_box_hideable" onload='Effect.hide(this);' style="display:none">
+        <RENDER_LOOP what="sections">
+            <div class="admin_title_{sections>number}">
+                <div class="admin_small_vspace"></div>
+                <div class="admin_titles">
+                    <RENDER_VALUE what="sections>name"/>
+                </div>
+            </div>
+            <div class="admin_content_{sections>number}">
+                <div class="admin_contents">
+                    <RENDER_LOOP what="elements">
+                        <div class="marginTop_5px"><RENDER_VALUE what="elements>element"/></div>
+                    </RENDER_LOOP>
+                </div>
+            </div>
+        </RENDER_LOOP>
+        <div id="adminPanel_bottom" class="admin_close adminPanel_closeText">
+            <a href="{admin>closeHref}">
+                <RENDER_VALUE what="i18n>adminPanel_close"/>
+            </a>
+        </div>
+    </div>
+    <div id="debug"></div>
+</div>

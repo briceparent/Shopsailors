@@ -1,0 +1,72 @@
+<div class="shop_tableCartContainer">
+    <div id="bg_cart_top">
+    </div>
+    <div id="bg_cart_middle">
+        <div class="shop_tableCart">
+            <table cellspacing="0" class="{productsTable>class}">
+                <tr>
+                    <th class="shop_headerText shop_border-bottom shop_border-left shop_border-top">
+                        <RENDER_VALUE what="i18n>cart_name"/>
+                    </th>
+                    <th class="shop_headerText shop_border-bottom shop_border-left shop_border-top">
+                        <RENDER_VALUE what="i18n>cart_reference"/>
+                    </th>
+                    <th class="shop_headerText shop_border-bottom shop_border-left shop_border-top">
+                        <RENDER_VALUE what="i18n>cart_quantity"/>
+                    </th>
+                    <th class="shop_headerText shop_border-bottom shop_border-left shop_border-top">
+                        <RENDER_VALUE what="i18n>cart_price"/>
+                    </th>
+                    <th class="shop_headerText shop_border-bottom shop_border-left shop_border-top shop_border-right">
+                        <RENDER_VALUE what="i18n>cart_productTotalPrice"/>
+                    </th>
+                </tr>
+                <RENDER_LOOP what="contents">
+                    <tr>
+                        <td class="shop_border-left shop_border-bottom">
+                            <RENDER_VALUE what="contents>name"/>
+                        </td>
+                        <td class="shop_border-left shop_border-bottom">
+                            <RENDER_VALUE what="contents>reference"/>
+                        </td>
+                        <td class="shop_border-left shop_border-bottom">
+                            <RENDER_VALUE what="contents>quantity"/>
+                        </td>
+                        <td class="shop_border-left shop_border-bottom">
+                            <span class="nobr">
+                                <RENDER_VALUE what="contents>price"/>
+                            </span>
+                        </td>
+                        <td class="shop_border-left shop_border-bottom shop_border-right">
+                            <span class="nobr">
+                                <RENDER_VALUE what="contents>totalPrice"/>
+                            </span>
+                        </td>
+                    </tr>
+                </RENDER_LOOP>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="2" class="shop_total_textClass shop_border-left shop_border-bottom shop_border-right ">
+                        <span class="nobr"><RENDER_VALUE what="i18n>totalht"/><RENDER_VALUE what="total>ht"/><RENDER_VALUE what="constants>currency"/></span><br/>
+                        <span class="nobr"><RENDER_VALUE what="i18n>totalttc"/><RENDER_VALUE what="total>ttc"/><RENDER_VALUE what="constants>currency"/></span>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+            <div class="shop_totalCartContainer">
+                <div class="shop_totalCart">
+                    <RENDER_FORM id="command_confirm">
+                        <div class="cart_goToCommand">
+                            <input type="image"  src="images/shared/icons/bank1/picto_command.png" name="submit_command" alt="{i18n>submit_command}" title="{i18n>submit_command}"/><br />
+                            <RENDER_VALUE what="i18n>command_confirm"/>
+                        </div>
+                    </RENDER_FORM>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="bg_cart_bottom">
+    </div>
+</div>

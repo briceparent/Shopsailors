@@ -1,0 +1,8 @@
+<div class="form_box_container edit_legacyContainer">
+    <RENDER_FORM id="legacy_edit">
+        <RENDER_VALUE what="i18n>description"/>
+        <RENDER_HELP what="{i18n>help}"/>
+        <RENDER_WEDITOR content="{legacy>content}" name="legacy" class="content_editor"/>
+        <input type="submit" value="{i18n>save}"/>
+    </RENDER_FORM>
+</div>

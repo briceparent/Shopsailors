@@ -1,0 +1,25 @@
+<div class="searcher_categoryResults">
+    <RENDER_LOOP what="category_elements">
+        <table class="catResult_container" cellspacing="0">
+            <tr>
+                <td class="catResult_image">
+                    <a href="{category_elements>link}">
+                        <img src="{category_elements>image}" alt="navigator_preview"/>
+                    </a>
+                </td>
+                <td class="catResult_name">
+                    <a href="{category_elements>link}">
+                        <RENDER_VALUE what="category_elements>name"/>
+                    </a>
+                    <span class="catResult_reference">
+                        <a href="{category_elements>link}">
+                            <RENDER_VALUE what="category_elements>reference"/>
+                        </a>
+                    </span><br />
+                    <RENDER_VALUE what="category_elements>shortDescription"/>
+                </td>
+            </tr>
+        </table>
+    </RENDER_LOOP>
+    <div class="clearBoth">&#160;</div>
+</div>

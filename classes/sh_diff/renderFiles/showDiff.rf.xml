@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8"></meta>
+        <title>Différences entre 2 révisions d'un même fichier</title>
+        <base href="http://dev.websailors.fr/"/>
+        <style type="text/css">
+            table.showDiff td{
+            border-right:1px solid black;
+            border-top:1px solid black;
+            padding:1px;
+            }
+            table.showDiff td.bottom{
+            border-bottom:1px solid black;
+            }
+            table.showDiff td.notop{
+            border-top:none;
+            }
+            table.showDiff td.left{
+            border-left:1px solid black;
+            }
+            table.showDiff td.noright{
+            border-right:none;
+            }
+            table.showDiff td.center{
+            text-align:center;
+            }
+            .lineNumbers{
+            width:50px;
+            background-color:rgba(0,128,128,0.5);
+            }
+            .lineContent{
+            width:750px;
+            }
+            .del{
+            background-color:rgba(128,0,0,0.5);
+            }
+            .ins{
+            background-color:rgba(0,128,0,0.5);
+            }
+        </style>
+    </head>
+    <body>
+        <h1><RENDER_VALUE what="titles>h1"/></h1>
+        <h3><RENDER_VALUE what="titles>h3"/></h3>
+        <table class="showDiff" cellspacing="0">
+            <tr>
+                <td class="top left lineNumbers">
+                    Old
+                </td>
+                <td class="top lineNumbers">
+                    New
+                </td>
+                <td class="top lineContent">
+                    &#160;
+                </td>
+            </tr>
+            <RENDER_LOOP what="lines">
+                <tr>
+                    <td class="{lines>class} left top center lineNumbers">
+                        <RENDER_IFNOTSET what="lines>old">
+                            &#160;
+                        </RENDER_IFNOTSET>
+                        <RENDER_IFSET what="lines>old">
+                            <RENDER_VALUE what="lines>old"/>
+                        </RENDER_IFSET>
+                    </td>
+                    <td class="{lines>class} top center lineNumbers">
+                        <RENDER_IFNOTSET what="lines>new">
+                            &#160;
+                        </RENDER_IFNOTSET>
+                        <RENDER_IFSET what="lines>new">
+                            <RENDER_VALUE what="lines>new"/>
+                        </RENDER_IFSET>
+                    </td>
+                    <td class="{lines>class} notop lineContent">
+                        <RENDER_IFNOTSET what="lines>content">
+                            &#160;
+                        </RENDER_IFNOTSET>
+                        <RENDER_IFSET what="lines>content">
+                            <RENDER_VALUE what="lines>content"/>
+                        </RENDER_IFSET>
+                    </td>
+                </tr>
+            </RENDER_LOOP>
+            <tr>
+                <td class="top noright" colspan="3">&#160;</td>
+            </tr>
+        </table>
+    </body>
+</html>

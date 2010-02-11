@@ -1,0 +1,27 @@
+<div id="form_box_container">
+    <RENDER_FORM id="delete_newslettersList">
+        <div class="form_box_container">
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>removeList_title"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="form_box_content">
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>removingTheList"/>
+                        <div style="font-weight:bold;margin-bottom:12px;">
+                            <RENDER_VALUE what="list>name"/>
+                        </div>
+                        <RENDER_VALUE what="i18n>removingTheMails"/>
+                    </div>
+                    <div class="formContent">
+                        <input type="submit" value="{i18n>confirmDeletion}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+        </div>
+    </RENDER_FORM>
+</div>

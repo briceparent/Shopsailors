@@ -1,0 +1,4 @@
+<div>
+    The project "<RENDER_VALUE what="project>name"/>"
+    (<RENDER_VALUE what="project>id"/>) has been initialized successfully!
+</div>

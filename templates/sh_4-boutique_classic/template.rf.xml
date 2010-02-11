@@ -1,0 +1,38 @@
+<html xml:lang="fr">
+    <head>
+        <RENDER_VALUE what="head>content"/>
+    </head>
+    <RENDER_TAG type="body" what="body>data">
+        <div id="mainContainer">
+            <h1 class="topTitle">
+                <RENDER_VALUE what="body>headline"/>
+            </h1>
+            <div id="bg_top">
+            </div>
+            <div id="bg_middle">
+                <div id="bg_menu1">
+                    <div id="top_menu">
+                        <RENDER_VALUE what="body>menu_1"/>
+                    </div>
+                </div>
+                <RENDER_VALUE what="body>menu_2"/>
+                <RENDER_VALUE what="body>beginning"/>
+                <div id="content_middle">
+                    <RENDER_IFSET what="body>title">
+                        <h1>
+                            <RENDER_VALUE what="body>title"/>
+                        </h1>
+                    </RENDER_IFSET>
+                    <RENDER_VALUE what="body>content"/>
+                </div>
+                <RENDER_VALUE what="body>otherContents"/>
+            </div>
+            <div id="bg_bottom">
+            </div>
+            <div id="copyrights">
+                <RENDER_VALUE what="body>copyrights"/>
+            </div>
+            <RENDER_VALUE what="body>analytics"/>
+        </div>
+    </RENDER_TAG>
+</html>

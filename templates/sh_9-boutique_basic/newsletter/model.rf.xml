@@ -1,0 +1,54 @@
+<div>
+    <font face="arial">
+        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center">
+            <tr bgcolor="#ffffff" >
+                <td width="20" height="140" background="http://dev.client2.safetyrent-online.com/images/template/variation/nl_bg_top_left.png"></td>
+                <td width="560" height="140" background="http://dev.client2.safetyrent-online.com/images/template/variation/nl_bg_top.png">
+                    <div>
+                        <font size="2" face="arial" color="#ffffff">
+                            <strong>
+                                <RENDER_VALUE what="i18n>nl_dateTitle"/>
+                                <RENDER_VALUE what="content>date"/>
+                            </strong>
+                        </font>
+                    </div>
+                    <div align="right">
+                        <a href="http://dev.client2.safetyrent-online.com/">
+                            <font face="arial" color="{variation>title}" size="4">
+                                <strong>
+                                    <img src="http://dev.client2.safetyrent-online.com/images/site/logo/rectangular.png" border="0" alt="logo" title="logo" width="240" height="80"/>
+                                </strong>
+                            </font>
+                        </a>
+                    </div>
+                </td>
+                <td width="20" height="140" background="http://dev.client2.safetyrent-online.com/images/template/variation/nl_bg_top_right.png"></td>
+            </tr>
+            <tr bgcolor="#ffffff">
+                <td width="20" background="http://dev.client2.safetyrent-online.com/images/template/nl_bg_middle_left.png"></td>
+                <td width="560" background="http://dev.client2.safetyrent-online.com/images/template/nl_bg_middle.png">
+                    <div>
+                        <font face="arial" color="{variation>title}" size="4">
+                            <strong>
+                                <RENDER_VALUE what="content>title"/>
+                            </strong>
+                        </font>
+                    </div>
+                </td>
+                <td width="20" background="http://dev.client2.safetyrent-online.com/images/template/nl_bg_middle_right.png"></td>
+            </tr>
+            <tr bgcolor="#ffffff">
+                <td width="20" background="http://dev.client2.safetyrent-online.com/images/template/nl_bg_middle_left.png"></td>
+                <td width="560" background="http://dev.client2.safetyrent-online.com/images/template/nl_bg_middle.png">
+                    <br/>
+                    <RENDER_VALUE what="content>plugins"/>
+                    <br/>
+                </td>
+                <td width="20" background="http://dev.client2.safetyrent-online.com/images/template/nl_bg_middle_right.png"></td>
+            </tr>
+            <tr bgcolor="#ffffff">
+                <td width="600" height="26" colspan="3" background="http://dev.client2.safetyrent-online.com/images/template/nl_bg_bottom.png">&#160;</td>
+            </tr>
+        </table>
+    </font>
+</div>

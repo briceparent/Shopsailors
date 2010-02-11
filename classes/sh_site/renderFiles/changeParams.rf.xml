@@ -1,0 +1,147 @@
+<div>
+    <RENDER_FORM action="" id="paramsEditor" >
+        <style type="text/css">
+          div.slider {
+              width:360px;
+              margin:10px 0;
+              background:transparent url(/images/shared/icons/bank1/rainbow.png) no-repeat top center;
+              height:10px;
+              position: relative;
+          }
+          div.slider div.handle {
+              width:8px;
+              height:15px;
+              background-color:#000;
+              cursor:move;
+              position: absolute;
+          }
+        </style>
+        <div class="form_box_container">
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>titleParams"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div>
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>site_name"/>
+                        <br />
+                        <RENDER_I18NINPUT class="sh_site" i18n="{constants>i18n_sitename}" name="siteName"/>
+                    </div>
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>favicon"/>
+                        <RENDER_HELP what="{i18n>favicon_explanation}"/>
+                        <br />
+                        <RENDER_VALUE what="favicon>changer"/>
+                    </div>
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>logo"/>
+                        <RENDER_HELP what="{i18n>logo_explanation}"/>
+                        <br />
+                        <div class="logoSelector">
+                            <RENDER_IMAGESELECTOR name="logo" value="/images/site/logo/logo.png" folder="logo" style="width:100px;height:100px;" class="showBackground"/>
+                        </div>
+                    </div>
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>default_headline"/>
+                        <br />
+                        <RENDER_I18NINPUT class="sh_site" i18n="{constants>i18n_defaultheadline}" name="defaultHeadline"/>
+                    </div>
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>default_title"/>
+                        <br />
+                        <RENDER_I18NINPUT class="sh_site" i18n="{constants>i18n_defaulttitle}" name="defaultTitle"/>
+                    </div>
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>metadescription"/>
+                        <RENDER_HELP what="{i18n>metadescription_explanation}"/>
+                        <RENDER_I18NINPUT class="sh_site" i18n="{constants>i18n_metadescription}" name="metaDescription"/>
+                    </div>
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>variation"/>
+                        <RENDER_HELP what="{i18n>variation_explanation}"/>
+                    </div>
+                    <div class="formContent">
+                        <div id="rgb_slider" class="slider">
+                            <div class="handle"></div>
+                        </div>
+                        <input type="hidden" id="variation_value" name="variation_value" value="{config>variation_value}"/>
+                        <script type="text/javascript">
+    sliderValues=[0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300,320,340,360];
+  (function() {
+    var rgb_slider = $('rgb_slider');
+    new Control.Slider(rgb_slider.select('.handle'), rgb_slider, {
+      range: $R(0, 360),
+      sliderValue: [<RENDER_VALUE what="config>variation_value"/>],
+      values:sliderValues,
+      onSlide: function(value) {
+            $('variation_value').value = value;
+      },
+      onChange: function(value) {
+            $('variation_value').value = value;
+      }
+    });
+  })();
+                        </script>
+                    </div>
+                    <div class="noteText">
+                        <RENDER_VALUE what="i18n>selectColorNote"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>i18nBox"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <RENDER_VALUE what="i18n>active_languages"/>
+                <RENDER_VALUE what="i18nClass>activeLanguages"/>
+                <br />
+                <RENDER_VALUE what="i18n>default_language"/>
+                <RENDER_VALUE what="i18nClass>defaultLanguage"/>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>otherBox"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="formContent">
+                    <div class="unroller">
+                        <span class="pointer" onclick="Effect.toggle('analytics_autohidden', 'blind');">
+                            <RENDER_VALUE what="i18n>analytics"/>&#160;
+                        </span>
+                        <RENDER_HELP what="{i18n>analytics_explanation}"/>
+                    </div>
+                    <div id="analytics_autohidden" style="display:none;">
+                        <textarea class="textAreaForm" name="analytics">
+                            <RENDER_VALUE what="analytics>code"/>
+                        </textarea>
+                    </div>
+                </div>
+                <div class="formContent">
+                    <div class="unroller">
+                        <span class="pointer" onclick="Effect.toggle('googleForWebmasters_autohidden', 'blind');">
+                            <RENDER_VALUE what="i18n>googleForWebmasters"/>&#160;
+                        </span>
+                        <RENDER_HELP what="{i18n>googleForWebmasters_explanation}"/>
+                    </div>
+                    <div id="googleForWebmasters_autohidden" style="display:none;">
+                        <input class="inputForm" name="googleForWebmasters" value="{googleForWebmasters>link}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+            <div class="formSubmitContainer">
+                <input type="submit" value="{i18n>save}"/>
+            </div>
+        </div>
+    </RENDER_FORM>
+</div>

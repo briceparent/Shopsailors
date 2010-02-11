@@ -1,0 +1,233 @@
+<div class="command_confirm">
+    <div class="notif_container">
+    <RENDER_FORM id="command_confirm">
+        <div class="notifL_top">
+            <h3><RENDER_VALUE what="i18n>cart_yourCommand"/></h3>
+        </div>
+        <div class="notifL_middle">
+            <div class="notifL_content">
+                <table cellspacing="0" class="{productsTable>class}">
+                    <tr>
+                        <th class="shop_headerText border-bottom border-left border-top bg_table">
+                            <RENDER_VALUE what="i18n>cart_name"/>
+                            /
+                            <RENDER_VALUE what="i18n>cart_reference"/>
+                        </th>
+                        <th class="shop_headerText border-bottom border-left border-top bg_table">
+                            <RENDER_VALUE what="i18n>cart_quantity"/>
+                        </th>
+                        <th class="shop_headerText border-bottom border-left border-top bg_table">
+                            <RENDER_VALUE what="i18n>cart_price"/>
+                        </th>
+                        <th class="shop_headerText border-bottom border-left border-top border-right bg_table">
+                            <RENDER_VALUE what="i18n>cart_productTotalPrice"/>
+                        </th>
+                    </tr>
+                    <RENDER_LOOP what="contents">
+                        <tr>
+                            <td class="border-left border-bottom left bg_table">
+                                <div class="shop_cartProduct_name"><RENDER_VALUE what="contents>name"/></div>
+                                <div class="shop_cartProduct_ref">
+                                    <RENDER_VALUE what="contents>reference"/>
+                                </div>
+                            </td>
+                            <td class="border-left border-bottom bg_table">
+                                <RENDER_VALUE what="contents>quantity"/>
+                            </td>
+                            <td class="shop_productPrice border-left border-bottom bg_table">
+                                <span class="nobr"><RENDER_VALUE what="contents>price"/></span>
+                            </td>
+                            <td class="shop_productPrice border-left border-bottom border-right bg_table">
+                                <span class="nobr"><RENDER_VALUE what="contents>totalPrice"/></span>
+                            </td>
+                        </tr>
+                    </RENDER_LOOP>
+                    <tr>
+                        <td class="cart_changeShipMode">
+                            <RENDER_IFSET what="constants>shipping_activated">
+                                <a href="/shop/cart_action.php?action=change_shipMode">
+                                    <RENDER_VALUE what="i18n>command_changeShipModeLink"/>
+                                </a>
+                            </RENDER_IFSET>
+                        </td>
+                        <td></td>
+                        <td colspan="2" class="shop_total_textClass border-left border-bottom border-right bg_table">
+                            <span class="nobr"><RENDER_VALUE what="i18n>totalht"/><RENDER_VALUE what="total>ht"/></span><br/>
+                            <span class="nobr"><RENDER_VALUE what="i18n>totalttc"/><RENDER_VALUE what="total>ttc"/></span>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="notifL_bottom">
+        </div>
+        <NORENDER>Billing and shipping addresses</NORENDER>
+        <RENDER_IFSET what="shipping>toCustomer">
+            <div class="command_billingL_container">
+                <div class="notifL_top">
+                    <h3 class="billing_title"><RENDER_VALUE what="i18n>command_billing"/></h3>
+                </div>
+                <div class="notifL_middle">
+                    <div class="notifL_content">
+                        <table cellspacing="0" class="billing_table">
+                            <tr>
+                                <td>
+                                    <div class="billing_enterAdress">
+                                        <RENDER_VALUE what="i18n>billing_enterAdress"/>
+                                    </div>
+                                    <div class="command_billing_name">
+                                        <RENDER_VALUE what="i18n>command_billing_name"/><br /> <input name="name" value="{billing>name}" style="width:180px;"/>
+                                    </div>
+                                    <div class="command_billing_address">
+                                        <RENDER_VALUE what="i18n>command_billing_address"/><br />
+                                        <textarea name="address"  style="width: 180px"></textarea>
+                                    </div>
+                                    <div class="command_billing_zipCode">
+                                        <RENDER_VALUE what="i18n>command_billing_zipCode"/>&#160;<input name="zip" style="width: 40px"/>
+                                    </div>
+                                    <div class="command_billing_city">
+                                        <RENDER_VALUE what="i18n>command_billing_city"/><br /><input name="city"/>
+                                    </div>
+                                </td>
+                                <td class="command_billing_middleTD">
+                                </td>
+                                <td>
+                                    <div class="command_deliveryRadiobox">
+                                        <RENDER_RADIOBOX text="{i18n>command_billingAddress}" onchange="switchShipTo(this);" name="shipTo" value="billing" state="checked"/>
+                                        <RENDER_RADIOBOX text="{i18n>command_followingAddress}" onchange="switchShipTo(this);" name="shipTo" value="other"/>
+                                    </div>
+                                    <div id="shipping_address">
+                                        <div class="command_billing_name">
+                                            <RENDER_VALUE what="i18n>command_billing_name"/><br /> <input name="ship_name" value="{billing>name}" style="width:180px;"/>
+                                        </div>
+                                        <div class="command_billing_address">
+                                            <RENDER_VALUE what="i18n>command_billing_address"/><br />
+                                            <textarea name="ship_address" style="width:180px;"></textarea>
+                                        </div>
+                                        <div class="command_billing_zipCode">
+                                        <RENDER_VALUE what="i18n>command_billing_zipCode"/>&#160;<input name="ship_zip" style="width:40px;"/>
+                                        </div>
+                                        <div class="command_billing_city">
+                                            <RENDER_VALUE what="i18n>command_billing_city"/><br /><input name="ship_city" style="width:180px;"/>
+                                        </div>
+                                    </div>
+                                    <NORENDER>
+                                        <script type="text/javascript">
+                                            <RENDER_IFSET what="userAgent>IE">
+                                                function switchShipTo(ship){
+                                                    return false;
+                                                }
+                                            </RENDER_IFSET>
+                                            <RENDER_IFNOTSET what="userAgent>IE">
+                                                $("shipping_address").style.display = 'none';
+                                                function switchShipTo(ship){
+                                                    if(ship.value == 'billing'){
+                                                        $("shipping_address").style.display = 'none';
+                                                    }else{
+                                                        $("shipping_address").style.display = 'block';
+                                                    }
+                                                    return false;
+                                                }
+                                            </RENDER_IFNOTSET>
+                                        </script>
+                                    </NORENDER>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="notifL_bottom">
+                </div>
+            </div> 
+        </RENDER_IFSET>           
+        <RENDER_IFSET what="shipping>comeTakeIt">
+            <div class="command_billingM_container">
+                <div class="notifM_top">
+                    <h3 class="billing_title"><RENDER_VALUE what="i18n>command_justBilling"/></h3>
+                </div>
+                <div class="notifM_middle">
+                    <div class="billing_bgM_enterAdress">
+                        <RENDER_VALUE what="i18n>billing_enterAdress"/>
+                    </div>
+                    <div class="notifM_content">
+                        <div class="command_billing_name">
+                            <RENDER_VALUE what="i18n>command_billing_name"/><br /> <input name="name" value="{billing>name}" style="width:180px;"/>
+                        </div>
+                        <div class="command_billing_address">
+                            <RENDER_VALUE what="i18n>command_billing_address"/><br />
+                            <textarea name="address"  style="width: 180px"></textarea>
+                        </div>
+                        <div class="command_billing_zipCode">
+                            <RENDER_VALUE what="i18n>command_billing_zipCode"/>&#160;<input name="zip" style="width: 40px"/>
+                        </div>
+                        <div class="command_billing_city">
+                            <RENDER_VALUE what="i18n>command_billing_city"/><br /><input style="width: 180px" name="city"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="notifM_bottom">
+                </div>
+            </div>
+            <input type="hidden" name="shipTo" value="comeTakeIt"/>
+        </RENDER_IFSET>
+
+        <NORENDER>Payment mode</NORENDER>
+        <div class="command_paymentContainer">
+            <div class="notifL_top">
+                <h3 class="command_payment_title"><RENDER_VALUE what="i18n>payment_title"/></h3>
+            </div>
+            <div class="notifL_middle">
+                <div class="notifL_content">
+                    <RENDER_IFSET what="payment>moreThanOneMode">
+                        <table cellspacing="0" class="border-top">
+                            <RENDER_LOOP what="paymentModes">
+                                <tr onclick="$('paymentMode_{paymentModes>id}').checked=true;">
+                                    <td class="border-left border-right border-bottom pointer">
+                                        <input type="radio" class="noBorder" name="paymentMode" id="paymentMode_{paymentModes>id}" value="{paymentModes>id}"/>
+                                    </td>
+                                    <td class="payment_logoMode border-right border-bottom pointer">
+                                        <img src="{paymentModes>logo}" alt="Logo : {paymentModes>name}"/>
+                                    </td>
+                                    <td class="border-right border-bottom payment_modeName pointer">
+                                        <RENDER_VALUE what="paymentModes>name"/>
+                                    </td>
+                                    <td class="border-right border-bottom payment_modeDescription pointer">
+                                        <RENDER_VALUE what="paymentModes>description"/>
+                                    </td>
+                                </tr>
+                            </RENDER_LOOP>
+                        </table>
+                    </RENDER_IFSET>
+                    <RENDER_IFNOTSET what="payment>moreThanOneMode">
+                        <input type="hidden" name="paymentMode" value="{paymentMode>id}"/>
+                        <div class="payment_oneMode_title">
+                            <RENDER_VALUE what="i18n>payment_oneMode"/>
+                        </div>
+                        <div class="payment_oneMode_content">
+                            <div class="payment_oneMode_logo">                           
+                                <img src="{paymentMode>logo}" alt="Logo : {paymentMode>name}"/>
+                            </div>
+                            <div class="payment_oneMode_title">
+                                <RENDER_VALUE what="paymentMode>name"/>
+                            </div>
+                            <RENDER_VALUE what="paymentMode>description"/>
+                        </div>
+                    </RENDER_IFNOTSET>
+                </div>
+            </div>
+            <div class="notifL_bottom">
+            </div>
+        </div>
+        <NORENDER>Submitting the command</NORENDER>
+        <div class="shop_totalCartContainer">
+            <div class="shop_totalCart">
+                <div class="cart_goToCommand">
+                    <input type="image"  src="images/shared/icons/bank1/picto_command.png" name="submit_command" alt="{i18n>submit_command}" title="{i18n>submit_command}"/><br />
+                    <RENDER_VALUE what="i18n>command_confirm"/>
+                </div>
+            </div>
+        </div>
+    </RENDER_FORM>
+</div>
+</div>

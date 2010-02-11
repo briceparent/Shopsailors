@@ -1,0 +1,47 @@
+AddDefaultCharset UTF-8
+
+php_value upload_max_filesize 12M
+
+RewriteEngine On
+
+RewriteRule /?tests/.* - [L]
+
+RewriteRule /?403/.* - [L]
+
+RewriteRule /?(.*)captcha\.gif /$1captcha.php
+
+RewriteRule ^/?([^/]+/singles/.+) /classes/$1 [L]
+
+RewriteRule ^/?(sitemap.xml) /sitemap/show/ [L]
+
+RewriteRule ^/?(templates/[a-zA-Z0-9_-]+/variations/CSS/)(.+)/(.+\.css) /$1$3.php?variation=$2
+
+# Redirections to the CSS sender
+# The second argument is only here to be abble to build different urls for the different variations,
+# in order not to make the browser use a wrong css file that could have been cached
+RewriteRule ^/?CSS/[^/]+/(.+)\.css /index.php?path_type=css&action=replace&file=$1 [L]
+RewriteRule ^/?templates/global/(.+).css /index.php?path_type=css&action=copy&file=$1 [L]
+
+# Redirections to the Images sender
+RewriteRule ^/?favicon\.ico /index.php?path_type=favicon [L]
+RewriteRule ^/?(images/template/variation/)(.+) /index.php?path_type=image&folder=/$1&file=$2 [L]
+RewriteRule ^/?(images/temp/)(.+) /index.php?path_type=image&folder=/$1&file=$2 [L]
+RewriteRule ^/?(images/(template|site|shared|generated)/)(.+) /index.php?path_type=image&folder=/$1&file=$3 [L]
+RewriteRule ^/?images/(newsletters)(_)(icon).png /index.php?path_type=image&folder=/$1&file=$3 [L]
+RewriteRule ^/?(images/templates/[^/]+/)(.+) /index.php?path_type=image&folder=/$1&file=$2 [L]
+RewriteRule ^/?(images/builder/)([-_a-zA-Z0-9]+)/(.+) /index.php?path_type=image&folder=/$1&button_type=$2&file=$3 [L]
+
+RewriteRule ^/?mp3/(([^/]+/)*[-_a-zA-Z0-9]+\.mp3) /index.php?path_type=mp3&file=$1 [L]
+
+# Prepares url for the browser
+RewriteRule ^/?(browser)/show/([^/]+).php /index.php?path_type=$1&browser_type=$2
+RewriteRule ^/?browser/([^/]+)/([^/]+)/([^/]+)/([^/]+)/show.php /index.php?path_type=browser&browser_type=params&folder=$1&types=$2&returnAction=$3&id=$4 [L]
+RewriteRule ^/?browser/session/([^/]+)/show.php /index.php?path_type=browser&fromSession=/$1 [L]
+
+# Rewrites every pages that don't exist to the index.php file
+RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/index.php$
+RewriteCond %{REQUEST_URI} (/|\.php[0-9]*|\.html|\.htm|\.feed|\.pdf|\.raw|\.xml|/[^.]*)$  [NC]
+RewriteRule (.*) /index.php
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]

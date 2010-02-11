@@ -1,0 +1,5 @@
+<div>
+    <RENDER_NOTIF size="M">
+        <RENDER_VALUE what="i18n>unsubscription_successfull"/>
+    </RENDER_NOTIF>
+</div>

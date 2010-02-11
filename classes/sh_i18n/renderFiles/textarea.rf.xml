@@ -1,0 +1,17 @@
+<span class="i18n_input">
+    <RENDER_LOOP what="langs">
+        <RENDER_TAG type="textarea" what="langs>args"><RENDER_VALUE what="langs>value"/></RENDER_TAG>
+    </RENDER_LOOP>
+    <RENDER_IFSET what="langs>1">
+        <select id="{lang>id}_select" class="verticalAlign_top" onchange="chooseLang('{lang>id}',this.value);">
+            <RENDER_LOOP what="langs">
+                <option value="{langs>id}" style="background:#ffffff url(/images/shared/flags/{langs>name}_small.png) no-repeat top right;">
+                    <RENDER_VALUE what="langs>name"/>
+                </option>
+            </RENDER_LOOP>
+        </select>
+    </RENDER_IFSET>
+    <script type="text/javascript">
+        chooseLang('<RENDER_VALUE what="lang>id"/>','<RENDER_VALUE what="lang>firstDisplayed"/>');
+    </script>
+</span>

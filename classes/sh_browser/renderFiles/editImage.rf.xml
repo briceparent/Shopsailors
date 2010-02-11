@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <link rel="stylesheet" media="screen" type="text/css" href="/sh_browser/singles/browser.css" />
+        <link rel="stylesheet" media="screen" type="text/css" href="/templates/global/global.css" />
+    </head>
+    <body class="editImage_container">
+        <table>
+            <tr>
+                <td class="editImage_image">
+                    <img class="theImage" src="{img>src}" id="{img>direction}" alt="The image"/>
+                </td>
+                <td class="editImage_actionsTop">
+                    <div class="actionsTitle">
+                        <RENDER_VALUE what="i18n>edtiImage_title"/>
+                    </div>
+                    <div class="actionsOption">
+                        <RENDER_VALUE what="i18n>edtiImage_actionsTitle"/>
+                        <ul>
+                            <RENDER_LOOP what="actions">
+                                <li>
+                                    <a href="?action={actions>name}">
+                                        <RENDER_VALUE what="actions>description"/>
+                                    </a>
+                                </li>
+                            </RENDER_LOOP>
+                        </ul>
+                    </div>
+                    <div>
+                        <form>
+                            <input type="hidden" name="action" value="validate"/>
+                            <input type="submit" value="Valider l'image"/>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,37 @@
+<div id="connection_mainContainer">
+    <div class="bg_identification_top">
+    </div>
+    <div class="bg_identification_middle">
+        <div id="identificationContainer">
+            <RENDER_IFSET what="error>message">
+                <RENDER_VALUE what="error>message"/>
+            </RENDER_IFSET>
+            <RENDER_FORM id="user_connection" method="post">
+                <div  id="clientConnection">
+                    <div class="clientConnection_title">
+                        <RENDER_VALUE what="i18n>client_identification_title"/><br />
+                    </div>
+                    <div class="id_mdp_text">
+                        <RENDER_VALUE what="i18n>client_username"/>
+                    </div>
+                    <input class="clientConnection_input" name="userName"/>
+                    <div class="id_mdp_text">
+                        <RENDER_VALUE what="i18n>client_password"/>
+                    </div>
+                    <input type="password" class="clientConnection_input" name="userPassword"/>
+                </div>
+                <a href="{link>passPhrase_link}" class="grey_link">
+                    <RENDER_VALUE what="i18n>password_forgotten"/>
+                </a>
+                <div><input type="image" src="/images/shared/icons/bank1/picto_validate.png"/></div>
+            </RENDER_FORM>
+        </div>
+        <div id="createAccountLink">
+            <a href="{createAccount>link}" class="grey_link">
+                <RENDER_VALUE what="i18n>create_account"/>
+            </a>
+        </div>
+    </div>
+    <div class="bg_identification_bottom">
+    </div>
+</div>

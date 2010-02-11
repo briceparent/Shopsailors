@@ -1,0 +1,99 @@
+<div>
+    <NORENDER>breadcrumbs</NORENDER>
+    <span id="shop_navigator" class="shop_arboText">
+        <RENDER_VALUE what="i18n>navigator_title"/>
+        <RENDER_LOOP what="nav_levels">
+            <span class="shop_same_level">
+                <span id="{nav_levels>id}" class="shop_levels" onmouseover="UnTip();TagToTip('shop_small_level_{nav_levels>id}',BORDERCOLOR,'#000000')" onmouseout="UnTip()">
+                    <a href="{nav_levels>categoryLink}" class="hideLink"><RENDER_VALUE what="nav_levels>name"/></a>
+                    <RENDER_VALUE what="nav_levels>separator"/>
+                </span>
+                <RENDER_IFSET what="nav_levels>hassisters">
+                    <span id="shop_small_level_{nav_levels>id}">
+                        <RENDER_LOOP what="sisters">
+                            <span class="breadcrumbSisters">
+                                <a href="{sisters>categoryLink}" class="shop_arboLink">
+                                    <RENDER_VALUE what="sisters>name"/>
+                                </a>
+                            </span>
+                        </RENDER_LOOP>
+                    </span>
+                </RENDER_IFSET>
+            </span>
+        </RENDER_LOOP>
+    </span>
+    
+    <RENDER_IFNOTSET what="category>empty">
+        <NORENDER>active category</NORENDER>
+        <div class="bg_active_category">
+            <div class="active_category_name">
+                <RENDER_VALUE what="category>name"/>
+            </div>
+            <div class="active_category_descriptionContainer">
+                <div class="active_category_describe">
+                    <RENDER_VALUE what="category>description"/>
+                </div>
+            </div>
+        </div>
+
+        <NORENDER>navigator_grid</NORENDER>
+        <div id="list">
+            <div class="selectAcategory">
+                <RENDER_VALUE what="i18n>selectAproduct"/>
+            </div>
+            <table cellspacing="0">
+                <tr>
+                    <td rowspan="5" class="pageNavigator">
+                        <RENDER_IFSET what="pagenavigation>previous_link">
+                            <a href="{pagenavigation>previous_link}">
+                                <img src="images/builder/nav/model2_previous.png" alt="{i18n>nav_previous}"/>
+                            </a>
+                        </RENDER_IFSET>
+                        <RENDER_IFNOTSET what="pagenavigation>previous_link">
+                            <img src="images/builder/nav/model2_noprevious.png" alt="{i18n>nav_noprevious}"/>
+                        </RENDER_IFNOTSET>
+                    </td>
+                    <td colspan="3">
+                    </td>
+                    <td rowspan="5" class="pageNavigator">
+                        <RENDER_IFSET what="pagenavigation>next_link">
+                            <a href="{pagenavigation>next_link}">
+                                <img src="images/builder/nav/model2_next.png" alt="{i18n>nav_next}"/>
+                            </a>
+                        </RENDER_IFSET>
+                        <RENDER_IFNOTSET what="pagenavigation>next_link">
+                            <img src="images/builder/nav/model2_nonext.png" alt="{i18n>nav_nonext}"/>
+                        </RENDER_IFNOTSET>
+                    </td>
+                </tr>
+                <RENDER_LOOP what="category_elements_groups">
+                    <tr>
+                        <RENDER_LOOP what="elements">
+                            <td class="list_image">
+                                <RENDER_IFSET what="elements>link">
+                                    <RENDER_IFSET what="elements>link">
+                                        <a href="{elements>link}">
+                                            <img src="{elements>image}" alt="{elements>shortdescription}" title="{elements>shortdescription}"/>
+                                        </a>
+                                    </RENDER_IFSET>
+                                </RENDER_IFSET>
+                            </td>
+                        </RENDER_LOOP>
+                    </tr>
+                </RENDER_LOOP>
+                <tr>
+                    <td colspan="3">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </RENDER_IFNOTSET>
+    
+    <NORENDER>Empty Category</NORENDER>
+    <RENDER_IFSET what="category>empty">
+        <div id="shop_emptyCategory">
+            <RENDER_VALUE what="i18n>emptyCategory"/>
+        </div>
+    </RENDER_IFSET>
+
+</div>

@@ -1,0 +1,180 @@
+<?php
+/**
+  * Copyright Shopsailors (2009)
+  *
+  * briceparent@free.fr
+  *
+  * This file is a part of a computer program whose purpose is to create,
+  * administrate and use a shop over the web.
+  *
+  * This software is governed by the CeCILL license under French law and
+  * abiding by the rules of distribution of free software.  You can  use,
+  * modify and/ or redistribute the software under the terms of the CeCILL
+  * license as circulated by CEA, CNRS and INRIA at the following URL
+  * "http://www.cecill.info".
+  *
+  * As a counterpart to the access to the source code and  rights to copy,
+  * modify and redistribute granted by the license, users are provided only
+  * with a limited warranty  and the software's author,  the holder of the
+  * economic rights,  and the successive licensors  have only  limited
+  * liability.
+  *
+  * In this respect, the user's attention is drawn to the risks associated
+  * with loading,  using,  modifying and/or developing or reproducing the
+  * software by the user in light of its specific status of free software,
+  * that may mean  that it is complicated to manipulate,  and  that  also
+  * therefore means  that it is reserved for developers  and  experienced
+  * professionals having in-depth computer knowledge. Users are therefore
+  * encouraged to load and test the software's suitability as regards their
+  * requirements in conditions enabling the security of their systems and/or
+  * data to be ensured and,  more generally, to use and operate it in the
+  * same conditions as regards security.
+  *
+  * The fact that you are presently reading this means that you have had
+  * knowledge of the CeCILL license and that you accept its terms.
+ **/
+
+/**
+  * This file was generated automatically by the Shopsailors engine.
+ **/
+if(!defined('SH_MARKER')){
+    header('location: directCallForbidden.php');
+}
+
+$values = array (
+  'images' => 
+  array (
+    0 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/010611300144419821.png',
+    ),
+    1 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/020611300244419672.png',
+    ),
+    2 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/040411450444419401.png',
+    ),
+    3 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/12101026124441982.png',
+    ),
+    4 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/13101026134441934.png',
+    ),
+    5 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/161010261644419495.png',
+    ),
+    6 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/220503422244419571.png',
+    ),
+    7 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/230503422344419332.png',
+    ),
+    8 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/230503422344419673.png',
+    ),
+    9 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/240503422444419544.png',
+    ),
+    10 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/240503422444419575.png',
+    ),
+    11 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/280908102844419471.png',
+    ),
+    12 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/30090810304441954.png',
+    ),
+    13 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/300908103044419695.png',
+    ),
+    14 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/370611213744419891.png',
+    ),
+    15 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/380611213844419724.png',
+    ),
+    16 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/380611213844419933.png',
+    ),
+    17 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/390611213944419985.png',
+    ),
+    18 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/411010194144419261.png',
+    ),
+    19 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/421010194244419973.png',
+    ),
+    20 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/431010194344419394.png',
+    ),
+    21 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/44419060613081648.png',
+    ),
+    22 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/44419081118045311.png',
+    ),
+    23 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/480503594844419431.png',
+    ),
+    24 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/490503594944419482.png',
+    ),
+    25 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/500503595044419703.png',
+    ),
+    26 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/510503595144419674.png',
+    ),
+    27 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/540503595444419645.png',
+    ),
+    28 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/basse.png',
+    ),
+    29 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/batterie.png',
+    ),
+    30 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/sax.png',
+    ),
+    31 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/trombone.png',
+    ),
+    32 => 
+    array (
+      'src' => '/images/site/diaporamas/1-diapo_1/trompette.png',
+    ),
+  ),
+);

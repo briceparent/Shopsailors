@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title><roundcube:object name="pagetitle" /></title>
+<roundcube:include file="/includes/links.html" />
+<link rel="stylesheet" type="text/css" href="/this/managesieve.css" />
+<script type="text/javascript" src="/functions.js"></script>
+</head>
+<body>
+
+<roundcube:include file="/includes/taskbar.html" />
+<roundcube:include file="/includes/header.html" />
+<roundcube:include file="/includes/settingstabs.html" />
+
+<div id="filtersbuttons">
+<roundcube:button command="plugin.managesieve-add" imageSel="/this/filter_add_sel.png" imagePas="/this/filter_add_pas.png" imageAct="/this/filter_add_act.png" width="32" height="32" title="managesieve.filteradd" />
+<roundcube:button command="plugin.managesieve-del" imageSel="/this/filter_del_sel.png" imagePas="/this/filter_del_pas.png" imageAct="/this/filter_del_act.png"  width="32" height="32" title="managesieve.filterdel" />
+<roundcube:button command="plugin.managesieve-up" imageSel="/this/filter_up_sel.png" imagePas="/this/filter_up_pas.png" imageAct="/this/filter_up_act.png"  width="32" height="32" title="managesieve.moveup" />
+<roundcube:button command="plugin.managesieve-down" imageSel="/this/filter_down_sel.png" imagePas="/this/filter_down_pas.png" imageAct="/this/filter_down_act.png"  width="32" height="32" title="managesieve.movedown" />
+</div>
+
+<div id="filterslist">
+<roundcube:object name="filterslist" id="filters-table" class="records-table" cellspacing="0" summary="Filters list" />
+</div>
+
+<div id="filter-box">
+<roundcube:object name="filterframe" id="filter-frame" width="100%" height="100%" frameborder="0" src="/watermark.html" />
+</div>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<div>
+    <RENDER_VALUE what="i18n>variationsCreator"/>
+    <RENDER_FORM id="{form>id}">
+        <select name="template">
+            <RENDER_LOOP what="templates">
+                <option value="{templates>id}">
+                    <RENDER_VALUE what="templates>name"/>
+                </option>
+            </RENDER_LOOP>
+        </select>
+        <select name="variation">
+            <RENDER_LOOP what="variations">
+                <option value="{variations>name}" state="{variation>state}">
+                    <RENDER_VALUE what="variations>name"/>
+                </option>
+            </RENDER_LOOP>
+        </select>
+        <input type="submit"/>
+    </RENDER_FORM>
+</div>

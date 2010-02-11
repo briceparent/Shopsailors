@@ -1,0 +1,28 @@
+<div id="menuEditor_container">
+    <RENDER_FORM id="restrictionsEditor" >
+        <div class="form_box_container">
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>privateAccess"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="formContent">
+                    <RENDER_CHECKBOX text="{i18n>privateAccess_input}" name="needs_connection" state="{form>needs_connection}" help="{i18n>privateAccess_explanation}"/>
+                </div>
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>userList"/>
+                    <RENDER_HELP what="{i18n>userList_explanation}"/>
+                    <textarea class="textAreaForm" name="allowedUsers">
+                        <RENDER_VALUE what="allowed>mails"/>
+                    </textarea>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+            <div class="formSubmitContainer">
+                <input type="submit" value="Enregistrer"/>
+            </div>
+        </div>
+    </RENDER_FORM>
+</div>

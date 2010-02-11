@@ -1,0 +1,69 @@
+<div id="form_box_container">
+    <RENDER_FORM id="chiefList">
+		<div class="form_box_container">
+			<div class="form_box_top">
+				<h3 class="box_title">
+					<RENDER_VALUE what="i18n2>forum_params"/>
+				</h3>
+			</div>
+			<div class="form_box_middle">
+				<div class="formContent">
+					<RENDER_VALUE what="i18n2>forum_pageIntro"/>
+					<RENDER_HELP what="{i18n2>forum_pageIntro_explanation}"/><br />
+					<RENDER_I18NWEDITOR type="minimal" i18nClass="cm_lvdc" i18n="{forum>intro}" name="forum_intro"/>
+				</div>
+			</div>
+			<div class="form_box_bottom">
+			</div>
+			<div class="form_box_top">
+				<h3 class="box_title">
+					<RENDER_VALUE what="i18n2>forum_rights"/>
+				</h3>
+			</div>
+			<div class="form_box_middle">
+				<div class="formContent">
+					<RENDER_VALUE what="i18n2>forum_rightsIntro"/>
+				</div>
+				<div class="formContent">
+					<RENDER_VALUE what="i18n2>forum_createSubject"/><br />
+					<select class="forum_createRights" multiple="multiple">
+						<option><RENDER_VALUE what="i18n2>all"/></option>
+						<option><RENDER_VALUE what="i18n2>connected"/></option>
+						<option><RENDER_VALUE what="i18n2>justMe"/></option>
+						<RENDER_LOOP what="groups">
+							<option><RENDER_VALUE what="groups>name"/></option>
+						</RENDER_LOOP>
+					</select>
+					<div class="noteText"><RENDER_VALUE what="i18n2>holdCtrl"/></div>
+				</div>
+				<div class="formContent">
+					<RENDER_VALUE what="i18n2>forum_postCom"/><br />
+					<select class="forum_createRights" multiple="multiple">
+						<option><RENDER_VALUE what="i18n2>all"/></option>
+						<option><RENDER_VALUE what="i18n2>connected"/></option>
+						<option><RENDER_VALUE what="i18n2>justMe"/></option>
+						<RENDER_LOOP what="groups">
+							<option><RENDER_VALUE what="groups>name"/></option>
+						</RENDER_LOOP>
+					</select>
+					<div class="noteText"><RENDER_VALUE what="i18n2>holdCtrl"/></div>
+				</div>
+				<div class="formContent">
+					<RENDER_VALUE what="i18n2>forum_access"/><br />
+					<select class="forum_createRights" multiple="multiple">
+						<option><RENDER_VALUE what="i18n2>all"/></option>
+						<option><RENDER_VALUE what="i18n2>connected"/></option>
+						<option><RENDER_VALUE what="i18n2>justMe"/></option>
+						<RENDER_LOOP what="groups">
+							<option><RENDER_VALUE what="groups>name"/></option>
+						</RENDER_LOOP>
+					</select>
+					<div class="noteText"><RENDER_VALUE what="i18n2>holdCtrl"/></div>
+				</div>
+			</div>
+			<div class="form_box_bottom">
+			</div>
+			<input type="submit" value="{i18n>validate}"/>
+		</div>
+    </RENDER_FORM>
+</div>

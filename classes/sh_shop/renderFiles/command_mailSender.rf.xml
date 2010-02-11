@@ -1,0 +1,6 @@
+<div>
+    <b><RENDER_VALUE what="i18n>command_mail_date"/></b><RENDER_VALUE what="mail>date"/><br />
+    <RENDER_VALUE what="i18n>command_mail_headlineSender"/>&#160;
+    <a href="{mail>siteName}"><RENDER_VALUE what="mail>siteName"/></a>.<br />
+    <b><RENDER_VALUE what="i18n>command_mail_billSender"/></b>
+</div>

@@ -1,0 +1,9 @@
+<?php
+$message = array(
+	'fr_FR' => 'Votre nouvelle image a été envoyée avec succès.<br />
+Si la nouvelle image n\'est pas affichée, il vous suffit de faire CTRL+F5 sur
+votre clavier. Cela forcera le rafraichissement de l\'image.<br /><br />
+<span style="color:red">Attention: </span>L\'image a été changée, ce qui signifie
+que même si vous ne validez pas le formulaire qui a appelé cette page, cette
+image sera tout de même affichée à la place de celle qui était là avant.'
+);

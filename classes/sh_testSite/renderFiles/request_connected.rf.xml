@@ -1,0 +1,44 @@
+<div>
+    <RENDER_DEBUGALL/>
+    <div><RENDER_VALUE what="i18n>request_connected"/></div>
+    <RENDER_FORM id="testSite_request">
+        <table>
+            <tr>
+                <td>
+                    <RENDER_VALUE what="i18n>form_login"/>
+                </td>
+                <td>
+                    <input name="login" value="{form>login}" readonly="readonly"/>
+                </td>
+                <td rowspan="4">
+                    <RENDER_VALUE what="i18n>form_filledFieldsExplanantion"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <RENDER_VALUE what="i18n>form_name"/>
+                </td>
+                <td>
+                    <input name="login" value="{form>name}" readonly="readonly"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <RENDER_VALUE what="i18n>form_lastName"/>
+                </td>
+                <td>
+                    <input name="login" value="{form>lastName}" readonly="readonly"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <RENDER_VALUE what="i18n>form_mail"/>
+                </td>
+                <td>
+                    <input name="login" value="{form>mail}" readonly="readonly"/>
+                </td>
+            </tr>
+        </table>
+    </RENDER_FORM>
+
+</div>

@@ -1,0 +1,13 @@
+<div>
+    <RENDER_FORM id="projectInitializer">
+        The project "<RENDER_VALUE what="project>name"/>"
+        (<RENDER_VALUE what="project>id"/>) doesn't exist.<br />
+        Do you want to import the current version as revision #0?<br />
+        <br />
+        Description :<br />
+        <textarea name="description" style="width:600px;height:150px;">
+Initial import of the project</textarea>
+        <br />
+        <input type="submit" name="{i18n>yes}"/>
+    </RENDER_FORM>
+</div>

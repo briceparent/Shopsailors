@@ -1,0 +1,135 @@
+<div class="cart_show">
+    <RENDER_FORM method="post" action="{general>action}" id="cart_form">
+        <div class="notif_container">
+            <div class="notifL_top">
+            </div>
+            <div class="notifL_middle">
+                <div class="notifL_content">
+                    <RENDER_LOOP what="stocknotsufficient">
+                        <div class="alertCart">
+                            <RENDER_VALUE what="stocknotsufficient>name"/>&#160;:
+                            <RENDER_VALUE what="i18n>product_stocknotsufficient"/>
+                        </div>
+                    </RENDER_LOOP>
+                    <RENDER_LOOP what="noMoreStock">
+                        <div class="alertCart">
+                            <RENDER_VALUE what="noMoreStock>name"/>&#160;:
+                            <RENDER_VALUE what="i18n>product_noMoreTakenOut"/>
+                        </div>
+                    </RENDER_LOOP>
+                    <div class="shop_tableCart">
+                        <table cellspacing="0" class="{productsTable>class}">
+                            <NORENDER>Table header</NORENDER>
+                            <tr>
+                                <th class="border-bottom">
+                                <RENDER_IFSET what="user>connected">
+                                    <div class="cart_save noBorder">
+                                        <input type="image" class="noBorder"  src="images/shared/icons/bank1/picto_save.png" name="save_cart" alt="{i18n>cart_save}" title="{i18n>cart_save}"/>
+                                    </div>
+                                </RENDER_IFSET>
+                                <RENDER_IFNOTSET what="user>connected">
+                                    <div class="cart_save">
+                                        <input type="image" class="noBorder"  src="images/shared/icons/bank1/picto_save.png" name="save_cart" alt="{i18n>cart_save}" title="{i18n>cart_save}"/>
+                                    </div>
+                                </RENDER_IFNOTSET>
+                                </th>
+                                <th class="shop_headerText border-bottom border-left border-top bg_table">
+                                    <RENDER_VALUE what="i18n>cart_name"/>
+                                </th>
+                                <th class="shop_headerText border-bottom border-left border-top bg_table">
+                                    <RENDER_VALUE what="i18n>cart_shortDescription"/>
+                                </th>
+                                <RENDER_IFSET what="constants>showQuantity">
+                                    <th class="shop_headerText border-bottom border-left border-top bg_table">
+                                        <RENDER_VALUE what="i18n>cart_stock"/>
+                                    </th>
+                                </RENDER_IFSET>
+                                <th class="shop_headerText border-bottom border-left border-top bg_table">
+                                    <RENDER_VALUE what="i18n>cart_quantity"/>
+                                </th>
+                                <th class="shop_headerText border-bottom border-left border-top bg_table">
+                                    <RENDER_VALUE what="i18n>cart_price"/>
+                                </th>
+                                <th class="shop_headerText border-bottom border-left border-top border-right bg_table">
+                                    <RENDER_VALUE what="i18n>cart_productTotalPrice"/>
+                                </th>
+                                <th class="shop_pictoCell shop_pictoTable"></th>
+                            </tr>
+                            <RENDER_LOOP what="contents">
+                                <NORENDER>Table content</NORENDER>
+                                <tr>
+                                    <td class="shop_table_preview border-left border-bottom">
+                                        <a href="{contents>link}">
+                                            <img src="{contents>image}" alt="product_preview"/>
+                                        </a>
+                                    </td>
+                                    <td class="border-left border-bottom bg_table">
+                                        <div class="shop_cartProduct_name">
+                                            <a href="{contents>link}">
+                                                <RENDER_VALUE what="contents>name"/>
+                                            </a>
+                                        </div>
+                                        <div class="shop_cartProduct_ref">
+                                            <a href="{contents>link}">
+                                                <RENDER_VALUE what="contents>reference"/>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td class="shop_cartProduct_shortDesc border-left border-bottom bg_table">
+                                        <RENDER_VALUE what="contents>shortDescription"/>
+                                    </td>
+                                    <RENDER_IFSET what="constants>showQuantity">
+                                        <td class="border-left border-bottom bg_table">
+                                            <RENDER_VALUE what="contents>stock"/>
+                                        </td>
+                                    </RENDER_IFSET>
+                                    <td class="border-left border-bottom bg_table shop_cartQuantity">
+                                        <input name="change_quantity[{contents>id}]" class="shop_cartQuantity" style="width: 40px" value="{contents>quantity}"/>
+                                    </td>
+                                    <td class="shop_productPrice border-left border-bottom bg_table">
+                                        <span class="nobr"><RENDER_VALUE what="contents>price"/></span>
+                                    </td>
+                                    <td class="shop_productPrice border-left border-bottom border-right bg_table">
+                                        <span class="nobr"><RENDER_VALUE what="contents>totalPrice"/></span>
+                                    </td>
+                                    <td class="shop_pictoTable">
+                                        <a href="{contents>removelink}">
+                                            <img class="picto_form" src="/images/shared/icons/bank1/picto_delete.png" alt="{i18n>cart_removeProduct}" title="{i18n>cart_removeProduct}"/>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </RENDER_LOOP>
+                            <NORENDER>Links and table footer</NORENDER>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <RENDER_IFSET what="constants>showQuantity">
+                                <td></td>
+                                </RENDER_IFSET>
+                                <td class="shop_pictoTable">
+                                    <input type="image" class="noBorder"  src="images/shared/icons/bank1/picto_update.png" name="update_quantities" alt="{i18n>cart_update}" title="{i18n>cart_update}"/>
+                                </td>
+                                <td colspan="2" class="shop_total_textClass border-left border-bottom border-right bg_table">
+                                    <span class="nobr"><RENDER_VALUE what="i18n>totalht"/><RENDER_VALUE what="total>ht"/></span><br/>
+                                    <span class="nobr"><RENDER_VALUE what="i18n>totalttc"/><RENDER_VALUE what="total>ttc"/></span>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="notifL_bottom">
+            </div>
+            <div class="shop_totalCartContainer">
+                <div class="shop_totalCart">
+                    <div class="cart_goToCommand">
+                        <input type="image" class="noBorder"  src="images/shared/icons/bank1/picto_command.png" name="submit_command" alt="{i18n>submit_command}" title="{i18n>submit_command}"/><br />
+                        <RENDER_VALUE what="i18n>submit_command"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </RENDER_FORM>
+</div>

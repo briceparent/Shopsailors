@@ -1,0 +1,11 @@
+<span>
+    <span style="float:right;">
+        <RENDER_VALUE what="constants>currencyBefore"/>
+        <RENDER_VALUE what="shipMode>price"/>
+        <RENDER_VALUE what="constants>currencyAfter"/>
+    </span>
+    <span class="clearBoth">&#160;</span>
+    <img src="{shipMode>logo}"/>
+    <RENDER_VALUE what="shipMode>name"/><br />
+    <RENDER_VALUE what="shipMode>description"/>
+</span>

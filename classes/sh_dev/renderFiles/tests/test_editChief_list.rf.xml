@@ -1,0 +1,37 @@
+<div id="form_box_container">
+    <RENDER_FORM id="chiefList">
+		<div class="form_box_container">
+			<div class="form_box_top">
+				<h3 class="box_title">
+					<RENDER_VALUE what="i18n2>chiefList"/>
+				</h3>
+			</div>
+			<div class="form_box_middle">
+				<div class="formContent">
+					<RENDER_VALUE what="i18n2>editChief_list_pageTitle"/><br />
+					<RENDER_I18NINPUT class="cm_lvdc" i18n="{content>title}" name="title"/><br />
+					<RENDER_CHECKBOX text="{i18n2>activate}" name="showTitle" state="{content>showTitle}"/>
+				</div>
+				<div class="formContent">
+					<RENDER_VALUE what="i18n2>editChief_list_pageIntro"/><br />
+					<RENDER_I18NTEXTAREA class="sh_content" i18n="{content>summary}" name="summary"/>
+				</div>
+				<div class="formContent">
+					<RENDER_VALUE what="i18n2>chiefList_list"/><br />
+					<RENDER_LOOP what="chief">
+						<div class="marginTop_5px">
+							<span class="bold">
+								<RENDER_VALUE what="chief>name"/>&#160;
+							</span>
+							<a href="{}"><RENDER_VALUE what="i18n2>editLink"/></a>&#160;&#160;
+							<a href="{}"><RENDER_VALUE what="i18n2>deleteLink"/></a>
+						</div>
+					</RENDER_LOOP>
+				</div>
+			</div>
+			<div class="form_box_bottom">
+			</div>
+			<input type="submit" value="{i18n>validate}"/>
+		</div>
+    </RENDER_FORM>
+</div>

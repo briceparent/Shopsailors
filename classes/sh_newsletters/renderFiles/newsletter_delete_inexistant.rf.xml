@@ -1,0 +1,7 @@
+<div>
+    <RENDER_NOTIF size="M" title="Suppression de newsletter">
+        La newsletter que vous souhaitez supprimer n'existe pas ou a déjà été supprimée.<br />
+        <br /><br />
+        <a href="{links>showInvisible}">Retourner à la liste des newsletters</a>
+    </RENDER_NOTIF>
+</div>

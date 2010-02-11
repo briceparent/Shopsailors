@@ -1,0 +1,2 @@
+Ce dossier contient les fichiers de style (fichiers CSS).
+Leur syntaxe est relativement complexe, donc sans connaissance, il vaut mieux ne pas les toucher.

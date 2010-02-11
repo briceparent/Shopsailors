@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+	<style>
+		#body{
+		background: transparent url(/templates/global/admin/bcg_restriction.png) no-repeat center top;
+		}
+		#texte{
+		color: #4a4a4a;
+		text-align: center;
+		margin-top: 220;
+		font-size: 25px;
+		}
+		#close_button{
+		text-align: center;
+		margin-top: 70;
+		height: 52;
+		}
+		#close_button img{
+		cursor:pointer;
+		}
+	</style>
+	<meta name="robots" content="noindex,noarchive,nofollow"/>
+	<title>Droits non activés</title>
+	<base href="{restriction>base}"/>
+	<meta name="description" content="Les droits nécéssaires à la connexion n'ont pas été activés"/>
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+	<link rel="stylesheet" media="screen" type="text/css" href="/templates/global/admin.css">
+	</link>
+</head>
+<body id="body"><div id="texte">
+    <RENDER_IFSET what="restrictions>notallowed">
+        <RENDER_VALUE what="i18n>notallowed"/>
+    </RENDER_IFSET>
+    <RENDER_IFSET what="restrictions>nofolder">
+        <RENDER_VALUE what="i18n>nofolder"/>
+    </RENDER_IFSET>
+	</div>
+	<div id="close_button">
+	 <img src="/templates/global/admin/close_button.png" onclick="window.close()"/>
+	</div>
+</body>
+</html>

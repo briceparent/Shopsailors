@@ -1,0 +1,9 @@
+<div>
+    <RENDER_VALUE what="i18n>list"/>: <br />
+    <ul>
+        <RENDER_LOOP what="fonts">
+            <li><RENDER_VALUE what="fonts>name"/></li>
+        </RENDER_LOOP>
+    </ul>
+    <a href="{add>link}"><RENDER_VALUE what="i18n>addfont"/></a>
+</div>

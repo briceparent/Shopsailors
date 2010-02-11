@@ -1,0 +1,127 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+    <head>
+        <title>Websailors</title>
+        <base href="/"/>
+        <meta name="description" content="Websailors"/>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" media="screen" type="text/css" href="/templates/global/admin.css"></link>
+        <link rel="stylesheet" media="screen" type="text/css" href="/CSS/default/main.css"></link>
+        <RENDER_SCRIPT file="PROTOTYPE" direct="direct"/>
+        <script type="text/javascript" src="/sh_browser/singles/getBrowser.js"></script>
+        <script type="text/javascript" src="/sh_colorPicker/singles/colorPicker.js"></script>
+        <script type="text/javascript">
+            var folder = '<RENDER_VALUE what="get>folder"/>';
+            function send(){
+                $$('input.page').each(function(s) {
+                    if(s.checked){
+                        chosenValue=s.value;
+                    }
+                });
+                if(chosenValue == "hardLink"){
+                    chosenValue = $('hardLink_value').value;
+                }
+                textValue = $('hardLink_value').innerHTML;
+                window.opener.tinymce_insertLink(chosenValue);
+                window.close ();
+            }
+            function selectImage(image,id){
+                $('theImage').value = image;
+                return false;
+            }
+            function showBrowser(){
+                /*Launches the browser*/
+                popupBrowser.clearParameters();
+                popupBrowser.parameters.set('type','url');
+                popupBrowser.parameters.set('folder',folder);
+                popupBrowser.parameters.set('action','selectImage');
+                popupBrowser.parameters.set('element','0');
+                popupBrowser.open();
+            }
+        </script>
+        <style type="text/css">
+            table{
+                font-size:  inherit;
+            }
+            tr{
+                vertical-align:top;
+            }
+            td{
+                padding-bottom: 15px;
+            }
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript" src="/sh_helpToolTips/singles/wz_tooltip/wz_tooltip.js"></script>
+        <script type="text/javascript" src="/sh_helpToolTips/singles/wz_tooltip/tip_balloon.js"></script>
+        <div style="width:100%;height:100%;overflow:auto;" class="bg_admin">
+            <table>
+                <tr>
+                    <td>
+                        Image : 
+                    </td>
+                    <td>
+                        <div style="width:300px;">
+                            <input id="theImage" style="width:280px;"/>
+                            <img style="width:20px;height:20px;vertical-align:middle;"
+                                src="/sh_wEditor/singles/plugins/shopsailors/img/imageInserter.gif"
+                                onclick="showBrowser();return false;"/>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Titre :
+                    </td>
+                    <td>
+                        <input id="title" style="width:280px;"/>
+                        <RENDER_HELP what="hihi"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Espacements :
+                    </td>
+                    <td>
+                        <input type="checkbox" id="margin_top" checked="checked"/>en&#160;haut&#160;&#160;
+                        <input type="checkbox" id="margin_bottom" checked="checked"/>en&#160;bas&#160;&#160;
+                        <input type="checkbox" id="margin_left" checked="checked"/>à&#160;gauche&#160;&#160;
+                        <input type="checkbox" id="margin_right" checked="checked"/>à&#160;droite<br />
+                        Dimension : <input id="margins_size" value="5" style="width:30px;"/> pixels
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Bordures :
+                    </td>
+                    <td>
+                        Type :
+                        <select id="border_type">
+                            <option value="none" selected="selected">Aucun</option>
+                            <option value="solid">Solide</option>
+                            <option value="dashed">Pointillés</option>
+                        </select><br />
+                        <input type="checkbox" id="border_top" checked="checked"/>en&#160;haut&#160;&#160;
+                        <input type="checkbox" id="border_bottom" checked="checked"/>en&#160;bas&#160;&#160;
+                        <input type="checkbox" id="border_left" checked="checked"/>à&#160;gauche&#160;&#160;
+                        <input type="checkbox" id="border_right" checked="checked"/>à&#160;droite<br />
+                        Epaisseur : <input id="margins_size" value="1" style="width:30px;"/> pixels<br />
+                        Couleur : <RENDER_COLORPICKER name="border_color" value="000000"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Flottement :
+                    </td>
+                    <td>
+                        <input type="radio" id="floatting" name="floatting" value="nofloat" checked="checked"/>
+                        <img src="/images/shared/icons/no_float.png"/>&#160;&#160;
+                        <input type="radio" id="floatting" name="floatting" value="float_left"/>
+                        <img src="/images/shared/icons/float_left.png"/>&#160;&#160;
+                        <input type="radio" id="floatting" name="floatting" value="float_right"/>
+                        <img src="/images/shared/icons/float_right.png"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

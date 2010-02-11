@@ -1,0 +1,88 @@
+<div id="form_box_container">
+    <RENDER_JS>
+        var diffusionListChanged = false;
+        function difflist_setChange(){
+            diffusionListChanged = true;
+        }
+        function difflist_changePage(page){
+            if(diffusionListChanged){
+                if(!confirm('<RENDER_VALUE what="i18n>thereWasSomeChanges"/>')){
+                    return false;
+                }
+            }
+            window.location.href = page;
+        }
+    </RENDER_JS>
+    <RENDER_FORM id="edit_diffusionList" >
+        <div class="form_box_container">
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_IFSET what="list>new">
+                        <RENDER_VALUE what="i18n>nl_newDiffusionList"/>
+                    </RENDER_IFSET>
+                    <RENDER_IFNOTSET what="list>new">
+                        <RENDER_VALUE what="i18n>nl_editDiffusionList"/>
+                    </RENDER_IFNOTSET>
+                    <RENDER_HELP what="{i18n>nl_diffusionList_explanation}"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <RENDER_IFSET what="error>text">
+                    <div class="formContent alert">
+                        <RENDER_VALUE what="error>text"/>
+                    </div>
+                </RENDER_IFSET>
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>nl_diffusionList_name"/>
+                    <br />
+                    <input class="inputForm" name="name" value="{list>name}" onchange="difflist_setChange();"/>
+                </div>
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>nl_diffusionList_desc"/>
+                    <RENDER_HELP what="{i18n>nl_diffusionList_desc_explanation}"/>
+                    <br />
+                    <textarea class="textAreaForm" name="description" onchange="difflist_setChange();">
+                        <RENDER_VALUE what="list>description"/>
+                    </textarea>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>nl_diffusionList"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="formContent">
+                    <div class="marginTop_5px bold">
+                        <span class="falseLink" onclick="difflist_changePage('{new>link}');">
+                            <RENDER_VALUE what="i18n>newDiffusionListLink"/>
+                        </span>
+                    </div>
+                </div>
+                <div class="formContent">
+                    <RENDER_LOOP what="diffusionList">
+                        <RENDER_IFNOTSET what="diffusionList>dontshow">
+                            <div class="marginTop_5px">
+                                <span class="bold">
+                                    <RENDER_VALUE what="diffusionList>name"/>
+                                </span>&#160;
+                                <RENDER_HELP what="{diffusionList>description}"/>
+                                <span class="falseLink" onclick="difflist_changePage('{diffusionList>edit}');">
+                                    <RENDER_VALUE what="i18n>editLink"/>
+                                </span>&#160;&#160;
+                                <span class="falseLink" onclick="difflist_changePage('{diffusionList>remove}');">
+                                    <RENDER_VALUE what="i18n>deleteLink"/>
+                                </span>
+                            </div>
+                        </RENDER_IFNOTSET>
+                    </RENDER_LOOP>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+            <input type="submit" value="{i18n>validate}"/>
+        </div>
+    </RENDER_FORM>
+</div>

@@ -1,0 +1,139 @@
+<div id="form_box_container">
+    <RENDER_JS>
+        String.prototype.trim = function(){
+            /* method found at http://anothergeekwebsite.com/fr/2007/03/trim-en-javascript */
+            return this.replace(/(?:^\s+|\s+$)/g, "");
+        }
+        function newsletter_setLoading(status){
+            if(status){
+                $('test_mail_response_img').show();
+                $('test_mail_response').style.backgroundImage = 'url(/images/shared/icons/bank1/sh_loading.gif)';
+                $(id + '_content').style.backgroundRepeat = 'no-repeat';
+                $(id + '_content').style.backgroundPosition = 'center 50%';
+            }else{
+                $('test_mail_response_img').hide();
+                $('test_mail_response_btn').style.backgroundImage = 'none';
+                $(id + '_content').style.backgroundImage = 'none';
+            }
+        }
+        function newsletter_test(){
+            var ed = tinyMCE.get('content');
+            content = ed.getContent();
+            response = $('test_mail_response');
+            response.innerHTML = '<RENDER_VALUE what="i18n>test_sending"/>';
+
+            var getParameters = new Array();
+            getParameters['content'] = content;
+            getParameters['mail'] = $('test_mail').value;
+            getParameters['title'] = $('title').value;
+
+            uri = "/newsletters/sendTest.php";
+            new Ajax.Updater(
+                response,
+                uri,
+                {
+                    parameters : getParameters,
+                    method : "post",
+                    evalScripts : true,
+                    onSuccess:function(){
+                        response.style.backgroundImage = 'none';
+                    }
+                }
+            );
+        }
+        function newsletter_save(){
+            if($('title').value.trim() == ''){
+                alert('<RENDER_VALUE what="i18n>titleIsEmpty"/>');
+            }else{
+                $('edit_newsletter').submit();
+            }
+        }
+    </RENDER_JS>
+    <RENDER_FORM id="edit_newsletter">
+        <RENDER_ADMINBOX title="Titre de la boite">
+            Contenu placé directement dans le RENDER_ADMINBOX.
+            <RENDER_ADMINBOXCONTENT>
+                Et voici un contenu placé dans un RENDER_ADMINBOXCONTENT à l'intérieur du RENDER_ADMINBOX.<br />
+                Bien sûr, vous pouvez insérer ici tous les éléments que vous voulez.
+            </RENDER_ADMINBOXCONTENT>
+            <RENDER_ADMINBOXCONTENT>
+                Et placer autant de RENDER_ADMINBOXCONTENT que vous le voulez.
+            </RENDER_ADMINBOXCONTENT>
+        </RENDER_ADMINBOX>
+
+        <div class="form_box_container">
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>editNewsletter_title"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>newsletterTitle"/>
+                    <RENDER_HELP what="{i18n>newsletterTitle_explanations}"/>
+                    <br />
+                    <input class="inputForm" name="title" id="title" value="{newsletter>title}"/>
+                </div>
+                <RENDER_IFNOTSET what="newsletter>sent">
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>newsletterDate"/>
+                        <br />
+                        <RENDER_DATEPICKER from="(0,0,1)" to="(0,2,0)" name="date" value="{newsletter>date}"/>
+                        <RENDER_HELP what="{i18n>newsletterDate_explanations}"/>
+                        <br />
+                    </div>
+                    <div class="formContent">
+                        <RENDER_CHECKBOX text="{i18n>sendNewsletter}" name="sendIt" state="{newsletter>sendIt}" help="{i18n>sendNewsletter_explanations}"/>
+                    </div>
+                    <div class="formContent">
+                        Cette newsletter sera envoyée aux listes suivantes :
+                        <ul>
+                        <RENDER_LOOP what="newsletters">
+                            <li>
+                                <RENDER_VALUE what="newsletters>name"/>
+                                <input type="hidden" name="newsletters[{newsletters>id}]" value="set"/>
+                            </li>
+                        </RENDER_LOOP>
+                        </ul>
+                    </div>
+                </RENDER_IFNOTSET>
+                <RENDER_IFSET what="newsletter>sent">
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>newsletter_hasBeenSent"/>
+                    </div>
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>newsletter_hasBeenSent_date"/>
+                        <RENDER_VALUE what="newsletter>date"/>
+                    </div>
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>newsletter_hasBeenSent_dest"/>
+                        <ul>
+                            <RENDER_LOOP what="newsletters">
+                                <li>
+                                    <RENDER_VALUE what="newsletters>name"/>
+                                    <input type="hidden" name="newsletters[{newsletters>id}]" value="set"/>
+                                </li>
+                            </RENDER_LOOP>
+                        </ul>
+                    </div>
+                </RENDER_IFSET>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+            <h3 class="contentTitle">
+                <RENDER_VALUE what="i18n>editNewsletter_contentTitle"/>
+            </h3>
+            <div class="content_edit">
+                <RENDER_WEDITOR style="width:620px;height:400px;" id="content" class="content_editor" type="newsletter" content="{newsletter>content}" name="content"/>
+            </div>
+            <div>
+                <input id="test_mail" value="brice.parent@websailors.fr"/>
+                <input type="button" id="test_mail_response_btn" value="{i18n>test_newsletter}" onclick="newsletter_test();"/>
+                    <img id="test_mail_response_img" src="/images/shared/icons/bank1/sh_loading.gif" style="display:none;"/>
+                <div id="test_mail_response">
+                </div>
+            </div>
+            <input type="button" value="{i18n>validate}" onclick="newsletter_save();"/>
+        </div>
+    </RENDER_FORM>
+</div>

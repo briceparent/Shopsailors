@@ -1,0 +1,49 @@
+CHANGELOG RoundCube Webmail
+===========================
+
+- Specify toolbar container in compose template (#1486247)
+- Fix $_SERVER['HTTPS'] check for SSL forcing on IIS (#1486243)
+- Avoid unnecessary page loads for selected tab (#1486032)
+- Fix quota indicator issues by content generation on client-size (#1486197, #1486220)
+- Don't display disabled sections in Settings (#1486099)
+- Added server-side e-mail address validation with 'email_dns_check' option (#1485857)
+- Fix login page loading into an iframe when session expires (#1485952)
+- Allow setting port number in 'force_https' option (#1486091)
+- Option 'force_https' replaced by 'force_https' plugin
+- Fix IE issue with non-UTF-8 characters in AJAX response (#1486159)
+- Partially fixed "empty body" issue by showing raw body of malformed message (#1486166)
+- Fix importing/sending to email address with whitespace (#1486214)
+- Added XIMSS (CommuniGate) driver for Password plugin
+- Fix newly attached files are not saved in drafts w/o editing any text (#1486202)
+- Added attachment upload indicator with parallel upload (#1486058)
+- Use default_charset for bodies of messages without charset definition (#1486187)
+- Password: added cPanel driver
+- Fix return to first page from e-mail screen (#1486105)
+- Fix handling HTML comments in HTML messages (#1486189)
+- Fix folder/messagelist controls alignment - icons used (#1486072)
+- Fix LDAP addressbook shows 'Contact not found' error sometimes (#1486178)
+- Fix cache status checking + improve cache operations performance (#1486104)
+- Prevent from setting INBOX as any of special folders (#1486114)
+- Fix regular expression for e-mail address (#1486152)
+- Fix Received header format
+- Implemented sorting by message index - added 'index_sort' option (#1485936)
+- Fix dl() use in installer (#1486150)
+- Added 'ldap_debug' option
+- Fix "Empty startup greeting" bug (#1486085)
+- Fix setting user name in 'new_user_identity' plugin (#1486137)
+- Fix incorrect count of new messages in folder list when using multiple IMAP clients (#1485995)
+- Fix all folders checking for new messages with disabled caching (#1486128)
+- Support skins in 'archive' and 'markasjunk' plugins
+- Added 'html_editor' hook (#1486068)
+- Fix DB constraint violation when populating messages cache (#1486052)
+- Password: added password strength options (#1486062)
+- Fix LDAP partial result warning (#1485536)
+- Fix delete in message view deletes permanently with flag_for_deletion=true (#1486101)
+- Use faster/secure mt_rand() (#1486094)
+- Fix roundcube hangs on empty inbox with bincimapd (#1486093)
+- Fix wrong headers for IE on servers without $_SERVER['HTTPS'] (#1485926)
+- Force IE style headers for attachments in non-HTTPS session, 'use_https' option (#1485655)
+- Check 'post_max_size' for upload max filesize (#1486089) 
+- Password Plugin: Fix %d inserts username instead of domain (#1486088)
+- Fix rcube_mdb2::affected_rows() (#1486082)
+

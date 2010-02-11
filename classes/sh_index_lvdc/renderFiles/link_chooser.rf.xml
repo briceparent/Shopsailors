@@ -1,0 +1,51 @@
+<div id="form_box_container">
+    <RENDER_FORM method="post" action="" id="chooseIndexPage" >
+        <div class="form_box_container">
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>selectIndexTitle"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="form_box_content">
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>title"/><br />
+                        <RENDER_I18NINPUT class="sh_content" i18n="{content>title}" name="title"/>
+                        <input name="lang" type="hidden" value="{content>lang}"/><br />
+                    <RENDER_CHECKBOX text="{i18n>showTitle}" name="showTitle" state="{content>showTitle}"/>
+                    </div>
+                    <div class="formContent">
+                    <RENDER_VALUE what="i18n>contentImage"/>
+                    <RENDER_HELP what="{i18n>contentImage_explanation}"/><br />
+                    <RENDER_IMAGESELECTOR name="image" value="{content>image}" folder="lvdc/index" style="width:200px;height:200px;"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+            <h3 class="contentTitle">
+                <RENDER_VALUE what="i18n>rightContent"/>
+            </h3>
+            <div class="content_edit">
+                <RENDER_I18NWEDITOR class="content_editor" i18nClass="sh_content" i18n="{content>content}" name="content"/>
+            </div>
+            <br /><br />
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>selectIndexTitle_secondBox"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="form_box_content">
+                    <div class="formContent">
+                        <RENDER_VALUE what="i18n>indexLVDC_diaporama"/> 
+                        <RENDER_MULTIPLEIMAGESSELECTOR name="diapo_images" value="" folder="SH_IMAGES_FOLDERlvdc/diapo"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+        <input type="submit" value="{i18n>validate}"/>
+        </div>
+    </RENDER_FORM>
+</div>

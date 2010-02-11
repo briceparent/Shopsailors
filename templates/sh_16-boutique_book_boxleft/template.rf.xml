@@ -1,0 +1,73 @@
+<html xml:lang="fr">
+    <head>
+        <RENDER_VALUE what="head>content"/>
+    </head>
+    <RENDER_TAG type="body" what="body>data">
+        <RENDER_VALUE what="body>beginning"/>
+        <div id="head">
+            <RENDER_IFSET what="connect>link">
+                <div id="connectionContainer">
+                    <table>
+                        <tr>
+                            <td>
+                                <img src="/images/shared/icons/bank1/picto_identification.png" class="pictoConnection"/>
+                            </td>
+                            <td>
+                                <a href="{connect>link}" class="grey_link_connect"><RENDER_VALUE what="i18n>connectAccountClient"/></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </RENDER_IFSET>
+            <RENDER_IFSET what="disconnect>link">
+                <div id="connectionContainer">
+                    <table>
+                        <tr>
+                            <td>
+                                <img src="/images/shared/icons/bank1/picto_identification.png" class="pictoConnection"/>
+                            </td>
+                            <td >
+                                <a href="{disconnect>link}" class="grey_link_connect"><RENDER_VALUE what="i18n>disconnectAccountClient"/></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </RENDER_IFSET>
+            <RENDER_VALUE what="language>selector"/>
+            <h1 class="topTitle">
+                <RENDER_VALUE what="body>headline"/>
+            </h1>
+        </div>
+        <div class="menu1">
+            <RENDER_VALUE what="body>menu_1"/>
+        </div>
+        <div id="mainContainer">
+            <div class="logo">
+            </div>
+            <div id="bg_menu1">
+            </div>
+                <div id="page_content">
+                    <table class="contentTable">
+                        <tr>
+                            <td>
+                                <div class="boxleft_content">
+                                    <RENDER_TEST rf="boxleft_10geli.rf.php" values="boxleft_10geli.values.php"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="content_middle">
+                                    <RENDER_IFSET what="body>title">
+                                        <h1><RENDER_VALUE what="body>title"/></h1>
+                                    </RENDER_IFSET>
+                                    <RENDER_VALUE what="body>content"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        <div id="copyrights">
+            <RENDER_VALUE what="body>copyrights"/>
+        </div>
+    </RENDER_TAG>
+</html>

@@ -1,0 +1,26 @@
+<div id="search_results">
+    <div class="search_results_type">
+        <div class="search_results_type_name">
+            <RENDER_VALUE what="i18n>resultsName"/>
+        </div>
+        <div class="search_results_type_content">
+            <RENDER_VALUE what="results>content"/>
+        </div>
+    </div>
+    <RENDER_IFSET what="resultsPages>0">
+        <div class="resultsPages">
+            <RENDER_LOOP what="resultsPages">
+                <RENDER_IFSET what="resultsPages>link">
+                    <a href="{resultsPages>link}">
+                        <RENDER_VALUE what="resultsPages>num"/>
+                    </a>
+                </RENDER_IFSET>
+                <RENDER_IFNOTSET what="resultsPages>link">
+                    <span class="search_activePage">
+                        <RENDER_VALUE what="resultsPages>num"/>
+                    </span>
+                </RENDER_IFNOTSET>
+            </RENDER_LOOP>
+        </div>
+    </RENDER_IFSET>
+</div>

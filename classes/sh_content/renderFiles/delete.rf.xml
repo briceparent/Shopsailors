@@ -1,0 +1,21 @@
+<div class="content">
+    Vous êtes sur le point de supprimer l'article 
+    "<span class="bold">
+        <RENDER_VALUE what="content>title"/>
+    </span>", datant du <RENDER_VALUE what="content>date"/>
+    <RENDER_IFSET what="content>active">
+        <table>
+            <tr>
+                <td style="vertical-align:top;">
+                    <img src="/images/shared/icons/bank1/picto_caution.png"/>
+                </td>
+                <td>
+                    <RENDER_VALUE what="i18n>deletePage_isActive"/>
+                </td>
+            </tr>
+        </table>
+    </RENDER_IFSET>
+    <RENDER_FORM id="delete_content">
+        <input type="submit" value="{i18n>action_delete}"/>
+    </RENDER_FORM>
+</div>

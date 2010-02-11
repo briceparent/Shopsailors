@@ -1,0 +1,22 @@
+<div>
+    <RENDER_NOTIF size="M">
+        <RENDER_IFSET what="response>ok">
+            <RENDER_IFSET what="response>validated">
+                <RENDER_VALUE what="i18n>confirm_subscription_validated"/>
+            </RENDER_IFSET>
+            <RENDER_IFNOTSET what="response>validated">
+                <RENDER_IFSET what="response>alreadyValidated">
+                    <RENDER_VALUE what="i18n>confirm_subscription_alreadyValidated"/>
+                </RENDER_IFSET>
+            </RENDER_IFNOTSET>
+        </RENDER_IFSET>
+        <RENDER_IFNOTSET what="response>ok">
+            <RENDER_IFSET what="response>dateOver">
+                <RENDER_VALUE what="i18n>confirm_subscription_dateOver"/>
+            </RENDER_IFSET>
+            <RENDER_IFNOTSET what="response>dateOver">
+                <RENDER_VALUE what="i18n>confirm_subscription_error"/>
+            </RENDER_IFNOTSET>
+        </RENDER_IFNOTSET>
+    </RENDER_NOTIF>
+</div>

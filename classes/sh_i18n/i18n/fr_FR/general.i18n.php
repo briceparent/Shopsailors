@@ -1,0 +1,25 @@
+<?php
+$i18n = array(
+'yes' => 'Oui',
+'no' => 'Non',
+'send' => 'Envoyer',
+'ok' => 'Ok',
+'yesorno' => 'Oui ou non?',
+'save'=> 'Enregistrer',
+'name'=>'Nom',
+'firstname'=>'Prénom',
+'lastname'=>'Nom',
+'address'=>'Adresse',
+'titleCheckbox'=>'Choisissez la ou les langues',
+'titleRadio'=>'Choisissez la langue',
+'lang_en_GB'=>'Anglais',
+'lang_fr_FR'=>'Français',
+'lang_es_ES'=>'Espagnol',
+'lang_de_DE'=>'Allemand',
+'lang_it_IT'=>'Italien',
+'lang_pt_PT'=>'Portugais',
+'default'=>'Langue par défaut',
+'modifyDefaultLang'=>'modifier',
+'modify'=>'Modifier',
+'validate'=>'Valider'
+);
