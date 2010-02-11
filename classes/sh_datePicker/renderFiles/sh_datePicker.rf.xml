@@ -57,7 +57,7 @@
             </RENDER_IFSET>
         </div>
         <div id="{datePicker>id}_content">
-            <img src="/images/shared/icons/bank1/sh_loading.gif" alt="loading"/>
+            <img src="/templates/global/admin/icons/sh_loading.gif" alt="loading"/>
         </div>
     </div>
 </span>

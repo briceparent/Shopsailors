@@ -166,6 +166,19 @@ exit;/**/
     public function changeToRealFolder($askedFolder,$file = '',$buttonType = ''){
         $templateFolder = $this->links->site->templateFolder;
         $variation = $this->links->site->variation;
+        if(substr($askedFolder,0,strlen(SH_SHAREDIMAGES_PATH)) == SH_SHAREDIMAGES_PATH){
+            // We allow the templates to replace common icons with custom ones
+            //which may be found in /templates/[template]/images/[path_to_the_image_from_sharedimagefolder]
+            $rewritedImage = str_replace(
+                SH_SHAREDIMAGES_PATH,
+                $templateFolder.'images/',
+                $askedFolder
+            );
+            if(file_exists($rewritedImage.$file)){
+                return $rewritedImage;
+            }
+        }
+        // We replace the path using some regexp
         $replace = array(
             '`/images/template/variation/`',
             '`/images/template/`',
@@ -186,6 +199,7 @@ exit;/**/
         );
         $ret = preg_replace($replace,$with,$askedFolder);
 
+        // We clean the folder name (remove double slashes)
         return str_replace('//','/',$ret);
     }
 

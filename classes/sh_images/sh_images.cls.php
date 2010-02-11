@@ -49,6 +49,7 @@ class sh_images extends sh_core{
         $this->links->cache->disable();
         // we verify if the session exists.
         if(isset($_SESSION['SH_BUILT'])){
+            // It does, so we verify if the image file exists
             $askedFolder = $_GET['folder'];
             $file = $_GET['file'];
             $buttonType=$_GET['button_type'];
@@ -56,16 +57,17 @@ class sh_images extends sh_core{
                 $this->createPreview($_GET['font'], $_GET['height']);
                 return true;
             }
+            // We translate path to folder
             $folder = $this->links->path->changeToRealFolder($askedFolder,$file,$buttonType);
-            // It does, so we verify if the image file exists
+            // we verify if the image file exists
             if(file_exists($folder.$file)){
-                // It does so, so we send it with the apropriate header
+                // It does, so we send it with the apropriate header
                 $contentType = mime_content_type($folder.$file);
                 header('Content-type: '.$contentType);
                 readfile($folder.$file);
                 return true;
             }
-            // It doesn't so we verify if the image has to be generated
+            // It doesn't, so we verify if the image has to be generated
             if(
                 $folder == SH_TEMP_FOLDER
                 || substr($askedFolder.$file,0,strlen(SH_GENERATEDIMAGES_PATH)) == SH_GENERATEDIMAGES_PATH

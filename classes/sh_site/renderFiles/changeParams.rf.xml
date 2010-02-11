@@ -1,21 +1,5 @@
 <div>
     <RENDER_FORM action="" id="paramsEditor" >
-        <style type="text/css">
-          div.slider {
-              width:360px;
-              margin:10px 0;
-              background:transparent url(/images/shared/icons/bank1/rainbow.png) no-repeat top center;
-              height:10px;
-              position: relative;
-          }
-          div.slider div.handle {
-              width:8px;
-              height:15px;
-              background-color:#000;
-              cursor:move;
-              position: absolute;
-          }
-        </style>
         <div class="form_box_container">
             <div class="form_box_top">
                 <h3 class="box_title">
