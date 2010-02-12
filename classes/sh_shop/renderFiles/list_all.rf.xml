@@ -69,7 +69,7 @@
                                                 </td>
                                                 <td class="listProduct_detailLink">
                                                     <a href="{products>link}">
-                                                        <img src="/images/shared/icons/bank1/picto_modify.png" alt="view_product_details" title="{i18n>showAllProducts_linktext}"/>
+                                                        <img src="/images/shared/icons/picto_modify.png" alt="view_product_details" title="{i18n>showAllProducts_linktext}"/>
                                                     </a>
                                                 </td>
                                             </tr>

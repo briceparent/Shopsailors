@@ -122,7 +122,22 @@
 	background: transparent url(admin/content_5.png) repeat-y center 0;  
 }
 
+/*changeParams : sh_site*/
 
+div.slider {
+  width:360px;
+  margin:10px 0;
+  background:transparent url(/templates/global/admin/icons/rainbow.png) no-repeat top center;
+  height:10px;
+  position: relative;
+}
+div.slider div.handle {
+  width:8px;
+  height:15px;
+  background-color:#000;
+  cursor:move;
+  position: absolute;
+}
 /*ALL ADMIN BOXES*/
   
 /*
@@ -716,7 +731,7 @@ ul#shortList_activeElements{
 /*Mulitiple image selector*/
 
 .mis_deleteCursor{
-    cursor:url(/images/shared/icons/bank1/trash_cursor.png),auto;
+    cursor:url(/templates/global/admin/icons/trash_cursor.png),auto;
 }
 .mis_imagesContainer{
     width:370px;

@@ -19,20 +19,20 @@
                             <span>
                                 <RENDER_IFSET what="product>picto_addtocart_link">
                                     <a href="{product>picto_addtocart_link}">
-                                        <img src="/images/shared/icons/bank1/picto_cart.png" alt="add_to_cart" title="{i18n>pictoAddToCart}"/>
+                                        <img src="/images/shared/icons/picto_cart.png" alt="add_to_cart" title="{i18n>pictoAddToCart}"/>
                                     </a>
                                 </RENDER_IFSET>
                                 <RENDER_IFNOTSET what="product>picto_addtocart_link">
-                                    <img src="/images/shared/icons/bank1/picto_nocart.png" alt="add_to_cart" title="{i18n>pictoAddToCart}"/>
+                                    <img src="/images/shared/icons/picto_nocart.png" alt="add_to_cart" title="{i18n>pictoAddToCart}"/>
                                 </RENDER_IFNOTSET>
                                 <RENDER_IFSET what="product>picto_show_link">
                                     <a href="{product>picto_show_link}">
-                                        <img src="/images/shared/icons/bank1/picto_details.png" alt="view_details_sheet" title="{i18n>pictoShow}"/>
+                                        <img src="/images/shared/icons/picto_details.png" alt="view_details_sheet" title="{i18n>pictoShow}"/>
                                     </a>
                                 </RENDER_IFSET>
                                 <RENDER_IFSET what="product>picto_sendmail_link">
                                     <a href="{product>picto_sendmail_link}">
-                                        <img src="/images/shared/icons/bank1/picto_mail.png" alt="send_by_mail" title="{i18n>pictoSendmail}"/>
+                                        <img src="/images/shared/icons/picto_mail.png" alt="send_by_mail" title="{i18n>pictoSendmail}"/>
                                     </a>
                                 </RENDER_IFSET>
                             </span>

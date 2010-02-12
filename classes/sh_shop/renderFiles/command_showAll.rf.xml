@@ -59,7 +59,7 @@
                 <div class="shop_totalCart">
                     <RENDER_FORM id="command_confirm">
                         <div class="cart_goToCommand">
-                            <input type="image"  src="images/shared/icons/bank1/picto_command.png" name="submit_command" alt="{i18n>submit_command}" title="{i18n>submit_command}"/><br />
+                            <input type="image"  src="images/shared/icons/picto_command.png" name="submit_command" alt="{i18n>submit_command}" title="{i18n>submit_command}"/><br />
                             <RENDER_VALUE what="i18n>command_confirm"/>
                         </div>
                     </RENDER_FORM>

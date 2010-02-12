@@ -23,7 +23,7 @@
                 <a href="{link>passPhrase_link}" class="grey_link">
                     <RENDER_VALUE what="i18n>password_forgotten"/>
                 </a>
-                <div><input type="image" src="/images/shared/icons/bank1/picto_validate.png"/></div>
+                <div><input type="image" src="/templates/global/admin/icons/picto_validate.png"/></div>
             </RENDER_FORM>
         </div>
         <div id="createAccountLink">

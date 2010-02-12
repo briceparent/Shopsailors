@@ -37,11 +37,11 @@ class sh_dev extends sh_core{
     const FILE_MODIFIED = 'modified';
     const FILE_INEXISTANT = 'inexistant';
     // And their icons
-    const IMAGE_FILE_NEW = '/images/shared/icons/bank1/picto_add.png';
-    const IMAGE_FILE_DELETED = '/images/shared/icons/bank1/picto_trash.png';
-    const IMAGE_FILE_NOTCHANGED = '/images/shared/icons/bank1/picto_equal.png';
-    const IMAGE_FILE_MODIFIED = '/images/shared/icons/bank1/picto_modify.png';
-    const IMAGE_FILE_INEXISTANT = '/images/shared/icons/bank1/picto_delete.png';
+    const IMAGE_FILE_NEW = '/images/shared/icons/picto_add.png';
+    const IMAGE_FILE_DELETED = '/images/shared/icons/picto_trash.png';
+    const IMAGE_FILE_NOTCHANGED = '/images/shared/icons/picto_equal.png';
+    const IMAGE_FILE_MODIFIED = '/images/shared/icons/picto_modify.png';
+    const IMAGE_FILE_INEXISTANT = '/images/shared/icons/picto_delete.png';
 
     public function construct(){
         $this->master = $this->isMaster();

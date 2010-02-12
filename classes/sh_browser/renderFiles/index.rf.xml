@@ -31,17 +31,6 @@
         var returnNeeded = '<RENDER_VALUE what="browser>doAction"/>';
         var returnMethod = '<RENDER_VALUE what="browser>action"/>';
         var returnParam = '<RENDER_VALUE what="browser>element"/>';
-        
-        /*
-        function returnElement(name) {
-            if('<RENDER_VALUE what="browser>doAction"/>'){
-                cpt = '<RENDER_VALUE what="browser>id"/>';
-                window.opener.<RENDER_VALUE what="browser>action"/>(name,cpt);
-                window.close ();
-            }else{
-            }
-        }
-        */
     </script>
 </head>
 <body class="browser_container">

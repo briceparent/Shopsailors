@@ -41,14 +41,14 @@
                 </div>
             </div>
             <div id="editMenu_waiting" style="display:none;">
-                <img src="/images/shared/icons/bank1/sh_loading_small.gif" style="vertical-align:middle;"/>
+                <img src="/templates/global/admin/icons/sh_loading_small.gif" style="vertical-align:middle;"/>
                 <RENDER_VALUE what="i18n>waiting"/>
             </div>
             <div id="menu_imagesUpdater"></div>
                 <RENDER_LOOP what="sections">
                     <div id="category_{sections>category}" class="section">
                         <div class="removeSection" onclick="removeSection('category_{sections>category}')">
-                            <img src="/images/shared/icons/cancel.png" alt="{i18n>deleteMenu}"/>
+                            <img src="/templates/global/admin/icons/cancel.png" alt="{i18n>deleteMenu}"/>
                         </div>
                         <div id="params_{sections>category}" class="params">
                             <div class="editMenu_buttonTitle">

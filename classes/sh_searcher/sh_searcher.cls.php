@@ -54,6 +54,7 @@ class sh_searcher extends sh_core {
         $values['search']['action'] = $this->translatePageToUri(
             $this->shortClassName.'/search/'
         );
+        // Verifies if there is a custom searchEngine or if we should show the default one
         $rfFromTemplate =  $this->links->site->templateFolder.'searcher/searchEngine.rf.xml';
         if(file_exists($rfFromTemplate)){
             $rf = $rfFromTemplate;
@@ -208,9 +209,15 @@ class sh_searcher extends sh_core {
             $this->removeSpecialChars($search)
         );
 
+        $rfNoResultsTemplate =  $this->links->site->templateFolder.'searcher/show_noResults.rf.xml';
+        if(file_exists($rfNoResultsTemplate)){
+            $rfNoResults = $rfNoResultsTemplate;
+        }else{
+            $rfNoResults = 'show_noResults';
+        }
         if(strlen(trim($search)) < 3){
             $values['error']['tooShort'] = true;
-            $this->render('show_noResults',$values);
+            $this->render($rfNoResults,$values);
             return true;
         }
 
@@ -224,7 +231,7 @@ class sh_searcher extends sh_core {
         );
 
         if(!is_array($allKeyWordsResults)){
-            $this->render('show_noResults');
+            $this->render($rfNoResults);
             return true;
         }
         // Giving points for the amount of found words in all rows
@@ -326,7 +333,14 @@ class sh_searcher extends sh_core {
                 }
             }
         }
-        $this->render('show_results',$values);
+
+        $rfFromTemplate =  $this->links->site->templateFolder.'searcher/show_results.rf.xml';
+        if(file_exists($rfFromTemplate)){
+            $rf = $rfFromTemplate;
+        }else{
+            $rf = 'show_results';
+        }
+        $this->render($rf,$values);
         return true;
     }
 
@@ -374,7 +388,13 @@ class sh_searcher extends sh_core {
                 }
             }
         }
-        $this->render('show_results_filtered',$values);
+        $rfFromTemplate =  $this->links->site->templateFolder.'searcher/show_results_filtered.rf.xml';
+        if(file_exists($rfFromTemplate)){
+            $rf = $rfFromTemplate;
+        }else{
+            $rf = 'show_results_filtered';
+        }
+        $this->render($rf,$values);
         return true;
     }
 

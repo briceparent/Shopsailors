@@ -1,7 +1,7 @@
 <div class="multipleImagesSelector" style="width:370px;border:1px dotted grey;">
     <input type="hidden" id="product_images_input_{mis>uid}" name="{mis>name}" value="{mis>value}"/>
     <div class="mis_pictoAdd" onclick="product_addImage_{mis>uid}();">
-        <img src="/images/shared/icons/bank1/picto_add.png"/>
+        <img src="/templates/global/admin/icons/picto_add.png"/>
     </div>
     <div id="product_images_{mis>uid}" class="mis_imagesContainer">
     </div>

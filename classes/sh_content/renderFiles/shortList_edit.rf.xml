@@ -57,7 +57,7 @@
                                     <li id="li_shortList_{activeContents>id}" class="shortList_element pointer">
                                         <RENDER_VALUE what="activeContents>id"/> - <RENDER_VALUE what="activeContents>title"/>
                                         <span onclick="removeFromList('li_shortList_{activeContents>id}');">
-                                            <img src="/images/shared/icons/bank1/picto_delete.png"/>
+                                            <img src="/templates/global/admin/icons/picto_delete.png"/>
                                         </span>
                                     </li>
                                 </RENDER_LOOP>
@@ -90,7 +90,7 @@
                                     modified = true;
                                     alreadyListed[newName] = true;
                                     new Effect.Highlight($('shortList_active'),{startcolor:'#99FF99',endcolor:'<RENDER_VALUE what="style>bgColor"/>'});
-                                    removeLink = ' <span onclick="removeFromList(\'' + newName + '\');"><img src="/images/shared/icons/bank1/picto_delete.png"/></span>';
+                                    removeLink = ' <span onclick="removeFromList(\'' + newName + '\');"><img src="/templates/global/admin/icons/picto_delete.png"/></span>';
                                     $('shortList_activeElements').innerHTML += '<li id="' + newName + '" class="shortList_element pointer">' + element.innerHTML + removeLink + '</li>';
                                     buildSortable();
                                 }
@@ -134,11 +134,11 @@
                 <div class="form_box_content">
                     <div class="formContent">
                         <div style="text-align:center">
-                            <img src="/images/shared/icons/bank1/picto_caution.png"/>
+                            <img src="/templates/global/admin/icons/picto_caution.png"/>
                         </div>
                         <RENDER_VALUE what="i18n>contentlisteditor_deleteContent"/><br /><br />
                         <div class="noBorder" style="text-align:center; border: none;">
-                            <input type="image" class=""  src="images/shared/icons/bank1/picto_delete.png" name="delete_list" alt="{i18n>action_delete}" title="{i18n>action_delete}"/>
+                            <input type="image" class=""  src="/templates/global/admin/icons/picto_delete.png" name="delete_list" alt="{i18n>action_delete}" title="{i18n>action_delete}"/>
                         </div>
                     </div>
                 </div>

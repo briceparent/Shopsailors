@@ -100,7 +100,7 @@ function dp_showNextMonth(id){
 
 function dp_setLoading(id,status){
     if(status){
-        $(id + '_content').style.backgroundImage = 'url(/images/shared/icons/bank1/sh_loading.gif)';
+        $(id + '_content').style.backgroundImage = 'url(/templates/global/admin/icons/sh_loading.gif)';
         $(id + '_content').style.backgroundRepeat = 'no-repeat';
         $(id + '_content').style.backgroundPosition = 'center 50%';
     }else{

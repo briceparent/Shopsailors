@@ -2491,10 +2491,10 @@ class sh_shop extends sh_core {
                     $values['category_elements'][$cpt]['navigator_price'] = $element['price'];
                     $addToCartLink = $this->links->path->getLink('shop/addToCart/');
                     $addToCartLink .= '?product='.$element['id'];
-                    $values['category_elements'][$cpt]['pictos'][0]['image'] = '/images/shared/icons/bank1/picto_cart.png';
+                    $values['category_elements'][$cpt]['pictos'][0]['image'] = '/images/shared/icons/picto_cart.png';
                     $values['category_elements'][$cpt]['pictos'][0]['image_alt'] = 'picto_cart';
                     $values['category_elements'][$cpt]['pictos'][0]['link'] = $addToCartLink;
-                    $values['category_elements'][$cpt]['pictos'][1]['image'] = '/images/shared/icons/bank1/picto_details.png';
+                    $values['category_elements'][$cpt]['pictos'][1]['image'] = '/images/shared/icons/picto_details.png';
                     $values['category_elements'][$cpt]['pictos'][1]['image_alt'] = 'picto_details';
                     $values['category_elements'][$cpt]['pictos'][1]['link'] = $link;
                     $cpt++;
@@ -2748,17 +2748,17 @@ class sh_shop extends sh_core {
                     $values['list'][$cpt]['navigator_price'] = $element['price'];
                     $addToCartLink = $this->links->path->getLink('shop/addToCart/');
                     $addToCartLink .= '?product='.$element['id'];
-                    $values['list'][$cpt]['pictos'][0]['image'] = '/images/shared/icons/bank1/picto_cart.png';
+                    $values['list'][$cpt]['pictos'][0]['image'] = '/images/shared/icons/picto_cart.png';
                     $values['list'][$cpt]['pictos'][0]['image_alt'] = 'picto_cart';
                     $values['list'][$cpt]['pictos'][0]['link'] = $addToCartLink;
-                    $values['list'][$cpt]['pictos'][1]['image'] = '/images/shared/icons/bank1/picto_details.png';
+                    $values['list'][$cpt]['pictos'][1]['image'] = '/images/shared/icons/picto_details.png';
                     $values['list'][$cpt]['pictos'][1]['image_alt'] = 'picto_details';
                     $values['list'][$cpt]['pictos'][1]['link'] = $link;
                 }else{
                     $link = $this->links->path->getLink('shop/showCategory/'.$element['id']);
                     $values['list'][$cpt]['navigator_link'] = $link;
                     $values['list'][$cpt]['navigator_noprice'] = $link;
-                    $values['list'][$cpt]['pictos'][0]['image'] = '/images/shared/icons/bank1/picto_details.png';
+                    $values['list'][$cpt]['pictos'][0]['image'] = '/images/shared/icons/picto_details.png';
                     $values['list'][$cpt]['pictos'][0]['image_alt'] = 'picto_details';
                     $values['list'][$cpt]['pictos'][0]['link'] = $link;
                 }
@@ -2816,17 +2816,17 @@ class sh_shop extends sh_core {
                     $values['list'][$cpt]['navigator_price'] = $element['price'];
                     $addToCartLink = $this->links->path->getLink('shop/addToCart/');
                     $addToCartLink .= '?product='.$element['id'];
-                    $values['list'][$cpt]['pictos'][0]['image'] = '/images/shared/icons/bank1/picto_cart.png';
+                    $values['list'][$cpt]['pictos'][0]['image'] = '/images/shared/icons/picto_cart.png';
                     $values['list'][$cpt]['pictos'][0]['image_alt'] = 'picto_cart';
                     $values['list'][$cpt]['pictos'][0]['link'] = $addToCartLink;
-                    $values['list'][$cpt]['pictos'][1]['image'] = '/images/shared/icons/bank1/picto_details.png';
+                    $values['list'][$cpt]['pictos'][1]['image'] = '/images/shared/icons/picto_details.png';
                     $values['list'][$cpt]['pictos'][1]['image_alt'] = 'picto_details';
                     $values['list'][$cpt]['pictos'][1]['link'] = $link;
                 }else{
                     $link = $this->links->path->getLink('shop/showCategory/'.$element['id']);
                     $values['list'][$cpt]['navigator_link'] = $link;
                     $values['list'][$cpt]['navigator_noprice'] = $link;
-                    $values['list'][$cpt]['pictos'][0]['image'] = '/images/shared/icons/bank1/picto_details.png';
+                    $values['list'][$cpt]['pictos'][0]['image'] = '/images/shared/icons/picto_details.png';
                     $values['list'][$cpt]['pictos'][0]['image_alt'] = 'picto_details';
                     $values['list'][$cpt]['pictos'][0]['link'] = $link;
                 }

@@ -27,14 +27,14 @@
                     <tr>
                         <td>
                             <RENDER_IFSET what="files>changed">
-                                <img class="pointer" onclick="showChanges('{files>md5}')" src="/images/shared/icons/bank1/picto_modify.png" alt="Modification" title="Modification"/>
+                                <img class="pointer" onclick="showChanges('{files>md5}')" src="/images/shared/icons/picto_modify.png" alt="Modification" title="Modification"/>
                             </RENDER_IFSET>
                             <RENDER_IFSET what="files>new">
-                                <img src="/images/shared/icons/bank1/picto_add.png" alt="New" title="New"/>
+                                <img src="/images/shared/icons/picto_add.png" alt="New" title="New"/>
                                 <input type="hidden" name="newFiles[{files>md5}]" value="{files>name}"/>
                             </RENDER_IFSET>
                             <RENDER_IFSET what="files>removed">
-                                <img src="/images/shared/icons/bank1/picto_delete.png" alt="Removed" title="Removed"/>
+                                <img src="/images/shared/icons/picto_delete.png" alt="Removed" title="Removed"/>
                             </RENDER_IFSET>
                         </td>
                         <td>

@@ -32,7 +32,7 @@
                                 <NORENDER>The customer may also come and take the product</NORENDER>
                                 <tr>
                                     <td class="shipMode_image border-bottom border-right">
-                                        <img src="/images/shared/icons/bank1/comeAndTakeIt.png" alt="logo: {i18n>chooseToComeAndTakeIt}" title="logo: {i18n>chooseToComeAndTakeIt}"/>
+                                        <img src="/images/shared/icons/comeAndTakeIt.png" alt="logo: {i18n>chooseToComeAndTakeIt}" title="logo: {i18n>chooseToComeAndTakeIt}"/>
                                     </td>
                                     <td class="shipMode_nameDescCome_container border-bottom border-right">
                                         <div class="shipMode_name">

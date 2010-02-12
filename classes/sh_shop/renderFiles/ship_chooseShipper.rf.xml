@@ -39,7 +39,7 @@
                                         <input type="radio" class="noBorder" name="shipMode" value="1000" id="shipModes_s1000"/>
                                     </td>
                                     <td class="shipMode_image border-bottom border-right">
-                                        <img src="/images/shared/icons/bank1/comeAndTakeIt.png" alt="logo: {i18n>chooseToComeAndTakeIt}" title="logo: {i18n>chooseToComeAndTakeIt}"/>
+                                        <img src="/images/shared/icons/comeAndTakeIt.png" alt="logo: {i18n>chooseToComeAndTakeIt}" title="logo: {i18n>chooseToComeAndTakeIt}"/>
                                     </td>
                                     <td class="shipMode_nameDescCome_container border-bottom border-right">
                                         <div class="shipMode_name">

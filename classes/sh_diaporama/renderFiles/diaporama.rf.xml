@@ -23,15 +23,15 @@
             </ul>
             <RENDER_IFSET what="diapo>commands">
                 <div class="diapo_controls" onmouseover="diapoButtonsAppear('content_{diapo>id}');" onmouseout="diapoButtonsFade('content_{diapo>id}');">
-                <span id="content_{diapo>id}-background" class="bg_diapo_control control" style="display:none;"><img src="/images/shared/icons/bank1/diapo_bgcontrol.png"/></span>
+                <span id="content_{diapo>id}-background" class="bg_diapo_control control" style="display:none;"><img src="/images/shared/icons/diapo_bgcontrol.png"/></span>
                 <span id="content_{diapo>id}-previous" class="control-previous control" style="display:none;">
-                    <img src="/images/shared/icons/bank1/diapo_previous.png"/>
+                    <img src="/images/shared/icons/diapo_previous.png"/>
                 </span>
                 <span id="content_{diapo>id}-play" class="control control-play" style="display:none;" onclick="diapoStartStop('{diapo>id}');">
-                    <img src="/images/shared/icons/bank1/diapo_play.png"/>
+                    <img src="/images/shared/icons/diapo_play.png"/>
                 </span>
                 <span id="content_{diapo>id}-next" class="control-next control" style="display:none;">
-                    <img src="/images/shared/icons/bank1/diapo_next.png"/>
+                    <img src="/images/shared/icons/diapo_next.png"/>
                 </span>
                 </div>
             </RENDER_IFSET>

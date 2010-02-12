@@ -8,7 +8,7 @@ if(!defined('SH_MARKER')){
 }
 
 $this->values = array (
-  'template' => 'sh_12-boutique_clean',
+  'template' => 'sh_2-websailors_tmp2',
   'variation' => '80',
   'lang' => 'fr_FR',
   'langs' => 
