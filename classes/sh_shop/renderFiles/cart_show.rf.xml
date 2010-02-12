@@ -24,12 +24,12 @@
                                 <th class="border-bottom">
                                 <RENDER_IFSET what="user>connected">
                                     <div class="cart_save noBorder">
-                                        <input type="image" class="noBorder"  src="images/shared/icons/bank1/picto_save.png" name="save_cart" alt="{i18n>cart_save}" title="{i18n>cart_save}"/>
+                                        <input type="image" class="noBorder"  src="images/shared/icons/picto_save.png" name="save_cart" alt="{i18n>cart_save}" title="{i18n>cart_save}"/>
                                     </div>
                                 </RENDER_IFSET>
                                 <RENDER_IFNOTSET what="user>connected">
                                     <div class="cart_save">
-                                        <input type="image" class="noBorder"  src="images/shared/icons/bank1/picto_save.png" name="save_cart" alt="{i18n>cart_save}" title="{i18n>cart_save}"/>
+                                        <input type="image" class="noBorder"  src="images/shared/icons/picto_save.png" name="save_cart" alt="{i18n>cart_save}" title="{i18n>cart_save}"/>
                                     </div>
                                 </RENDER_IFNOTSET>
                                 </th>
@@ -94,7 +94,7 @@
                                     </td>
                                     <td class="shop_pictoTable">
                                         <a href="{contents>removelink}">
-                                            <img class="picto_form" src="/images/shared/icons/bank1/picto_delete.png" alt="{i18n>cart_removeProduct}" title="{i18n>cart_removeProduct}"/>
+                                            <img class="picto_form" src="/images/shared/icons/picto_delete.png" alt="{i18n>cart_removeProduct}" title="{i18n>cart_removeProduct}"/>
                                         </a>
                                     </td>
                                 </tr>
@@ -108,7 +108,7 @@
                                 <td></td>
                                 </RENDER_IFSET>
                                 <td class="shop_pictoTable">
-                                    <input type="image" class="noBorder"  src="images/shared/icons/bank1/picto_update.png" name="update_quantities" alt="{i18n>cart_update}" title="{i18n>cart_update}"/>
+                                    <input type="image" class="noBorder"  src="images/shared/icons/picto_update.png" name="update_quantities" alt="{i18n>cart_update}" title="{i18n>cart_update}"/>
                                 </td>
                                 <td colspan="2" class="shop_total_textClass border-left border-bottom border-right bg_table">
                                     <span class="nobr"><RENDER_VALUE what="i18n>totalht"/><RENDER_VALUE what="total>ht"/></span><br/>
@@ -125,7 +125,7 @@
             <div class="shop_totalCartContainer">
                 <div class="shop_totalCart">
                     <div class="cart_goToCommand">
-                        <input type="image" class="noBorder"  src="images/shared/icons/bank1/picto_command.png" name="submit_command" alt="{i18n>submit_command}" title="{i18n>submit_command}"/><br />
+                        <input type="image" class="noBorder"  src="images/shared/icons/picto_command.png" name="submit_command" alt="{i18n>submit_command}" title="{i18n>submit_command}"/><br />
                         <RENDER_VALUE what="i18n>submit_command"/>
                     </div>
                 </div>

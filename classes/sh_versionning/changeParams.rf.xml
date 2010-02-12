@@ -4,7 +4,7 @@
           div.slider {
               width:360px;
               margin:10px 0;
-              background:transparent url(/images/shared/icons/bank1/rainbow.png) no-repeat top center;
+              background:transparent url(/templates/global/admin/icons/rainbow.png) no-repeat top center;
               height:10px;
               position: relative;
           }

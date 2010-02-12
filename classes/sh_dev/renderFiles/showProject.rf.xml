@@ -33,13 +33,13 @@
                 Description
             </td>
             <td class="borderTop">
-                <img src="/images/shared/icons/bank1/picto_add.png" alt="New" title="New"/>
+                <img src="/images/shared/icons/picto_add.png" alt="New" title="New"/>
             </td>
             <td class="borderTop">
-                <img src="/images/shared/icons/bank1/picto_modify.png" alt="Modification" title="Modification"/>
+                <img src="/images/shared/icons/picto_modify.png" alt="Modification" title="Modification"/>
             </td>
             <td class="borderTop">
-                <img src="/images/shared/icons/bank1/picto_delete.png" alt="Removed" title="Removed"/>
+                <img src="/images/shared/icons/picto_delete.png" alt="Removed" title="Removed"/>
             </td>
         </tr>
         <RENDER_LOOP what="revisions">
@@ -54,13 +54,13 @@
                         <RENDER_LOOP what="details">
                             <div>
                                 <RENDER_IFSET what="details>added">
-                                    <img src="/images/shared/icons/bank1/picto_add.png" alt="New" title="New"/>
+                                    <img src="/images/shared/icons/picto_add.png" alt="New" title="New"/>
                                 </RENDER_IFSET>
                                 <RENDER_IFSET what="details>modified">
-                                    <img src="/images/shared/icons/bank1/picto_modify.png" alt="Modification" title="Modification"/>
+                                    <img src="/images/shared/icons/picto_modify.png" alt="Modification" title="Modification"/>
                                 </RENDER_IFSET>
                                 <RENDER_IFSET what="details>deleted">
-                                    <img src="/images/shared/icons/bank1/picto_delete.png" alt="Removed" title="Removed"/>
+                                    <img src="/images/shared/icons/picto_delete.png" alt="Removed" title="Removed"/>
                                 </RENDER_IFSET>
                                 <RENDER_VALUE what="details>file"/>
                                 <a href="{project>showHistoryLink}?project={project>id}&#38;file={details>fileId}">

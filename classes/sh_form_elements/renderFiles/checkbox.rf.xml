@@ -12,7 +12,7 @@
             <input class="{captcha>error}" name="captcha" maxlength="5" style="width:60px;height:28px;"/>
         </div>
         <div style="position:absolute;left:210px;top:0;width:30px;cursor:pointer;">
-            <img  onclick="changeCaptchaImage('{captcha>form}','image_{captcha>form}');" style="width:30px;height:30px;border:inherit;" src="/images/shared/icons/bank1/picto_update.png" alt="{i18n>changePicture}" title="{i18n>changePicture}"/>
+            <img  onclick="changeCaptchaImage('{captcha>form}','image_{captcha>form}');" style="width:30px;height:30px;border:inherit;" src="/templates/global/admin/icons/picto_update.png" alt="{i18n>changePicture}" title="{i18n>changePicture}"/>
         </div>
     </div>
 </div>

@@ -731,7 +731,7 @@ ul#shortList_activeElements{
 /*Mulitiple image selector*/
 
 .mis_deleteCursor{
-    cursor:url(/images/shared/icons/bank1/trash_cursor.png),auto;
+    cursor:url(/templates/global/admin/icons/trash_cursor.png),auto;
 }
 .mis_imagesContainer{
     width:370px;

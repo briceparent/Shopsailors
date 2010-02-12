@@ -269,7 +269,7 @@ class sh_admin extends sh_core{
     public function insert($element,$category,$image = ''){
         if($image != ''){
             $root = $this->links->path->getBaseUri().'/';
-            $image = '<img src="'.$root.'images/shared/icons/'.$image.'" alt="logo"/> ';
+            $image = '<img src="'.$root.'templates/global/admin/icons/'.$image.'" alt="logo"/> ';
         }
         $this->elements[$category][]['element'] = $image.'<span>'.$element."</span>\n";
         return true;

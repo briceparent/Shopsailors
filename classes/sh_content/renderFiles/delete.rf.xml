@@ -7,7 +7,7 @@
         <table>
             <tr>
                 <td style="vertical-align:top;">
-                    <img src="/images/shared/icons/bank1/picto_caution.png"/>
+                    <img src="/templates/global/admin/icons/picto_caution.png"/>
                 </td>
                 <td>
                     <RENDER_VALUE what="i18n>deletePage_isActive"/>

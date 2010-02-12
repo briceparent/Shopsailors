@@ -7,7 +7,7 @@
         function newsletter_setLoading(status){
             if(status){
                 $('test_mail_response_img').show();
-                $('test_mail_response').style.backgroundImage = 'url(/images/shared/icons/bank1/sh_loading.gif)';
+                $('test_mail_response').style.backgroundImage = 'url(/templates/global/admin/icons/sh_loading.gif)';
                 $(id + '_content').style.backgroundRepeat = 'no-repeat';
                 $(id + '_content').style.backgroundPosition = 'center 50%';
             }else{
@@ -129,7 +129,7 @@
             <div>
                 <input id="test_mail" value="brice.parent@websailors.fr"/>
                 <input type="button" id="test_mail_response_btn" value="{i18n>test_newsletter}" onclick="newsletter_test();"/>
-                    <img id="test_mail_response_img" src="/images/shared/icons/bank1/sh_loading.gif" style="display:none;"/>
+                    <img id="test_mail_response_img" src="/templates/global/admin/icons/sh_loading.gif" style="display:none;"/>
                 <div id="test_mail_response">
                 </div>
             </div>

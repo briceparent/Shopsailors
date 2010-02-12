@@ -19,7 +19,7 @@
                 <div class="form_box_middle">
                     <div class="form_box_content">
                         <div class="formContent" style="text-align:center;">
-                            <img src="/images/shared/icons/bank1/picto_caution.png" alt=""/>
+                            <img src="/templates/global/admin/icons/picto_caution.png" alt=""/>
                         </div>
                         <div class="formContent">
                             <RENDER_VALUE what="i18n>templateWasChanged"/>
