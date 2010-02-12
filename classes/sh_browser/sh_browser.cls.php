@@ -493,7 +493,7 @@ class sh_browser extends sh_core {
                                     $vars['pictures'][$cpt]['imagestyle'] = 'height:80px;';
                                 }
                                 $picture = $file;
-                                $description = $w.'px x '.$h.'px<br />';
+                                $description = $w.'x'.$h.' px<br />';
                             }else {
                                 if(file_exists(SH_SHAREDIMAGES_FOLDER.'/icons/'.$ext.'.png')) {
                                     $picture = SH_SHAREDIMAGES_PATH.'/icons/'.$ext.'.png';
@@ -879,7 +879,6 @@ class sh_browser extends sh_core {
     public function editImage(){
         $this->debug(__METHOD__, 2, __LINE__);
         sh_cache::disable();
-        //echo 'The page to show is '.$this->links->path->uri();
         $id = (int) $this->links->path->page['id'];
         $name = $_SESSION[__CLASS__]['uploaded_images'][$id]['name'];
         $srcFolder = $_SESSION[__CLASS__]['uploaded_images'][$id]['src'];
@@ -944,13 +943,14 @@ class sh_browser extends sh_core {
             }elseif($action == 'validate'){
                 list($originalWidth,$originalHeight) = getImageSize($filePath);
                 if($hasMaxDims) {
-                    $this->resize_image($filePath, $width, $height,$margins);
+                    $filePath = $this->resize_image($filePath, $width, $height,$margins);
                 }elseif(
                     ($originalWidth > 900 || $originalHeight > 900)
                     && !file_exists($destFolder.self::NOMAXSIZEFILE)
                 ){
-                    $this->resize_image($filePath, 900, 900, false);
+                    $filePath = $this->resize_image($filePath, 900, 900, false);
                 }
+                $name = basename($filePath);
                 rename($filePath, $destFolder.$name);
                 $this->raiseEvent(self::ONADD,$destFolder);
                 $session = $_SESSION[__CLASS__]['uploaded_images'][$id]['browserSession'];

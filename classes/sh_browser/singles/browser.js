@@ -14,8 +14,8 @@ function showLastOpenedFolder(){
 function inPlaceRename(element){
     previousContents[element] = $(element + "_form").innerHTML;
     $(element + "_form").innerHTML = '<input id="' + element + '_element" value="' + $(element).innerHTML + '"/>';
-    $(element + "_form").innerHTML += '<img style="cursor:pointer;" src="/images/shared/icons/validate.png" onclick="inPlaceRenameUpdate(\'' + element + '\')"/>';
-    $(element + "_form").innerHTML += '<img style="cursor:pointer;" src="/images/shared/icons/cancel.png" onclick="inPlaceRenameCancel(\'' + element + '\')"/>';
+    $(element + "_form").innerHTML += '<img style="cursor:pointer;" src="/templates/global/admin/sh_browser/validate.png" onclick="inPlaceRenameUpdate(\'' + element + '\')"/>';
+    $(element + "_form").innerHTML += '<img style="cursor:pointer;" src="/templates/global/admin/sh_browser/cancel.png" onclick="inPlaceRenameCancel(\'' + element + '\')"/>';
 }
 function inPlaceRenameUpdate(element){
     url = renameLink + '?element=' + element + '|' + $(element + '_element').value;
