@@ -1,3 +1,5 @@
-bigband
-safetyrent_1
-safetyrent_2
+*
+!.gitignore
+!shopsailors
+!domains_resolver.php
+
