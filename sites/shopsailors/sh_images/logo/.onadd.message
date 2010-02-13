@@ -1,5 +1,0 @@
-<?php
-$message = array(
-	'fr_FR' => 'Votre nouveau logo a été envoyé avec succès.',
-	'en_GB' => 'Your new logo has been sent successfully.',
-);

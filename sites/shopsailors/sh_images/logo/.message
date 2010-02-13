@@ -1,7 +1,0 @@
-<?php
-$message = array(
-	'fr_FR' => 'Pour changer votre logo, il suffit d\'envoyer le nouveau ici. Il sera automatiquement retaillé et dupliqué pour créer 3 formats différents.<br />
-<span style="color:red">Attention: </span>Les modifications sont apportées immédiatement, que vous validiez le formulaire de gestion du site ou pas.',
-	'en_GB' => 'To change your logo, you just have to send the new one here. It will be resized and duplicated automatically to fit the 3 different formats.<br />
-<span style="color:red">Caution: </span>The modification are applied immediately, even if you don\'t apply the changes on the Manage Website" form.',
-);
