@@ -69,26 +69,6 @@ class sh_templatesLister extends sh_core {
 
         $templates = $this->getList();
 
-        /*
-        $scan =  scandir(SH_TEMPLATE_FOLDER.'preview/');
-        if(is_array($scan)){
-            foreach($scan as $element){
-                $folder = SH_TEMPLATE_FOLDER.'preview/'.$element.'/';
-                if(substr($element,0,1) != '.' && is_dir($folder)){
-                    if(preg_match('`([1-9][0-9]*)-(.+)`', $element, $matches)){
-                        list($all,$id,$name) = $matches;
-                        $templates[$id] = array(
-                            'name' => $name,
-                            'preview' => $this->fromRoot($folder).$name.'_mini.png',
-                            'link' => $this->links->path->getLink(
-                                'templatesLister/show/'.$id,
-                                $name
-                            )
-                        );
-                   }
-               }
-            }
-        }*/
         ksort($templates);
         $values['templates'] = $templates;
         $this->render('list',$values);

@@ -1,14 +1,13 @@
 <?php
 
-$sites['`mail\.(.+\..+)`'] = 'roundCube';
-
 $sites['`(.*\.)?websailors\.fr`'] = 'websailors';
 $sites['`(.*\.)?shopsailors\.org`'] = 'shopsailors';
 $sites['`(.*\.)?bigbandaix(enprovence)?\.com`'] = 'bigband';
 
 $sites['`(.*\.)?client1.safetyrent-online\.com`'] = 'safetyrent_1';
 $sites['`(.*\.)?client2.safetyrent-online\.com`'] = 'safetyrent_2';
-$sites['`(.*\.)?client3.safetyrent-online\.com`'] = 'safetyrent_3';
+
+$sites['`(.*\.)?lavilladeschefs\.com`'] = 'lvdc';
 
 $default = 'websailors';
 

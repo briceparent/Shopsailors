@@ -458,8 +458,8 @@ class sh_i18n extends sh_core{
         $id = 'i18n_'.substr(md5(microtime()),0,8);
 
         $langs = $this->links->site->langs;
-
-        if(is_array($langs) && count($langs)>1){
+        
+        if(is_array($langs) && count($langs)>0){
             foreach($langs as $oneLang){
                 $value = $this->db_get($class,$i18n, $oneLang,&$qry);
                 $thisArgs = ' name="'.$name.'['.$oneLang.']" value="'.$value.'"';
@@ -497,7 +497,7 @@ class sh_i18n extends sh_core{
 
         $langs = $this->links->site->langs;
 
-        if(is_array($langs) && count($langs)>1){
+        if(is_array($langs) && count($langs)>0){
             foreach($langs as $oneLang){
                 $value = $this->db_get($class,$i18n, $oneLang);
                 $thisArgs = ' name="'.$name.'['.$oneLang.']"';
