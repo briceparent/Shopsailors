@@ -158,7 +158,7 @@ class sh_newsletters extends sh_core {
         $unchanged = array(
             'manage','sendTest','showPage',
             'isThereANewsletterWaiting','edit_newslettersList','subscribe',
-            'confirmSubscription','unsubscribe','showInvisible','showList','sendNewYearNewsletter'
+            'confirmSubscription','unsubscribe','showInvisible','showList'
         );
         if(in_array($method,$unchanged)){
             return '/'.$this->shortClassName.'/'.$method.'.php';
@@ -193,7 +193,7 @@ class sh_newsletters extends sh_core {
             $unchanged = array(
                 'manage','sendTest','showPage',
                 'isThereANewsletterWaiting','edit_newslettersList','subscribe',
-                'confirmSubscription','unsubscribe','showInvisible','showList','sendNewYearNewsletter'
+                'confirmSubscription','unsubscribe','showInvisible','showList'
             );
             if(in_array($matches[1],$unchanged)){
                 return $this->shortClassName.'/'.$matches[1].'/';
@@ -207,24 +207,6 @@ class sh_newsletters extends sh_core {
             }
         }
         return false;
-    }
-
-    public function sendNewYearNewsletter(){
-        $addresses = file(SH_ROOT_FOLDER. 'newYear/addresses.php');
-        echo 'Adresses : <br />'.nl2br(str_replace(' ','&#160;',print_r($addresses,true))).'<br />';
-        $mailTitle = file_get_contents(SH_ROOT_FOLDER. 'newYear/title.php');
-        $mailContent = file_get_contents(SH_ROOT_FOLDER. 'newYear/content.xml');
-        $mailer = $this->links->mailer->get(false);
-        $mail = $mailer->em_create();
-        $mailer->em_replyTo($mail,'contact@websailors.fr','Websailors');
-        foreach($addresses as $address){
-            $mailer->em_addBCC($mail,$address);
-        }
-        $mailer->em_addSubject($mail,$mailTitle);
-        $mailer->em_addContent($mail,$mailContent);
-        $rep = $mailer->em_send($mail);
-        echo $rep;
-        
     }
 
     public function manage(){
