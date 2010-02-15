@@ -180,17 +180,19 @@ class sh_admin extends sh_core{
         $adminCpt = 1000;
 
         foreach($this->elements as $category=>$contents){
-            if(substr($category,0,3) == ' - '){
+            if(substr($category,0,1) == '['){
                 $masterCpt++;
                 $cpt = $masterCpt;
-                $admin['sections'][$category]['number'] = 'master';
+                $categoryOrder = '0'.$category;
+                $admin['sections'][$categoryOrder]['number'] = 'master';
             }else{
+                $categoryOrder = '1'.$category;
                 $adminCpt++;
                 $cpt = $adminCpt;
             }
-            $admin['sections'][$category]['elements'] = $contents;
-            $admin['sections'][$category]['name'] = $category;
-            $admin['sections'][$category]['id'] = $cpt;
+            $admin['sections'][$categoryOrder]['elements'] = $contents;
+            $admin['sections'][$categoryOrder]['name'] = $category;
+            $admin['sections'][$categoryOrder]['id'] = $cpt;
         }
 
         ksort($admin['sections']);
@@ -266,12 +268,24 @@ class sh_admin extends sh_core{
      * status of the operation<br />
      * (For now, it only returns true)
      */
-    public function insert($element,$category,$image = ''){
+    public function insert($element,$category,$image = '',$position = "bottom"){
         if($image != ''){
             $root = $this->links->path->getBaseUri().'/';
             $image = '<img src="'.$root.'templates/global/admin/icons/'.$image.'" alt="logo"/> ';
         }
-        $this->elements[$category][]['element'] = $image.'<span>'.$element."</span>\n";
+        if(!is_array($this->elements[$category])){
+            $this->elements[$category] = array();
+        }
+        if(substr($position,0,3) == 'top'){
+            array_unshift(
+                $this->elements[$category],
+                array(
+                    'element' => $image.'<span>'.$element."</span>\n"
+                )
+            );
+        }else{
+            $this->elements[$category][]['element'] = $image.'<span>'.$element."</span>\n";
+        }
         return true;
     }
 
@@ -292,7 +306,7 @@ class sh_admin extends sh_core{
         include($file);
         if(is_array($adminMenu)){
             foreach($adminMenu as $name=>$menu){
-                foreach($menu as $menuElement){
+                foreach($menu as $position=>$menuElement){
                     if($menuElement['type'] != 'popup'){
                         $options=array();
                         if(isset($menuElement['target'])){
@@ -305,7 +319,8 @@ class sh_admin extends sh_core{
                                 $options
                             ),
                             $name,
-                            $menuElement['icon']
+                            $menuElement['icon'],
+                            $position
                         );
                     }else{
                         $this->insert(
@@ -316,7 +331,8 @@ class sh_admin extends sh_core{
                                 $menuElement['height']
                             ),
                             $name,
-                            $menuElement['icon']
+                            $menuElement['icon'],
+                            $position
                         );
 
                     }
@@ -325,14 +341,16 @@ class sh_admin extends sh_core{
         }
         if(is_array($masterMenu) && $this->master){
             foreach($masterMenu as $name=>$menu){
-                foreach($menu as $menuElement){
+                foreach($menu as $position=>$menuElement){
                     if($menuElement['type'] != 'popup'){
                         $this->insert(
                             $this->links->html->createLink(
                                 $menuElement['link'],
                                 $menuElement['text']
                             ),
-                            ' - '.$name.' - ',$menuElement['icon']
+                            '['.$name.']',
+                            $menuElement['icon'],
+                            $position
                         );
                     }else{
                         $this->insert(
@@ -342,8 +360,9 @@ class sh_admin extends sh_core{
                                 $menuElement['width'],
                                 $menuElement['height']
                             ),
-                            $name,
-                            $menuElement['icon']
+                            '['.$name.']',
+                            $menuElement['icon'],
+                            $position
                         );
 
                     }
