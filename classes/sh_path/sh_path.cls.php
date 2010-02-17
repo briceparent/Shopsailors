@@ -189,7 +189,7 @@ exit;/**/
             '`/images/builder/`'
         );
         $with = array(
-            $templateFolder.'variations/images/'.$variation.'/',
+            $templateFolder.'images/variations/'.$variation.'/',
             $templateFolder.'images/',
             SH_TEMPLATE_FOLDER.'$1/images/',
             SH_IMAGES_FOLDER,
@@ -213,7 +213,7 @@ exit;/**/
         $askedFolder = str_replace('//','/',$askedFolder);
         
         $replace = array(
-            $templateFolder.'variations/images/'.$variation.'/',
+            $templateFolder.'images/variations/'.$variation.'/',
             $templateFolder.'images/',
             SH_TEMPLATE_FOLDER.'[TYPE]/images/',
             SH_IMAGES_FOLDER,

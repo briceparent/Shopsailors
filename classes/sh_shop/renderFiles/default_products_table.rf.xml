@@ -7,17 +7,17 @@
                     <span class="icon_display">
                     <RENDER_IFSET what="selectors>link_list">
                         <a href="{selectors>link_list}">
-                            <img src="/images/shared/sh_shop/icon_list.png" alt="aperçu en liste" title="aperçu en liste"/>
+                            <img src="/images/shared/variations/{constants>variation}/sh_shop/icon_list.png" alt="aperçu en liste" title="aperçu en liste"/>
                         </a>&#160;
                     </RENDER_IFSET>
                     <RENDER_IFSET what="selectors>link_miniature">
                         <a href="{selectors>link_miniature}">
-                            <img src="/images/shared/sh_shop/icon_miniature.png" alt="aperçu en miniatures" title="aperçu en miniatures"/>
+                            <img src="/images/shared/variations/{constants>variation}/sh_shop/icon_miniature.png" alt="aperçu en miniatures" title="aperçu en miniatures"/>
                         </a>&#160;
                     </RENDER_IFSET>
                     <RENDER_IFSET what="selectors>link_table">
                         <a href="{selectors>link_table}">
-                            <img src="/images/shared/sh_shop/icon_table.png" alt="aperçu en tableau" title="aperçu en tableau"/>
+                            <img src="/images/shared/variations/{constants>variation}/sh_shop/icon_table.png" alt="aperçu en tableau" title="aperçu en tableau"/>
                         </a>&#160;
                     </RENDER_IFSET>
                 </span>
@@ -133,12 +133,12 @@
                 <tr>
                     <RENDER_IFSET what="pagenavigation>previous_link">
                         <td>
-                            <a href="{pagenavigation>previous_link}"><img src="images/builder/nav/model1_previous.png" alt="{i18n>nav_previous}"/></a>
+                            <a href="{pagenavigation>previous_link}"><img src="images/shared/variations/{constants>variation}/navigation/model1_previous.png" alt="{i18n>nav_previous}"/></a>
                         </td>
                     </RENDER_IFSET>
                     <RENDER_IFNOTSET what="pagenavigation>previous_link">
                         <td>
-                            <img src="images/builder/nav/model1_noprevious.png" alt="{i18n>nav_previous}"/>
+                            <img src="images/shared/variations/{constants>variation}/navigation/model1_noprevious.png" alt="{i18n>nav_previous}"/>
                         </td>
                     </RENDER_IFNOTSET>
                     <RENDER_LOOP what="pages">
@@ -148,12 +148,12 @@
                     </RENDER_LOOP>
                     <RENDER_IFNOTSET what="pagenavigation>next_link">
                         <td>
-                            <img src="images/builder/nav/model1_nonext.png" alt="{i18n>nav_next}"/>
+                            <img src="images/shared/variations/{constants>variation}/navigation/model1_nonext.png" alt="{i18n>nav_next}"/>
                         </td>
                     </RENDER_IFNOTSET>
                     <RENDER_IFSET what="pagenavigation>next_link">
                         <td>
-                            <a href="{pagenavigation>next_link}"><img src="images/builder/nav/model1_next.png" alt="{i18n>nav_next}"/></a>
+                            <a href="{pagenavigation>next_link}"><img src="images/shared/variations/{constants>variation}/navigation/model1_next.png" alt="{i18n>nav_next}"/></a>
                         </td>
                     </RENDER_IFSET>
                 </tr>

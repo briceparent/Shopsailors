@@ -13,12 +13,19 @@ if(!defined('SH_MARKER')){header('location: directCallForbidden.php');}
  */
 class sh_button extends sh_core {
 
+    public function construct(){
+        $this->builderFolder = $this->links->site->templateFolder.'builder/';
+        if(!is_dir($this->builderFolder)){
+            mkdir($this->builderFolder);
+        }
+    }
+
     /**
      * public function getButtonParams
      * Gets the params from a button's variation, in one state
      */
     public function getButtonParams($type,$variation,$state){
-        $path = SH_TEMPLATE_BUILDER.$type.'/';
+        $path = $this->builderFolder.$type.'/';
         $ret = $this->links->params->get(
             $path.'params.php',
             'variations>'.$variation.'>'.$state
@@ -31,19 +38,19 @@ class sh_button extends sh_core {
      *
      */
     protected function buildVariations($buttonName){
-        $path = SH_TEMPLATE_BUILDER.$buttonName.'/';
+        $path = $this->builderFolder.$buttonName.'/';
         $files = scandir($path.'model/');
 
         if(file_exists($path.'passive.php')){
-            $addToPassive = '.'.sh_buttonsBuilder::PASSIVE;
+            $addToPassive = '.'.sh_imagesBuilder::PASSIVE;
         }
         if(file_exists($path.'selected.php')){
             $isThereSelected = true;
-            $addToPassive = '.'.sh_buttonsBuilder::PASSIVE;
+            $addToPassive = '.'.sh_imagesBuilder::PASSIVE;
         }
         if(file_exists($path.'active.php')){
             $isThereActive = true;
-            $addToPassive = '.'.sh_buttonsBuilder::PASSIVE;
+            $addToPassive = '.'.sh_imagesBuilder::PASSIVE;
         }
 
         echo 'Successfully built variations : ';
@@ -69,12 +76,12 @@ class sh_button extends sh_core {
                     sh_colors::setHueToImage($srcImage,$destImage,$degree,$forcedSaturation);
                     if($isThereSelected){
                         sh_colors::setHueToImage($srcImage,
-                            $path.'variations/'.$degree.'/'.$shortName.'.'.sh_buttonsBuilder::SELECTED.'.png',
+                            $path.'variations/'.$degree.'/'.$shortName.'.'.sh_imagesBuilder::SELECTED.'.png',
                             $degree,$forcedSaturation,-10);
                     }
                     if($isThereActive){
                         sh_colors::setHueToImage($srcImage,
-                            $path.'variations/'.$degree.'/'.$shortName.'.'.sh_buttonsBuilder::ACTIVE.'.png',
+                            $path.'variations/'.$degree.'/'.$shortName.'.'.sh_imagesBuilder::ACTIVE.'.png',
                             $degree,$forcedSaturation,10);
                     }
                 }
@@ -129,10 +136,10 @@ class sh_button extends sh_core {
              $fileName = preg_replace('/([^.a-z0-9]+)/i', '_', $fileName);
              if(trim($fileName) != ''){
                 // Copy the file
-                if(move_uploaded_file($_FILES["button"]['tmp_name'], SH_TEMPLATE_BUILDER.$fileName)){
+                if(move_uploaded_file($_FILES["button"]['tmp_name'], $this->builderFolder.$fileName)){
                     // Deletes the folder if it already exists
                     $buttonName = substr($fileName,0,-4);
-                    $mainFolder = SH_TEMPLATE_BUILDER.$buttonName;
+                    $mainFolder = $this->builderFolder.$buttonName;
                     if(is_dir($mainFolder)){
                         $deleted = $this->links->helper->deleteDir($mainFolder);
                         if(!$deleted){
@@ -144,14 +151,14 @@ class sh_button extends sh_core {
 
                     // Unzips the archive
                     $this->links->zipper->extract(
-                        SH_TEMPLATE_BUILDER.$fileName,
+                        $this->builderFolder.$fileName,
                         $mainFolder, array('png','php')
                     );
                     // TODO: Add an "empty php files" routine, to prevent from hacking
                     mkdir($mainFolder.'/model');
                     mkdir($mainFolder.'/variations');
                     // Deletes the archive
-                    unlink(SH_TEMPLATE_BUILDER.$fileName);
+                    unlink($this->builderFolder.$fileName);
                     return $buttonName;
                 }
                 $this->links->html->insert('Il y a eu une erreur lors de l\'envoi du fichier. Si le problème persiste, contactez l\'administrateur du site.<br />');
@@ -172,7 +179,7 @@ class sh_button extends sh_core {
     public function translatePageToUri($page){
         list($class,$method,$id) = explode('/',$page);
         if($method == 'add'){
-            $uri = '/'.$this->shortClassName.'/'.$this->getI18n('add_uri').'.php';
+            $uri = '/'.$this->shortClassName.'/add.php';
             return $uri;
         }
 
@@ -185,7 +192,7 @@ class sh_button extends sh_core {
      * @return string|bool The uri, or false
      */
     public function translateUriToPage($uri){
-        if(preg_match('`/'.$this->shortClassName.'/'.$this->getI18n('add_uri').'\.php`',$uri)){
+        if($uri == '/'.$this->shortClassName.'/add.php'){
             $page = $this->shortClassName.'/add/';
             return $page;
         }

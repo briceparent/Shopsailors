@@ -785,7 +785,7 @@ class sh_newsletters extends sh_core {
                     '`/images/template/`',
                 ),
                 array(
-                    '/templates/'.$templateName.'/variations/images/'.$variation.'/',
+                    '/templates/'.$templateName.'/images/variations/'.$variation.'/',
                     '/templates/'.$templateName.'/images/',
                 ),
                 $content

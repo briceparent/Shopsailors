@@ -1,0 +1,62 @@
+<html xml:lang="fr">
+    <head>
+        <RENDER_VALUE what="head>content"/>
+    </head>
+    <RENDER_TAG type="body" what="body>data">
+        <RENDER_VALUE what="body>beginning"/>
+        <div id="head">
+            <RENDER_IFSET what="connect>link">
+                <div id="connectionContainer">
+                    <table cellspacing="0">
+                        <tr>
+                            <td class="verticalAlign_middle">
+                                <img src="/images/shared/icons/picto_identification.png"/>
+                            </td>
+                            <td class="verticalAlign_middle">
+                                <a href="{connect>link}"><RENDER_VALUE what="i18n>connectAccountClient"/></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </RENDER_IFSET>
+            <RENDER_IFSET what="disconnect>link">
+                <div id="connectionContainer">
+                    <table cellspacing="0">
+                        <tr>
+                            <td class="verticalAlign_middle">
+                                <img src="/images/shared/icons/picto_identification.png"/>
+                            </td>
+                            <td class="verticalAlign_middle">
+                                <a href="{disconnect>link}"><RENDER_VALUE what="i18n>disconnectAccountClient"/></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </RENDER_IFSET>
+            <RENDER_VALUE what="language>selector"/>
+            <h1 class="topTitle">
+                <RENDER_VALUE what="body>headline"/>
+            </h1>
+        </div>
+        <div class="menu1">
+            <RENDER_VALUE what="body>menu_1"/>
+        </div>
+        <RENDER_VALUE what="body>searchEngine"/>
+        <div id="mainContainer">
+            <div class="logo">
+                <img src="/images/site/logo/banner.png" alt="logo" title=""/>
+            </div>
+            <div class="content_middle">
+                <RENDER_IFSET what="body>title">
+                    <h1><RENDER_VALUE what="body>title"/></h1>
+                </RENDER_IFSET>
+                <div class="page_content">
+                    <RENDER_VALUE what="body>content"/>
+                    <div id="copyrights">
+                        <RENDER_VALUE what="body>copyrights"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </RENDER_TAG>
+</html>

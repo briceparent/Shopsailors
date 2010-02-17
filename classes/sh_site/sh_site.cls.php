@@ -297,7 +297,7 @@ class sh_site extends sh_core{
      * @example
      * <code>
      * echo $sh_site->defaultTitle;<br />
-     * // Will echo the containt of $this->defaultTitle,<br />
+     * // Will echo the content of $this->defaultTitle,<br />
      * // even if it is protected or private.<br />
      * // In that cases, it allows to get the values, <br />
      * // but not to set them.

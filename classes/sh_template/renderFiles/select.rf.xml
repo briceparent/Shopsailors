@@ -41,14 +41,14 @@
                                     <RENDER_RADIOBOX text="{templates>name}" name="template" state="{templates>state}" value="{templates>completeName}"/>
                                     <RENDER_IFSET what="templates>firstSlide">
                                         <a class="lightwindow page-options" href="{templates>firstSlide}" rel="templates[{templates>completeName}]" style="width:80px;">
-                                            <img src="/images/templates/{templates>completeName}/template_mini.png" alt="{templates>name}" title="{templates>name}"/>
+                                            <img src="{templates>thumbnail}" alt="{templates>name}" title="{templates>name}"/>
                                         </a>
                                         <RENDER_LOOP what="slides">
                                             <a class="lightwindow hidden" href="{slides>src}" rel="templates[{templates>completeName}]" style="width:20px;"></a>
                                         </RENDER_LOOP>
                                     </RENDER_IFSET>
                                     <RENDER_IFNOTSET what="templates>firstSlide">
-                                        <img src="/images/templates/{templates>completeName}/template_mini.png" alt="{templates>name}" title="{templates>name}"/>
+                                        <img src="{templates>thumbnail}" alt="{templates>name}" title="{templates>name}"/>
                                     </RENDER_IFNOTSET>
                                 </div>
                             </div>

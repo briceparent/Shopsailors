@@ -532,7 +532,13 @@ class sh_html extends sh_core{
             }
 
             // Prepares the data for the output
-            $this->bodyContent = $this->fromRoot(str_replace('#TEMPLATE_DIR#',$this->template,$this->bodyContent));
+            $this->bodyContent = $this->fromRoot(
+                str_replace(
+                    '#TEMPLATE_DIR#',
+                    $this->template,
+                    $this->bodyContent
+                )
+            );
 
             // Sets the variables to fill the output
             $data['body']['adminpanel'] = $this->links->admin->get();

@@ -1,0 +1,84 @@
+<div>
+    <NORENDER>breadcrumbs</NORENDER>
+    <span id="shop_navigator" class="shop_arboText">
+        <RENDER_VALUE what="i18n>navigator_title"/>
+        <RENDER_BREADCRUMBS what="nav_levels" sameLevelText="{i18n>breadCrumbs_sameCategoryText}"/>
+    </span>
+
+    <NORENDER>active category</NORENDER>
+    <div class="bg_active_category">
+        <div class="active_category_name">
+            <RENDER_VALUE what="category>name"/>
+        </div>
+        <div class="active_category_descriptionContainer">
+            <div class="active_category_describe">
+                <RENDER_VALUE what="category>description"/>
+            </div>
+        </div>
+    </div>
+
+
+    <RENDER_IFNOTSET what="category_elements>empty">
+        <NORENDER>navigator_grid</NORENDER>
+        <div id="list">
+            <div class="selectAcategory">
+                <RENDER_VALUE what="i18n>selectAcategory"/>
+            </div>
+            <table cellspacing="0">
+                <tr>
+                    <td rowspan="5" class="pageNavigator">
+                        <RENDER_IFSET what="pagenavigation>previous_link">
+                            <a href="{pagenavigation>previous_link}">
+                                <img src="images/shared/variations/{constants>variation}/navigation/model2_previous.png" alt="{i18n>nav_previous}"/>
+                            </a>
+                        </RENDER_IFSET>
+                        <RENDER_IFNOTSET what="pagenavigation>previous_link">
+                            <img src="images/shared/variations/{constants>variation}/navigation/model2_noprevious.png" alt="{i18n>nav_noprevious}"/>
+                        </RENDER_IFNOTSET>
+                    </td>
+                    <td colspan="3">
+                    </td>
+                    <td rowspan="5" class="pageNavigator">
+                        <RENDER_IFSET what="pagenavigation>next_link">
+                            <a href="{pagenavigation>next_link}">
+                                <img src="images/shared/variations/{constants>variation}/navigation/model2_next.png" alt="{i18n>nav_next}"/>
+                            </a>
+                        </RENDER_IFSET>
+                        <RENDER_IFNOTSET what="pagenavigation>next_link">
+                            <img src="images/shared/variations/{constants>variation}/navigation/model2_nonext.png" alt="{i18n>nav_nonext}"/>
+                        </RENDER_IFNOTSET>
+                    </td>
+                </tr>
+                <RENDER_LOOP what="category_elements_groups">
+                    <tr>
+                        <RENDER_LOOP what="elements">
+                            <td class="list_image">
+                                <RENDER_IFSET what="elements>link">
+                                    <RENDER_IFSET what="elements>link">
+                                        <a href="{elements>link}">
+                                            <img src="{elements>image}" alt="{elements>shortdescription}" title="{elements>shortdescription}"/>
+                                        </a>
+                                    </RENDER_IFSET>
+                                </RENDER_IFSET>
+                            </td>
+                        </RENDER_LOOP>
+                    </tr>
+                </RENDER_LOOP>
+                <tr>
+                    <td colspan="3">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </RENDER_IFNOTSET>
+    
+    <NORENDER>navigator_emptyCategory</NORENDER>
+    <RENDER_IFSET what="category_elements>empty">
+        <div id="shop_emptyCategory">
+            <div class="selectAcategory">
+            <RENDER_VALUE what="i18n>emptyCategory"/>
+            <img src="/images/shared/default/shop_empty_category.png" alt="emptyCategory_illustration"/>
+            </div>
+        </div>
+    </RENDER_IFSET>
+</div>

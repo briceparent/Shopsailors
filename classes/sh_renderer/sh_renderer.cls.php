@@ -76,6 +76,9 @@ class sh_renderer extends sh_core {
             }
         }
 
+        $variation = $this->links->site->variation;
+        define('VARIATION',$variation);
+
         return true;
     }
 

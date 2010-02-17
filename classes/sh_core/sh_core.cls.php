@@ -428,6 +428,10 @@ abstract class sh_core{
         return $this->writeParams();
     }
 
+    protected function countParams($paramName = ''){
+        return $this->links->params->count($this->paramsFile,$paramName);
+    }
+
     /**
      * Adds a page to the sitemap class (in order to include it in sitemap.xml)
      * @param string $page optional, defaults to ""<br />

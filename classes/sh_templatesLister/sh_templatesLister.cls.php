@@ -106,9 +106,24 @@ class sh_templatesLister extends sh_core {
             $template['page'] = $this->shortClassName.'/show/'.$id;
             //$template['link'] = $this->translatePageToUri($this->shortClassName.'/show/'.$id);
             $template['link'] = $this->translatePageToUri($this->shortClassName.'/show/').'?template='.$id;
+
+            $imagesRoot = $this->getImagesRoot($templateName);
+
+            $template['variations'] = $imagesRoot.$template['variations'];
+            $template['thumbnail'] = $imagesRoot.$template['thumbnail'];
+            $template['background'] = $imagesRoot.$template['background'];
+            if(is_array($template['slides'])){
+                foreach($template['slides'] as &$slide){
+                    $slide['src'] = $imagesRoot.$slide['src'];
+                }
+            }
             return $template;
         }
         return false;
+    }
+
+    public function getImagesRoot($templateName){
+        return '/images/templates/'.$templateName.'/';
     }
 
     public function build(){
@@ -117,7 +132,7 @@ class sh_templatesLister extends sh_core {
         if($this->formSubmitted($formId)){
             $templateName = $_POST['template'];
             $baseVariation = $_POST['variation'];
-            $variationFolder = SH_TEMPLATE_FOLDER.$templateName.'/variations/images/';
+            $variationFolder = SH_TEMPLATE_FOLDER.$templateName.'/images/variations/';
 
             if(!is_dir($variationFolder.$baseVariation.'/')){
                 $values['variation']['folder'] = $variationFolder.$baseVariation.'/';
@@ -125,13 +140,13 @@ class sh_templatesLister extends sh_core {
             }else{
                 if($baseVariation != 'default'){
                     // If needed, we empty the "default" variation folder
-                    if(is_dir(SH_TEMPLATE_FOLDER.$templateName.'/variations/images/default/')){
-                        $this->links->helper->emptyDir(SH_TEMPLATE_FOLDER.$templateName.'/variations/images/default/');
+                    if(is_dir(SH_TEMPLATE_FOLDER.$templateName.'/images/variations/default/')){
+                        $this->links->helper->emptyDir(SH_TEMPLATE_FOLDER.$templateName.'/images/variations/default/');
                     }
                     // And copy the base images to that folder
                     $this->links->helper->moveDirContent(
-                        SH_TEMPLATE_FOLDER.$templateName.'/variations/images/'.$baseVariation.'/',
-                        SH_TEMPLATE_FOLDER.$templateName.'/variations/images/default/'
+                        SH_TEMPLATE_FOLDER.$templateName.'/images/variations/'.$baseVariation.'/',
+                        SH_TEMPLATE_FOLDER.$templateName.'/images/variations/default/'
                     );
                 }
                 flush();
@@ -151,16 +166,12 @@ class sh_templatesLister extends sh_core {
                     $folder = SH_TEMPLATE_FOLDER.$element.'/';
 
                     if(substr($element,0,1) != '.' && is_dir($folder)){
-                        if(preg_match('`((sh_|cm_)[1-9][0-9]*)-(.+)`', $element, $matches)){
-                            list($all,$id,$type,$name) = $matches;
+                        if(preg_match('`((sh_|cm_)([1-9][0-9]*))-(.+)`', $element, $matches)){
+                            list($all,$id,$type,$num,$name) = $matches;
 
-                            if($id<10){
-                                $longId = '0'.$id;
-                            }else{
-                                $longId=$id;
-                            }
-                            $values['templates'][$id] = array(
-                                'name' => $longId.' - '.$name,
+                            $longId = str_pad($num, 6, "0", STR_PAD_LEFT);
+                            $values['templates'][$longId] = array(
+                                'name' => $id.' - '.$name,
                                 'id' => $element
                             );
                        }
@@ -231,6 +242,9 @@ class sh_templatesLister extends sh_core {
                 foreach($filesList as $file){
                     $ext = strtolower(array_pop(explode('.',$file['name'])));
                     if(in_array($ext,$allowedExts)){
+                        if(!is_dir($variationFolder.$degree.'/'.$file['folder'].'/')){
+                            mkdir($variationFolder.$degree.'/'.$file['folder'].'/',0777,true);
+                        }
                         $destImage = $variationFolder.$degree.'/'.$file['folder'].'/'.$file['name'];
                         $destImage = str_replace('//','/',$destImage);
                         $srcImage = $variationFolder.'default/'.$file['folder'].'/'.$file['name'];
@@ -313,7 +327,7 @@ class sh_templatesLister extends sh_core {
     protected function getTemplateRealName($id){
         $elements = scandir(SH_TEMPLATE_FOLDER);
         foreach($elements as $template){
-            if(substr($template,0,strlen($id) + 4) == $id.'-'){
+            if(substr($template,0,strlen($id) + 1) == $id.'-'){
                 return $template;
             }
         }
@@ -329,10 +343,6 @@ class sh_templatesLister extends sh_core {
         list($class,$method,$id) = explode('/',$page);
         if($method == 'show'){
             return '/'.$this->shortClassName.'/show.php';
-        }
-        if($method == 'show'){
-            $realName = $this->getTemplateRealName($id);
-            return '/'.$this->shortClassName.'/show/'.$realName.'.php';
         }
         if($method == 'showList'){
             return '/'.$this->shortClassName.'/showList.php';

@@ -126,10 +126,10 @@
             <tr>
                 <td class="navigator_inSameCategory_pictos">
                     <RENDER_IFSET what="pagenavigation>previous_link">
-                        <a href="{pagenavigation>previous_link}"><img src="images/builder/nav/model1_previous.png" alt="{i18n>nav_previous}"/></a>
+                        <a href="{pagenavigation>previous_link}"><img src="images/shared/variations/{constants>variation}/navigation/model1_previous.png" alt="{i18n>nav_previous}"/></a>
                     </RENDER_IFSET>
                     <RENDER_IFNOTSET what="pagenavigation>previous_link">
-                        <img src="images/builder/nav/model1_noprevious.png" alt="{i18n>nav_previous}"/>
+                        <img src="images/shared/variations/{constants>variation}/navigation/model1_noprevious.png" alt="{i18n>nav_previous}"/>
                     </RENDER_IFNOTSET>
                 </td>
                 <RENDER_LOOP what="category_elements">
@@ -146,10 +146,10 @@
                 </RENDER_LOOP>
                 <td class="navigator_inSameCategory_pictos">
                     <RENDER_IFSET what="pagenavigation>next_link">
-                        <a href="{pagenavigation>next_link}"><img src="images/builder/nav/model1_next.png" alt="{i18n>nav_next}"/></a>
+                        <a href="{pagenavigation>next_link}"><img src="images/shared/variations/{constants>variation}/navigation/model1_next.png" alt="{i18n>nav_next}"/></a>
                     </RENDER_IFSET>
                     <RENDER_IFNOTSET what="pagenavigation>next_link">
-                        <img src="images/builder/nav/model1_nonext.png" alt="{i18n>nav_nonext}"/>
+                        <img src="images/shared/variations/{constants>variation}/navigation/model1_nonext.png" alt="{i18n>nav_nonext}"/>
                     </RENDER_IFNOTSET>
                 </td>
             </tr>

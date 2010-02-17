@@ -22,12 +22,12 @@ class sh_variation extends sh_core{
     public function construct(){
         $templateFolder = $this->links->site->templateFolder;
         $variation = $this->links->site->variation;
-        if(file_exists($templateFolder.'variations/params/'.$variation.'.params.php')){
-            $this->paramsFile = $templateFolder.'variations/params/'.$variation.'.params.php';
-        }elseif(file_exists()){
-            $this->paramsFile = $templateFolder.'variations/params/default.params.php';
+        if(file_exists($templateFolder.'variations/'.$variation.'.params.php')){
+            $this->paramsFile = $templateFolder.'variations/'.$variation.'.params.php';
+        }elseif(file_exists($templateFolder.'variations/default.params.php')){
+            $this->paramsFile = $templateFolder.'variations/default.params.php';
         }else{
-            $this->paramsFile = $templateFolder.'variations/params/0.params.php';
+            $this->paramsFile = $templateFolder.'variations/0.params.php';
         }
         $this->links->params->addElement($this->paramsFile);
         return true;
