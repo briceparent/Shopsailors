@@ -47,6 +47,34 @@ body{
     width:100%;
 	padding-top: 30px;
 }
+/* flags */
+.pictoFlagsContainer{
+	text-align: left;
+	width: 150px;
+	height: 20px;
+	padding-top: 7px;
+	position: absolute;
+}
+.pictoFlags{
+	width: 20px;
+	margin-right: 4px;
+	cursor: pointer;
+}
+
+/* Champ de connexion */
+
+#connectionContainer{
+	height: 20px;
+	text-align: right;
+}
+#connectionContainer span{
+	text-align: right;
+}
+#connectionContainer a{
+	margin-left: 22px;
+	color:  <RENDER_VALUE what="variation>connectLinkColor"/>;
+	font-weight: bold;
+}
 /*SEARCHER*/
 
 #searcher{
@@ -107,19 +135,6 @@ body{
 	}
 
 
-/* Champ de connexion */
-
-#connectionContainer{
-	height: 20px;
-	width: 900px;
-	text-align: right;
-	margin-top: 0px;
-}
-#connectionContainer a{
-	color:  <RENDER_VALUE what="variation>connectLinkColor"/>;
-	font-weight: bold;
-}
-
 /*: liste d'aperçus d'articles*/
 .showList_content table tr td{
 	vertical-align: top;
@@ -155,21 +170,6 @@ body{
 	font-weight: bold;
 	font-size: 110%;
 	color: <RENDER_VALUE what="variation>globalText"/>;	
-}
-
-
-
-/* flags */
-.pictoFlagsContainer{
-text-align: left;
-width: 150px;
-height: 20px;
-padding-top: 7px;
-}
-.pictoFlags{
-width: 20px;
-margin-right: 4px;
-cursor: pointer;
 }
 
 /*contenus de droite de la page*/
