@@ -461,7 +461,8 @@ class sh_i18n extends sh_core{
         
         if(is_array($langs) && count($langs)>0){
             foreach($langs as $oneLang){
-                $value = $this->db_get($class,$i18n, $oneLang,&$qry);
+                // We get the value, replacing " with its equivalent char code
+                $value = str_replace('"','&#34;',$this->db_get($class,$i18n, $oneLang,&$qry));
                 $thisArgs = ' name="'.$name.'['.$oneLang.']" value="'.$value.'"';
                 $thisArgs .= ' style="background:#ffffff url(/images/shared/flags/'.$oneLang.'_small.png) no-repeat top left;padding-left:20px;"';
                 $thisArgs .= ' class="'.$id.' form_i18n_input"';
