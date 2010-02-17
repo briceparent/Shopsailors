@@ -22,6 +22,7 @@ class sh_imagesBuilder extends sh_core{
     protected $textMasks = array();
     protected $stretchMasks = array();
     protected $colors = array('passive'=>'#000','active'=>'#111','selected'=>'#222');
+    protected $builderFolder = '';
 
 
     // Images' names are built with [POSITION]_[STATE]
@@ -40,13 +41,21 @@ class sh_imagesBuilder extends sh_core{
 
     const DEFAULTEXT = '.png';
 
+
+    public function construct(){
+        $this->builderFolder = $this->links->site->templateFolder.'builder/';
+        if(!is_dir($this->builderFolder)){
+            mkdir($this->builderFolder);
+        }
+    }
+
     /**
      * protected function getMask
      * USED
      */
     protected function getMask($type,$position,$state){
         $this->debug('function : '.__FUNCTION__, 2, __LINE__);
-        $imageFile = SH_TEMPLATE_BUILDER.$type.'/model/'.$position.'.png';
+        $imageFile = $this->builderFolder.$type.'/model/'.$position.'.png';
 
         // Verifies the existance of the stretch file
         if(!file_exists($imageFile)){
@@ -100,7 +109,7 @@ class sh_imagesBuilder extends sh_core{
         if(!is_dir(dirname($destinationImage))){
             mkdir(dirname($destinationImage));
         }
-        $folder = SH_TEMPLATE_BUILDER.$type.'/';
+        $folder = $this->builderFolder.$type.'/';
         if(!file_exists($originalImage)){
             return false;
         }
@@ -178,7 +187,7 @@ class sh_imagesBuilder extends sh_core{
             $state = '.'.$state;
         }
 
-        $srcImageName = SH_TEMPLATE_BUILDER.$type.'/variations/'.$variation.'/'.$position.$state.'.png';
+        $srcImageName = $this->builderFolder.$type.'/variations/'.$variation.'/'.$position.$state.'.png';
 
         $this->stretchHorizontally($destImageName,$destWidth,$srcImageName,$mask);
         $this->stretchVertically($destImageName,$destHeight,$destImageName,$mask);
@@ -552,8 +561,8 @@ class sh_imagesBuilder extends sh_core{
         imagecolortransparent($newImage, $transparentColor);
 
         if($startX == null || strtoupper($startX) == 'NULL'){
-            if(file_exists(SH_TEMPLATE_BUILDER.$type.'/model/'.$position.'.php')){
-                include(SH_TEMPLATE_BUILDER.$type.'/model/'.$position.'.php');
+            if(file_exists($this->builderFolder.$type.'/model/'.$position.'.php')){
+                include($this->builderFolder.$type.'/model/'.$position.'.php');
                 $textBox = imagettfbbox($fontSize,0,$font,$text);
                 $startX = $image['startLeft'] + $box['left'];
                 $startY = $image['startTop'] + $box['top'];
@@ -785,25 +794,25 @@ class sh_imagesBuilder extends sh_core{
      */
     public function prepareButtons($type,$variation){
         $this->debug('function : '.__FUNCTION__, 2, __LINE__);
-        $variationFolder = SH_TEMPLATE_BUILDER.$type.'/variations/'.$variation;
+        $variationFolder = $this->builderFolder.$type.'/variations/'.$variation;
         if(!is_dir($variationFolder)){
-            mkdir($variationFolder);
+            mkdir($variationFolder,0777,true);
         }
         // Lists the files
-        if(file_exists(SH_TEMPLATE_BUILDER.$type.'/menu.php')){
-            if(!file_exists(SH_TEMPLATE_BUILDER.$type.'/'.self::NORMAL.'.png')){
+        if(file_exists($this->builderFolder.$type.'/menu.php')){
+            if(!file_exists($this->builderFolder.$type.'/'.self::NORMAL.'.png')){
                 return false;
             }
             $files[] = self::NORMAL.'.png';
 
-            if(file_exists(SH_TEMPLATE_BUILDER.$type.'/'.self::FIRST.'.png')){
+            if(file_exists($this->builderFolder.$type.'/'.self::FIRST.'.png')){
                 $files[] = self::FIRST.'.png';
             }
-            if(file_exists(SH_TEMPLATE_BUILDER.$type.'/'.self::LAST.'.png')){
+            if(file_exists($this->builderFolder.$type.'/'.self::LAST.'.png')){
                 $files[] = self::LAST.'.png';
             }
         }else{
-            $scannedFiles = scandir(SH_TEMPLATE_BUILDER.$type.'/');
+            $scannedFiles = scandir($this->builderFolder.$type.'/');
             foreach($scannedFiles as $file){
                 if(array_pop(explode('.',$file)) == 'png'){
                     $files[] = $file;
@@ -812,7 +821,7 @@ class sh_imagesBuilder extends sh_core{
         }
 
         // Put them in the correct folder, and prepare them for rendering (resize and tag)
-        if(file_exists(SH_TEMPLATE_BUILDER.$type.'/resize.php')){
+        if(file_exists($this->builderFolder.$type.'/resize.php')){
             if(is_array($files)){
                 foreach($files as $file){
                     $this->explodeImage($type,$file);
@@ -821,8 +830,10 @@ class sh_imagesBuilder extends sh_core{
         }else{
             if(is_array($files)){
                 foreach($files as $file){
-                    rename(SH_TEMPLATE_BUILDER.$type.'/'.$file,SH_TEMPLATE_BUILDER.$type.'/model/'.$file);
-                 }
+                    rename(
+                        $this->builderFolder.$type.'/'.$file,$this->builderFolder.$type.'/model/'.$file
+                    );
+                }
              }
         }
         return true;
@@ -834,7 +845,7 @@ class sh_imagesBuilder extends sh_core{
      */
     protected function explodeImage($type,$imageFile){
         $this->debug('function : '.__FUNCTION__, 2, __LINE__);
-        $folder = SH_TEMPLATE_BUILDER.$type.'/';
+        $folder = $this->builderFolder.$type.'/';
         if(!file_exists($folder.$imageFile)){
             // This state hasn't any png file
             return false;
@@ -842,7 +853,7 @@ class sh_imagesBuilder extends sh_core{
 
         $original = imagecreatefrompng($folder.'/'.$imageFile);
 
-        $destDir = SH_TEMPLATE_BUILDER.$type.'/model/';
+        $destDir = $this->builderFolder.$type.'/model/';
         if(!is_dir($destDir)){
             mkdir($destDir);
         }
@@ -954,7 +965,7 @@ class sh_imagesBuilder extends sh_core{
     public function getMultipleImagesBox($texts,$font,$textHeight,$type){
         $this->debug('function : '.__FUNCTION__, 2, __LINE__);
         $allText = implode('',$texts);
-        $folder = SH_TEMPLATE_BUILDER.$type.'/';
+        $folder = $this->builderFolder.$type.'/';
         // Creating or getting text masks
         if(file_exists($folder.'model/'.self::NORMAL.'.php')){
             include($folder.'model/'.self::NORMAL.'.php');

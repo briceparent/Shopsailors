@@ -76,6 +76,11 @@ class sh_browser extends sh_core {
         }
     }
 
+    public function insertScript(){
+        $singlePath = $this->getSinglePath();
+        $this->links->html->addScript($singlePath.'getBrowser.js');
+    }
+
     /**
      * public static function createUserName
      *
@@ -391,7 +396,11 @@ class sh_browser extends sh_core {
         if($owner=='' || is_null($owner)) {
             $owner = self::createUserName();
         }
-        if(mkdir($newName)) {
+        if(is_dir($folder)){
+            $this->links->helper->writeInFile($newName.'/'.self::RIGHTSFILE, $rights);
+            $this->links->helper->writeInFile($newName.'/'.self::OWNERFILE, $owner);
+            return true;
+        }elseif(mkdir($newName)) {
             $this->links->helper->writeInFile($newName.'/'.self::RIGHTSFILE, $rights);
             $this->links->helper->writeInFile($newName.'/'.self::OWNERFILE, $owner);
             return $newName;

@@ -338,9 +338,7 @@ class sh_menu extends sh_core{
         $this->links->html->addToBody('onLoad', 'createSortables();');
 
         // Reads button type's params to get the available fonts
-        $builder = $this->links->buttonsBuilder;
         $type = $this->links->template->get('menuButtons>'.$id.'>type');
-
 
         $_SESSION[__CLASS__] = array();
         $_SESSION[__CLASS__]['links']['menuId'] = $id;

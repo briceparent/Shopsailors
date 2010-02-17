@@ -349,6 +349,12 @@ input[type='submit'], input[type='button']{
 .verticalAlign_top{
     vertical-align: top;
 }
+.verticalAlign_bottom{
+    vertical-align: bottom;
+}
+.verticalAlign_middle{
+    vertical-align: middle;
+}
 .helpToolTip{
     margin-left: 4px;
     margin-right: 4px;

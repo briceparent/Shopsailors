@@ -38,7 +38,7 @@ class sh_template extends sh_core{
         $scan =  scandir(SH_TEMPLATE_FOLDER);
         if(is_array($scan)){
             foreach($scan as $element){
-                if(preg_match('`(((sh_|cm_)[1-9][0-9]*)-(.+))`', $element, $matches)){
+                if(preg_match('`(((sh_|cm_)[0-9]*)-(.+))`', $element, $matches)){
                     if($this->links->site->templateIsAuthorized($matches[1])){
                         if($matches[1] == $this->links->site->templateName){
                             $state = 'checked';
@@ -46,6 +46,8 @@ class sh_template extends sh_core{
                         }else{
                             $state = '';
                         }
+
+                        $imagesRoot = $this->links->templatesLister->getImagesRoot($element);
                         
                         if(file_exists(SH_TEMPLATE_FOLDER.$matches[1].'/template.description.php')){
                             list($id, $name) = explode('-',$matches[1]);
@@ -53,16 +55,18 @@ class sh_template extends sh_core{
                             $firstSlide = $template['variations'];
                             $slides = array();
                             if(is_array($template['slides'])){
-                                $slides = $template['slides'];
+                                foreach($template['slides'] as $slide){
+                                    $slides[]['src'] = $imagesRoot.$slide['src'];
+                                }
                             }
                         }
 
                         $values['templates'][$matches[2]] = array(
                             'name' => $matches[4],
-                            'preview' => '/images/templates/'.$matches[1].'/template_mini.png',
+                            'thumbnail' => $imagesRoot.$template['thumbnail'],
                             'completeName' => $matches[1],
                             'state'=>$state,
-                            'firstSlide'=>$firstSlide,
+                            'firstSlide'=>$imagesRoot.$firstSlide,
                             'slides'=>$slides
                         );
                     }

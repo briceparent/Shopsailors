@@ -1,7 +1,4 @@
 <span class="browser_show">
-    <RENDER_IFSET what="js>old_insert">
-        <script type="text/javascript" src="/sh_browser/singles/changeImg.js"/>
-    </RENDER_IFSET>
     <RENDER_IFSET what="js>insert">
         <script type="text/javascript" src="/sh_browser/singles/getBrowser.js"/>
     </RENDER_IFSET>

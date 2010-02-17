@@ -108,7 +108,8 @@ class sh_sitemap extends sh_core {
         $this->links->helper->writeArrayInFile(
             $this->file,
             'this->addresses',
-            $this->addresses
+            $this->addresses,
+            false
         );
         return $rep;
     }

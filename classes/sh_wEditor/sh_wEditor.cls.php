@@ -19,6 +19,7 @@ class sh_wEditor extends sh_core{
     public function render_wEditor($attributes = array(),$content = ''){
         $singlePath = $this->getSinglePath();
         $this->links->html->addScript($singlePath.'tiny_mce/tiny_mce.js');
+        $this->links->browser->insertScript();
         $lang = $this->links->i18n->getLang();
         $shortLang = substr($lang,0,strpos($lang,'_'));
         $this->links->html->addScript($singlePath.'all.js?lang='.$shortLang.'&#38;variation='.$this->links->site->variation);

@@ -80,6 +80,14 @@ class sh_params extends sh_core{
         return $this->classes[$element]->write();
     }
 
+    public function count($element,$param = ''){
+        $elements = $this->get($element,$param,array());
+        if(is_array($elements)){
+            return count($elements);
+        }
+        return 0;
+    }
+
     /**
      * public function get
      *
