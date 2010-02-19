@@ -4,7 +4,7 @@
 <head>
 	<style>
 		#body{
-		background: transparent url(/templates/global/admin/bcg_restriction.png) no-repeat center top;
+		background: transparent url(/templates/global/admin/sh_browser/bcg_restriction.png) no-repeat center top;
 		}
 		#texte{
 		color: #4a4a4a;
@@ -22,7 +22,7 @@
 		}
 	</style>
 	<meta name="robots" content="noindex,noarchive,nofollow"/>
-	<title>Droits non activés</title>
+	<title><RENDER_VALUE what="i18n>unauthorizedAccess"/></title>
 	<base href="{restriction>base}"/>
 	<meta name="description" content="Les droits nécéssaires à la connexion n'ont pas été activés"/>
 	<meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
