@@ -40,6 +40,33 @@ body{
 	width: 900px;
 }
 
+/* Champ de connexion */
+
+#connectionContainer{
+	height: 20px;
+	width: 900px;
+	text-align: right;
+	padding-top: 7px;
+	position: absolute;
+}
+#connectionContainer a{
+	color: #ffffff;
+	font-weight: bold;
+}
+
+/* flags */
+.pictoFlagsContainer{
+text-align: left;
+width: 150px;
+height: 20px;
+padding-top: 7px;
+}
+.pictoFlags{
+width: 20px;
+margin-right: 4px;
+cursor: pointer;
+}
+
 /*SEARCHER*/
 
 #searcher{
@@ -137,44 +164,6 @@ body{
 }
 .showList_intro a{
 	color: <RENDER_VALUE what="variation>globalText"/>;
-}
-
-/* Champ de connexion */
-
-#connectionContainer{
-	height: 20px;
-	width: 900px;
-	text-align: right;
-	margin-top: 0px;
-	position: absolute;
-}
-.grey_link_connect{
-	color:  <RENDER_VALUE what="variation>connectLinkColor"/>;
-}
-.grey_link{
-	color: #333333;
-	margin-top:2px;
-	margin-bottom:2px;
-}
-.grey_link_line{
-	color: #333333;
-	margin-top:5px;
-}
-
-
-
-/* flags */
-.pictoFlagsContainer{
-text-align: left;
-width: 150px;
-height: 20px;
-padding-top: 7px;
-position: absolute;
-}
-.pictoFlags{
-width: 20px;
-margin-right: 4px;
-cursor: pointer;
 }
 
 /*contenus de droite de la page*/
@@ -629,12 +618,13 @@ width: 600px;
 /*général: all templates*/
 
 .topTitle{
-    /*background: transparent url(/images/template/logo.png) no-repeat center 0;*/
+	height: 20px;
     text-align:left;
     font-size:120%;
     color:  <RENDER_VALUE what="variation>topTitle"/>;
     width:100%;
-	padding-top: 30px;
+	padding-top: 7px;
+	overflow: hidden;
 }
 
 h1{ /* Grand titre des pages */

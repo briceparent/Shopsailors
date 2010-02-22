@@ -103,8 +103,13 @@ body{
 	height: 20px;
 	width: 900px;
 	text-align: right;
-	margin-top: 0px;
+	padding-top: px;
 	position: absolute;
+	padding-top: 5px;
+}
+#connectionContainer a{
+	color: #cccccc;
+	font-weight: bold;
 }
 .grey_link_connect{
 	color:  <RENDER_VALUE what="variation>connectLinkColor"/>;
@@ -117,6 +122,20 @@ body{
 .grey_link_line{
 	color: #333333;
 	margin-top:5px;
+}
+
+/* flags */
+.pictoFlagsContainer{
+text-align: left;
+width: 150px;
+height: 20px;
+padding-top: 5px;
+position: absolute;
+}
+.pictoFlags{
+width: 20px;
+margin-right: 4px;
+cursor: pointer;
 }
 
 /*SEARCHER*/
@@ -215,20 +234,6 @@ body{
 	font-weight: bold;
 	font-size: 110%;
 	color: <RENDER_VALUE what="variation>globalText"/>;	
-}
-
-/* flags */
-.pictoFlagsContainer{
-text-align: left;
-width: 150px;
-height: 20px;
-padding-top: 7px;
-position: absolute;
-}
-.pictoFlags{
-width: 20px;
-margin-right: 4px;
-cursor: pointer;
 }
 
 /*contenus de droite de la page*/

@@ -140,21 +140,34 @@ div.slider div.handle {
 }
 /*ALL ADMIN BOXES*/
   
-/*
-#menuEditor_container{
-  margin-top: 15px;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-  color: #333333;
+
+/*Admin Pop Up : sh_menu, sh_favicon...*/
+.adminPopup_body{
+	background: transparent url(admin/bg_admin.png) repeat center top;
+	font-size: 80%;
 }
-#menuEditor_container a{
-  color: #333333;
+.adminPopup_content{
+	width:100%;
+	height:100%;
+	overflow:auto;
 }
-*/
-.bg_admin{
+/* Popup selection langues */
+ .langSelector_contents{
+     padding-left: 10px;
+     margin: inherit;
+     text-align: center;
+     overflow: auto;
+ }
+ .langSelector_contents img{
+     width: 30px;
+ }
+.getSelector_submit{
+	text-align: left;
+	margin-top: 15px;
+	margin-left: 6px;
+
 }
+
   /* Conteneurs et boîtes*/
   #form_box_container, .form_box_container{
     text-align: center;
@@ -162,6 +175,7 @@ div.slider div.handle {
     margin-right: auto;
     width:100%;
     color: #333333;
+	font-family: arial;
   }
   #form_box_container input, .form_box_container input{
     border: 1px solid #666666;
@@ -750,6 +764,16 @@ ul#shortList_activeElements{
     cursor: pointer;
 }
 
+/*Favicon selector*/
+.favicon_input{
+	margin-top: 5px;
+	height: 55px;
+	overflow: hidden;
+}
+.favicon_input input{
+	margin-top: 5px;
+	margin-bottom: 0;
+}
 /*COMON*/
 .greyBorder{
   border: 1px solid #666666;

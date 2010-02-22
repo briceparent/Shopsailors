@@ -47,6 +47,46 @@ body{
 	width: 900px;
 }
 
+/* Champ de connexion */
+
+#connectionContainer{
+	height: 20px;
+	width: 900px;
+	text-align: right;
+	margin-top: 0px;
+	position: absolute;
+	padding-top: 5px;
+}
+#connectionContainer a{
+	font-weight: bold;
+}
+.grey_link_connect{
+	color:  <RENDER_VALUE what="variation>connectLinkColor"/>;
+}
+.grey_link{
+	color: #333333;
+	margin-top:2px;
+	margin-bottom:2px;
+}
+.grey_link_line{
+	color: #333333;
+	margin-top:5px;
+}
+
+/* flags */
+.pictoFlagsContainer{
+text-align: left;
+width: 150px;
+height: 20px;
+padding-top: 5px;
+position: absolute;
+}
+.pictoFlags{
+width: 20px;
+margin-right: 4px;
+cursor: pointer;
+}
+
 /*SEARCHER*/
 
 #searcher{
@@ -106,33 +146,6 @@ body{
 	margin-top: 10px;
 	}
 
-
-/* Champ de connexion */
-
-#connectionContainer{
-	height: 20px;
-	width: 900px;
-	text-align: right;
-	margin-top: 0px;
-	position: absolute;
-}
-#connectionContainer a{
-	font-weight: bold;
-}
-.grey_link_connect{
-	color:  <RENDER_VALUE what="variation>connectLinkColor"/>;
-}
-.grey_link{
-	color: #333333;
-	margin-top:2px;
-	margin-bottom:2px;
-}
-.grey_link_line{
-	color: #333333;
-	margin-top:5px;
-}
-
-
 /*ShowList: liste d'aperçus d'articles*/
 
 .showList_content table tr td{
@@ -171,21 +184,6 @@ body{
 	color: <RENDER_VALUE what="variation>globalText"/>;	
 }
 
-
-
-/* flags */
-.pictoFlagsContainer{
-text-align: left;
-width: 150px;
-height: 20px;
-padding-top: 7px;
-position: absolute;
-}
-.pictoFlags{
-width: 20px;
-margin-right: 4px;
-cursor: pointer;
-}
 
 /*contenus de droite de la page*/
 
@@ -638,8 +636,7 @@ cursor: pointer;
 h1{ /* Grand titre des pages */
     color:   <RENDER_VALUE what="variation>title"/>;
     font-weight: bold;
-    font-size: 120%;
-    line-height: 24px;
+    font-size: 150%;
     text-align: left;
 	margin-top: inherit;
 }

@@ -27,16 +27,15 @@ body{
 	text-align: left;
 }
 .logo img{
-    height:80px;
-    width:240px;
+    height: 110px;
+    width:330px;
 }
 .topTitle{
 	height: 25px;
-    text-align:left;
+    text-align: right;
     font-size:120%;
     color:  <RENDER_VALUE what="variation>topTitle"/>;
     width:100%;
-	padding-top: 30px;
 	margin-bottom: 0;
 }
 
@@ -46,16 +45,17 @@ body{
     width: 900px;
 }
 .blank{
-/*div servant à régler la position du menu sous IE*/
+/*div servant à régler la position du menu sous IE
 	height: 28px;
 	margin-left: auto; 
-	margin-right: auto;
+	margin-right: auto;*/
 }
 .menu1{
 	text-align: right;
 	width: 900px;
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: 7px;
 }
 
 .blackBottom{
@@ -63,6 +63,43 @@ body{
 	width: 100%;
 	height: 140px;
 	margin-bottom: 0px;
+}
+
+/* Champ de connexion */
+
+#connectionContainer{
+	height: 20px;
+	width: 900px;
+	text-align: right;
+	position: absolute;
+	font-weight: bold;
+}
+#connectionContainer a{
+	font-weight: bold;
+}
+.grey_link_connect{
+	color:  <RENDER_VALUE what="variation>connectLinkColor"/>;
+}
+.grey_link{
+	color: <RENDER_VALUE what="variation>connectLinkColor"/>;
+	margin-top:2px;
+	margin-bottom:2px;
+}
+.grey_link_line{
+	color: <RENDER_VALUE what="variation>connectLinkColor"/>;
+	margin-top:5px;
+}
+
+/* flags */
+.pictoFlagsContainer{
+text-align: left;
+width: 150px;
+height: 20px;
+}
+.pictoFlags{
+width: 20px;
+margin-right: 4px;
+cursor: pointer;
 }
 
 /*SEARCHER*/
@@ -123,47 +160,6 @@ body{
 .articleResult_contents{
 	margin-top: 10px;
 	}
-
-/* Champ de connexion */
-
-#connectionContainer{
-	height: 20px;
-	width: 900px;
-	text-align: right;
-	padding-top: 10px;
-	position: absolute;
-	font-weight: bold;
-}
-#connectionContainer a{
-	font-weight: bold;
-}
-.grey_link_connect{
-	color:  <RENDER_VALUE what="variation>connectLinkColor"/>;
-}
-.grey_link{
-	color: <RENDER_VALUE what="variation>connectLinkColor"/>;
-	margin-top:2px;
-	margin-bottom:2px;
-}
-.grey_link_line{
-	color: <RENDER_VALUE what="variation>connectLinkColor"/>;
-	margin-top:5px;
-}
-
-/* flags */
-.pictoFlagsContainer{
-text-align: left;
-width: 150px;
-height: 20px;
-padding-top: 7px;
-position: absolute;
-}
-.pictoFlags{
-width: 20px;
-margin-right: 4px;
-cursor: pointer;
-}
-
 
 /*contenus de droite de la page*/
 
@@ -672,7 +668,8 @@ h1{ /* Grand titre des pages */
     font-size: 160%;
     line-height: 24px;
     text-align: left;
-	margin-top: inherit;
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 h2{ /* Petit titre des pages */

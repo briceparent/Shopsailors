@@ -53,7 +53,7 @@ body{
 .menu1{
 	margin-left: 10px;
 	padding-top: 4px;
-	width: 800px;
+	width: 840px;
 }
 
 /*SEARCHER*/
@@ -78,7 +78,7 @@ body{
 }
 .searcher_input{
 	background: transparent url(/images/template/searcher_bg.png) repeat right top;
-    border: none;
+    border: 1px solid <RENDER_VALUE what="variation>globalText"/>;
     height: 17px;
 	width: 155px;
     font-size: 90%;
@@ -164,7 +164,7 @@ cursor: pointer;
 /*Table et contenus de droite de la page*/
 
 #page_content{
-margin-top: 20px;
+margin-top: 10px;
 padding-top: 0px;
 width: 600px;
 }

@@ -84,10 +84,10 @@ width: 900px;
 /*SEARCHER*/
 
 #searcher{
-	text-align: right;
+	position: absolute;
     height: 20px;
-	margin-right: 37px;
-	padding-top: 15px;
+	margin-top: 10px;
+	margin-left: 680px;
 }
 #searcher input{
     vertical-align:middle;
@@ -102,8 +102,11 @@ width: 900px;
     display: none;
 }
 .searcher_input{
-	background: transparent url(/images/template/variation/searcher_bg.png) repeat right top;
-    border: none;
+    border: 1px solid #666666;
+}
+.searcher_input{
+	background: transparent url(/images/template/searcher_bg.png) repeat right top;
+    height: 17px;
 	width: 155px;
     font-size: 90%;
     padding-top: 2px;

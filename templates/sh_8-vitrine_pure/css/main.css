@@ -10,15 +10,17 @@ body{
 }
 
 .topTitle{
-    /*background: transparent url(/images/template/logo.png) no-repeat center 0;*/
-    text-align:center;
+    text-align: left;
     font-size:120%;
+	margin-left: 60px;
     color:#666666;
-    width:100%;
-	margin: inherit;
-	padding: inherit;
+    width:780px;
 	position: relative;
 	line-height: 15px;
+}
+.topTitle h1{
+	margin: inherit;
+	padding: inherit;
 }
 /* Arrières plans */
 
@@ -94,7 +96,6 @@ body{
 }
 #connectionContainer a{
 	font-weight: bold;
-	text-decoration: none;
 }
 .grey_link_connect{
 	color: #333333;
@@ -117,7 +118,7 @@ text-align: right;
 width: 150px;
 height: 20px;
 margin-left: 690px;
-padding-top: 10px;
+padding-top: 12px;
 position: absolute;
 }
 .pictoFlags{

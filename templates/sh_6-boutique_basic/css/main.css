@@ -132,8 +132,7 @@ cursor: pointer;
     vertical-align:middle;
 }
 .searcher_input{
-	background: transparent url(/images/template/searcher_bg.png) repeat right top;
-    border: none;
+    color: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
     height: 17px;
 	width: 155px;
     font-size: 90%;

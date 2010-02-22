@@ -453,6 +453,12 @@ ul{
 .noMargin{
     margin:0;
 }
+.noMargin_bottom{
+    margin-bottom:0;
+}
+.noPadding_bottom{
+    padding-bottom:0;
+}
 .marginTop_5px{
     margin-top: 5px;
 }

@@ -7,14 +7,12 @@
         <div id="header">
             <RENDER_IFSET what="connect>link">
                 <div id="connectionContainer">
-                    <img src="/images/shared/icons/bank1/picto_identification.png" class="pictoConnection"/>
-                    <a href="{connect>link}" class="grey_link_connect"><RENDER_VALUE what="i18n>connectAccountClient"/></a>
+                    <a href="{connect>link}"><RENDER_VALUE what="i18n>connectAccountClient"/></a>
                 </div>
             </RENDER_IFSET>
             <RENDER_IFSET what="disconnect>link">
                 <div id="connectionContainer">
-                    <img src="/images/shared/icons/bank1/picto_identification.png" class="pictoConnection"/>
-                    <a href="{disconnect>link}" class="grey_link_connect"><RENDER_VALUE what="i18n>disconnectAccountClient"/></a>
+                    <a href="{disconnect>link}"><RENDER_VALUE what="i18n>disconnectAccountClient"/></a>
                 </div>
             </RENDER_IFSET>
             <RENDER_VALUE what="language>selector"/>
