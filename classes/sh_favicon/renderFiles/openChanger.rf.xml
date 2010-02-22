@@ -4,9 +4,9 @@ function changeFavicon(){
     window.open(
         '<RENDER_VALUE what="links>faviconChanger"/>',
         'sh_favicon',
-        config='height=200, width=450, toolbar=no, menubar=no'
+        config='height=250, width=450, toolbar=no, menubar=no'
     );
 }
     </script>
-    <div class="falseLink" onclick="changeFavicon();return false;">Changer de favicon</div>
+    <div class="falseLink" onclick="changeFavicon();return false;"><RENDER_VALUE what="i18n>titleFavicon"/></div>
 </div>

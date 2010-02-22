@@ -184,6 +184,7 @@ class sh_i18n extends sh_core{
         }
 
         $values['params']['type'] = $_SESSION[__CLASS__.'changer'][$id]['type'];
+        $values['params'][$_SESSION[__CLASS__.'changer'][$id]['type']] = true;
 
 
         foreach($langs as $oneLang){

@@ -21,5 +21,6 @@ $i18n = array(
 'default'=>'Default language',
 'modifyDefaultLang'=>'modify',
 'modify'=>'Modify',
-'validate'=>'Validate'
+'validate'=>'Validate',
+'activeLang'=>'Select languages',
 );

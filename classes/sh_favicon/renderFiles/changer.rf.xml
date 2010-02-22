@@ -1,31 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <base href="/"/>
-    <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" media="screen" type="text/css" href="/templates/global/global.css"></link>
-</head>
-<body style="background:transparent url(/templates/global/admin/bcg_browser.png) no-repeat 0 0;">
-<div id="{captcha>name}" class="captchaText" >
-    <RENDER_VALUE what="i18n>actual"/><img src="{favicon>actual}"/><br />
-    <RENDER_IFSET what="response>done">
-        <RENDER_VALUE what="i18n>done"/>
-    </RENDER_IFSET>
-    <RENDER_IFSET what="response>wrongFileType">
-        <RENDER_VALUE what="i18n>wrongFileType"/>
-    </RENDER_IFSET>
-    <RENDER_IFNOTSET what="response>done">
-        <RENDER_IFNOTSET what="response>wrongFileType">
-            <RENDER_VALUE what="i18n>howToChangeIt"/>
-        </RENDER_IFNOTSET>
-        <br />
-        <RENDER_FORM id="faviconChanger" enctype="multipart/form-data">
-            <input type="file" name="favicon"/>
-            <input type="submit"/>
-        </RENDER_FORM>
-    </RENDER_IFNOTSET>
-</div>
-</body>
+    <head>
+        <title>Shopsailors</title>
+        <base href="/"/>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" media="screen" type="text/css" href="/templates/global/admin.css"></link>
+    </head>
+    <body class="adminPopup_body">
+        <div class="form_box_container">
+            <div class="form_box_top">
+                <h3 class="box_title">
+                    <RENDER_VALUE what="i18n>titleFavicon"/>
+                </h3>
+            </div>
+            <div class="form_box_middle">
+                <div class="formContent">
+                    <RENDER_VALUE what="i18n>actual"/><img src="{favicon>actual}"/><br />
+                    <RENDER_IFSET what="response>done">
+                        <RENDER_VALUE what="i18n>done"/>
+                    </RENDER_IFSET>
+                    <RENDER_IFSET what="response>wrongFileType">
+                        <RENDER_VALUE what="i18n>wrongFileType"/>
+                    </RENDER_IFSET>
+                    <RENDER_IFNOTSET what="response>done">
+                        <RENDER_IFNOTSET what="response>wrongFileType">
+                            <RENDER_VALUE what="i18n>howToChangeIt"/>
+                        </RENDER_IFNOTSET>
+                        <div class="favicon_input">
+                            <RENDER_FORM id="faviconChanger" enctype="multipart/form-data">
+                                <input type="file" name="favicon"/><br />
+                                <input type="submit"/>
+                            </RENDER_FORM>
+                        </div>
+                    </RENDER_IFNOTSET>
+                </div>
+            </div>
+            <div class="form_box_bottom">
+            </div>
+        </div>
+    </body>
 </html>
 

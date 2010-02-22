@@ -4,7 +4,7 @@
     <head>
         <base href="/" />
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
-        <link rel="stylesheet" media="screen" type="text/css" href="/sh_i18n/singles/style.css" />
+        <link rel="stylesheet" media="screen" type="text/css" href="/templates/global/admin.css" />
         <RENDER_SCRIPT file="PROTOTYPE" absolute="absolute"/>
         <script type="text/javascript">
             function submit_checkbox(){
@@ -32,45 +32,47 @@
             }
         </script>
     </head>
-    <body>
-        <div class="get_selectorContainer">
-            <div class="selector_top">
-            </div>
-            <div class="selector_middle">
-                <div class="langSelector_title">
-                    <RENDER_IFSET what="params>checkboxTitle">
-                        <RENDER_VALUE what="i18n>titleCheckbox"/>
-                    </RENDER_IFSET>
-                    <RENDER_IFSET what="params>radioTitle">
-                    <RENDER_VALUE what="i18n>titleRadio"/>
-                    </RENDER_IFSET>
+    <body class="adminPopup_body">
+        <div class="adminPopup_content">
+            <div class="form_box_container">
+                <div class="form_box_top">
+                    <h3 class="box_title">
+                        <RENDER_IFSET what="params>checkbox">
+                            <RENDER_VALUE what="i18n>titleCheckbox"/>
+                        </RENDER_IFSET>
+                        <RENDER_IFSET what="params>radio">
+                        <RENDER_VALUE what="i18n>titleRadio"/>
+                        </RENDER_IFSET>
+                    </h3>
                 </div>
-                <div class="langSelector_contents">
-                    <table>
-                        <RENDER_FORM id="i18n_changer">
-                            <RENDER_LOOP what="langs">
-                                <tr>
-                                    <td class="tdInput">
-                                        <input type="{params>type}" name="{langs>inputName}" value="{langs>language}" state="{langs>state}"/>
-                                    </td>
-                                    <td class="tdImage">
-                                        <img src="{langs>flag}" alt="{lang>description}"/>
-                                    </td>
-                                    <td class="tdText">
-                                        <RENDER_VALUE what="langs>languageName"/>
-                                    </td>
-                                </tr>
-                            </RENDER_LOOP>
-                            <tr>
-                                <td colspan="3" class="selectLangSubmitContainer">
-                                    <input type="submit" value="ok"/>
-                                </td>
-                            </tr>
-                        </RENDER_FORM>
-                    </table>
+                <div class="form_box_middle">
+                    <div class="form_box_content">
+                        <div class="langSelector_contents">
+                            <RENDER_FORM id="i18n_changer">
+                                <table>
+                                    <RENDER_LOOP what="langs">
+                                        <tr>
+                                            <td class="tdInput">
+                                                <input type="{params>type}" name="{langs>inputName}" value="{langs>language}" state="{langs>state}"/>
+                                            </td>
+                                            <td class="tdImage">
+                                                <img src="{langs>flag}" alt="{lang>description}"/>
+                                            </td>
+                                            <td class="tdText">
+                                                <RENDER_VALUE what="langs>languageName"/>
+                                            </td>
+                                        </tr>
+                                    </RENDER_LOOP>
+                                </table>
+                                <div class="getSelector_submit">
+                                    <input type="submit" value="{i18n>validate}"/>
+                                </div>
+                            </RENDER_FORM>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="selector_bottom">
+                <div class="form_box_bottom">
+                </div>
             </div>
         </div>
     </body>
