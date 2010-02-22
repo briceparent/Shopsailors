@@ -1,10 +1,18 @@
 <span class="sh_date_picker">
-    <RENDER_TAG type="input" what="datePicker>data" readonly="readonly"/>
+    <RENDER_IFSET what="datepicker>callback">
+        <script type="text/javascript">
+            function <RENDER_VALUE what="datePicker>id"/>_callback(){
+                <RENDER_VALUE what="datePicker>callback"/>
+            }
+        </script>
+    </RENDER_IFSET>
     <input type="hidden" id="{datePicker>id}_real" name="{datePicker>name}" value="{datePicker>value}"/>
-    <input type="button" id="btn_{datePicker>id}" value="{i18n>choose}" onclick="dp_showDatePicker('{datePicker>id}','{year>method}');"/>
+    <span class="nobr">
+        <RENDER_TAG style="width:80px;vertical-align:middle;" type="input" what="datePicker>data" readonly="readonly"/>
+        <img src="/images/shared/icons/picto_calendar.png" style="width:20px;height:20px;vertical-align:middle;" id="btn_{datePicker>id}" value="{i18n>choose}" onclick="dp_showDatePicker('{datePicker>id}','{year>method}');"/>
+    </span>
     <div class="oneDatePicker" id="div_{datePicker>id}" style="display:none;">
         <div class="oneDatePicker_monthAndYear">
-            
             <NORENDER>We separate the choices for the month and for the year</NORENDER>
             <RENDER_IFSET what="year>separatedFromMonth">
                 <NORENDER>Month</NORENDER>

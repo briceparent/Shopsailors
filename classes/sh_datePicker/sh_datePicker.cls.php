@@ -85,8 +85,12 @@ class sh_datePicker extends sh_core {
         }else {
             return false;
         }
-        
-        $id='dp_'.substr(md5(microtime()),0,8);
+
+        if(isset($attributes['id'])){
+            $id=$attributes['id'];
+        }else{
+            $id='dp_'.substr(md5(microtime()),0,8);
+        }
         
         if(isset($attributes['value'])) {
             $value = $attributes['value'];
@@ -246,6 +250,9 @@ class sh_datePicker extends sh_core {
         );
         
         $values['datePicker']['data'] = ' value="' .$value . '" name="'.$name.'_i18ned" id="'.$id.'" class="oneDatePicker_input"';
+        if(isset($attributes['onchange'])){
+            $values['datePicker']['callBack'] = $attributes['onchange'];
+        }
         $values['datePicker']['name'] = $name;
         $values['datePicker']['id'] = $id;
         

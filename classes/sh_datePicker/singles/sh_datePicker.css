@@ -1,10 +1,6 @@
-
-.oneDatePicker_input{
-    width:100px;
-}
 .oneDatePicker{
     position:absolute;
-    width:100px;
+    width:150px;
     border:1px solid black;
     -moz-border-radius:0 0 5px 5px;
     background-color:#999999;
@@ -14,7 +10,7 @@
     color:black;
 }
 .oneDatePicker table{
-    width:100%;
+    width:150px;
 }
 .oneDatePicker table td{
     width:14%;
