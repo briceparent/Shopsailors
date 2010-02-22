@@ -28,10 +28,10 @@ class sh_site extends sh_core{
             'I18N_DEFAULTHEADLINE'=>self::I18N_DEFAULTHEADLINE,
             'I18N_METADESCRIPTION'=>self::I18N_METADESCRIPTION
         );
-        $this->templateName = $this->getParam('template','12-boutique_clean');
+        $this->templateName = $this->getParam('template','sh_2-boutique_clean');
 
         if(!$this->templateIsAuthorized($this->templateName)){
-             $this->templateName = '12-boutique_clean';
+             $this->templateName = 'sh_2-boutique_clean';
         }
 
         $this->templateFolder = SH_TEMPLATE_FOLDER.$this->templateName.'/';
@@ -72,6 +72,9 @@ class sh_site extends sh_core{
     }
 
     public function templateIsAuthorized($template){
+        if(!is_dir(SH_TEMPLATE_FOLDER.$template)){
+            return false;
+        }
         if(file_exists(SH_TEMPLATE_FOLDER.$template.'/restricted.php')){
             $allowedTemplates = $this->getParam('allowedTemplates', array());
             if(!in_array($template,$allowedTemplates)){
