@@ -1115,14 +1115,14 @@ class sh_renderer extends sh_core {
      */
     protected function changeValue($valueToChange,$secondLevel = false){
         $old = $valueToChange;
-        if(preg_match('`(.*)\{([^>]+)\}(.*)`',$valueToChange,$matches)){
+        if(preg_match('`(.*)\{([^ >]+)\}(.*)`',$valueToChange,$matches)){
             $element = strtolower($matches[2]);
             $value = trim($this->values[$element]);
             $ret = $matches[1].$value.$matches[3];
             $valueToChange = $this->changeValue($ret,true);
         }
         
-        if(preg_match('`(.*)\{([^>]+)>([^\}]+)\}(.*)`',$valueToChange,$matches)){
+        if(preg_match('`(.*)\{([^ >]+)>([^\}]+)\}(.*)`',$valueToChange,$matches)){
             $class = strtolower($matches[2]);
             $element = strtolower($matches[3]);
             if($class == 'i18n'){
