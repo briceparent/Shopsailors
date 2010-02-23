@@ -32,9 +32,6 @@ function dp_showDatePicker(id,method){
 
     var minWidth = btn.offsetLeft + btn.offsetWidth - input.offsetLeft - 2;
     var actualWidth = div.offsetWidth;
-    if(actualWidth < minWidth){
-        div.style.width = minWidth + "px";
-    }
     dp_drawDatePicker(id,method);
     return true;
 }
@@ -139,4 +136,8 @@ function dp_select(id,newDate,year,month,day){
     $(id + '_real').value = year+'-'+month+'-'+day;
     Effect.BlindUp('div_' + id);
     datePickerShown[id] = false;
+    var myFunc = eval(id+'_callback');
+    if(typeof(myFunc)=="function"){
+        myFunc();
+    }
 }

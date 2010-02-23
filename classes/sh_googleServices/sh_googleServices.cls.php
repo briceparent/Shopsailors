@@ -73,8 +73,8 @@ class sh_googleServices extends sh_core{
     public function translateUriToPage($uri){
         if($uri != '/' && $uri == '/'.$this->getParam('googleForWebmasters>link', '')){
             // In this case, we don\'t have to do more than to send a 200 header,
-            // so we send some text, and quit
-            echo 'Let\'s go baby!';
+            // so we send the required text, and quit
+            echo 'google-site-verification: '.$this->getParam('googleForWebmasters>link', '');
             exit(1);
         }
         return false;

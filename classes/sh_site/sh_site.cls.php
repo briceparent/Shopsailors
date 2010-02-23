@@ -28,10 +28,10 @@ class sh_site extends sh_core{
             'I18N_DEFAULTHEADLINE'=>self::I18N_DEFAULTHEADLINE,
             'I18N_METADESCRIPTION'=>self::I18N_METADESCRIPTION
         );
-        $this->templateName = $this->getParam('template','12-boutique_clean');
+        $this->templateName = $this->getParam('template','sh_2-boutique_clean');
 
         if(!$this->templateIsAuthorized($this->templateName)){
-             $this->templateName = '12-boutique_clean';
+             $this->templateName = 'sh_2-boutique_clean';
         }
 
         $this->templateFolder = SH_TEMPLATE_FOLDER.$this->templateName.'/';
@@ -72,6 +72,9 @@ class sh_site extends sh_core{
     }
 
     public function templateIsAuthorized($template){
+        if(!is_dir(SH_TEMPLATE_FOLDER.$template)){
+            return false;
+        }
         if(file_exists(SH_TEMPLATE_FOLDER.$template.'/restricted.php')){
             $allowedTemplates = $this->getParam('allowedTemplates', array());
             if(!in_array($template,$allowedTemplates)){
@@ -110,9 +113,17 @@ class sh_site extends sh_core{
         }
         if(!isset($newImage)){
             // We have to find out which of the images is the new one
-
+            clearstatcache();
+            $times = array(
+                'logo' => filemtime(SH_IMAGES_FOLDER.'logo/logo.png'),
+                'banner' => filemtime(SH_IMAGES_FOLDER.'logo/banner.png'),
+                'rectangular' => filemtime(SH_IMAGES_FOLDER.'logo/rectangular.png')
+            );
+            $newerElement = array_search(max($times),$times);
+            $newImage = $newerElement.'_2.png';
+            rename($folder.$newerElement.'.png',$folder.$newImage);
+            $newExt = 'png';
         }
-
         copy($folder.$newImage,$folder.'logo.'.$newExt);
         $this->links->browser->resample_image(
             $folder.'logo.'.$newExt,

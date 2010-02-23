@@ -1375,7 +1375,7 @@ class sh_shop extends sh_core {
         if($id == 0){
             // We are creating a new category, so we give the default values
             $values['category'] = array(
-                'image'=>'/images/shared/default/defaultPreviewForm.png',
+                'image'=>'/images/shared/default/defaultShopImage.png',
                 'onClickReplaceImage'=>$this->links->browser->getOnClickReplaceImage(
                     'image',
                     SH_IMAGES_FOLDER.'shop/categories/'
@@ -1931,7 +1931,7 @@ class sh_shop extends sh_core {
             if($id == 0){
                 // We are creating a new product, so we give the default values
                 $values['product'] = array(
-                    'image'=>'/images/shared/default/defaultPreviewForm.png',
+                    'image'=>'/images/shared/default/defaultShopImage.png',
                     'stock'=>0,
                     'active'=>'checked',
                     'onClickReplaceImage'=>$this->links->browser->getOnClickReplaceImage(

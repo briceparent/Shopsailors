@@ -10,10 +10,10 @@
                     <table>
                         <tr>
                             <td>
-                                <img src="/images/shared/icons/bank1/picto_identification.png" class="pictoConnection" alt="picto_connection_account"/>
+                                <img src="/images/shared/icons/picto_identification.png" alt="picto_connection_account"/>
                             </td>
                             <td>
-                                <a href="{connect>link}" class=""><RENDER_VALUE what="i18n>connectAccountClient"/></a>
+                                <a href="{connect>link}"><RENDER_VALUE what="i18n>connectAccountClient"/></a>
                             </td>
                         </tr>
                     </table>
@@ -24,10 +24,10 @@
                     <table>
                         <tr>
                             <td>
-                                <img src="/images/shared/icons/bank1/picto_identification.png" class="pictoConnection" alt="picto_disconnect_acount"/>
+                                <img src="/images/shared/icons/picto_identification.png" alt="picto_disconnect_acount"/>
                             </td>
-                            <td >
-                                <a href="{disconnect>link}" class=""><RENDER_VALUE what="i18n>disconnectAccountClient"/></a>
+                            <td>
+                                <a href="{disconnect>link}"><RENDER_VALUE what="i18n>disconnectAccountClient"/></a>
                             </td>
                         </tr>
                     </table>

@@ -1,5 +1,6 @@
 <?php
 $i18n = array(
+    'titleFavicon'=>'Change favicon',
     'actual'=>'The favicon that is used is : ',
     'howToChangeIt'=>'To replace it, you have to upload an ICO
 image with the size 32x32 or 16x16.<br />

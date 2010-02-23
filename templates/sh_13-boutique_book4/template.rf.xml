@@ -23,7 +23,6 @@
                 <img src="/images/site/logo/rectangular.png" alt="logo" title=""/>
             </div>
         </div>
-        <div class="blank">&#160;</div>
         <div id="mainContainer">
         <div class="menu1">
             <RENDER_VALUE what="body>menu_1"/>

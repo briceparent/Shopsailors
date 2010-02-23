@@ -22,16 +22,8 @@ body{
 }
 #connectionContainer a{
     color: #333333;
-	display: block;
 	margin-top:5px;
-}
-#identificationContainer a{
-	display: block;
-	margin-top:5px;
-}
-
-.connectText{
-	margin-left: 20px;
+	font-weight: bold;
 }
 .grey_link{
 	color: #333333;

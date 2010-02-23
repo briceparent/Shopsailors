@@ -241,6 +241,11 @@ input[type=text]{
 .noDisplay{
     display:none;
 }
+.form_error{
+	color: #660000;
+	font-style: italic;
+}
+
 
 /* Default templates listing style */
 
@@ -452,6 +457,12 @@ ul{
 }
 .noMargin{
     margin:0;
+}
+.noMargin_bottom{
+    margin-bottom:0;
+}
+.noPadding_bottom{
+    padding-bottom:0;
 }
 .marginTop_5px{
     margin-top: 5px;

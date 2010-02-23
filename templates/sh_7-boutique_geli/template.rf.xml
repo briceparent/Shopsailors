@@ -43,12 +43,12 @@
                 </div>
             </div>
             <div id="bg_menu1">
-                <RENDER_VALUE what="body>searchEngine"/>
                 <div class="menu1">
                     <RENDER_VALUE what="body>menu_1"/>
                 </div>
             </div>
             <div id="bg_middle">
+                <RENDER_VALUE what="body>searchEngine"/>
                 <div id="page_content">
                         <RENDER_IFSET what="body>title">
                             <h1><RENDER_VALUE what="body>title"/></h1>

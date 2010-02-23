@@ -37,7 +37,9 @@ class sh_helpToolTips extends sh_core{
             $values['help']['what'] = $attributes['what'];
         }else{
             return false;
-        }$values['help']['id'] = substr(MD5(__CLASS__.microtime()),0,12);
+        }
+
+        $values['help']['id'] = substr(MD5(__CLASS__.microtime()),0,12);
 
         
         if(sh_html::$willRender){

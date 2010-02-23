@@ -46,60 +46,61 @@
             </div>
         </div>
     </div>
-
+    
     <div class="selectAcategory">
         <RENDER_VALUE what="i18n>selectAproduct"/>
     </div>
     
     <NORENDER>navigator_table</NORENDER>
         <table cellspacing="0" class="navigator_table">
-            <tr class="navigator_table_title">
+            <tr class="tableMode_title">
                 <th class="border-bottom">&#160;</th>
-                <th class="border-bottom border-left border-top">
+                <th class="tableMode_bg border-bottom border-left border-top">
                     <RENDER_VALUE what="i18n>productsTable_name"/>
                 </th>
-                <th class="border-bottom border-left border-top">
+                <th class="tableMode_bg border-bottom border-left border-top">
                     <RENDER_VALUE what="i18n>productsTable_desc"/>
                 </th>
                 <RENDER_IFSET what="constants>showQuantity">
-                    <th class="border-bottom border-left border-top">
+                    <th class="tableMode_bg border-bottom border-left border-top">
                         <RENDER_VALUE what="i18n>productsTable_stock"/>
                     </th>
                 </RENDER_IFSET>
-                <th class="border-bottom border-left border-top border-right">
+                <th class="tableMode_bg border-bottom border-left border-top border-right">
                     <RENDER_VALUE what="i18n>productsTable_price"/>
                 </th>
-                <th>&#160;</th>
+                <th>
+                </th>
             </tr>
             <RENDER_LOOP what="category_elements">
             <tr>
-                <td class="table_preview border-left border-bottom">
+                <td class="tableMode_preview tableMode_bg border-left border-bottom">
                     <a href="{category_elements>link}">
                         <img src="{category_elements>image}" alt="navigator_preview"/>
                     </a>
                 </td>
-                <td class="navigator_table_name border-left border-bottom bg_table">
+                <td class="tableMode_name tableMode_bg border-left border-bottom bg_table">
                     <a href="{category_elements>link}">
                         <RENDER_VALUE what="category_elements>name"/>
                     </a>
-                    <div class="navigator_table_reference">
+                    <div class="tableMode_reference">
                         <a href="{category_elements>link}">
                             <RENDER_VALUE what="category_elements>reference"/>
                         </a>
                     </div>
                 </td>
-                <td class="navigator_table_shortDesc border-left border-bottom bg_table">
+                <td class="tableMode_shortDesc tableMode_bg border-left border-bottom bg_table">
                     <RENDER_VALUE what="category_elements>shortDescription"/>
                 </td>
                 <RENDER_IFSET what="constants>showQuantity">
-                    <td class="border-left border-bottom bg_table navigator_table_stock">
+                    <td class="tableMode_stock tableMode_bg border-left border-bottom bg_table">
                         <RENDER_VALUE what="category_elements>stock"/>
                     </td>
                 </RENDER_IFSET>
-                <td class="border-left border-bottom border-right bg_table navigator_table_price nobr">
+                <td class="tableMode_price tableMode_bg border-left border-bottom border-right bg_table nobr">
                    <span class="nobr"><RENDER_VALUE what="category_elements>price"/></span>
                 </td>
-                <td class="picto_cell picto_table">
+                <td class="tableMode_picto nobr">
                     <RENDER_IFSET what="category_elements>picto_addtocart_link">
                         <a href="{category_elements>picto_addtocart_link}">
                             <img src="/images/shared/icons/picto_cart.png" alt="add_to_cart" title="{i18n>pictoAddTocart}"/>
@@ -122,7 +123,7 @@
                 </tr>
             </RENDER_LOOP>
         </table>
-
+        
     <NORENDER>Page navigator</NORENDER>
     <RENDER_IFSET what="pages>0">
         <div class="pageNavigator">
@@ -130,7 +131,9 @@
                 <tr>
                     <RENDER_IFSET what="pagenavigation>previous_link">
                         <td>
-                            <a href="{pagenavigation>previous_link}"><img src="images/shared/variations/{constants>variation}/navigation/model1_previous.png" alt="{i18n>nav_previous}"/></a>
+                            <a href="{pagenavigation>previous_link}">
+                                <img src="images/shared/variations/{constants>variation}/navigation/model1_previous.png" alt="{i18n>nav_previous}"/>
+                            </a>
                         </td>
                     </RENDER_IFSET>
                     <RENDER_IFNOTSET what="pagenavigation>previous_link">
@@ -140,7 +143,9 @@
                     </RENDER_IFNOTSET>
                     <RENDER_LOOP what="pages">
                         <td>
-                            <a href="{pages>link}" class="{pages>class}"><RENDER_VALUE what="pages>number"/></a>
+                            <a href="{pages>link}" class="{pages>class}">
+                                <RENDER_VALUE what="pages>number"/>
+                            </a>
                         </td>
                     </RENDER_LOOP>
                     <RENDER_IFNOTSET what="pagenavigation>next_link">
@@ -150,12 +155,13 @@
                     </RENDER_IFNOTSET>
                     <RENDER_IFSET what="pagenavigation>next_link">
                         <td>
-                            <a href="{pagenavigation>next_link}"><img src="images/shared/variations/{constants>variation}/navigation/model1_next.png" alt="{i18n>nav_next}"/></a>
+                            <a href="{pagenavigation>next_link}">
+                                <img src="images/shared/variations/{constants>variation}/navigation/model1_next.png" alt="{i18n>nav_next}"/>
+                            </a>
                         </td>
                     </RENDER_IFSET>
                 </tr>
             </table>
         </div>
     </RENDER_IFSET>
-
 </div>

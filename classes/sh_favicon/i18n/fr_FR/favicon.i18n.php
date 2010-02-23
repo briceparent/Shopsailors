@@ -1,5 +1,6 @@
 <?php
 $i18n = array(
+    'titleFavicon'=>'Changer le favicon',
     'actual'=>'Le favicon actuellemet utilisé est : ',
     'howToChangeIt'=>'Pour le remplacer, vous
 devez envoyer une image au format .ico et dimensions 32x32 ou 16x16 pixels.<br />

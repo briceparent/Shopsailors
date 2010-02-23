@@ -1,5 +1,5 @@
 <div>
-    <RENDER_FORM action="" id="paramsEditor" >
+    <RENDER_FORM id="paramsEditor" >
         <div class="form_box_container">
             <div class="form_box_top">
                 <h3 class="box_title">

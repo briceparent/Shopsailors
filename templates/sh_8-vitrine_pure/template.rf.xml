@@ -15,14 +15,12 @@
                     <a href="{disconnect>link}" class="grey_link_connect"><RENDER_VALUE what="i18n>disconnectAccountClient"/></a>
                 </div>
             </RENDER_IFSET>
-            <RENDER_VALUE what="language>selector"/>
             <h1 class="topTitle">
                 <RENDER_VALUE what="body>headline"/>
             </h1>
             <div id="bg_top">
                 <RENDER_VALUE what="body>searchEngine"/>
-                <div id="top_gray">
-                </div>
+                <RENDER_VALUE what="language>selector"/>
             </div>
             <div id="bg_content">
                 <div id="bg_content_top">

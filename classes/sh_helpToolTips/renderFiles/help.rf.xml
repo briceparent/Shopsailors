@@ -2,7 +2,7 @@
     <RENDER_JS when="onEnd">
         $('global_<RENDER_VALUE what="help>id"/>').appear();
     </RENDER_JS>
-    <img src="/images/shared/icons/help.png" class="aLink helpToolTip" title="{i18n>help}" onclick="UnTip();TagToTip('{help>id}',BORDERCOLOR,'#003366',TITLEBGCOLOR,'#336699', BALLOON, true, ABOVE, true)"/>
+    <img src="/images/shared/icons/help.png" class="aLink helpToolTip" title="{i18n>help}" onmouseover="UnTip();TagToTip('{help>id}', BALLOON, true)" onmouseout="UnTip()"/>
     <span id="{help>id}">
         <span class="render_help_explanation">
             <RENDER_VALUE what="help>what"/>

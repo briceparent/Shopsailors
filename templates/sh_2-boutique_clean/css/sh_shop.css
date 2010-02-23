@@ -13,12 +13,6 @@ CSS for shop contents only*/
 	padding-top: 2px;
 	color: <RENDER_VALUE what="variation>globalText"/>;
 }
-.shop_arboLink{
-	color: <RENDER_VALUE what="variation>navigatorLinkColor"/>;
-}
-.shop_arboText{
-	color: <RENDER_VALUE what="variation>navigatorLinkColor"/>;
-}
 .breadcrumbSisters{
 	display: block;
 }
@@ -32,23 +26,6 @@ CSS for shop contents only*/
 .bc_sister_container{
 	display:none;
 }
-#shop_emptyCategory{
-	background: transparent url(/images/shared/default/shop_empty_category.png) no-repeat center top;
-	width: 320px;
-	height: 255px;
-	margin-top: 30px;
-	margin-left: 30px;
-}
-.shop_emptyCategoryText{
-	width: 240px;
-	height: 215px;
-	color: white;
-	font-size: 120%;
-	font-weight: bold;
-	margin-left: 50px;
-	padding-top: 60px;
-}
-
 /*Navigateur de pages*/
 
 .pageNavigator{
@@ -93,7 +70,7 @@ CSS for shop contents only*/
 	overflow: auto;	
 }
 
-/*sub_category */
+/*list of sub_category */
 .selectAcategory{
 	font-size: 110%;
 	font-weight: bold;
@@ -112,6 +89,9 @@ CSS for shop contents only*/
 .subcategory_image{
     height: 100px;
 	width: 100px;
+}
+.subcategory_name{
+	text-align: left;
 }
 .subcategory_name a{
 	color:  <RENDER_VALUE what="variation>globalText"/>;
@@ -134,7 +114,11 @@ CSS for shop contents only*/
 .subcategory_describe{
 }
 
-/*Liste de produits en ligne1*/
+/*Empty category*/
+.shop_emptyCategory{
+	margin-top: 20px;
+}
+/*Product list : list mode*/
 
 .navigator_list{
 	background: transparent url(/images/template/list.png) no-repeat center top;
@@ -145,47 +129,43 @@ CSS for shop contents only*/
 	float: left;
 }
 
-.navigator_preview{
+.listMode_preview{
     height: 100px;
 	width: 100px;
 	vertical-align: top;
 }
 
-.navigator_preview img{
+.listMode_preview img{
     height: 100px;
 	width: 100px;
 }
-
-.descriptionContainer{
+.listMode_descriptionContainer{
 	margin-left: 2px;
 	height: 65px;
 	width: 246px;
 	overflow: auto;
 	vertical-align: top;
 }
-
-.nameRef_container{
+.listMode_nameRefContainer{
 	
 }
-.navigator_name a{
+.listMode_name a{
 	color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 	font-size: 110%;
 	margin-right: 3px;
 	margin-top: 2px;
 }
-.navigator_reference{
+.listMode_reference{
 	font-style: italic;
 }
-.navigator_describe{
+.listMode_describe{
 	margin-top: 2px;
 }
-.navigator_property_name{
+.listMode_propertyName{
 	font-weight: bold;
 }
-.navigator_property_values{
-}
-.navigator_price{
+.listMode_price{
 	text-align: center;
 	width: 130px;
 	margin-left: 102px;
@@ -194,11 +174,11 @@ CSS for shop contents only*/
 	margin-top: 5px;
 	position: absolute;
 }
-.pictosList{
+.listMode_pictos{
 	margin-left: 5px;
 	vertical-align: top;
 }
-.pictosList img{
+.listMode_pictos img{
 	width: 25px;
 	display: block;
 	cursor: pointer;
@@ -206,7 +186,7 @@ CSS for shop contents only*/
 	padding-top: inherit;
 }
 
-/*Liste de produits en tableau1*/
+/*Product list : table mode*/
 
 .navigator_table{
 	margin-top: 10px;
@@ -216,51 +196,51 @@ CSS for shop contents only*/
 .navigator_table th{
 	text-align: center;
 }
-.values_title{
+.tableMode_bg{
+	background: transparent url(/images/template/table_bg.png) repeat center top;
 }
-.navigator_table1 th{
-}
-.navigator_table_title{
+.tableMode_title{
 	color: <RENDER_VALUE what="variation>globalText"/>;
 }
-.navigator_table_name a{
+.tableMode_preview{
+	width: 42px;
+	height: 42px;
+	vertical-align: top;
+}
+.tableMode_preview img{
+	width: 42px;
+}
+.tableMode_name{
+	text-align: left;
+}
+.tableMode_name a{
 	font-weight: bold;
 	color: <RENDER_VALUE what="variation>globalText"/>;
 	padding: 4px;
 }
-.navigator_table_reference a{
+.tableMode_reference a{
 	font-style: italic;
 	font-weight: normal;
 	color: <RENDER_VALUE what="variation>globalText"/>;
 	margin-left: 4px;
 	padding: 4px
 }
-.navigator_table_shortDesc{
+.tableMode_shortDesc{
 	padding: 4px;
 	vertical-align: top;
 }
-.navigator_table_price{
+.tableMode_price{
 	font-weight: bold;
 	text-align: right;
 	padding: 4px;
 }
-.navigator_table_stock{
+.tableMode_stock{
 	width: 50px;
 	text-align: center;
 	padding: 4px;
 }
-.table_preview{
-	width: 42px;
-	height: 42px;
-}
-.table_preview img{
-	width: 40px;
-}
-.picto_table img{
+.tableMode_picto img{
 	width: 26px;
-}
-.picto_cell{
-	width: 80px;
 }
 /*Liste de produits en miniature1*/
 
@@ -272,49 +252,48 @@ CSS for shop contents only*/
 	margin-top: 10px;
 	margin-left: 15px;
 }
-.navigator_preview_miniature{
+.miniature_preview{
     height: 158px;
 	width: 158px;
 	margin-left: 2px;
 	padding-top: 2px;
 }
 
-.navigator_preview_miniature img{
+.miniature_preview img{
     height: 154px;
 	width: 154px;
 }
 
-.descriptionContainer_miniature{
+.miniature_descriptionContainer{
 	margin-top: 8px;
 	margin-left: 6px;
-	width: 150px;
+	width: 152px;
 	height: 158px;
 	overflow: auto;
 }
-.navigator_name_miniature a{
+.miniature_name{
+	text-align: left;
+}
+.miniature_name a{
 	color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 	font-size: 120%;
 	margin-right: 3px;
 	margin-top: 2px;
 }
-.navigator_property_name_miniature{
+.miniature_propertyName{
 	font-weight: bold;
 }
-.navigator_property_values_miniature{
-overflow: hidden;
-	margin-top: 1px;
-}
-.navigator_price_miniature{
+.miniature_price{
 	font-weight: bold;
 	font-size: 120%;
 }
-.pictosMiniature{
+.miniature_pictos{
 	position: absolute;
 	margin-left: 155px;
 	margin-top: 23px;
 }
-.pictosMiniature img{
+.miniature_pictos img{
 	display: block;
 	cursor: pointer;
 	margin: inherit;
@@ -527,7 +506,6 @@ overflow: hidden;
 	font-weight: bold;
 }
 .shop_cartProduct_name a{
-	text-align: left;
 	font-weight: bold;
 	color: <RENDER_VALUE what="variation>globalText"/>;
 }

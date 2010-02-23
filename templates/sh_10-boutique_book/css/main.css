@@ -42,17 +42,16 @@ body{
 
 .topTitle{
     text-align:left;
-    font-size:120%;
     color:  <RENDER_VALUE what="variation>topTitle"/>;
     width:100%;
-	padding-top: 30px;
+	margin-top: 20px;
 }
 /* flags */
 .pictoFlagsContainer{
 	text-align: left;
 	width: 150px;
 	height: 20px;
-	padding-top: 7px;
+	padding-top: 10px;
 	position: absolute;
 }
 .pictoFlags{
@@ -66,6 +65,7 @@ body{
 #connectionContainer{
 	height: 20px;
 	text-align: right;
+	padding-top: 10px;
 }
 #connectionContainer span{
 	text-align: right;
@@ -616,13 +616,15 @@ body{
 #copyrights{
     color : <RENDER_VALUE what="variation>globalText"/>;
     text-align:center;
-    font-size:80%;
+    font-size:90%;
 	clear: both;
+	font-weight: bold;
 }
 
 
 #copyrights a{
     color : <RENDER_VALUE what="variation>globalText"/>;
+	font-weight: bold;
 }
 
 

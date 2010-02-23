@@ -1,5 +1,6 @@
 <?php
 $i18n = array(
+    'unauthorizedAccess' => 'Accès interdit',
     'notallowed' => 'Les droits nécéssaires à la connexion n\'ont pas été activés',
     'nofolder' => 'Le dossier appelé n\'existe pas.<br />Si le problème persiste, veuillez contacter l\'administrateur',
     'send'=>'Envoyer',

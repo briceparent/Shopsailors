@@ -27,7 +27,7 @@ if(typeof config == "undefined")
 // e.g. from config. FollowScroll a command FOLLOWSCROLL will automatically be
 // created.
 
-//===================	GLOBAL TOOPTIP CONFIGURATION	======================//
+//===================	GLOBAL TOOLTIP CONFIGURATION	======================//
 config. FollowScroll = false		// true or false - set to true if you want this to be the default behaviour
 //=======	END OF TOOLTIP CONFIG, DO NOT CHANGE ANYTHING BELOW	==============//
 
