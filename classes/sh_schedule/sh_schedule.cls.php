@@ -439,7 +439,7 @@ class sh_schedule extends sh_core {
     /**
      * protected function save
      */
-    protected function save($id,$isNew = false){
+    /*protected function save($id,$isNew = false){
         $this->debug(__FUNCTION__.'();', 2, __LINE__);
         $active = $this->checkedToBinary('active');
         $showTitle = $this->checkedToBinary('showTitle');
@@ -478,7 +478,7 @@ class sh_schedule extends sh_core {
             $this->links->path->redirect(__CLASS__,'show',$id);
         }
         return $isNew;
-    }
+    }*/
 
     /**
      * Renders the results of a research (should be called by sh_searcher).
