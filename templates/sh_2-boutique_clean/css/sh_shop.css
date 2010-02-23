@@ -90,6 +90,9 @@ CSS for shop contents only*/
     height: 100px;
 	width: 100px;
 }
+.subcategory_name{
+	text-align: left;
+}
 .subcategory_name a{
 	color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-size: 110%;
@@ -192,6 +195,9 @@ CSS for shop contents only*/
 }
 .navigator_table th{
 	text-align: center;
+}
+.tableMode_bg{
+	background: transparent url(/images/template/table_bg.png) repeat center top;
 }
 .tableMode_title{
 	color: <RENDER_VALUE what="variation>globalText"/>;
@@ -500,7 +506,6 @@ CSS for shop contents only*/
 	font-weight: bold;
 }
 .shop_cartProduct_name a{
-	text-align: left;
 	font-weight: bold;
 	color: <RENDER_VALUE what="variation>globalText"/>;
 }

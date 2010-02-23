@@ -55,18 +55,18 @@
         <table cellspacing="0" class="navigator_table">
             <tr>
                 <th class="border-bottom">&#160;</th>
-                <th class="border-bottom border-left border-top">
+                <th class="border-bottom border-left border-top bg_table">
                     <RENDER_VALUE what="i18n>productsTable_name"/>
                 </th>
-                <th class="border-bottom border-left border-top">
+                <th class="border-bottom border-left border-top bg_table">
                     <RENDER_VALUE what="i18n>productsTable_desc"/>
                 </th>
                 <RENDER_IFSET what="constants>showQuantity">
-                    <th class="border-bottom border-left border-top">
+                    <th class="border-bottom border-left border-top bg_table">
                         <RENDER_VALUE what="i18n>productsTable_stock"/>
                     </th>
                 </RENDER_IFSET>
-                <th class="border-bottom border-left border-top border-right">
+                <th class="border-bottom border-left border-top border-right bg_table">
                     <RENDER_VALUE what="i18n>productsTable_price"/>
                 </th>
                 <th>&#160;</th>
@@ -99,7 +99,7 @@
                 <td class="border-left border-bottom border-right bg_table navigator_table_price">
                     <span class="nobr"><RENDER_VALUE what="category_elements>price"/></span>
                 </td>
-                <td class="picto_cell picto_table">
+                <td class="nobr picto_table">
                     <RENDER_IFSET what="category_elements>picto_addtocart_link">
                         <a href="{category_elements>picto_addtocart_link}">
                             <img src="/images/shared/icons/picto_cart.png" class="onePicto" alt="add_to_cart" title="{i18n>pictoAddTocart}"/>

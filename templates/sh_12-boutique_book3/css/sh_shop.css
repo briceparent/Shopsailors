@@ -114,6 +114,9 @@ CSS for shop contents only*/
     height: 100px;
 	width: 100px;
 }
+.subcategory_name{
+	text-align: left;
+}
 .subcategory_name a{
 	color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-size: 110%;
@@ -228,6 +231,7 @@ CSS for shop contents only*/
 .navigator_table_name{
 	vertical-align: top;
 	padding: 4px;
+	text-align: left;
 }
 .navigator_table_name a{
 	font-weight: bold;
@@ -262,8 +266,8 @@ CSS for shop contents only*/
 .picto_table img{
 	width: 26px;
 }
-.picto_cell{
-	width: 80px;
+.bg_table{
+	background: transparent url(/images/template/bg_table.png) repeat center top;
 }
 /*Liste de produits en miniature1*/
 
@@ -295,19 +299,15 @@ CSS for shop contents only*/
 	height: 158px;
 	overflow: auto;
 }
+.navigator_name_miniature{
+	text-align: left;
+}
 .navigator_name_miniature a{
 	color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 	font-size: 120%;
 	margin-right: 3px;
 	margin-top: 2px;
-}
-.navigator_property_name_miniature{
-	font-weight: bold;
-}
-.navigator_property_values_miniature{
-overflow: hidden;
-	margin-top: 1px;
 }
 .navigator_price_miniature{
 	font-weight: bold;

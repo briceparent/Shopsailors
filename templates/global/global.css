@@ -241,6 +241,11 @@ input[type=text]{
 .noDisplay{
     display:none;
 }
+.form_error{
+	color: #660000;
+	font-style: italic;
+}
+
 
 /* Default templates listing style */
 

@@ -24,7 +24,7 @@ $this->values = array (
     1 => 
     array (
       'maxWidth' => true,
-      'totalWidth' => 875,
+      'totalWidth' => 900,
       'textHeight' => 18,
       'expand' => false,
       'type' => 'onglets_shadow',

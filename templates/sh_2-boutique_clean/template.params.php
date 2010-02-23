@@ -23,7 +23,7 @@ $this->values = array (
         1 =>
         array (
       'maxWidth' => true,
-      'totalWidth' => 875,
+      'totalWidth' => 680,
       'textHeight' => 18,
       'expand' => false,
       'type' => 'btn_transp',

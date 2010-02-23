@@ -55,18 +55,18 @@
         <table cellspacing="0" class="navigator_table">
             <tr class="tableMode_title">
                 <th class="border-bottom">&#160;</th>
-                <th class="border-bottom border-left border-top">
+                <th class="tableMode_bg border-bottom border-left border-top">
                     <RENDER_VALUE what="i18n>productsTable_name"/>
                 </th>
-                <th class="border-bottom border-left border-top">
+                <th class="tableMode_bg border-bottom border-left border-top">
                     <RENDER_VALUE what="i18n>productsTable_desc"/>
                 </th>
                 <RENDER_IFSET what="constants>showQuantity">
-                    <th class="border-bottom border-left border-top">
+                    <th class="tableMode_bg border-bottom border-left border-top">
                         <RENDER_VALUE what="i18n>productsTable_stock"/>
                     </th>
                 </RENDER_IFSET>
-                <th class="border-bottom border-left border-top border-right">
+                <th class="tableMode_bg border-bottom border-left border-top border-right">
                     <RENDER_VALUE what="i18n>productsTable_price"/>
                 </th>
                 <th>
@@ -74,12 +74,12 @@
             </tr>
             <RENDER_LOOP what="category_elements">
             <tr>
-                <td class="tableMode_preview border-left border-bottom">
+                <td class="tableMode_preview tableMode_bg border-left border-bottom">
                     <a href="{category_elements>link}">
                         <img src="{category_elements>image}" alt="navigator_preview"/>
                     </a>
                 </td>
-                <td class="tableMode_name border-left border-bottom bg_table">
+                <td class="tableMode_name tableMode_bg border-left border-bottom bg_table">
                     <a href="{category_elements>link}">
                         <RENDER_VALUE what="category_elements>name"/>
                     </a>
@@ -89,15 +89,15 @@
                         </a>
                     </div>
                 </td>
-                <td class="tableMode_shortDesc border-left border-bottom bg_table">
+                <td class="tableMode_shortDesc tableMode_bg border-left border-bottom bg_table">
                     <RENDER_VALUE what="category_elements>shortDescription"/>
                 </td>
                 <RENDER_IFSET what="constants>showQuantity">
-                    <td class="tableMode_stock border-left border-bottom bg_table">
+                    <td class="tableMode_stock tableMode_bg border-left border-bottom bg_table">
                         <RENDER_VALUE what="category_elements>stock"/>
                     </td>
                 </RENDER_IFSET>
-                <td class="tableMode_price border-left border-bottom border-right bg_table nobr">
+                <td class="tableMode_price tableMode_bg border-left border-bottom border-right bg_table nobr">
                    <span class="nobr"><RENDER_VALUE what="category_elements>price"/></span>
                 </td>
                 <td class="tableMode_picto nobr">

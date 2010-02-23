@@ -159,13 +159,15 @@ div.slider div.handle {
      overflow: auto;
  }
  .langSelector_contents img{
-     width: 30px;
+     width: 20px;
  }
 .getSelector_submit{
 	text-align: left;
 	margin-top: 15px;
 	margin-left: 6px;
-
+}
+.getSelector_submit input{
+	cursor: pointer;
 }
 
   /* Conteneurs et boîtes*/
@@ -198,6 +200,13 @@ div.slider div.handle {
     background: transparent url(admin/form_box_middle.png) repeat-y center top;
     width: 400px;
   }
+  #form_box_middle hr, .form_box_middle hr{
+    background-color: #999999;
+	border: none;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	width: 375px;
+  }
   #form_box_bottom, .form_box_bottom{
     background: transparent url(admin/form_box_bottom.png) no-repeat center top;
     height: 23px;
@@ -209,8 +218,8 @@ div.slider div.handle {
   .form_box_content{
     padding: 3px 10px 3px 10px;
     color: #333333;
-  }
-  .form_box_content a{
+  } .form_box_content{
+    padding: 3px 10px 3px 10px;
     color: #333333;
   }
   .formContent{

@@ -90,6 +90,9 @@ CSS for shop contents only*/
     height: 100px;
 	width: 100px;
 }
+.subcategory_name{
+	text-align: left;
+}
 .subcategory_name a{
 	color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-size: 110%;
