@@ -2,4 +2,4 @@
 !.gitignore
 !shopsailors
 !domains_resolver.php
-/list.php
+list.php
