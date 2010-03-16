@@ -14,21 +14,8 @@ $this->version = '0.2';
 
 $this->values = array (
     'globalText'=>'#006666',
-    'boxText' => '#006666',
-    'link'=>'#333300',
-    'signature' => '#333300',
-    'topTitle' => '#006666',
-    'title'=>'#006666',
-    'importantText' => '#336600',
-    'linkVisited'=>'#336633',
-    'linkOver' => '#336633',
     'buttonText' => '#006666',
     'buttonTextSelected' => '#003333',
     'buttonTextActive' => '#003333',
     'borderColor' => '#006666',
-    'connectLinkColor'=>'#333333',
-    'navigatorLinkColor'=>'#000000',
-    'navigatorTextColor'=>'#333300',
-    'contactColor'=>'#006666',
-    'productDescriptions'=>'#000000',
 );

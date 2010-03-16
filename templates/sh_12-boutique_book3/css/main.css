@@ -13,7 +13,6 @@ body{
 	color: #333333;
 }
 #head{
-	height: 102px;
 	width: 900px;
     margin-left: auto;
     margin-right: auto;
@@ -38,6 +37,21 @@ body{
     margin-right: auto;
 	text-align: center;
 	width: 900px;
+	margin-top: 20px;
+}
+
+.topTitle{
+	height: 20px;
+    text-align:left;
+    width:100%;
+	padding-top: 7px;
+	overflow: hidden;
+}
+.topTitle h1{
+    font-size:15px;
+    color: #ffffff;
+	margin: 0;
+	padding: 0;
 }
 
 /* Champ de connexion */
@@ -60,6 +74,8 @@ text-align: left;
 width: 150px;
 height: 20px;
 padding-top: 7px;
+margin-bottom: 0;
+padding-bottom: 0;
 }
 .pictoFlags{
 width: 20px;
@@ -67,24 +83,33 @@ margin-right: 4px;
 cursor: pointer;
 }
 
+/*contenus de droite de la page*/
+
+.page_content{
+margin-top: 20px;
+padding-top: 0px;
+width: 900px;
+}
+.page_content a{
+color: #333333;
+}
+.content_middle{
+	margin-top: 14px;
+	width: 900px;
+}
+
 /*SEARCHER*/
 
 #searcher{
 	text-align: left;
     height: 20px;
-	margin-top: 6px;
+	margin-top: 7px;
 }
 #searcher input{
     vertical-align:middle;
 }
 #searcher img{
     vertical-align:middle;
-}
-.searcher_bgRight{
-    display: none;
-}
-.searcher_bgLeft{
-    display: none;
 }
 .searcher_input{
 	background: transparent url(/images/template/searcher_bg.png) repeat right top;
@@ -116,7 +141,6 @@ cursor: pointer;
 	border: 1px solid <RENDER_VALUE what="variation>globalText"/>;
 }
 .articleResult_title a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 }
 .searcher_oneArticle_image img{
@@ -155,27 +179,12 @@ cursor: pointer;
 	overflow: auto;
 }
 .oneArticle_summary{
-	color: <RENDER_VALUE what="variation>blackText"/>;	
 }
 .oneArticle_title a{
 	font-weight: bold;
 	font-size: 110%;
-	color: <RENDER_VALUE what="variation>globalText"/>;	
 }
 .showList_intro a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
-}
-
-/*contenus de droite de la page*/
-
-#page_content{
-margin-top: 20px;
-padding-top: 0px;
-width: 600px;
-}
-.content_middle{
-	margin-top: 14px;
-	width: 660px;
 }
 
  /* Page de mentions légales */
@@ -190,7 +199,6 @@ width: 600px;
 	font-size: 110%;
 }
 .news_subscribe a{
-	color: <RENDER_VALUE what="variation>title"/>;
 }
 .nl_chooseList{
 	margin-top: 15px;
@@ -214,7 +222,6 @@ width: 600px;
 	margin-top: 5px;
 }
 .news_unsubscribe a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .newsList_intro{
 }
@@ -250,7 +257,6 @@ width: 600px;
 .nl_chooseYourList{
 	margin-top: 10px;
 	font-weight: bold;
-	color: #660033;
 }
 .nl_subscribeConfirmed{
 	font-size: 120%;
@@ -272,7 +278,6 @@ width: 600px;
 }
 .nl_backToList a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 	/*Newsletter: unsubscribe*/
 .nl_unsub_intro{
@@ -502,7 +507,6 @@ width: 600px;
 	text-align: left;
 }
 .contact_mail a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 #sendMailForm_container{
 	width: 400px;
@@ -534,7 +538,6 @@ width: 600px;
 	padding-left: 0px;
 }
 .contactMail_link{
-	color: <RENDER_VALUE what="variation>contactColor"/>;
 }
 .mailContent{
 	width: 340px;
@@ -590,10 +593,10 @@ width: 600px;
 	width:60px;
 }
 .captcha_input input{
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #333333;
 }
 .captcha_code img{
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #333333;
 	width:130px;
 	height:30px;
 }
@@ -617,16 +620,6 @@ width: 600px;
 
 /*général: all templates*/
 
-.topTitle{
-	height: 20px;
-    text-align:left;
-    font-size:120%;
-    color:  <RENDER_VALUE what="variation>topTitle"/>;
-    width:100%;
-	padding-top: 7px;
-	overflow: hidden;
-}
-
 h1{ /* Grand titre des pages */
     color:   <RENDER_VALUE what="variation>title"/>;
     font-weight: bold;
@@ -637,7 +630,7 @@ h1{ /* Grand titre des pages */
 }
 
 h2{ /* Petit titre des pages */
-    color: <RENDER_VALUE what="variation>titlesColor"/>;
+    color: <RENDER_VALUE what="variation>title"/>;
     font-weight: bold;
     font-size: 120%;
     line-height: 16px;
@@ -680,10 +673,6 @@ border-right: 1px solid #660000;
 .alert-bottom{
 border-bottom: 1px solid #660000;
 }
-.important{
-    color : <RENDER_VALUE what="variation>importantColor"/>;
-}
-
 .halfSize{
     width:50%;
 }
@@ -704,11 +693,15 @@ font-style: italic;
 color: white;
 font-size: 80%;
 }
-a:link, a:visited, a:hover, a:active {
-    color: <RENDER_VALUE what="variation>linksColor"/>;
+a:link{
+}
+
+ a:active{
+}
+a:visited, a:hover{
+	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .templateColor{
-    color: <RENDER_VALUE what="variation>color"/>;
 }
 
 .aLink{
@@ -716,7 +709,7 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .falseLink{
-    color: <RENDER_VALUE what="variation>linksColor"/>;
+    color: <RENDER_VALUE what="variation>globalText"/>;
     cursor: pointer;
     text-decoration: underline;
 }

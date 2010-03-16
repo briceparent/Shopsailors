@@ -11,41 +11,25 @@ CSS for shop contents only*/
 #shop_navigator{
 	width: 400px;
 	padding-top: 2px;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
-.shop_arboLink{
-	color: <RENDER_VALUE what="variation>navigatorLinkColor"/>;
-}
-.shop_arboText{
-	color: <RENDER_VALUE what="variation>navigatorLinkColor"/>;
-}
+
+/* -- breadcrumbs predefines --*/
 .breadcrumbSisters{
 	display: block;
 }
 .bc_sisters, .bc_sameLevelText{
 	display:block;
+	color: #333333;
 }
-.bc_sisters a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
+.bc_sisters a.bc_sameLevelText a{
+	color: #333333;
 }
 .bc_sister_container{
 	display:none;
 }
+
+/*Empty Category*/
 #shop_emptyCategory{
-	background: transparent url(/images/shared/default/shop_empty_category.png) no-repeat center top;
-	width: 320px;
-	height: 255px;
-	margin-top: 30px;
-	margin-left: 30px;
-}
-.shop_emptyCategoryText{
-	width: 240px;
-	height: 215px;
-	color: white;
-	font-size: 120%;
-	font-weight: bold;
-	margin-left: 50px;
-	padding-top: 60px;
 }
 
 /*Navigateur de pages*/
@@ -107,7 +91,6 @@ CSS for shop contents only*/
 	margin-top: 10px;
 	margin-right: 20px;
 	height: 135px;
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	float: left;
 }
 .subcategory_image{
@@ -144,7 +127,6 @@ CSS for shop contents only*/
 	background: transparent url(/images/template/list.png) no-repeat center top;
 	width: 365px;
 	height: 120px;
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	margin-top: 10px;
 	margin-right: 40px;
 	float: left;
@@ -179,8 +161,9 @@ CSS for shop contents only*/
 	margin-right: 3px;
 	margin-top: 2px;
 }
-.navigator_reference{
+.navigator_reference a{
 	font-style: italic;
+	color:  <RENDER_VALUE what="variation>globalText"/>;
 }
 .navigator_describe{
 	margin-top: 2px;
@@ -215,7 +198,6 @@ CSS for shop contents only*/
 
 .navigator_table{
 	margin-top: 10px;
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -276,7 +258,6 @@ CSS for shop contents only*/
 
 .navigator_miniature{
 	background: transparent url(/images/template/miniature.png) no-repeat left top;
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	height: 340px;
 	width: 190px;
 	float: left;
@@ -334,7 +315,6 @@ CSS for shop contents only*/
 .product_details1{
 	margin-top: 10px;
 	width: 640px;
-	color: <RENDER_VALUE what="variation>globalText"/> 
 }
 .product_details1 table{
 	vertical-align: top;

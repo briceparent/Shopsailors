@@ -12,12 +12,6 @@ CSS for shop contents only*/
 	width: 400px;
 	padding-top: 2px;
 }
-.shop_arboLink{
-	color: <RENDER_VALUE what="variation>navigatorLinkColor"/>;
-}
-.shop_arboText a{
-	color: <RENDER_VALUE what="variation>navigatorLinkColor"/>;
-}
 .breadcrumbSisters{
 	display: block;
 }
@@ -25,26 +19,15 @@ CSS for shop contents only*/
 	display:block;
 }
 .bc_sisters a{
-	color: <RENDER_VALUE what="variation>globalText"/>
+	color: #333333;
 }
 .bc_sister_container{
 	display:none;
 }
-#shop_emptyCategory{
-	background: transparent url(/images/shared/default/shop_empty_category.png) no-repeat center top;
-	width: 320px;
-	height: 255px;
-	margin-top: 30px;
-	margin-left: 30px;
-}
-.shop_emptyCategoryText{
-	width: 240px;
-	height: 215px;
-	color: white;
-	font-size: 120%;
-	font-weight: bold;
-	margin-left: 50px;
-	padding-top: 60px;
+
+/*Empty category*/
+.shop_emptyCategory{
+	margin-top: 20px;
 }
 
 /*Navigateur de pages*/
@@ -62,9 +45,6 @@ CSS for shop contents only*/
 	margin-left: auto;
 	margin-right: auto;
 }
-.pagesNumbers a{
-	color: #333333;
-}
 /*active category */
 
 .bg_active_category{
@@ -72,7 +52,6 @@ CSS for shop contents only*/
 	width: 650px;
 	height: 50px;
 	margin-left: 50px;
-	color:  #333333;
 }
 .active_category_preview{
 }
@@ -97,7 +76,6 @@ CSS for shop contents only*/
 	font-size: 110%;
 	font-weight: bold;
 	margin-top: 20px;
-	color:  #333333;
 }
 
 .bg_subcategory{
@@ -106,7 +84,6 @@ CSS for shop contents only*/
 	margin-top: 10px;
 	margin-right: 20px;
 	height: 135px;
-	color:  #333333;
 	float: left;
 }
 .subcategory_image{
@@ -118,7 +95,6 @@ CSS for shop contents only*/
 }
 .subcategory_name a{
 	font-size: 110%;
-	color:  #333333;
 	font-weight: bold;
 	margin-top: 2px;
 }
@@ -144,7 +120,6 @@ CSS for shop contents only*/
 	background: transparent url(/images/template/list.png) no-repeat center top;
 	width: 365px;
 	height: 120px;
-	color:  #333333;
 	margin-top: 10px;
 	margin-right: 40px;
 	float: left;
@@ -177,17 +152,14 @@ CSS for shop contents only*/
 	font-size: 110%;
 	margin-right: 3px;
 	margin-top: 2px;
-	color: #333333;
 }
 .navigator_reference a{
 	font-style: italic;
-	color: #333333;
 }
 .navigator_describe{
 	margin-top: 2px;
 }
 .navigator_property_name a{
-	color: #333333
 	font-weight: bold;
 }
 .navigator_property_values{
@@ -217,16 +189,12 @@ CSS for shop contents only*/
 
 .navigator_table{
 	margin-top: 10px;
-	color:  #333333;
 	margin-right: auto;
 	margin-left: auto;
 }
 .navigator_table th{
 	text-align: center;
 	padding: 4px;
-}
-.navigator_table1 th{
-	color: #333333;
 }
 .navigator_table_name{
 	vertical-align: top;
@@ -235,7 +203,6 @@ CSS for shop contents only*/
 }
 .navigator_table_name a{
 	font-weight: bold;
-	color: #333333;
 }
 .navigator_table_shortDesc{
 	vertical-align: top;
@@ -255,7 +222,6 @@ CSS for shop contents only*/
 .navigator_table_reference a{
 	font-style: italic;
 	font-weight: normal;
-	color: #333333;
 }
 .table_preview{
 	vertical-align: top;
@@ -270,7 +236,6 @@ CSS for shop contents only*/
 
 .navigator_miniature{
 	background: transparent url(/images/template/miniature.png) no-repeat left top;
-	color:  #333333;
 	height: 340px;
 	width: 190px;
 	float: left;
@@ -297,7 +262,6 @@ CSS for shop contents only*/
 	overflow: auto;
 }
 .navigator_name_miniature a{
-	color:  #333333;
 	font-weight: bold;
 	font-size: 120%;
 	margin-right: 3px;
@@ -328,7 +292,6 @@ CSS for shop contents only*/
 .product_details1{
 	margin-top: 10px;
 	width: 640px;
-	color: #333333;
 }
 .product_details1 table{
 	vertical-align: top;
@@ -380,13 +343,12 @@ CSS for shop contents only*/
 /* Other preview*/
 #product_pictures img{
 	width: 40px;
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #333333;;
 }
 
 /*navigator_sameCategory : aperçu des produit de la categorie dans la page de produit*/
 
 .navigator_sameCategory{
-	color: #333333;
 	width: 420px;
 	height: 110px;
 	margin-top: 20px;
@@ -411,13 +373,8 @@ CSS for shop contents only*/
 	font-size: inherit;
 	font-weight: inherit;
 	height: 5px;
-	color: #333333;
-}
-.navigator_sameCategory{
-	vertical-align: center;
 }
 .navigator_inSameCategory {
-	color: #333333;
 	font-size: 110%;
 	font-weight: bold;
 	padding-top: 5px;
@@ -426,7 +383,6 @@ CSS for shop contents only*/
 	width: 80px;
 }
 .navigator_productCategory a{
-	color: #333333;
 	margin-right: 5px;
 	margin-top: 5px;
 	font-size: inherit;
@@ -449,7 +405,6 @@ CSS for shop contents only*/
 }
 .catResult_name a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>
 }
 .catResult_pictos{
 	clear: both;
@@ -461,7 +416,7 @@ CSS for shop contents only*/
 .catResult_image img{
 	height: 60px;
 	margin-right: 5px;
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #333333;
 }
 
 /*Searcher: product results*/
@@ -474,12 +429,10 @@ CSS for shop contents only*/
 }
 .prodResult_name a{
 	font-weight: bold;
-	color: #333333;
 }
 .prodResult_reference a{
 	text-decoration: none;
 	font-style: italic;
-	color: #333333;
 }
 .prodResult_pictos{
 	vertical-align: top;
@@ -496,7 +449,7 @@ CSS for shop contents only*/
 .prodResult_image img{
 	height: 60px;
 	margin-right: 5px;
-	border: 1px solid #333333;;
+	border: 1px solid #333333;
 }
 
 /*CART COMMAND SHIPPING DELIVERY*/
@@ -536,7 +489,6 @@ CSS for shop contents only*/
 .shop_cartProduct_name a{
 	text-align: left;
 	font-weight: bold;
-	color: #333333;
 }
 .shop_cartProduct_ref{
 	text-align: left;
@@ -545,7 +497,6 @@ CSS for shop contents only*/
 }
 .shop_cartProduct_ref a{
 	text-align: left;
-	color: #333333;
 }
 .shop_cartProduct_shortDesc{
 	text-align: left;
@@ -564,7 +515,6 @@ CSS for shop contents only*/
 	padding-left: 4px;
 	padding-right: 4px;
 	padding-bottom: 4px;
-	color: #333333;
 	height: 30px;
 }
 .shop_headerText{
@@ -591,7 +541,6 @@ CSS for shop contents only*/
 	font-size: 110%;
 	text-align: right;
 	font-weight: bold;
-	color: #333333;
 }
 .shop_totalCartContainer{
 	height: 80px;
@@ -603,7 +552,6 @@ CSS for shop contents only*/
 	height: 60px;
 	margin-left: 455px;
 	text-align: center;
-	color: #333333;
 }
 .shop_update img{
 	margin-top: 2px;
@@ -612,7 +560,6 @@ CSS for shop contents only*/
 	text-align: center;
 }
 .shop_total_text{
-	color: #333333;
 	font-weight: bold;
 	font-size: 130%;
 }
@@ -625,7 +572,6 @@ CSS for shop contents only*/
 }
 
 .cart_goToCommand {
-	color: #333333;
 	font-size: 110%;
 	font-weight: bold;
 }
@@ -641,7 +587,6 @@ CSS for shop contents only*/
 	vertical-align: top;
 }
 .cart_changeShipMode a{
-	color: #333333;
 	font-weight: bold;
 }
 

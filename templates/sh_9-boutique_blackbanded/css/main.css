@@ -8,7 +8,7 @@ body{
 	margin-right: auto;
     font-family: Arial,sans-serif;
     font-size: 12px;
-    color: <RENDER_VALUE what="variation>globalText"/>;
+    color: #ffffff;
 	margin: 0;
 }
 #mainContainer{
@@ -37,7 +37,6 @@ body{
 }
 .topTitle{
     font-size:110%;
-    color:  #ffffff;
 	height: 24px;
 	overflow: hidden;
 	padding-top: 90px;
@@ -94,7 +93,6 @@ body{
 }
 .bg_diapo td{
 	margin-top: inherit;
-	background-color: #ffffff;
 }
 
 /* Champ de connexion */
@@ -103,7 +101,6 @@ body{
 	height: 20px;
 	width: 900px;
 	text-align: right;
-	padding-top: px;
 	position: absolute;
 	padding-top: 5px;
 }
@@ -112,7 +109,6 @@ body{
 	font-weight: bold;
 }
 .grey_link_connect{
-	color:  <RENDER_VALUE what="variation>connectLinkColor"/>;
 }
 .grey_link{
 	color: #333333;
@@ -228,12 +224,10 @@ cursor: pointer;
 	overflow: auto;
 }
 .oneArticle_summary{
-	color: <RENDER_VALUE what="variation>descriptions"/>;	
 }
 .oneArticle_title a{
 	font-weight: bold;
 	font-size: 110%;
-	color: <RENDER_VALUE what="variation>globalText"/>;	
 }
 
 /*contenus de droite de la page*/
@@ -241,6 +235,9 @@ cursor: pointer;
 .page_content{
 	margin-top: 20px;
 	width: 900px;
+}
+.page_content a{
+	color: #ffffff;
 }
 .bg_content{
 	background: transparent url(/images/template/variation/bg_content.png) repeat center top;
@@ -261,9 +258,6 @@ cursor: pointer;
 .news_subscribe{
 	font-weight: bold;
 	font-size: 110%;
-}
-.news_subscribe a{
-	color: <RENDER_VALUE what="variation>title"/>;
 }
 .nl_chooseList{
 	margin-top: 15px;
@@ -286,9 +280,6 @@ cursor: pointer;
 	font-style: italic;
 	margin-top: 5px;
 }
-.news_unsubscribe a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
-}
 .newsList_intro{
 }
 .newsList_title{
@@ -305,7 +296,6 @@ cursor: pointer;
 }
 .nl_oneMonth_name{
 	font-style: italic;
-	color: <RENDER_VALUE what="variation>title"/>;
 }
 .nl_list_oneLine{
 	margin-top: 5px;
@@ -323,7 +313,6 @@ cursor: pointer;
 .nl_chooseYourList{
 	margin-top: 10px;
 	font-weight: bold;
-	color: #660033;
 }
 .nl_subscribeConfirmed{
 	font-size: 120%;
@@ -345,7 +334,6 @@ cursor: pointer;
 }
 .nl_backToList a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 	/*Newsletter: unsubscribe*/
 .nl_unsub_intro{
@@ -354,7 +342,6 @@ cursor: pointer;
 .nl_unsub_mailAddress{
 	margin-top: 10px;
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .nl_unsub_mailAddress input{
 	width: 200px;
@@ -374,7 +361,6 @@ cursor: pointer;
 	text-align: left;
 	margin-left: auto; 
 	margin-right: auto;
-    color:  <RENDER_VALUE what="variation>globalText"/>;
 	margin-top: 20px;
 }
 #contact table td{
@@ -384,7 +370,6 @@ cursor: pointer;
 	margin-top: 10px;
  }
  #contactData_container h3{
-    color:  <RENDER_VALUE what="variation>contactColor"/>;
 	font-size: 115%;
  }
 .contact_intro{
@@ -402,9 +387,6 @@ cursor: pointer;
 .contact_mail{
 	width: 200px;
 	text-align: left;
-}
-.contact_mail a{
-	color: #ffffff;
 }
 #sendMailForm_container{
 	width: 400px;
@@ -434,9 +416,6 @@ cursor: pointer;
 .sendmailContent{
 	padding-left: 0px;
 }
-.contactMail_link{
-	color: <RENDER_VALUE what="variation>contactColor"/>;
-}
 .mailContent{
 	width: 340px;
 	height: 140px;
@@ -456,6 +435,12 @@ cursor: pointer;
 	width: 100%;
 	color: #333333;
 	font-size: 110%;
+}
+.notif_container a{
+	color: #333333;
+}
+.notif_container a:visited, .notif_container a:hover{
+	color: #666666;
 }
 .notif_container div{
 	margin-left: auto;
@@ -640,7 +625,7 @@ cursor: pointer;
 
 /*LEGACY*/
 #copyrights{
-    color : <RENDER_VALUE what="variation>signature"/>;
+    color: #ffffff;
     text-align: right;
 	margin-left: auto;
 	margin-right: auto;
@@ -653,7 +638,7 @@ cursor: pointer;
 }
 
 #copyrights a{
-    color : <RENDER_VALUE what="variation>signature"/>;
+    color: #ffffff;
 }
 
 /*CAPTCHA*/
@@ -696,7 +681,6 @@ cursor: pointer;
 /*général: all templates*/
 
 h1{ /* Grand titre des pages */
-    color:   <RENDER_VALUE what="variation>title"/>;
     font-weight: bold;
     font-size: 130%;
     line-height: 24px;
@@ -705,7 +689,6 @@ h1{ /* Grand titre des pages */
 }
 
 h2{ /* Petit titre des pages */
-    color: <RENDER_VALUE what="variation>titlesColor"/>;
     font-weight: bold;
     font-size: 120%;
     line-height: 16px;
@@ -748,9 +731,6 @@ border-right: 1px solid #ff0000;
 border-bottom: 1px solid #ff0000;
 }
 
-.important{
-    color : <RENDER_VALUE what="variation>importantColor"/>;
-}
 .halfSize{
     width:50%;
 }
@@ -770,19 +750,20 @@ font-style: italic;
 color: white;
 font-size: 80%;
 }
-a:link, a:visited, a:hover, a:active {
+a:link{
 }
 
-.templateColor{
-    color: <RENDER_VALUE what="variation>color"/>;
+ a:active{
 }
-
+a:visited, a:hover{
+	color: #cccccc;
+}
 .aLink{
     cursor: pointer;
 }
 
 .falseLink{
-    color: <RENDER_VALUE what="variation>linksColor"/>;
+    color: #ffffff;
     cursor: pointer;
     text-decoration: underline;
 }

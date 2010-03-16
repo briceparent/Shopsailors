@@ -12,39 +12,26 @@ CSS for shop contents only*/
 #shop_navigator{
 	width: 400px;
 	padding-top: 2px;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
-.shop_arboLink{
-	color: <RENDER_VALUE what="variation>navigatorLinkColor"/>;
-}
-.shop_arboText{
-	color: <RENDER_VALUE what="variation>navigatorLinkColor"/>;
-}
+
+/* -- breadcrumbs predefines --*/
 .breadcrumbSisters{
 	display: block;
 }
-.bc_sisters, .bc_sisters a, .bc_sameLevelText{
+.bc_sisters, .bc_sameLevelText{
 	color: #333333;
 	display:block;
 }
 .bc_sister_container{
 	display:none;
 }
-#shop_emptyCategory{
-	background: transparent url(/images/shared/default/shop_empty_category.png) no-repeat center top;
-	width: 320px;
-	height: 255px;
-	margin-top: 30px;
-	margin-left: 30px;
+
+.bc_sisters a:visited, .bc_sisters a:hover{
+	color: #666666;
 }
-.shop_emptyCategoryText{
-	width: 240px;
-	height: 215px;
-	color: white;
-	font-size: 120%;
-	font-weight: bold;
-	margin-left: 50px;
-	padding-top: 60px;
+/*Empty Category*/
+#shop_emptyCategory{
+	margin-top: 20px;
 }
 
 /*Navigateur de pages*/
@@ -52,10 +39,6 @@ CSS for shop contents only*/
 .pageNavigator{
 	text-align: center;
 	clear: both;
-	color: <RENDER_VALUE what="variation>globalText"/>;
-}
-.pagesNumbers a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .pageNavigator img{
 	height: 25px;
@@ -74,7 +57,6 @@ CSS for shop contents only*/
 	width: 650px;
 	height: 50px;
 	margin-left: 50px;
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 }
 .active_category_preview img{
     height: 50px;
@@ -97,7 +79,6 @@ CSS for shop contents only*/
 	font-size: 110%;
 	font-weight: bold;
 	margin-top: 20px;
-	color:  <RENDER_VALUE what="variation>title"/>;
 }
 
 .bg_subcategory{
@@ -106,7 +87,6 @@ CSS for shop contents only*/
 	margin-top: 10px;
 	margin-right: 20px;
 	height: 135px;
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	float: left;
 }
 .subcategory_image{
@@ -117,7 +97,6 @@ CSS for shop contents only*/
 	text-align: left;
 }
 .subcategory_name a{
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-size: 110%;
 	font-weight: bold;
 }
@@ -143,7 +122,6 @@ CSS for shop contents only*/
 	background: transparent url(/images/template/list.png) no-repeat center top;
 	width: 365px;
 	height: 120px;
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	margin-top: 10px;
 	margin-right: 40px;
 	float: left;
@@ -172,7 +150,6 @@ CSS for shop contents only*/
 	
 }
 .navigator_name a{
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 	font-size: 110%;
 	margin-right: 3px;
@@ -214,17 +191,11 @@ CSS for shop contents only*/
 
 .navigator_table{
 	margin-top: 10px;
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	margin-left: auto;
 	margin-right: auto;
 }
 .navigator_table th{
 	text-align: center;
-}
-.values_title{
-}
-.navigator_table1 th{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .navigator_table_name{
 	vertical-align: top;
@@ -233,11 +204,9 @@ CSS for shop contents only*/
 }
 .navigator_table_name a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .navigator_table_reference a{
 	font-style: italic;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .navigator_table_shortDesc{
 	vertical-align: top;
@@ -268,7 +237,6 @@ CSS for shop contents only*/
 
 .navigator_miniature{
 	background: transparent url(/images/template/miniature.png) no-repeat left top;
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	height: 340px;
 	width: 190px;
 	float: left;
@@ -298,7 +266,6 @@ CSS for shop contents only*/
 	text-align: left;
 }
 .navigator_name_miniature a{
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 	font-size: 120%;
 	margin-right: 3px;
@@ -326,7 +293,6 @@ CSS for shop contents only*/
 .product_details1{
 	margin-top: 10px;
 	width: 640px;
-	color: <RENDER_VALUE what="variation>globalText"/> 
 }
 .product_details1 table{
 	vertical-align: top;
@@ -384,7 +350,6 @@ CSS for shop contents only*/
 /*navigator_sameCategory : aperçu des produit de la categorie dans la page de produit*/
 
 .navigator_sameCategory{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	width: 420px;
 	height: 110px;
 	margin-top: 20px;
@@ -412,7 +377,6 @@ CSS for shop contents only*/
 	padding-top: 5px;
 }
 .navigator_productCategory a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	margin-right: 5px;
 	margin-top: 5px;
 	font-size: inherit;
@@ -439,7 +403,6 @@ CSS for shop contents only*/
 }
 .catResult_name a{
 	font-weight: bold;
-	color: #ffffff;
 }
 .catResult_pictos{
 	clear: both;
@@ -526,7 +489,6 @@ CSS for shop contents only*/
 .shop_cartProduct_name a{
 	text-align: left;
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .shop_cartProduct_ref{
 	text-align: left;
@@ -535,7 +497,6 @@ CSS for shop contents only*/
 }
 .shop_cartProduct_ref a{
 	text-align: left;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .shop_cartProduct_shortDesc{
 	text-align: left;
@@ -555,7 +516,6 @@ background: transparent url(/images/template/bg_table.png) repeat center top;
 	padding-left: 4px;
 	padding-right: 4px;
 	padding-bottom: 4px;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	height: 30px;
 }
 .shop_headerText{
@@ -593,7 +553,6 @@ background: transparent url(/images/template/bg_table.png) repeat center top;
 	height: 60px;
 	margin-left: 455px;
 	text-align: center;
-	color: <RENDER_VALUE what="variation>globalText"/>
 }
 .shop_update img{
 	margin-top: 2px;
@@ -602,7 +561,6 @@ background: transparent url(/images/template/bg_table.png) repeat center top;
 	text-align: center;
 }
 .shop_total_text{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 	font-size: 130%;
 }
@@ -615,7 +573,6 @@ background: transparent url(/images/template/bg_table.png) repeat center top;
 }
 
 .cart_goToCommand {
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	font-size: 110%;
 	font-weight: bold;
 }
@@ -631,7 +588,6 @@ background: transparent url(/images/template/bg_table.png) repeat center top;
 	vertical-align: top;
 }
 .cart_changeShipMode a{
-	color: #ffffff;
 	font-weight: bold;
 }
 
@@ -654,11 +610,9 @@ background: transparent url(/images/template/bg_table.png) repeat center top;
 	padding-top: 5px;
 	text-align: center;
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .billing_enterAdress{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .command_billing_name input{
 	border: 1px solid #333333;

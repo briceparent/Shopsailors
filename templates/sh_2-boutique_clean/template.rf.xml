@@ -31,7 +31,7 @@
                 <div class="tmp_menu1">
                 <RENDER_VALUE what="body>menu_1"/>
                 </div>
-                <div id="tmp_mainContent">
+                <div class="tmp_mainContent">
                     <RENDER_IFSET what="body>title">
                         <h1 class="bodyTitle"><RENDER_VALUE what="body>title"/></h1>
                     </RENDER_IFSET>

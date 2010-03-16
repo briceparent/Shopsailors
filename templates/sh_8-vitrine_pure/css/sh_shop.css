@@ -6,6 +6,46 @@ CSS for shop contents only*/
 
 /*SHOP: PRODUCTS CATEGORIES NAVIGATOR*/
 
+/*breadcrumbs*/
+
+#shop_navigator{
+	background: transparent url(/images/template/bg_arbo.png) no-repeat center top;
+	width: 350px;
+}
+
+/* -- breadcrumbs predefines --*/
+.breadcrumbSisters{
+	display: block;
+}
+.bc_sisters, .bc_sameLevelText{
+	color: #333333;
+	display:block;
+}
+.bc_sister_container{
+	display:none;
+}
+
+.bc_sisters a:visited, .bc_sisters a:hover{
+	color: #666666;
+}
+
+/*Empty category*/
+
+#shop_emptyCategory{
+	width: 292px;
+	height: 215px;
+	margin-top: 45px;
+	margin-left: 30px;
+}
+.shop_emptyCategoryText{
+	width: 240px;
+	height: 215px;
+	color: #333333;
+	font-size: 120%;
+	font-weight: bold;
+	margin-left: 50px;
+	padding-top: 60px;
+}
 /*Navigateur de pages*/
 
 .pageNavigator{
@@ -21,14 +61,9 @@ CSS for shop contents only*/
 	background: transparent url(/images/template/variation/box.png) no-repeat right top;
 	height: 286px;
 	width: 435px;
-	margin-top: 15px;
-	margin-left: 420px;
-	position: absolute;
-	color:  <RENDER_VALUE what="variation>boxText"/>;
-}
-.active_category_preview{
-}
-.active_category_preview img{
+	color: #ffffff;
+	padding: 0;
+	margin-left: 100px;
 }
 .active_category_descriptionContainer{
 	margin-left: 15px;
@@ -41,14 +76,13 @@ CSS for shop contents only*/
 }
 
 .active_category_titles{
-	color: <RENDER_VALUE what="variation>boxText"/>;
 	font-size: 110%;
 	font-weight: bold;
 }
 
 .active_category_name{
 text-align: center;
-margin-top: 20px;
+padding-top: 20px;
 margin-bottom: inherit;
 font-weight: bold;
 font-size: 180%;
@@ -57,7 +91,7 @@ font-size: 180%;
 .active_category_price{
 font-weight: bold;
 font-size: 140%;
-color: white;
+color: #ffffff;
 padding-left: 25px;
 padding-right: 25px;
 margin-top: 10px;
@@ -71,82 +105,23 @@ width: 400px;
 margin-top: 25px;
 }
 .onePicto{
-height: 36px;
-width: 36px;
+height: 30px;
+width: 30px;
 cursor: pointer;
 }
-/*Navigateur*/
 
-#shop_navigator{
-	width: 400px;
-	padding-top: 2px;
-	color: <RENDER_VALUE what="variation>globalText"/>;
-}
-
-/*breadcrumbs*/
-
-#shop_navigator{
-	width: 400px;
-	padding-top: 2px;
-	color: <RENDER_VALUE what="variation>globalText"/>;
-}
-.shop_arboLink{
-	color: <RENDER_VALUE what="variation>navigatorLinkColor"/>;
-}
-.shop_arboText{
-	color: <RENDER_VALUE what="variation>navigatorLinkColor"/>;
-}
-.breadcrumbSisters{
-	display: block;
-}
-.bc_sisters, .bc_sameLevelText{
-	display:block;
-}
-.bc_sisters a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
-}
-.bc_sister_container{
-	display:none;
-}
 /*sub_category */
 
 .selectAcategory{
+	width: 300px;
 	text-align: center;
 	font-size: 110%;
 	font-weight: bold;
 	margin-top: 20px;
-	color:  <RENDER_VALUE what="variation>navigatorTextColor"/>;
-}
-
-.bg_subcategory{
-	color:  <RENDER_VALUE what="variation>descriptions"/>;
 }
 
 /*product*/
 
-#shop_navigator{
-	background: transparent url(/images/template/bg_arbo.png) no-repeat center top;
-	width: 400px;
-	color: <RENDER_VALUE what="variation>navigatorTextColor"/>;
-}
-.shop_arboLink{
-	color: <RENDER_VALUE what="variation>navigatorLinkColor"/>;
-}
-#shop_emptyCategory{
-	width: 292px;
-	height: 215px;
-	margin-top: 45px;
-	margin-left: 30px;
-}
-.shop_emptyCategoryText{
-	width: 240px;
-	height: 215px;
-	color: <RENDER_VALUE what="variation>boxText"/>;
-	font-size: 120%;
-	font-weight: bold;
-	margin-left: 50px;
-	padding-top: 60px;
-}
 #list{
 	padding-top: 25px;
 	margin-left: 20px;
@@ -164,14 +139,6 @@ cursor: pointer;
 	height: 60px;
 	width: 60px;
 }
-#oneProduct{
-	background: transparent url(/images/template/variation/box.png) no-repeat right top;
-	height: 286px;
-	width: 430px;
-	margin-top: 15px;
-	margin-left: 420px;
-	position: absolute;
-}
 .textContent{
 	margin-left: 15px;
 	margin-top: 15px;
@@ -181,7 +148,6 @@ cursor: pointer;
 }
 .product_describe, .category_describe{
 padding-top: 0px;
-color: white;
 }
 .product_preview, .category_preview{
 	width: 250px;
@@ -190,7 +156,6 @@ color: white;
 
 .product_reference{
 	text-align: center;
-	color: white;
 	font-style: italic;
 }
 .product_name, .category_name{
@@ -199,12 +164,10 @@ margin-top: 20px;
 margin-bottom: inherit;
 font-weight: bold;
 font-size: 180%;
-color: white;
 }
 .product_property_name, .category_property_name{
 font-weight: bold;
 padding-top: 8px;
-color: white;
 }
 /* Other preview*/
 #product_pictures img{
@@ -212,10 +175,6 @@ color: white;
 	border: 1px solid #333333;
 }
 /*navigator_sameCategory : aperçu des produit de la categorie dans la page de produit*/
-
-.navigator_sameCategory{
-	color: <RENDER_VALUE what="variation>title"/>;
-}
 
 .navigator_sameCategory table {
 }
@@ -246,7 +205,6 @@ color: white;
 }
 .catResult_name a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>
 }
 .catResult_pictos{
 	clear: both;
@@ -271,12 +229,10 @@ color: white;
 }
 .prodResult_name a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .prodResult_reference a{
 	text-decoration: none;
 	font-style: italic;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .prodResult_pictos{
 	vertical-align: top;
@@ -335,7 +291,6 @@ color: white;
 .shop_cartProduct_name a{
 	text-align: left;
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .shop_cartProduct_ref{
 	text-align: left;
@@ -344,7 +299,6 @@ color: white;
 }
 .shop_cartProduct_ref a{
 	text-align: left;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .shop_cartProduct_shortDesc{
 	text-align: left;
@@ -363,7 +317,6 @@ color: white;
 	padding-left: 4px;
 	padding-right: 4px;
 	padding-bottom: 4px;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	height: 30px;
 }
 .shop_headerText{
@@ -390,7 +343,6 @@ color: white;
 	font-size: 110%;
 	text-align: right;
 	font-weight: bold;
-	color: #333333;
 }
 .shop_totalCartContainer{
 	height: 80px;
@@ -402,7 +354,6 @@ color: white;
 	height: 60px;
 	margin-left: 455px;
 	text-align: center;
-	color: <RENDER_VALUE what="variation>globalText"/>
 }
 .shop_update img{
 	margin-top: 2px;
@@ -411,7 +362,6 @@ color: white;
 	text-align: center;
 }
 .shop_total_text{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 	font-size: 130%;
 }
@@ -424,7 +374,6 @@ color: white;
 }
 
 .cart_goToCommand {
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	font-size: 110%;
 	font-weight: bold;
 }
@@ -440,7 +389,6 @@ color: white;
 	vertical-align: top;
 }
 .cart_changeShipMode a{
-	color: #333333;
 	font-weight: bold;
 }
 
@@ -463,11 +411,9 @@ color: white;
 	padding-top: 5px;
 	text-align: center;
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .billing_enterAdress{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .command_billing_name input{
 	border: 1px solid #333333;

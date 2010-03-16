@@ -42,7 +42,6 @@ body{
 
 .topTitle{
     text-align:left;
-    color:  <RENDER_VALUE what="variation>topTitle"/>;
     width:100%;
 	margin-top: 20px;
 }
@@ -71,8 +70,8 @@ body{
 	text-align: right;
 }
 #connectionContainer a{
+	color: #ffffff;
 	margin-left: 22px;
-	color:  <RENDER_VALUE what="variation>connectLinkColor"/>;
 	font-weight: bold;
 }
 /*SEARCHER*/
@@ -164,12 +163,10 @@ body{
 	overflow: auto;
 }
 .oneArticle_summary{
-	color: <RENDER_VALUE what="variation>descriptions"/>;	
 }
 .oneArticle_title a{
 	font-weight: bold;
 	font-size: 110%;
-	color: <RENDER_VALUE what="variation>globalText"/>;	
 }
 
 /*contenus de droite de la page*/
@@ -177,6 +174,9 @@ body{
 .page_content{
 	margin-top: 20px;
 	width: 900px;
+}
+.page_content a{
+	color: #ffffff;
 }
 .content_middle{
 	margin-top: 35px;
@@ -192,9 +192,6 @@ body{
 .news_subscribe{
 	font-weight: bold;
 	font-size: 110%;
-}
-.news_subscribe a{
-	color: <RENDER_VALUE what="variation>title"/>;
 }
 .nl_chooseList{
 	margin-top: 15px;
@@ -217,9 +214,6 @@ body{
 	font-style: italic;
 	margin-top: 5px;
 }
-.news_unsubscribe a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
-}
 .newsList_intro{
 }
 .newsList_title{
@@ -231,12 +225,10 @@ body{
 }
 .newsList_list a{
 	font-weight: bold;
-	color: #ffffff;
 	margin-top: 3px;
 }
 .nl_oneMonth_name{
 	font-style: italic;
-	color: <RENDER_VALUE what="variation>title"/>;
 }
 .nl_list_oneLine{
 	margin-top: 5px;
@@ -276,7 +268,6 @@ body{
 }
 .nl_backToList a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 	/*Newsletter: unsubscribe*/
 .nl_unsub_intro{
@@ -285,7 +276,6 @@ body{
 .nl_unsub_mailAddress{
 	margin-top: 10px;
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .nl_unsub_mailAddress input{
 	width: 200px;
@@ -483,7 +473,6 @@ body{
 	text-align: left;
 	margin-left: auto; 
 	margin-right: auto;
-	color: #ffffff;
 	margin-top: 20px;
 }
 #contact table td{
@@ -511,9 +500,6 @@ body{
 	width: 200px;
 	text-align: left;
 }
-.contact_mail a{
-	color: #ffffff;
-}
 #sendMailForm_container{
 	width: 400px;
 	margin-left: 180px;
@@ -523,7 +509,6 @@ body{
 }
 
 #sendMailForm_container h3{
-    color: #ffffff;
 	margin-top: 0px;
 	padding-top: 5px;
 	text-align: center;
@@ -540,7 +525,6 @@ body{
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
-    color: #ffffff;
 }
 .sendmailContent{
 	padding-left: 0px;
@@ -614,7 +598,6 @@ body{
 
 /*Legacy menu*/
 #copyrights{
-    color : <RENDER_VALUE what="variation>globalText"/>;
     text-align:center;
     font-size:90%;
 	clear: both;
@@ -623,7 +606,7 @@ body{
 
 
 #copyrights a{
-    color : <RENDER_VALUE what="variation>globalText"/>;
+color: #ffffff;
 	font-weight: bold;
 }
 
@@ -631,7 +614,6 @@ body{
 /*général: all templates*/
 
 h1{ /* Grand titre des pages */
-    color:   <RENDER_VALUE what="variation>title"/>;
     font-weight: bold;
     font-size: 160%;
     line-height: 24px;
@@ -640,7 +622,6 @@ h1{ /* Grand titre des pages */
 }
 
 h2{ /* Petit titre des pages */
-    color: <RENDER_VALUE what="variation>titlesColor"/>;
     font-weight: bold;
     font-size: 120%;
     line-height: 16px;
@@ -684,17 +665,10 @@ p{ /* Paragraphes */
     text-indent: 2px;
 }
 
-.important{
-    color : <RENDER_VALUE what="variation>importantColor"/>;
-}
 .halfSize{
     width:50%;
 }
 
-.hideLink{
-  text-decoration:inherit;
-  color:inherit;
-}
 input, textarea{
 	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
 }
@@ -707,19 +681,23 @@ font-style: italic;
 color: white;
 font-size: 80%;
 }
-a:link, a:visited, a:hover, a:active {
+a:link{
 }
 
-.templateColor{
-    color: <RENDER_VALUE what="variation>color"/>;
+ a:active{
 }
-
+a:visited, a:hover{
+	color: #cccccc;
+}
 .aLink{
     cursor: pointer;
 }
 
+.hideLink{
+  text-decoration:inherit;
+  color:inherit;
+}
 .falseLink{
-    color: <RENDER_VALUE what="variation>linksColor"/>;
     cursor: pointer;
     text-decoration: underline;
 }

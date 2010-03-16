@@ -41,8 +41,10 @@
                             <RENDER_VALUE what="body>title"/>
                         </h1>
                     </RENDER_IFSET>
-                    <RENDER_VALUE what="body>content"/>
-                    <div class="noFloat">&#160;</div>
+                    <div class="page_content">
+                        <RENDER_VALUE what="body>content"/>
+                        <div class="noFloat">&#160;</div>
+                    </div>
                 </div>
             </div>
             <div id="bg_bottom">

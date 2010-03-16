@@ -27,14 +27,10 @@ body{
 	background: transparent url(/images/template/variation/bg_middle.png) repeat-y center top;
 	width: 900px;
 }
-#content_middle{
-	margin-left: 20px;
-	width: 850px;
-}
 .topTitle{
     text-align:center;
     font-size:120%;
-    color:<RENDER_VALUE what="variation>topTitle"/>;
+    color: #ffffff;
     width:100%;
 	padding-top: 5px;
 	margin-bottom: 5px;
@@ -105,7 +101,6 @@ body{
 	border: 1px solid <RENDER_VALUE what="variation>globalText"/>;
 }
 .articleResult_title a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 }
 .searcher_oneArticle_image img{
@@ -131,19 +126,6 @@ body{
 	text-align: left;
 	margin-top: 0px;
 }
-.grey_link_connect{
-	color: <RENDER_VALUE what="variation>connectLinkColor"/>;
-}
-.grey_link{
-	color: #333333;
-	margin-top:5px;
-	display: block;
-}
-.grey_link_line{
-	color: #333333;
-	margin-top:5px;
-}
-
 
 
 /* flags */
@@ -163,10 +145,17 @@ cursor: pointer;
 
 /*Table et contenus de droite de la page*/
 
-#page_content{
+.content_middle{
+	margin-top: 20px;
+	width: 850px;
+}
+.page_content{
 margin-top: 10px;
+margin-left: 20px;
 padding-top: 0px;
-width: 600px;
+}
+.page_content a{
+color: #333333;
 }
  .contentTable{
 width: 250px;
@@ -181,9 +170,6 @@ margin: inherit;
 
 .showList_content table tr td{
 	vertical-align: top;
-}
-.showList_intro a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .oneArticle_contents{
 	width: 370px;
@@ -206,13 +192,9 @@ margin: inherit;
 	height: 90px;
 	overflow: auto;
 }
-.oneArticle_summary{
-	color: <RENDER_VALUE what="variation>descriptions"/>;	
-}
 .oneArticle_title a{
 	font-weight: bold;
 	font-size: 110%;
-	color: <RENDER_VALUE what="variation>globalText"/>;	
 }
 
 /*NEWSLETTER*/
@@ -221,9 +203,6 @@ margin: inherit;
 .news_subscribe{
 	font-weight: bold;
 	font-size: 110%;
-}
-.news_subscribe a{
-	color: <RENDER_VALUE what="variation>title"/>;
 }
 .nl_chooseList{
 	margin-top: 15px;
@@ -246,9 +225,6 @@ margin: inherit;
 	font-style: italic;
 	margin-top: 5px;
 }
-.news_unsubscribe a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
-}
 .newsList_intro{
 }
 .newsList_title{
@@ -260,12 +236,10 @@ margin: inherit;
 }
 .newsList_list a{
 	font-weight: bold;
-	color: #333333;
 	margin-top: 3px;
 }
 .nl_oneMonth_name{
 	font-style: italic;
-	color: <RENDER_VALUE what="variation>title"/>;
 }
 .nl_list_oneLine{
 	margin-top: 5px;
@@ -305,7 +279,6 @@ margin: inherit;
 }
 .nl_backToList a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 	/*Newsletter: unsubscribe*/
 .nl_unsub_intro{
@@ -523,7 +496,7 @@ margin: inherit;
 	margin-top: 10px;
  }
  #contactData_container h3{
-    color:  <RENDER_VALUE what="variation>contactColor"/>;
+    color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-size: 115%;
  }
 .contact_intro{
@@ -542,9 +515,6 @@ margin: inherit;
 	width: 200px;
 	text-align: left;
 }
-.contact_mail a{
-	color: #333333;
-}
 #sendMailForm_container{
 	width: 400px;
 	margin-left: 140px;
@@ -554,7 +524,7 @@ margin: inherit;
 }
 
 #sendMailForm_container h3{
-    color:  <RENDER_VALUE what="variation>contactColor"/>;
+    color:  <RENDER_VALUE what="variation>globalText"/>;
 	margin-top: 0px;
 	text-align: center;
 	font-size: 115%;
@@ -575,7 +545,7 @@ margin: inherit;
 	padding-left: 0px;
 }
 .contactMail_link{
-	color: <RENDER_VALUE what="variation>contactColor"/>;
+	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .mailContent{
 	width: 340px;
@@ -633,10 +603,10 @@ margin: inherit;
 	width:60px;
 }
 .captcha_input input{
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #333333;
 }
 .captcha_code img{
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #333333;
 	width:130px;
 	height:30px;
 }
@@ -667,7 +637,7 @@ h1{ /* Grand titre des pages */
 }
 
 h2{ /* Petit titre des pages */
-    color: <RENDER_VALUE what="variation>titlesColor"/>;
+    color: <RENDER_VALUE what="variation>globalText"/>;
     font-weight: bold;
     font-size: 120%;
     line-height: 16px;
@@ -711,24 +681,10 @@ border-right: 1px solid #660000;
 .alert-bottom{
 border-bottom: 1px solid #660000;
 }
-
-.important{
-    color : <RENDER_VALUE what="variation>importantColor"/>;
-}
-.halfSize{
-    width:50%;
-}
-
-.hideLink{
-  text-decoration:inherit;
-  color:inherit;
-}
-
 input, textarea{
 	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
 }
 .fourFifth{
-color: <RENDER_VALUE what="variatrion>contactColor"/>;
 font-size:80%;
 font-style: italic;
 }
@@ -737,22 +693,28 @@ font-style: italic;
 color: white;
 font-size: 80%;
 }
-a:link, a:visited, a:hover, a:active {
-    color: <RENDER_VALUE what="variation>linksColor"/>;
-}
 
-.templateColor{
-    color: <RENDER_VALUE what="variation>color"/>;
+a:link{
 }
-
+ a:active{
+}
+a:visited, a:hover{
+	color: <RENDER_VALUE what="variation>globalText"/>;
+}
 .aLink{
     cursor: pointer;
 }
+.hideLink{
+  text-decoration:inherit;
+  color:inherit;
+}
 
 .falseLink{
-    color: <RENDER_VALUE what="variation>linksColor"/>;
     cursor: pointer;
     text-decoration: underline;
+}
+.falseLink:hover{
+	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 img { 
     border: 0;

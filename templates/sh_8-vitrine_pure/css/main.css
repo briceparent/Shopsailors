@@ -3,10 +3,10 @@
 /* Shopsailors' CSS File | Template : <RENDER_VALUE what="template>name"/> | Variation : <RENDER_VALUE what="variation>name"/> */
 /* UTF-8 Check : à  ç  é  è  */
 body{
-	background: <RENDER_VALUE what="variation>backgroundColor"/> url(/images/template/variation/bg_bg.png) repeat 0 0;
+	background: transparent url(/images/template/variation/bg_bg.png) repeat 0 0;
     font-family: Arial,sans-serif;
     font-size: 12px;
-    color: <RENDER_VALUE what="variation>globalText"/>;
+    color: #333333;
 }
 
 .topTitle{
@@ -40,10 +40,13 @@ body{
 #bg_content{
 	background: transparent url(/images/template/bg_middle2.png) repeat-y center top;
 }
-#content{
+.page_content{
 	margin-left: 25px;
 	margin-top: 10px;
 	width: 840px;
+}
+.page_content a{
+	color: #333333;
 }
 #bg_bottom{
 	background: transparent url(/images/template/bg_bottom.png) no-repeat center top;
@@ -96,21 +99,8 @@ body{
 }
 #connectionContainer a{
 	font-weight: bold;
+	color: #666666;
 }
-.grey_link_connect{
-	color: #333333;
-}
-.grey_link{
-	color: #333333;
-	margin-top:5px;
-	display: block;
-}
-.grey_link_line{
-	color: #333333;
-	margin-top:5px;
-}
-
-
 
 /* flags */
 .pictoFlagsContainer{
@@ -165,10 +155,8 @@ cursor: pointer;
 .searcher_oneArticle_image{
 	vertical-align: top;
 	margin-right: 5px;
-	border: 1px solid <RENDER_VALUE what="variation>globalText"/>;
 }
 .articleResult_title a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 }
 .searcher_oneArticle_image img{
@@ -230,9 +218,6 @@ cursor: pointer;
 .showList_content table tr td{
 	vertical-align: top;
 }
-.showList_intro a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
-}
 .oneArticle_contents{
 	width: 370px;
 	height: 105px;
@@ -254,13 +239,9 @@ cursor: pointer;
 	height: 90px;
 	overflow: auto;
 }
-.oneArticle_summary{
-	color: <RENDER_VALUE what="variation>blackText"/>;	
-}
 .oneArticle_title a{
 	font-weight: bold;
-	font-size: 110%;
-	color: <RENDER_VALUE what="variation>globalText"/>;	
+	font-size: 110%;	
 }
 
 /*NEWSLETTER*/
@@ -269,9 +250,6 @@ cursor: pointer;
 .news_subscribe{
 	font-weight: bold;
 	font-size: 110%;
-}
-.news_subscribe a{
-	color: <RENDER_VALUE what="variation>title"/>;
 }
 .nl_chooseList{
 	margin-top: 15px;
@@ -294,9 +272,6 @@ cursor: pointer;
 	font-style: italic;
 	margin-top: 5px;
 }
-.news_unsubscribe a{
-	color: <RENDER_VALUE what="variation>title"/>;
-}
 .newsList_intro{
 }
 .newsList_title{
@@ -313,7 +288,6 @@ cursor: pointer;
 }
 .nl_oneMonth_name{
 	font-style: italic;
-	color: <RENDER_VALUE what="variation>title"/>;
 }
 .nl_list_oneLine{
 	margin-top: 5px;
@@ -331,7 +305,6 @@ cursor: pointer;
 .nl_chooseYourList{
 	margin-top: 10px;
 	font-weight: bold;
-	color: #660033;
 }
 .nl_subscribeConfirmed{
 	font-size: 120%;
@@ -353,7 +326,6 @@ cursor: pointer;
 }
 .nl_backToList a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>title"/>;
 }
 	/*Newsletter: unsubscribe*/
 .nl_unsub_intro{
@@ -362,7 +334,6 @@ cursor: pointer;
 .nl_unsub_mailAddress{
 	margin-top: 10px;
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .nl_unsub_mailAddress input{
 	width: 200px;
@@ -560,7 +531,6 @@ cursor: pointer;
 	text-align: left;
 	margin-left: auto; 
 	margin-right: auto;
-	color: #333333;
 	margin-top: 20px;
 }
 #contact table td{
@@ -571,7 +541,6 @@ cursor: pointer;
  }
  #contactData_container h3{
 	font-size: 115%;
-	color: <RENDER_VALUE what="variation>title"/>;
  }
 .contact_intro{
 	text-align: left;
@@ -589,9 +558,6 @@ cursor: pointer;
 	width: 200px;
 	text-align: left;
 }
-.contact_mail a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
-}
 #sendMailForm_container{
 	width: 400px;
 	margin-left: 140px;
@@ -601,7 +567,6 @@ cursor: pointer;
 }
 
 #sendMailForm_container h3{
-    color: #333333;
 	margin-top: 0px;
 	text-align: center;
 	font-size: 115%;
@@ -617,7 +582,6 @@ cursor: pointer;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
-    color: #333333;
 }
 .sendmailContent{
 	padding-left: 0px;
@@ -635,20 +599,18 @@ cursor: pointer;
  }
  .mailSent{
 	font-weight: bold;
-	color: #333333;
  }
 
 /* Copyrights and legacy*/
 
 #copyrights{
     text-align:right;
-    font-size:90%;
 	clear: both;
 	font-weight: bold;
 	margin-right: 50px;
+	color: #333333;
 }
 #copyrights a{
-    font-size: 90%;
 	font-weight: bold;
 	color: #333333;
 }
@@ -682,10 +644,10 @@ cursor: pointer;
 	width:60px;
 }
 .captcha_input input{
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #333333;
 }
 .captcha_code img{
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #333333;
 	width:130px;
 	height:30px;
 }
@@ -693,7 +655,6 @@ cursor: pointer;
 /*All templates*/
 
 h1{ /* Grand titre des pages */
-    color: <RENDER_VALUE what="variation>globalText"/>;
     font-weight: bold;
     font-size: 160%;
     text-align: left;
@@ -705,7 +666,6 @@ h1{ /* Grand titre des pages */
 }
 
 h2{ /* Petit titre des pages */
-    color: <RENDER_VALUE what="variation>titlesColor"/>;
     font-weight: bold;
     font-size: 120%;
     line-height: 16px;
@@ -721,35 +681,6 @@ p{ /* Paragraphes */
     line-height: 16px;
     text-align: left;
     text-indent: 2px;
-}
-
-.spacer{
-	clear: both;
-}
-
-.important{
-    color : <RENDER_VALUE what="variation>importantColor"/>;
-}
-
-.bold{ /* Elements affichés en gras (mots clés) */
-    font-weight: bold;
-}
-
-.italic{ /* Elements affichés en italic */
-    font-style: italic;
-}
-
-.center{ /* Elements centrés */
-    text-align:center;
-}
-
-.halfSize{
-    width:50%;
-}
-
-.hideLink{
-  text-decoration:none;
-  color:#333333;
 }
 
 .border-top{
@@ -789,20 +720,23 @@ color: white;
 font-size: 80%;
 }
 
-a:link, a:visited, a:hover, a:active {
-    color: <RENDER_VALUE what="variation>linksColor"/>;
+a:link{
 }
 
-.templateColor{
-    color: <RENDER_VALUE what="variation>color"/>;
+ a:active{
 }
-
+a:visited, a:hover{
+	color: #666666;
+}
 .aLink{
     cursor: pointer;
 }
-
+.hideLink{
+  text-decoration:none;
+  color:#333333;
+}
 .falseLink{
-    color: <RENDER_VALUE what="variation>linksColor"/>;
+    color: #333333;
     cursor: pointer;
     text-decoration: underline;
 }

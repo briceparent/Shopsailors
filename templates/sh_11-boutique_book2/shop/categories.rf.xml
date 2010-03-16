@@ -75,8 +75,12 @@
     
     <NORENDER>navigator_emptyCategory</NORENDER>
     <RENDER_IFSET what="category_elements>empty">
-        <div class="selectAcategory">
-            <RENDER_VALUE what="i18n>emptyCategory"/>
+        <div id="shop_emptyCategory">
+            <RENDER_NOTIF size="M">
+                <div class="bold">
+                    <RENDER_VALUE what="i18n>emptyCategory"/>
+                </div>
+            </RENDER_NOTIF>
         </div>
     </RENDER_IFSET>
     

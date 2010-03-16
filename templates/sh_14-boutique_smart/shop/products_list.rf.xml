@@ -7,17 +7,17 @@
                     <span class="icon_display">
                         <RENDER_IFSET what="selectors>link_list">
                             <a href="{selectors>link_list}">
-                                <img src="/images/template/icon_list.png" alt="{i18n>list_view}" title="{i18n>list_view}"/>
+                                <img src="/images/shared/icons/icon_list.png" alt="{i18n>list_view}" title="{i18n>list_view}"/>
                             </a>&#160;
                         </RENDER_IFSET>
                         <RENDER_IFSET what="selectors>link_miniature">
                             <a href="{selectors>link_miniature}">
-                                <img src="/images/template/icon_miniature.png" alt="{i18n>miniature_view}" title="{i18n>miniature_view}"/>
+                                <img src="/images/shared/icons/icon_miniature.png" alt="{i18n>miniature_view}" title="{i18n>miniature_view}"/>
                             </a>&#160;
                         </RENDER_IFSET>
                         <RENDER_IFSET what="selectors>link_table">
                             <a href="{selectors>link_table}">
-                                <img src="/images/template/icon_table.png" alt="{i18n>table_view}" title="{i18n>table_view}"/>
+                                <img src="/images/shared/icons/icon_table.png" alt="{i18n>table_view}" title="{i18n>table_view}"/>
                             </a>&#160;
                         </RENDER_IFSET>
                     </span>

@@ -10,7 +10,7 @@ body{
 	margin-right: auto;
     font-family: Arial,sans-serif;
     font-size: 12px;
-    color: #000000;
+    color: #333333;
 	margin-top:0;
 	padding-top: 0;
 	margin-bottom: 0;
@@ -34,7 +34,7 @@ body{
 	height: 25px;
     text-align: right;
     font-size:120%;
-    color:  <RENDER_VALUE what="variation>topTitle"/>;
+    color:  <RENDER_VALUE what="variation>title"/>;
     width:100%;
 	margin-bottom: 0;
 }
@@ -43,12 +43,6 @@ body{
     margin-left: auto;
     margin-right: auto;
     width: 900px;
-}
-.blank{
-/*div servant à régler la position du menu sous IE
-	height: 28px;
-	margin-left: auto; 
-	margin-right: auto;*/
 }
 .menu1{
 	text-align: right;
@@ -76,17 +70,18 @@ body{
 }
 #connectionContainer a{
 	font-weight: bold;
+	color: #333333;
 }
 .grey_link_connect{
-	color:  <RENDER_VALUE what="variation>connectLinkColor"/>;
+	color: #333333;
 }
 .grey_link{
-	color: <RENDER_VALUE what="variation>connectLinkColor"/>;
+	color: #333333;
 	margin-top:2px;
 	margin-bottom:2px;
 }
 .grey_link_line{
-	color: <RENDER_VALUE what="variation>connectLinkColor"/>;
+	color: #333333;
 	margin-top:5px;
 }
 
@@ -165,8 +160,12 @@ cursor: pointer;
 
 .page_content{
 	margin-top: 20px;
-	margin-left: 10px;
+	margin-left: auto; 
+	margin-right: auto;
 	width: 880px;
+}
+.page_content a{
+	color: #333333;
 }
 .content_middle{
 	background: transparent url(/images/template/bg_content_white.png) repeat center top;
@@ -185,7 +184,7 @@ cursor: pointer;
 	vertical-align: top;
 }
 .ShowList_intro a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
+	color: #333333;
 }
 .oneArticle_contents{
 	width: 370px;
@@ -208,12 +207,11 @@ cursor: pointer;
 	overflow: auto;
 }
 .oneArticle_summary{
-	color: <RENDER_VALUE what="variation>descriptions"/>;	
 }
 .oneArticle_title a{
 	font-weight: bold;
 	font-size: 110%;
-	color: <RENDER_VALUE what="variation>globalText"/>;	
+	color: #333333;
 }
 
 /*NEWSLETTER*/
@@ -224,7 +222,7 @@ cursor: pointer;
 	font-size: 110%;
 }
 .news_subscribe a{
-	color: <RENDER_VALUE what="variation>title"/>;
+	color: #333333;
 }
 .nl_chooseList{
 	margin-top: 15px;
@@ -248,7 +246,7 @@ cursor: pointer;
 	margin-top: 5px;
 }
 .news_unsubscribe a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
+	color: #333333;
 }
 .newsList_intro{
 }
@@ -514,7 +512,6 @@ cursor: pointer;
 	text-align: left;
 	margin-left: auto; 
 	margin-right: auto;
-    color:  <RENDER_VALUE what="variation>globalText"/>;
 	margin-top: 20px;
 }
 #contact table td{
@@ -524,7 +521,7 @@ cursor: pointer;
 	margin-top: 10px;
  }
  #contactData_container h3{
-    color:  <RENDER_VALUE what="variation>contactColor"/>;
+    color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-size: 115%;
  }
 .contact_intro{
@@ -555,7 +552,7 @@ cursor: pointer;
 }
 
 #sendMailForm_container h3{
-    color:  <RENDER_VALUE what="variation>contactColor"/>;
+    color:  <RENDER_VALUE what="variation>globalText"/>;
 	margin-top: 0px;
 	text-align: center;
 	font-size: 115%;
@@ -575,8 +572,8 @@ cursor: pointer;
 .sendmailContent{
 	padding-left: 0px;
 }
-.contactMail_link{
-	color: <RENDER_VALUE what="variation>contactColor"/>;
+.contactMail_link a{
+	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .mailContent{
 	width: 340px;
@@ -652,10 +649,10 @@ cursor: pointer;
 	width:60px;
 }
 .captcha_input input{
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #333333;
 }
 .captcha_code img{
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #333333;
 	width:130px;
 	height:30px;
 }
@@ -673,7 +670,7 @@ h1{ /* Grand titre des pages */
 }
 
 h2{ /* Petit titre des pages */
-    color: <RENDER_VALUE what="variation>titlesColor"/>;
+    color: <RENDER_VALUE what="variation>globalText"/>;
     font-weight: bold;
     font-size: 120%;
     line-height: 16px;
@@ -726,26 +723,22 @@ font-style: italic;
 color: white;
 font-size: 80%;
 }
-.important{
-    color : <RENDER_VALUE what="variation>importantColor"/>;
-}
 .halfSize{
     width:50%;
-}
-.hideLink{
-  text-decoration:inherit;
-  color:inherit;
 }
 input, textarea{
 	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
 }
 
-a:link, a:visited, a:hover, a:active {
-    color: <RENDER_VALUE what="variation>linksColor"/>;
+a:link{
 }
 
+ a:active{
+}
+a:visited, a:hover{
+	color: <RENDER_VALUE what="variation>globalText"/>;
+}
 .templateColor{
-    color: <RENDER_VALUE what="variation>color"/>;
 }
 
 .aLink{
@@ -753,7 +746,7 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .falseLink{
-    color: <RENDER_VALUE what="variation>linksColor"/>;
+    color: <RENDER_VALUE what="variation>globalText"/>;
     cursor: pointer;
     text-decoration: underline;
 }

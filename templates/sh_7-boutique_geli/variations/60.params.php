@@ -13,21 +13,9 @@ if(!defined('SH_MARKER')){
 $this->version = '0.2';
 
 $this->values = array (
-    'globalText'=>'#663300',
-    'boxText' => '#663300',
-    'link'=>'#663300',
-    'signature' => '#cc9933',
-    'topTitle' => '#330000',
-    'title'=>'#330000',
-    'importantText' => '#cc9933',
-    'linkVisited'=>'#666633',
-    'linkOver' => '#666633',
-    'buttonText' => '#663300',
-    'buttonTextSelected' => '#330000',
-    'buttonTextActive' => '#330000',
-    'borderColor' => '#ffcc33',
-    'connectLinkColor'=>'#333333',
-    'navigatorLinkColor'=>'#000000',
-    'navigatorTextColor'=>'#663300',
-    'contactColor'=>'#663300',
+    'globalText'=>'#333300',
+    'buttonText' => '#333300',
+    'buttonTextSelected' => '#333333',
+    'buttonTextActive' => '#333333',
+    'borderColor' => '#333300',
 );

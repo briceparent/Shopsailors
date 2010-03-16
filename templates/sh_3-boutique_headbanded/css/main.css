@@ -9,7 +9,7 @@ body{
 	margin-right: auto;
     font-family: Arial,sans-serif;
     font-size: 12px;
-    color: <RENDER_VALUE what="variation>textColor"/>;
+    color: #333333;
 }
 #mainContainer{
     margin-left: auto;
@@ -68,7 +68,7 @@ body{
 .topTitle{
     text-align:center;
     font-size:120%;
-    color:<RENDER_VALUE what="variation>topTitle"/>;
+    color:<RENDER_VALUE what="variation>globalText"/>;
     width:100%;
 	padding-top: 15px;
 	margin-bottom: 0;
@@ -84,16 +84,6 @@ body{
 	position: absolute;
 	font-weight: bold;
 }
-.grey_link_connect{
-	color:  <RENDER_VALUE what="variation>connectLinkColor"/>;
-}
-.grey_link{
-	color: #333333;
-}
-.grey_link_line{
-	color: #333333;
-}
-
 /* Flags */
 
 .pictoFlagsContainer{
@@ -159,9 +149,6 @@ img {
 .showList_content table tr td{
 	vertical-align: top;
 }
-.showList_intro a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
-}
 .search_results_type_name{
 	margin-top: 20px;
 }
@@ -179,7 +166,6 @@ img {
 .search_results_type_name a{
     font-weight: bold;
     font-size: 110%;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .articleResult_contents{
 	margin-top: 10px;
@@ -187,7 +173,6 @@ img {
 .articleResult_title a{
     font-weight: bold;
     font-size: 110%;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 	
 	
@@ -216,13 +201,9 @@ img {
 	height: 90px;
 	overflow: auto;
 }
-.oneArticle_summary{
-	color: <RENDER_VALUE what="variation>descriptions"/>;	
-}
 .oneArticle_title a{
 	font-weight: bold;
 	font-size: 110%;
-	color: <RENDER_VALUE what="variation>globalText"/>;	
 }
 
 
@@ -276,13 +257,16 @@ img {
 
 /*contenu */
 
-.page_content{
+.content_middle{
 	margin-top: 20px;
 	margin-left: 40px;
 	width: 830px;
 }
-.important{
-    color : <RENDER_VALUE what="variation>importantColor"/>;
+.page_content{
+	margin-top: 20px;
+}
+.page_content a{
+	color: #333333;
 }
 
 /*NEWSLETTER*/
@@ -291,9 +275,6 @@ img {
 .news_subscribe{
 	font-weight: bold;
 	font-size: 110%;
-}
-.news_subscribe a{
-	color: <RENDER_VALUE what="variation>title"/>;
 }
 .nl_chooseList{
 	margin-top: 15px;
@@ -316,9 +297,6 @@ img {
 	font-style: italic;
 	margin-top: 5px;
 }
-.news_unsubscribe a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
-}
 .newsList_intro{
 }
 .newsList_title{
@@ -330,12 +308,11 @@ img {
 }
 .newsList_list a{
 	font-weight: bold;
-	color: #333333;
 	margin-top: 3px;
 }
 .nl_oneMonth_name{
 	font-style: italic;
-	color: <RENDER_VALUE what="variation>title"/>;
+	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .nl_list_oneLine{
 	margin-top: 5px;
@@ -353,7 +330,6 @@ img {
 .nl_chooseYourList{
 	margin-top: 10px;
 	font-weight: bold;
-	color: #660033;
 }
 .nl_subscribeConfirmed{
 	font-size: 120%;
@@ -375,7 +351,6 @@ img {
 }
 .nl_backToList a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 	/*Newsletter: unsubscribe*/
 .nl_unsub_intro{
@@ -611,9 +586,6 @@ img {
 	width: 200px;
 	text-align: left;
 }
-.contact_mail a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
-}
 #sendMailForm_container{
 	width: 400px;
 	margin-left: 140px;
@@ -643,7 +615,7 @@ img {
 	padding-left: 0px;
 }
 .contactMail_link{
-	color: <RENDER_VALUE what="variation>contactColor"/>;
+	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .mailContent{
 	width: 340px;
@@ -695,7 +667,7 @@ img {
 }
 
 #copyrights{
-    color : <RENDER_VALUE what="variation>signature"/>;
+    color: #333333;
     text-align:center;
     font-size:90%;
 	font-weight: bold;
@@ -703,13 +675,13 @@ img {
 }
 
 #copyrights a{
-    color : <RENDER_VALUE what="variation>signature"/>;
+    color: #333333;
 }
 
 /*GENERAL ALL TEMPLATES*/
 
 h1{ /* Grand titre des pages */
-    color: <RENDER_VALUE what="variation>title"/>;
+    color: <RENDER_VALUE what="variation>globalText"/>;
     font-weight: bold;
     font-size: 160%;
     line-height: 24px;
@@ -761,18 +733,6 @@ border-right: 1px solid #660000;
 border-bottom: 1px solid #660000;
 }
 
-.halfSize{
-    width:50%;
-}
-.width_20px{
-	width: 13px;
-}
-.margin_5px{
-margin-left: 5px;
-margin-right: 5px;
-margin-top: 0px;
-margin-bottom: 0;
-}
 .hideLink{
   text-decoration:inherit;
   color:inherit;
@@ -781,12 +741,12 @@ input, textarea{
 	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
 }
 
-a:link, a:visited, a:hover, a:active {
-    color: <RENDER_VALUE what="variation>globalText"/>;
+a:link{
 }
-
-.templateColor{
-    color: <RENDER_VALUE what="variation>color"/>;
+ a:active{
+}
+a:visited, a:hover{
+	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 
 .aLink{
@@ -794,9 +754,11 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .falseLink{
-    color: <RENDER_VALUE what="variation>linksColor"/>;
     cursor: pointer;
     text-decoration: underline;
+}
+.falseLink:hover{
+	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .fourFifth{
 font-size:80%;

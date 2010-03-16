@@ -14,8 +14,6 @@ $this->version = '0.2';
 
 $this->values = array (
     'globalText'=>'#330033',
-    'topTitle' => '#330033',
-    'title'=>'#330033',
     'buttonText' => '#330033',
     'buttonTextSelected' => '#000000',
     'buttonTextActive' => '#000000',
