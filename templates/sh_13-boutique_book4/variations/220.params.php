@@ -13,11 +13,7 @@ if(!defined('SH_MARKER')){
 $this->version = '0.2';
 
 $this->values = array (
-    'globalText'=>'#333333',
-    'boxText' => '#333333',
-    'link'=>'#333333',
-    'signature' => '#ffffff',
-    'topTitle' => '#333333',
+    'globalText'=>'#000033',
     'title'=>'#000033',
     'importantText' => '#003366',
     'linkVisited'=>'#333366',

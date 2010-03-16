@@ -41,7 +41,7 @@
                                 <a href="{category_elements>link}"><RENDER_VALUE what="category_elements>name"/></a>
                             </div>
                                 <div class="subcategory_describe">
-                                    <RENDER_VALUE what="category_elements>shortDescription"/>fcdfedfefnudcvbds c dv e v d fe f v s fcd vdq c cd cq cd cd cq cqc dbvcd
+                                    <RENDER_VALUE what="category_elements>shortDescription"/>
                                 </div>
                         </div>
                     </td>
@@ -75,8 +75,12 @@
     
     <NORENDER>navigator_emptyCategory</NORENDER>
     <RENDER_IFSET what="category_elements>empty">
-        <div class="selectAcategory">
-            <RENDER_VALUE what="i18n>emptyCategory"/>
+        <div class="shop_emptyCategory">
+            <RENDER_NOTIF size="M">
+                <div class="bold">
+                    <RENDER_VALUE what="i18n>emptyCategory"/>
+                </div>
+            </RENDER_NOTIF>
         </div>
     </RENDER_IFSET>
     

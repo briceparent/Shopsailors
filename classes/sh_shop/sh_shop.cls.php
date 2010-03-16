@@ -1481,8 +1481,6 @@ class sh_shop extends sh_core {
     public function showCategory(){
         $this->debug('Entering the '.__FUNCTION__.' function',2,__LINE__);
 
-        $this->links->sitemap->renew();
-
         // We get the category's datas
         $id = $this->links->path->page['id'];
 

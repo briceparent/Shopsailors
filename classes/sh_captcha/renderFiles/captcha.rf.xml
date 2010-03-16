@@ -9,7 +9,7 @@
             <img src="{captcha>image}" id="image_{captcha>form}" alt="{i18n>title}" title="{i18n>title}: {i18n>instructions}"/>
         </div>
         <div class="captcha_input">
-            <input class="{captcha>error}" name="captcha" maxlength="5" style="width:60px;height:28px;"/>
+            <input class="{captcha>error}" name="captcha" maxlength="5" style="width:60px;height:28px;" autocomplete="off"/>
         </div>
         <div class="captcha_reload">
             <img  onclick="changeCaptchaImage('{captcha>form}','image_{captcha>form}');" style="width:30px;height:30px;border:none;" src="/images/shared/icons/picto_update.png" alt="{i18n>changePicture}" title="{i18n>changePicture}"/>

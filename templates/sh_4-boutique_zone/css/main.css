@@ -8,11 +8,12 @@ body{
     font-size: 12px;
     color: #333333;
 }
-div#mainContainer{
+.background{
     margin-left: auto;
     margin-right: auto;
-    width: 900px;
+    width:900px;
 }
+
 #bg_bottom{
 background: transparent url(/images/template/variation/bg_bottom.png) no-repeat center top;
 	width: 900px;
@@ -36,12 +37,14 @@ width: 900px;
 	}
 #content_middle{
 	margin-left: 40px;
-	margin-top: 0px;
-	width: 820px;
 	z-index: 100;
 }
-.important{
-    color : <RENDER_VALUE what="variation>importantColor"/>;
+.page_content{
+	width: 840px;
+	margin-top: 10px;
+}
+.page_content a{
+	color: #333333;
 }
 
 #head{
@@ -74,7 +77,6 @@ width: 900px;
 .topTitle{
     text-align:center;
     font-size:120%;
-    color: #333333;
     padding-top:5px;
     width:100%;
 	margin-right:40px;
@@ -132,7 +134,6 @@ width: 900px;
 	border: 1px solid #333333;
 }
 .articleResult_title a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 }
 .searcher_oneArticle_image img{
@@ -174,32 +175,10 @@ cursor: pointer;
 	margin-top:5px;
 }
 
-.connectText{
-	margin-left: 20px;
-}
-.grey_link{
-	color: #333333;
-	margin-top:5px;
-    display: block;
-}
-.grey_link_line{
-	color: #333333;
-	margin-top:5px;
-}
-
-.background{
-    margin-left: auto;
-    margin-right: auto;
-    width:900px;
-}
-
 /*ShowList: liste d'aperçus d'articles*/
 
 .showList_content table tr td{
 	vertical-align: top;
-}
-.showList_intro a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .oneArticle_contents{
 	width: 370px;
@@ -221,13 +200,9 @@ cursor: pointer;
 	height: 90px;
 	overflow: auto;
 }
-.oneArticle_summary{
-	color: <RENDER_VALUE what="variation>descriptions"/>;	
-}
 .oneArticle_title a{
 	font-weight: bold;
 	font-size: 110%;
-	color: #333333;	
 }
 
 /*NEWSLETTER*/
@@ -236,9 +211,6 @@ cursor: pointer;
 .news_subscribe{
 	font-weight: bold;
 	font-size: 110%;
-}
-.news_subscribe a{
-	color: #333333;
 }
 .nl_chooseList{
 	margin-top: 15px;
@@ -261,9 +233,6 @@ cursor: pointer;
 	font-style: italic;
 	margin-top: 5px;
 }
-.news_unsubscribe a{
-	color: #333333;
-}
 .newsList_intro{
 }
 .newsList_title{
@@ -275,12 +244,10 @@ cursor: pointer;
 }
 .newsList_list a{
 	font-weight: bold;
-	color: #333333;
 	margin-top: 3px;
 }
 .nl_oneMonth_name{
 	font-style: italic;
-	color: #333333;
 }
 .nl_list_oneLine{
 	margin-top: 5px;
@@ -297,8 +264,6 @@ cursor: pointer;
 }
 .nl_chooseYourList{
 	margin-top: 10px;
-	font-weight: bold;
-	color: #660033;
 }
 .nl_subscribeConfirmed{
 	font-size: 120%;
@@ -320,7 +285,6 @@ cursor: pointer;
 }
 .nl_backToList a{
 	font-weight: bold;
-	color: #333333;
 }
 	/*Newsletter: unsubscribe*/
 .nl_unsub_intro{
@@ -329,7 +293,6 @@ cursor: pointer;
 .nl_unsub_mailAddress{
 	margin-top: 10px;
 	font-weight: bold;
-	color: #333333;
 }
 .nl_unsub_mailAddress input{
 	width: 200px;
@@ -555,9 +518,6 @@ cursor: pointer;
 	width: 200px;
 	text-align: left;
 }
-.contact_mail a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
-}
 #sendMailForm_container{
 	width: 400px;
 	margin-left: 100px;
@@ -580,9 +540,6 @@ cursor: pointer;
 }
 .sendmailContent{
 	padding-left: 0px;
-}
-.contactMail_link{
-	color: <RENDER_VALUE what="variation>contactColor"/>;
 }
 .mailContent{
 	width: 340px;
@@ -651,17 +608,15 @@ cursor: pointer;
 /*GENERAL ALL TEMPLATES*/
 
 h1{ /* Grand titre des pages */
-    color: #333333;
     font-weight: bold;
     font-size: 140%;
     text-align: left;
 	padding-top: 30px;
 	margin-top: inherit;
-	margin-bottom: ;
+	margin-bottom: 0;
 }
 
 h2{ /* Petit titre des pages */
-    color: #333333;
     font-weight: bold;
     font-size: 120%;
     line-height: 16px;
@@ -741,23 +696,26 @@ font-style: italic;
 color: #333333;
 font-size: 80%;
         }
-a:link, a:visited, a:hover, a:active {
+	
+a:link{
 }
-
-.templateColor{
-    color: <RENDER_VALUE what="variation>color"/>;
+ a:active{
 }
-
+a:visited, a:hover{
+	color: #666666;
+}
 .aLink{
     cursor: pointer;
 }
 
 .falseLink{
-    color: <RENDER_VALUE what="variation>linksColor"/>;
     cursor: pointer;
     text-decoration: underline;
 }
 
+.falseLink:hover{
+	color: #666666;
+}
 img { 
     border: 0;
 }

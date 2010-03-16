@@ -360,6 +360,7 @@ input[type='submit'], input[type='button']{
 .verticalAlign_middle{
     vertical-align: middle;
 }
+
 .helpToolTip{
     margin-left: 4px;
     margin-right: 4px;
@@ -391,7 +392,7 @@ img.showBackground, .showBackground img{
 }
 
 .center{
-        text-align: center;
+	text-align: center;
 }
 
 .left{
@@ -487,16 +488,6 @@ margin-bottom: 15px;
 }
 .paddingTop_10px{
 padding-top: 10px;;
-}
-
-.verticalAlignCenter{
-vertical-align: center;
-}
-.verticalAlignTop{
-vertical-align: top;
-}
-.verticalAlignBottom{
-vertical-align: bottom;
 }
 
 .position_absolute{

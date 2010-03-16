@@ -11,21 +11,28 @@ CSS for shop contents only*/
 #shop_navigator{
 	width: 400px;
 	padding-top: 2px;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
+
+/* -- breadcrumbs predefines --*/
 .breadcrumbSisters{
 	display: block;
 }
 .bc_sisters, .bc_sameLevelText{
 	display:block;
-	font-size: 120%;
+	color: #333333;
 }
-.bc_sisters a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
+.bc_sisters a.bc_sameLevelText a{
+	color: #333333;
 }
 .bc_sister_container{
 	display:none;
 }
+
+/*Empty Category*/
+.shop_emptyCategory{
+	margin-top: 20px;
+}
+
 /*Navigateur de pages*/
 
 .pageNavigator{
@@ -94,7 +101,6 @@ CSS for shop contents only*/
 	text-align: left;
 }
 .subcategory_name a{
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-size: 110%;
 	font-weight: bold;
 }
@@ -112,11 +118,6 @@ CSS for shop contents only*/
 	margin-top: 2px;
 }
 .subcategory_describe{
-}
-
-/*Empty category*/
-.shop_emptyCategory{
-	margin-top: 20px;
 }
 /*Product list : list mode*/
 
@@ -150,7 +151,6 @@ CSS for shop contents only*/
 	
 }
 .listMode_name a{
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 	font-size: 110%;
 	margin-right: 3px;
@@ -215,13 +215,11 @@ CSS for shop contents only*/
 }
 .tableMode_name a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	padding: 4px;
 }
 .tableMode_reference a{
 	font-style: italic;
 	font-weight: normal;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	margin-left: 4px;
 	padding: 4px
 }
@@ -275,7 +273,6 @@ CSS for shop contents only*/
 	text-align: left;
 }
 .miniature_name a{
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 	font-size: 120%;
 	margin-right: 3px;
@@ -385,7 +382,6 @@ CSS for shop contents only*/
 	font-size: inherit;
 	font-weight: inherit;
 	height: 5px;
-	color: #333333;
 }
 .navigator_inSameCategory {
 	font-size: 110%;
@@ -393,7 +389,6 @@ CSS for shop contents only*/
 	padding-top: 5px;
 }
 .navigator_productCategory a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	margin-right: 5px;
 	margin-top: 5px;
 	font-size: inherit;
@@ -420,7 +415,6 @@ CSS for shop contents only*/
 }
 .catResult_name a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>
 }
 .catResult_pictos{
 	clear: both;
@@ -445,12 +439,10 @@ CSS for shop contents only*/
 }
 .prodResult_name a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .prodResult_reference a{
 	text-decoration: none;
 	font-style: italic;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .prodResult_pictos{
 	vertical-align: top;
@@ -507,7 +499,6 @@ CSS for shop contents only*/
 }
 .shop_cartProduct_name a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .shop_cartProduct_ref{
 	text-align: left;
@@ -516,7 +507,6 @@ CSS for shop contents only*/
 }
 .shop_cartProduct_ref a{
 	text-align: left;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .shop_cartProduct_shortDesc{
 	text-align: left;
@@ -612,7 +602,6 @@ CSS for shop contents only*/
 	vertical-align: top;
 }
 .cart_changeShipMode a{
-	color: #333333;
 	font-weight: bold;
 }
 

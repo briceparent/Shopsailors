@@ -54,7 +54,7 @@ class sh_wEditor extends sh_core{
      * @return str The css to add
      */
     public function addToMainCSS(){
-        $file = $this->links->site->templateFolder.'/css/forum.css';
+        /*$file = $this->links->site->templateFolder.'/css/forum.css';
         if(file_exists($file)){
             return file_get_contents(
                 $file
@@ -63,7 +63,7 @@ class sh_wEditor extends sh_core{
             return file_get_contents(
                 $this->getSinglePath(true).'/forum.css'
             );
-        }
+        }*/
     }
 
     public function addBlock(){

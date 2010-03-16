@@ -16,9 +16,9 @@
                 </div>
             </RENDER_IFSET>
             <RENDER_VALUE what="language>selector"/>
-            <h1 class="topTitle">
-                <RENDER_VALUE what="body>headline"/>
-            </h1>
+            <div class="topTitle">
+                <h1><RENDER_VALUE what="body>headline"/></h1>
+            </div>
             <RENDER_VALUE what="body>searchEngine"/>
         </div>
         <div class="menu1">

@@ -9,7 +9,7 @@ body{
 	margin-right: auto;
     font-family: Arial,sans-serif;
     font-size: 12px;
-    color: <RENDER_VALUE what="variation>blackText"/>;
+	color: #333333;
 }
 
 /* Champ de connexion */
@@ -24,15 +24,6 @@ body{
     color: #333333;
 	margin-top:5px;
 	font-weight: bold;
-}
-.grey_link{
-	color: #333333;
-	margin-top:5px;
-    display: block;
-}
-.grey_link_line{
-	color: #000066;
-	margin-top:5px;
 }
 
 /* flags */
@@ -79,6 +70,23 @@ cursor: pointer;
 	margin-left: 25px;
 	width: 850px;
 }
+/* contenu de page */
+
+.page_content{
+	margin-top: 20px;
+	margin-left: auto; 
+	margin-right: auto;
+	width: 850px;
+}
+.page_content a{
+	color: #333333;
+}
+.oneMenu, .oneContent{
+    padding-top: 10px;
+    margin-left: 25px;
+}
+
+
 .topTitle{
 	text-align: left;
 	width: 600px;
@@ -150,7 +158,6 @@ cursor: pointer;
 	border: 1px solid <RENDER_VALUE what="variation>globalText"/>;
 }
 .articleResult_title a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 }
 .searcher_oneArticle_image img{
@@ -172,14 +179,6 @@ cursor: pointer;
 #copyrights a{
     color : #333333;
 }
-
-/* contenu de page */
-
-.oneMenu, .oneContent{
-    padding-top: 10px;
-    margin-left: 25px;
-}
-
 
 /*ShowList: liste d'aperçus d'articles*/
 
@@ -207,15 +206,12 @@ cursor: pointer;
 	overflow: auto;
 }
 .oneArticle_summary{
-	color: <RENDER_VALUE what="variation>descriptions"/>;	
 }
 .oneArticle_title a{
 	font-weight: bold;
 	font-size: 110%;
-	color: <RENDER_VALUE what="variation>globalText"/>;	
 }
 .showList_intro a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 
 /*NEWSLETTER*/
@@ -226,7 +222,6 @@ cursor: pointer;
 	font-size: 110%;
 }
 .news_subscribe a{
-	color: <RENDER_VALUE what="variation>title"/>;
 }
 .nl_chooseList{
 	margin-top: 15px;
@@ -250,7 +245,6 @@ cursor: pointer;
 	margin-top: 5px;
 }
 .news_unsubscribe a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .newsList_intro{
 }
@@ -308,7 +302,6 @@ cursor: pointer;
 }
 .nl_backToList a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 	/*Newsletter: unsubscribe*/
 .nl_unsub_intro{
@@ -541,7 +534,6 @@ cursor: pointer;
 	text-align: left;
 }
 .contact_mail a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 #sendMailForm_container{
 	width: 400px;
@@ -615,10 +607,10 @@ cursor: pointer;
 	width:60px;
 }
 .captcha_input input{
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #333333;
 }
 .captcha_code img{
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #333333;
 	width:130px;
 	height:30px;
 }
@@ -635,7 +627,7 @@ h1{ /* Grand titre des pages */
 }
 
 h2{ /* Petit titre des pages */
-    color: <RENDER_VALUE what="variation>titlesColor"/>;
+    color: <RENDER_VALUE what="variation>title"/>;
     font-weight: bold;
     font-size: 120%;
     line-height: 16px;
@@ -676,18 +668,10 @@ p{ /* Paragraphes */
     text-align: left;
     text-indent: 2px;
 }
-.important{
-    color : <RENDER_VALUE what="variation>importantColor"/>;
-}
-
 .halfSize{
     width:50%;
 }
 
-.hideLink{
-  text-decoration:inherit;
-  color:inherit;
-}
 
 input, textarea{
 	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>
@@ -701,12 +685,15 @@ font-style: italic;
 color: white;
 font-size: 80%;
 }
-a:link, a:visited, a:hover, a:active {
-    color: <RENDER_VALUE what="variation>linksColor"/>;
+a:link{
 }
 
+ a:active{
+}
+a:visited, a:hover{
+	color: <RENDER_VALUE what="variation>globalText"/>;
+}
 .templateColor{
-    color: <RENDER_VALUE what="variation>color"/>;
 }
 
 .aLink{
@@ -714,7 +701,7 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .falseLink{
-    color: <RENDER_VALUE what="variation>linksColor"/>;
+    color: <RENDER_VALUE what="variation>globalText"/>;
     cursor: pointer;
     text-decoration: underline;
 }

@@ -11,12 +11,8 @@ CSS for shop contents only*/
 	padding-top: 2px;
 	color: #333333;
 }
-.shop_arboLink{
-	color: <RENDER_VALUE what="variation>navigatorLinkColor"/>;
-}
-.shop_arboText{
-	color: <RENDER_VALUE what="variation>navigatorLinkColor"/>;
-}
+
+/* -- breadcrumbs predefines --*/
 .breadcrumbSisters{
 	display: block;
 }
@@ -29,23 +25,11 @@ CSS for shop contents only*/
 .bc_sister_container{
 	display:none;
 }
-#shop_emptyCategory{
-	background: transparent url(/images/shared/default/shop_empty_category.png) no-repeat center top;
-	width: 320px;
-	height: 255px;
-	margin-top: 30px;
-	margin-left: 30px;
-}
-.shop_emptyCategoryText{
-	width: 240px;
-	height: 215px;
-	color: white;
-	font-size: 120%;
-	font-weight: bold;
-	margin-left: 50px;
-	padding-top: 60px;
-}
 
+/*Empty category*/
+.shop_emptyCategory{
+	margin-top: 20px;
+}
 /*Navigateur de pages*/
 
 .pageNavigator{
@@ -61,9 +45,6 @@ CSS for shop contents only*/
 	margin-left: auto;
 	margin-right: auto;
 }
-.pagesNumbers a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
-}
 /*active category */
 
 .bg_active_category{
@@ -71,7 +52,6 @@ CSS for shop contents only*/
 	width: 650px;
 	height: 50px;
 	margin-left: 50px;
-	color:  <RENDER_VALUE what="variation>descriptions"/>;
 }
 .active_category_preview{
 }
@@ -96,7 +76,7 @@ CSS for shop contents only*/
 	font-size: 110%;
 	font-weight: bold;
 	margin-top: 20px;
-	color:  <RENDER_VALUE what="variation>title"/>;
+	color:  <RENDER_VALUE what="variation>globalText"/>;
 }
 
 .bg_subcategory{
@@ -115,7 +95,6 @@ CSS for shop contents only*/
 	text-align: left;
 }
 .subcategory_name a{
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-size: 110%;
 	font-weight: bold;
 	margin-top: 2px;
@@ -170,7 +149,6 @@ CSS for shop contents only*/
 	
 }
 .navigator_name a{
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 	font-size: 110%;
 	margin-right: 3px;
@@ -230,11 +208,9 @@ CSS for shop contents only*/
 	text-align: left;
 }
 .navigator_table_name a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 }
 .navigator_table_reference a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	font-style: italic;
 	font-weight: normal;
 }
@@ -294,7 +270,6 @@ CSS for shop contents only*/
 	text-align: left;
 }
 .navigator_name_miniature a{
-	color:  <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 	font-size: 120%;
 	margin-right: 3px;
@@ -381,7 +356,7 @@ CSS for shop contents only*/
 /*navigator_sameCategory : aperçu des produit de la categorie dans la page de produit*/
 
 .navigator_sameCategory{
-	color: <RENDER_VALUE what="variation>title"/>;
+	color: <RENDER_VALUE what="variation>globalText"/>;
 	width: 420px;
 	height: 110px;
 	margin-top: 50px;
@@ -394,10 +369,6 @@ CSS for shop contents only*/
 	margin-right: auto;
 	margin-top: 10px;
 	text-align: center;
-	vertical-align: center;
-}
-.navigator_sameCategory a{
-	color: #333333;
 }
 .navigator_inSameCategory {
 	font-size: 110%;
@@ -433,7 +404,6 @@ CSS for shop contents only*/
 }
 .catResult_name a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>
 }
 .catResult_pictos{
 	clear: both;
@@ -458,12 +428,10 @@ CSS for shop contents only*/
 }
 .prodResult_name a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .prodResult_reference a{
 	text-decoration: none;
 	font-style: italic;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .prodResult_pictos{
 	vertical-align: top;
@@ -521,7 +489,6 @@ CSS for shop contents only*/
 .shop_cartProduct_name a{
 	text-align: left;
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .shop_cartProduct_ref{
 	text-align: left;
@@ -530,7 +497,6 @@ CSS for shop contents only*/
 }
 .shop_cartProduct_ref a{
 	text-align: left;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .shop_cartProduct_shortDesc{
 	text-align: left;
@@ -626,7 +592,6 @@ CSS for shop contents only*/
 	vertical-align: top;
 }
 .cart_changeShipMode a{
-	color: #333333;
 	font-weight: bold;
 }
 

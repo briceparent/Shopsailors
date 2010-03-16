@@ -13,21 +13,7 @@ if(!defined('SH_MARKER')){
 $this->version = '0.2';
 
 $this->values = array (
-    'globalText'=>'#006699',
-    'boxText' => '#ffffff',
-    'link'=>'#000066',
-    'signature' => '#006699',
-    'topTitle' => '#ffffff',
-    'title'=>'#006699',
-    'importantText' => '#006699',
-    'linkVisited'=>'#cc0000',
-    'linkOver' => '#cc0000',
     'buttonText' => '#333333',
     'buttonTextSelected' => '#666666',
     'buttonTextActive' => '#666666',
-    'borderColor'=>'#006699',
-    'connectLinkColor'=>'#cccccc',
-    'navigatorLinkColor'=>'#000000',
-    'navigatorTextColor'=>'#006699',
-    'blackText'=>'#000000',
 );

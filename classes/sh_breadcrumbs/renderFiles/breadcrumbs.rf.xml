@@ -16,7 +16,7 @@
                     </RENDER_IFSET>
                     <RENDER_LOOP what="sisters">
                         <span class="bc_sisters">
-                            <a href="{sisters>link}">
+                            <a href="{sisters>link}" class="bc_sisters">
                                 <RENDER_VALUE what="sisters>name"/>
                             </a>
                         </span>

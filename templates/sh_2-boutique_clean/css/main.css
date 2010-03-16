@@ -16,10 +16,13 @@ body{
     margin-right: auto;
     width:900px;
 }
-#tmp_mainContent{
+.tmp_mainContent{
     margin-left: 20px;
     padding-top: 20px;
     width: 860px;
+}
+.tmp_mainContent a{
+    color: #333333;
 }
 .tmp_topBox{
     background: transparent url(/images/template/top_box.png) no-repeat center top;
@@ -48,7 +51,7 @@ body{
 }
 
 .tmp_topTitle{
-    color: <RENDER_VALUE what="variation>topTitle"/>;
+    color: <RENDER_VALUE what="variation>globalText"/>;
     width: 500px;
     padding-top: 66px;
     text-align:right;
@@ -116,7 +119,7 @@ cursor: pointer;
     display: none;
 }
 .searcher_input input{
-    border: 1 px solid #666666;
+    border: 1px solid #666666;
 }
 .searcher_input{
 	background: transparent url(/images/template/searcher_bg.png) repeat right top;
@@ -149,7 +152,6 @@ cursor: pointer;
     vertical-align: top;
 }
 .articleResult_title a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	font-weight: bold;
 }
 .searcher_oneArticle_image img{
@@ -161,16 +163,13 @@ cursor: pointer;
 	margin-top: 10px;
 	}
 .searcher_input input{
-    border: 1 px solid #666666;
+    border: 1px solid #666666;
 }
 
 
 /*ShowList: liste d'aperçus d'articles*/
 .showList_content table tr td{
 	vertical-align: top;
-}
-.showList_intro a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .oneArticle_contents{
 	width: 370px;
@@ -193,13 +192,9 @@ cursor: pointer;
 	height: 90px;
 	overflow: auto;
 }
-.oneArticle_summary{
-	color: <RENDER_VALUE what="variation>descriptions"/>;	
-}
 .oneArticle_title a{
 	font-weight: bold;
 	font-size: 110%;
-	color: <RENDER_VALUE what="variation>globalText"/>;	
 }
 
 
@@ -209,9 +204,6 @@ cursor: pointer;
 .news_subscribe{
 	font-weight: bold;
 	font-size: 110%;
-}
-.news_subscribe a{
-	color: <RENDER_VALUE what="variation>title"/>;
 }
 .nl_chooseList{
 	margin-top: 15px;
@@ -234,9 +226,6 @@ cursor: pointer;
 	font-style: italic;
 	margin-top: 5px;
 }
-.news_unsubscribe a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
-}
 .newsList_intro{
 }
 .newsList_title{
@@ -253,7 +242,7 @@ cursor: pointer;
 }
 .nl_oneMonth_name{
 	font-style: italic;
-	color: <RENDER_VALUE what="variation>title"/>;
+	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .nl_list_oneLine{
 	margin-top: 5px;
@@ -277,7 +266,6 @@ cursor: pointer;
 }
 .nl_backToList a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 	/*Newsletter: subscribe*/
 .nl_Sub_mailAddress{
@@ -540,7 +528,7 @@ cursor: pointer;
 }
 
 #sendMailForm_container h3{
-    color:  <RENDER_VALUE what="variation>contactColor"/>;
+    color:  <RENDER_VALUE what="variation>globalText"/>;
 	margin-top: 0px;
 	text-align: center;
 	font-size: 115%;
@@ -560,9 +548,6 @@ cursor: pointer;
 .sendmailContent{
 	padding-left: 0px;
 }
-.contactMail_link{
-	color: <RENDER_VALUE what="variation>contactColor"/>;
-}
 .mailContent{
 	width: 340px;
 	height: 140px;
@@ -577,7 +562,7 @@ cursor: pointer;
 
 /*Legacy menu*/
 #tmp_legacy{
-    color: <RENDER_VALUE what="variation>globalText"/>;
+    color: #ffffff;
     text-align:center;
     font-size:90%;
 	clear: both;
@@ -586,7 +571,7 @@ cursor: pointer;
 
 
 #tmp_legacy a{
-    color: <RENDER_VALUE what="variation>globalText"/>;
+    color: #ffffff;
     margin-top: 5px;
     font-weight: bold;
 }
@@ -624,10 +609,10 @@ cursor: pointer;
 	width:60px;
 }
 .captcha_input input{
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #333333;
 }
 .captcha_code img{
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #333333;
 	width:130px;
 	height:30px;
 }
@@ -685,14 +670,18 @@ border-right: 1px solid #660000;
 border-bottom: 1px solid #660000;
 }
 
-.templateColor{
-    color: <RENDER_VALUE what="variation>globalText"/>;
-}
-
 .aLink{
     cursor: pointer;
 }
 
+a:link{
+}
+
+ a:active{
+}
+a:visited, a:hover{
+	color: <RENDER_VALUE what="variation>globalText"/>;
+}
 .falseLink{
     cursor: pointer;
     text-decoration: underline;
@@ -706,13 +695,12 @@ input, textarea{
 	border: 1px solid #666666;
 }
 .fourFifth{
-    color: <RENDER_VALUE what="variatrion>contactColor"/>;
+    color: <RENDER_VALUE what="variation>globalText"/>;
     font-size:80%;
     font-style: italic;
 }
 .table_description{
     font-style: italic;
-    color: #003333s;
     font-size: 80%;
 }
 .progressBar{

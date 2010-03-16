@@ -9,7 +9,7 @@ body{
 	margin-right: auto;
     font-family: Arial,sans-serif;
     font-size: 12px;
-    color: <RENDER_VALUE what="variation>globalText"/>;
+    color: #ffffff;
 	margin-top:0;
 }
 #head{
@@ -21,7 +21,6 @@ body{
 .topTitle{
     text-align:left;
     font-size:120%;
-    color:  <RENDER_VALUE what="variation>topTitle"/>;
     width:100%;
 	padding-top: 30px;
 }
@@ -59,18 +58,7 @@ body{
 }
 #connectionContainer a{
 	font-weight: bold;
-}
-.grey_link_connect{
-	color:  <RENDER_VALUE what="variation>connectLinkColor"/>;
-}
-.grey_link{
-	color: #333333;
-	margin-top:2px;
-	margin-bottom:2px;
-}
-.grey_link_line{
-	color: #333333;
-	margin-top:5px;
+	color: #ffffff;
 }
 
 /* flags */
@@ -133,7 +121,7 @@ cursor: pointer;
 .searcher_oneArticle_image{
 	vertical-align: top;
 	margin-right: 5px;
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #000000;
 }
 .articleResult_title a{
 	color: #ffffff;
@@ -176,12 +164,10 @@ cursor: pointer;
 	overflow: auto;
 }
 .oneArticle_summary{
-	color: <RENDER_VALUE what="variation>descriptions"/>;	
 }
 .oneArticle_title a{
 	font-weight: bold;
 	font-size: 110%;
-	color: <RENDER_VALUE what="variation>globalText"/>;	
 }
 
 
@@ -190,6 +176,9 @@ cursor: pointer;
 .page_content{
 	margin-top: 20px;
 	width: 900px;
+}
+.page_content a{
+	color: #ffffff;
 }
 .content_middle{
 	margin-top: 35px;
@@ -207,7 +196,6 @@ cursor: pointer;
 	font-size: 110%;
 }
 .news_subscribe a{
-	color: <RENDER_VALUE what="variation>title"/>;
 }
 .nl_chooseList{
 	margin-top: 15px;
@@ -231,7 +219,6 @@ cursor: pointer;
 	margin-top: 5px;
 }
 .news_unsubscribe a{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .newsList_intro{
 }
@@ -249,7 +236,6 @@ cursor: pointer;
 }
 .nl_oneMonth_name{
 	font-style: italic;
-	color: <RENDER_VALUE what="variation>title"/>;
 }
 .nl_list_oneLine{
 	margin-top: 5px;
@@ -289,7 +275,6 @@ cursor: pointer;
 }
 .nl_backToList a{
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 	/*Newsletter: unsubscribe*/
 .nl_unsub_intro{
@@ -298,7 +283,6 @@ cursor: pointer;
 .nl_unsub_mailAddress{
 	margin-top: 10px;
 	font-weight: bold;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .nl_unsub_mailAddress input{
 	width: 200px;
@@ -502,7 +486,6 @@ cursor: pointer;
 	margin-top: 10px;
  }
  #contactData_container h3{
-    color:  <RENDER_VALUE what="variation>contactColor"/>;
 	font-size: 115%;
  }
 .contact_intro{
@@ -580,8 +563,8 @@ cursor: pointer;
 }
 /*Legacy menu*/
 #copyrights{
+	color: #cccccc;
 	margin-top: 50px;
-    color : <RENDER_VALUE what="variation>globalText"/>;
     text-align:center;
     font-size:90%;
 	font-weight: bold;
@@ -589,7 +572,7 @@ cursor: pointer;
 }
 
 #copyrights a{
-    color : <RENDER_VALUE what="variation>globalText"/>;
+	color: #cccccc;
 	font-weight: bold;
 }
 
@@ -622,10 +605,10 @@ cursor: pointer;
 	width:60px;
 }
 .captcha_input input{
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #000000;
 }
 .captcha_code img{
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #000000;
 	width:130px;
 	height:30px;
 }
@@ -634,7 +617,6 @@ cursor: pointer;
 /*général: all templates*/
 
 h1{ /* Grand titre des pages */
-    color:   <RENDER_VALUE what="variation>title"/>;
     font-weight: bold;
     font-size: 150%;
     text-align: left;
@@ -642,7 +624,6 @@ h1{ /* Grand titre des pages */
 }
 
 h2{ /* Petit titre des pages */
-    color: <RENDER_VALUE what="variation>titlesColor"/>;
     font-weight: bold;
     font-size: 120%;
     line-height: 16px;
@@ -655,16 +636,16 @@ h3{
 }
 
 .border-top{
-border-top: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+border-top: 1px solid #000000;
 }
 .border-right{
-border-right: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+border-right: 1px solid #000000;
 }
 .border-bottom{
-border-bottom: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+border-bottom: 1px solid #000000;
 }
 .border-left{
-border-left: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+border-left: 1px solid #000000;
 }
 .alert-top{
 border-top: 1px solid #ff0000;
@@ -684,20 +665,12 @@ p{ /* Paragraphes */
     text-align: left;
     text-indent: 2px;
 }
-
-.important{
-    color : <RENDER_VALUE what="variation>importantColor"/>;
-}
 .halfSize{
     width:50%;
 }
 
-.hideLink{
-  text-decoration:inherit;
-  color:inherit;
-}
 input, textarea{
-	border: 1px solid <RENDER_VALUE what="variation>borderColor"/>;
+	border: 1px solid #000000;
 }
 .fourFifth{
 font-size:80%;
@@ -708,20 +681,23 @@ font-style: italic;
 color: white;
 font-size: 80%;
 }
-a:link, a:visited, a:hover, a:active {
-    color: <RENDER_VALUE what="variation>linksColor"/>;
+a:link{
 }
 
-.templateColor{
-    color: <RENDER_VALUE what="variation>color"/>;
+ a:active{
 }
-
+a:visited, a:hover{
+	color: #cccccc;
+}
 .aLink{
     cursor: pointer;
 }
-
+.hideLink{
+  text-decoration:inherit;
+  color:inherit;
+}
 .falseLink{
-    color: <RENDER_VALUE what="variation>linksColor"/>;
+    color: #ffffff;
     cursor: pointer;
     text-decoration: underline;
 }
