@@ -28,7 +28,6 @@ background: transparent url(/images/shared/icons/bg_forum.png) repeat center top
 .forum_postTitle{
 	font-weight: bold;
 	font-style: italic;
-	color: <RENDER_VALUE what="variation>globalText"/>;
 }
 .forum_content{
 	vertical-align: top;
@@ -53,7 +52,6 @@ background: transparent url(/images/shared/icons/bg_forum.png) repeat center top
 	text-decoration: none;
 }
 .forum_userInfo{
-	color: <RENDER_VALUE what="variation>globalText"/>;
 	width: 100px;
 	text-align: left;
 	padding: 5px;
