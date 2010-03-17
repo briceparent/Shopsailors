@@ -203,7 +203,6 @@ class sh_templatesLister extends sh_core {
         echo '<html><head>
 <title>Shopsailors - Variations builder</title>
 <link rel="shortcut icon" href="'.$this->links->favicon->getPath().'"></link>';
-        echo $this->links->javascript->get(sh_javascript::PROTOTYPE,false);
         echo '</head><body>';
         echo '<div style="font-weight:bold">Building the variations for the template '.$templateName.'</div>';
         echo 'Base variation : '.$baseVariation;
