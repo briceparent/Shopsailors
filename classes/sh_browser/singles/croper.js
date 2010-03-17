@@ -61,8 +61,9 @@ function crop_moveMask(evt){
         return false;
     }
 
-    var crop_newX=0;
+    var crop_newX;
     crop_newX = evt.clientX - crop_decayX;
+    
     var crop_maskWidth = crop_x2 - crop_x1;
     if(crop_newX >= crop_minX && crop_newX + crop_maskWidth <= crop_maxX){
         $("mask").style.left = crop_newX;
@@ -116,6 +117,7 @@ function crop_startRedimMaskFromCorners(evt){
 }
 
 function crop_startRedimMask(evt){
+    $('mask').style.display="";
     crop_isDrawing = true;
     var crop_newX=0;
     var crop_newY=0;
@@ -242,23 +244,28 @@ function crop_prepareDrawing(img){
     crop_init();
     crop_width = img.width;
     crop_height = img.height;
-    var crop_xFactor = 1;var crop_yFactor = 1;
-    if(crop_maxWidth > 0 && (crop_width > crop_maxWidth)){
-        crop_xFactor = crop_width / crop_maxWidth;
-    }
-    if(crop_maxHeight > 0 && crop_height > crop_maxHeight){
-        crop_yFactor = crop_height / crop_maxHeight;
-    }
-    if(crop_xFactor > crop_yFactor){
-        img.width = crop_maxWidth;
-        crop_factor = crop_xFactor;
-    }else{
-        img.height = crop_maxHeight;
-        crop_factor = crop_yFactor;
-    }
-    crop_width = crop_width / crop_factor;
-    crop_height = crop_height / crop_factor;
 
+    if(crop_width < crop_maxWidth && crop_height < crop_maxHeight){
+        crop_factor = 1;
+    }else{
+        var crop_xFactor = 1;
+        var crop_yFactor = 1;
+        if(crop_maxWidth > 0 && (crop_width > crop_maxWidth)){
+            crop_xFactor = crop_width / crop_maxWidth;
+        }
+        if(crop_maxHeight > 0 && crop_height > crop_maxHeight){
+            crop_yFactor = crop_height / crop_maxHeight;
+        }
+        if(crop_xFactor > crop_yFactor){
+            img.width = crop_maxWidth;
+            crop_factor = crop_xFactor;
+        }else{
+            img.height = crop_maxHeight;
+            crop_factor = crop_yFactor;
+        }
+        crop_width = crop_width / crop_factor;
+        crop_height = crop_height / crop_factor;
+    }
 
     // Now that the image is loaded, we also have to set the minimums
     var crop_offsetLeft = crop_GetRealOffsetLeft(editedImage);

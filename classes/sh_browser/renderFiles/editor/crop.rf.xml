@@ -50,11 +50,12 @@
                                 <input type="submit" name="cancel" value="{i18n>cancel}"/>
                             </form>
                         </div>
+                        <div id="debug"></div>
                     </div>
                 </td>
             </tr>
         </table>
-        <div id='mask'>
+        <div id='mask' style="display:none;">
             <div id="tl"></div>
             <div id="tr"></div>
             <div id="bl"></div>
