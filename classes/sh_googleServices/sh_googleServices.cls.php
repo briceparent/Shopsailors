@@ -27,7 +27,7 @@ class sh_googleServices extends sh_core{
      */
     public function getAnalytics($force = false){
         $this->debug('function : '.__FUNCTION__, 2, __LINE__);
-        $domain = $this->links->path->getDomain();
+        $domain = $this->linker->path->getDomain();
         list($firstPart) = explode('.',$domain);
         if($force || $firstPart != 'dev'){
             return $this->getParam('analytics>code','');;

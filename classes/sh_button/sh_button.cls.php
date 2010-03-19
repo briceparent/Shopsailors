@@ -14,7 +14,7 @@ if(!defined('SH_MARKER')){header('location: directCallForbidden.php');}
 class sh_button extends sh_core {
 
     public function construct(){
-        $this->builderFolder = $this->links->site->templateFolder.'builder/';
+        $this->builderFolder = $this->linker->site->templateFolder.'builder/';
         if(!is_dir($this->builderFolder)){
             mkdir($this->builderFolder);
         }
@@ -26,7 +26,7 @@ class sh_button extends sh_core {
      */
     public function getButtonParams($type,$variation,$state){
         $path = $this->builderFolder.$type.'/';
-        $ret = $this->links->params->get(
+        $ret = $this->linker->params->get(
             $path.'params.php',
             'variations>'.$variation.'>'.$state
         );
@@ -105,14 +105,14 @@ class sh_button extends sh_core {
         if($this->formSubmitted('addButton')){
             $buttonName = $this->loadZip();
             if($buttonName !== false){
-                $rep = $this->links->imagesBuilder->prepareButtons($buttonName,$_POST['variation']);
+                $rep = $this->linker->imagesBuilder->prepareButtons($buttonName,$_POST['variation']);
                 $_GET['name'] = $buttonName;
                 $this->buildVariations($buttonName);
-                $this->links->html->insert('toutes les variations ont été créées avec succès!<br /> ');
+                $this->linker->html->insert('toutes les variations ont été créées avec succès!<br /> ');
                 return true;
             }
         }
-        $this->links->html->setTitle('Ajouter un bouton');
+        $this->linker->html->setTitle('Ajouter un bouton');
         $this->render('add.rf.xml',$values);
         return true;
     }
@@ -126,7 +126,7 @@ class sh_button extends sh_core {
         $table = explode('.',$_FILES["button"]['name']);
         $last = strtolower($table[count($table)-1]);
         if($_FILES["button"]['size'] == 0){
-            $this->links->html->insert('Soit le fichier est trop volumineux (>'. ($_POST['MAX_FILE_SIZE'] / 1024) .' ko), soit aucun fichier n\'a été selectionné.');
+            $this->linker->html->insert('Soit le fichier est trop volumineux (>'. ($_POST['MAX_FILE_SIZE'] / 1024) .' ko), soit aucun fichier n\'a été selectionné.');
             return false;
         }elseif($last=='zip'){
              // Cleans the file name.
@@ -141,16 +141,16 @@ class sh_button extends sh_core {
                     $buttonName = substr($fileName,0,-4);
                     $mainFolder = $this->builderFolder.$buttonName;
                     if(is_dir($mainFolder)){
-                        $deleted = $this->links->helper->deleteDir($mainFolder);
+                        $deleted = $this->linker->helper->deleteDir($mainFolder);
                         if(!$deleted){
-                            $this->links->html->insert('Droits insuffisants pour supprimer le dossier actuellement en place.<br />');
+                            $this->linker->html->insert('Droits insuffisants pour supprimer le dossier actuellement en place.<br />');
                             return false;
                         }
                     }
                     mkdir($mainFolder);
 
                     // Unzips the archive
-                    $this->links->zipper->extract(
+                    $this->linker->zipper->extract(
                         $this->builderFolder.$fileName,
                         $mainFolder, array('png','php')
                     );
@@ -161,13 +161,13 @@ class sh_button extends sh_core {
                     unlink($this->builderFolder.$fileName);
                     return $buttonName;
                 }
-                $this->links->html->insert('Il y a eu une erreur lors de l\'envoi du fichier. Si le problème persiste, contactez l\'administrateur du site.<br />');
+                $this->linker->html->insert('Il y a eu une erreur lors de l\'envoi du fichier. Si le problème persiste, contactez l\'administrateur du site.<br />');
                 return false;
             }
-            $this->links->html->insert('Aucun nom n\'a été trouvé!<br />');
+            $this->linker->html->insert('Aucun nom n\'a été trouvé!<br />');
             return false;
         }
-        $this->links->html->insert($last .' n\'est pas un format accepté.<br />');
+        $this->linker->html->insert($last .' n\'est pas un format accepté.<br />');
         return false;
     }
 

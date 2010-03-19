@@ -97,14 +97,14 @@ class sh_user extends sh_core{
                 }
                 foreach($mailsList as $mail){
                     $mail = trim($mail);
-                    $mailer = $this->links->mailer->get();
+                    $mailer = $this->linker->mailer->get();
                     if($mailer->checkAddress($mail)){
                         $userId = $this->prot_getOneUserId('mail',$mail);
                         if($userId == 0){
                             if(!in_array($mail,$sentMails)){
                                 $values['websailors']['createAccountPage'] =
                                     'http://www.websailors.fr/connection/create_account.php';
-                                $values['client']['site'] = 'http://'.$this->links->path->getDomain();
+                                $values['client']['site'] = 'http://'.$this->linker->path->getDomain();
                                 $values['dest']['mail'] = $mail;
 
                                 $content = $this->render('mailModel',$values,false,false);
@@ -125,7 +125,7 @@ class sh_user extends sh_core{
 
                                 $mailer->em_addSubject(
                                     $mailObject,
-                                    $this->getI18n('mail_authorization_title').'http://'.$this->links->path->getDomain()
+                                    $this->getI18n('mail_authorization_title').'http://'.$this->linker->path->getDomain()
                                 );
                                 $mailer->em_addContent($mailObject,$content);
 
@@ -141,7 +141,7 @@ class sh_user extends sh_core{
                             if(!in_array($mail,$sentMails)){
                                 $values['websailors']['createAccountPage'] =
                                     'http://www.websailors.fr/connection/create_account.php';
-                                $values['client']['site'] = 'http://'.$this->links->path->getDomain();
+                                $values['client']['site'] = 'http://'.$this->linker->path->getDomain();
                                 $values['dest']['mail'] = $mail;
 
                                 $content = $this->render('mailAccountAuthorized',$values,false,false);
@@ -159,7 +159,7 @@ class sh_user extends sh_core{
 
                                 $mailer->em_addSubject(
                                     $mailObject,
-                                    $this->getI18n('mail_authorization_title').'http://'.$this->links->path->getDomain()
+                                    $this->getI18n('mail_authorization_title').'http://'.$this->linker->path->getDomain()
                                 );
                                 $mailer->em_addContent($mailObject,$content);
 
@@ -174,17 +174,17 @@ class sh_user extends sh_core{
                         }
                     }
                 }
-                $this->links->helper->writeArrayInFile(
+                $this->linker->helper->writeArrayInFile(
                     SH_SITE_FOLDER.__CLASS__.'/allowed.php',
                     'allowedUsers',
                     $allowedUser
                 );
-                $this->links->helper->writeArrayInFile(
+                $this->linker->helper->writeArrayInFile(
                     SH_SITE_FOLDER.__CLASS__.'/inexistantButAllowedUsers.php',
                     'inexistantButAllowedUsers',
                     $inexistantButAllowedUsers
                 );
-                $this->links->helper->writeArrayInFile(
+                $this->linker->helper->writeArrayInFile(
                     SH_SITE_FOLDER.__CLASS__.'/sentMails.php',
                     'sentMails',
                     $sentMails
@@ -246,10 +246,10 @@ class sh_user extends sh_core{
      */
     protected function prot_getOneUserId($field,$value){
         $connectionPage = $this->masterUrl.$this->getParam('master>getOneUserId');
-        $requestId = $this->links->postRequest->create($connectionPage);
-        $this->links->postRequest->setData($requestId,'field',$field);
-        $this->links->postRequest->setData($requestId,'value',$value);
-        $id = $this->links->postRequest->send($requestId);
+        $requestId = $this->linker->postRequest->create($connectionPage);
+        $this->linker->postRequest->setData($requestId,'field',$field);
+        $this->linker->postRequest->setData($requestId,'value',$value);
+        $id = $this->linker->postRequest->send($requestId);
         return $id;
     }
 
@@ -265,28 +265,28 @@ class sh_user extends sh_core{
             return true;
         }
         // Authorises the shared images
-        if(substr($this->links->path->uri,0,strlen(SH_SHAREDIMAGES_PATH)) == SH_SHAREDIMAGES_PATH){
+        if(substr($this->linker->path->uri,0,strlen(SH_SHAREDIMAGES_PATH)) == SH_SHAREDIMAGES_PATH){
             return true;
         }
         // Authorises the banner image
-        if($this->links->path->uri == $this->getParam('banner_image')){
+        if($this->linker->path->uri == $this->getParam('banner_image')){
             return true;
         }
-        $this->links->cache->disable();
-        if($this->links->path->page['page'] == $this->shortClassName.'/passwordForgotten/'){
+        $this->linker->cache->disable();
+        if($this->linker->path->page['page'] == $this->shortClassName.'/passwordForgotten/'){
             $values['page']['connectionForm'] =  $this->passwordForgotten(false);
         }else{
             $values['page']['connectionForm'] = $this->connect(false);
 
             if($this->getConnection()){
-                $this->links->path->refresh();
+                $this->linker->path->refresh();
                 return true;
             }
         }
 
         $values['banner']['image'] = $this->getParam('banner_image');
 
-        $values['site']['name'] = $this->links->path->getDomain();
+        $values['site']['name'] = $this->linker->path->getDomain();
 
         echo $this->render('index', $values, false, false);
 
@@ -300,9 +300,9 @@ class sh_user extends sh_core{
      */
     public function getConnectionLink(){
         if($this->isConnected()){
-            return array('disconnect',$this->links->path->getLink('user/disconnect/'));
+            return array('disconnect',$this->linker->path->getLink('user/disconnect/'));
         }
-        return array('connect',$this->links->path->getLink('user/connect/'));
+        return array('connect',$this->linker->path->getLink('user/connect/'));
     }
 
     /**
@@ -328,9 +328,9 @@ class sh_user extends sh_core{
      */
     public function getOneUserData($id){
         $connectionPage = $this->masterUrl.$this->getParam('master>getUserData');
-        $requestId = $this->links->postRequest->create($connectionPage);
-        $this->links->postRequest->setData($requestId,'user',$id);
-        $response = $this->links->postRequest->send($requestId);
+        $requestId = $this->linker->postRequest->create($connectionPage);
+        $this->linker->postRequest->setData($requestId,'user',$id);
+        $response = $this->linker->postRequest->send($requestId);
         $entries = explode("\n".self::LINE_SEPARATOR."\n", $response);
         foreach($entries as $entry){
             list($fieldName,$fieldValue) = explode("\n",$entry);
@@ -355,7 +355,7 @@ class sh_user extends sh_core{
 
     public function passwordForgotten_master(){
         $site = $this->getFromAnyServer('site');
-        $mail = $this->links->crypter->uncrypt($this->getFromAnyServer('mail'),$site);
+        $mail = $this->linker->crypter->uncrypt($this->getFromAnyServer('mail'),$site);
 
         $user = $this->db_execute(
             'getOneUserId',
@@ -377,7 +377,7 @@ class sh_user extends sh_core{
     
     
 
-        $mailer = $this->links->mailer->get();
+        $mailer = $this->linker->mailer->get();
         // Creating and sending the email itself
         $mailObject = $mailer->em_create();
         $address = $user['mail'];
@@ -391,7 +391,7 @@ class sh_user extends sh_core{
 
         $mailer->em_addSubject(
             $mailObject,
-            $this->getI18n('mail_temporaryPassword_title').'http://'.$this->links->path->getDomain()
+            $this->getI18n('mail_temporaryPassword_title').'http://'.$this->linker->path->getDomain()
         );
         $mailer->em_addContent($mailObject,$content);
 
@@ -405,25 +405,25 @@ class sh_user extends sh_core{
     }
 
     public function passwordForgotten($sendToHtml = true){
-        $this->links->cache->disable();
+        $this->linker->cache->disable();
         //delays the script also to prevent brutforce attacks
         if($this->formSubmitted('passwordForgotten')){
 
-            $mailer = $this->links->mailer->get();
+            $mailer = $this->linker->mailer->get();
             if($mailer->checkAddress($_POST['mail'])){
                 // Gets and prepares the data
                 $mail = trim($_POST['mail']);
                 $site = $this->clearData(SH_SITE);
 
                 // Crypts it
-                $mail = $this->links->crypter->crypt($mail,$site);
+                $mail = $this->linker->crypter->crypt($mail,$site);
 
                 // Sends it
                 $connectionPage = $this->masterUrl.$this->getParam('master>passwordForgotten');
-                $requestId = $this->links->postRequest->create($connectionPage);
-                $this->links->postRequest->setData($requestId,'mail',urlencode($mail));
-                $this->links->postRequest->setData($requestId,'site',urlencode($site));
-                $response = $this->links->postRequest->send($requestId);
+                $requestId = $this->linker->postRequest->create($connectionPage);
+                $this->linker->postRequest->setData($requestId,'mail',urlencode($mail));
+                $this->linker->postRequest->setData($requestId,'site',urlencode($site));
+                $response = $this->linker->postRequest->send($requestId);
                 if($response == 'OK'){
                     return $this->render('passwordForgotten_response',$values,false,$sendToHtml);
                 }
@@ -441,9 +441,9 @@ class sh_user extends sh_core{
         $this->debug(__FUNCTION__.'('.$user.')', 2, __LINE__);
         $connectionPage = $this->masterUrl.$this->getParam('master>get_last_connection');
         $this->debug('Connection page is '.$connectionPage, 3, __LINE__);
-        $requestId = $this->links->postRequest->create($connectionPage);
-        $this->links->postRequest->setData($requestId,'user',$user);
-        $response = $this->links->postRequest->send($requestId);
+        $requestId = $this->linker->postRequest->create($connectionPage);
+        $this->linker->postRequest->setData($requestId,'user',$user);
+        $response = $this->linker->postRequest->send($requestId);
         $ret = $this->splitReturn($response);
         return $ret;
     }
@@ -482,9 +482,9 @@ class sh_user extends sh_core{
     protected function get_connection_failures($user){
         $this->debug(__FUNCTION__.'('.$user.')', 2, __LINE__);
         $connectionPage = $this->masterUrl.$this->getParam('master>get_connection_failures');
-        $requestId = $this->links->postRequest->create($connectionPage);
-        $this->links->postRequest->setData($requestId,'user',$user);
-        $response = $this->links->postRequest->send($requestId);
+        $requestId = $this->linker->postRequest->create($connectionPage);
+        $this->linker->postRequest->setData($requestId,'user',$user);
+        $response = $this->linker->postRequest->send($requestId);
         $ret = $this->splitReturn($response);
         return $ret;
     }
@@ -521,12 +521,12 @@ class sh_user extends sh_core{
     protected function set_connection_status($site,$user,$status){
         $this->debug(__FUNCTION__.'('.$site.', '.$user.', '.$status.')', 2, __LINE__);
         $connectionPage = $this->masterUrl.$this->getParam('master>set_connection_status');
-        $requestId = $this->links->postRequest->create($connectionPage);
-        $this->links->postRequest->setData($requestId,'site',$site);
-        $this->links->postRequest->setData($requestId,'user',$user);
-        $this->links->postRequest->setData($requestId,'status',$status);
-        $this->links->postRequest->setData($requestId,'ip',$_SERVER['REMOTE_ADDR']);
-        $response = $this->links->postRequest->send($requestId);
+        $requestId = $this->linker->postRequest->create($connectionPage);
+        $this->linker->postRequest->setData($requestId,'site',$site);
+        $this->linker->postRequest->setData($requestId,'user',$user);
+        $this->linker->postRequest->setData($requestId,'status',$status);
+        $this->linker->postRequest->setData($requestId,'ip',$_SERVER['REMOTE_ADDR']);
+        $response = $this->linker->postRequest->send($requestId);
         $entries = explode("\n".self::LINE_SEPARATOR."\n", $response);
         foreach($entries as $entry){
             list($fieldName,$fieldValue) = explode("\n",$entry);
@@ -581,9 +581,9 @@ class sh_user extends sh_core{
     protected function clear_connection_failures($user){
         $this->debug(__FUNCTION__.'('.$site.', '.$user.')', 2, __LINE__);
         $connectionPage = $this->masterUrl.$this->getParam('master>clear_connection_failures');
-        $requestId = $this->links->postRequest->create($connectionPage);
-        $this->links->postRequest->setData($requestId,'user',$user);
-        $response = $this->links->postRequest->send($requestId);
+        $requestId = $this->linker->postRequest->create($connectionPage);
+        $this->linker->postRequest->setData($requestId,'user',$user);
+        $response = $this->linker->postRequest->send($requestId);
         return true;
     }
 
@@ -601,7 +601,7 @@ class sh_user extends sh_core{
         $this->checkIntegrity();
         sleep(0.5);
         $site = $this->getFromAnyServer('site');
-        $userName = $this->links->crypter->uncrypt($this->getFromAnyServer('user'),$site);
+        $userName = $this->linker->crypter->uncrypt($this->getFromAnyServer('user'),$site);
         list($user) = $this->db_execute('getOneUserVerification', array('userName'=>$userName),$qry);
         if(isset($user['verification']) && $user['active'] == '1'){
             echo 'id'."\n".$user['id']."\n".self::LINE_SEPARATOR."\n";
@@ -615,9 +615,9 @@ class sh_user extends sh_core{
         $this->checkIntegrity();
         sleep(0.5);
         $site = $this->getFromAnyServer('site');
-        $userName = $this->links->crypter->uncrypt($this->getFromAnyServer('user'),$site);
-        $password = $this->preparePassword($this->links->crypter->uncrypt($this->getFromAnyServer('password'),$site));
-        $verifPhrase = $this->links->crypter->uncrypt($this->getFromAnyServer('verifPhrase'),$site);
+        $userName = $this->linker->crypter->uncrypt($this->getFromAnyServer('user'),$site);
+        $password = $this->preparePassword($this->linker->crypter->uncrypt($this->getFromAnyServer('password'),$site));
+        $verifPhrase = $this->linker->crypter->uncrypt($this->getFromAnyServer('verifPhrase'),$site);
         list($user) = $this->db_execute(
             'connectOneUser',
             array(
@@ -656,15 +656,15 @@ class sh_user extends sh_core{
         $site = $this->clearData(SH_SITE);
 
         // Crypts it
-        $userName = $this->links->crypter->crypt($userName,$site);
+        $userName = $this->linker->crypter->crypt($userName,$site);
 
         // Sends it
         $uri = $this->shortClassName.'/connection_step1_master.php';
         $connectionPage = $this->masterUrl.$uri;
-        $requestId = $this->links->postRequest->create($connectionPage);
-        $this->links->postRequest->setData($requestId,'user',urlencode($userName));
-        $this->links->postRequest->setData($requestId,'site',urlencode($site));
-        $response = $this->links->postRequest->send($requestId);
+        $requestId = $this->linker->postRequest->create($connectionPage);
+        $this->linker->postRequest->setData($requestId,'user',urlencode($userName));
+        $this->linker->postRequest->setData($requestId,'site',urlencode($site));
+        $response = $this->linker->postRequest->send($requestId);
         $ret = $this->splitReturn($response);
         return $ret;
     }
@@ -682,19 +682,19 @@ class sh_user extends sh_core{
         $site = $this->clearData(SH_SITE);
 
         // Crypts it
-        $userName = $this->links->crypter->crypt($userName,$site);
-        $password = $this->links->crypter->crypt($password,$site);
-        $verifPhrase = $this->links->crypter->crypt($verifPhrase,$site);
+        $userName = $this->linker->crypter->crypt($userName,$site);
+        $password = $this->linker->crypter->crypt($password,$site);
+        $verifPhrase = $this->linker->crypter->crypt($verifPhrase,$site);
 
         // Sends it
         $uri = $this->shortClassName.'/connection_step2_master.php';
         $connectionPage = $this->masterUrl.$uri;
-        $requestId = $this->links->postRequest->create($connectionPage);
-        $this->links->postRequest->setData($requestId,'user',urlencode($userName));
-        $this->links->postRequest->setData($requestId,'password',urlencode($password));
-        $this->links->postRequest->setData($requestId,'verifPhrase',urlencode($verifPhrase));
-        $this->links->postRequest->setData($requestId,'site',urlencode($site));
-        $response = $this->links->postRequest->send($requestId);
+        $requestId = $this->linker->postRequest->create($connectionPage);
+        $this->linker->postRequest->setData($requestId,'user',urlencode($userName));
+        $this->linker->postRequest->setData($requestId,'password',urlencode($password));
+        $this->linker->postRequest->setData($requestId,'verifPhrase',urlencode($verifPhrase));
+        $this->linker->postRequest->setData($requestId,'site',urlencode($site));
+        $response = $this->linker->postRequest->send($requestId);
         return $response;
     }
 
@@ -705,8 +705,8 @@ class sh_user extends sh_core{
      * If set to false, returns the contents.
      */
     public function connect($sendToHtml = true){
-        $this->links->cache->disable();
-        //$this->links->javascript->get(sh_javascript::AES_COMPLETE);
+        $this->linker->cache->disable();
+        //$this->linker->javascript->get(sh_javascript::AES_COMPLETE);
         /*
         include(dirname(__FILE__).'/aes.php');
 $key256 = '603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4';
@@ -751,7 +751,7 @@ $values['aes']['phptest'] .=  $content.'<br />';
                 $count = $failures['number'];
                 
                 for($a = 0; $a < $count; $a++){
-                    $dateAndTime = $this->links->datePicker->dateAndTimeToLocal(
+                    $dateAndTime = $this->linker->datePicker->dateAndTimeToLocal(
                         $failures['failure_'.$a.'_date']
                     );
                     $values['show']['failures'] = true;
@@ -769,7 +769,7 @@ $values['aes']['phptest'] .=  $content.'<br />';
             }
             $lastConnection = $this->get_last_connection($user);
             if(is_array($lastConnection)){
-                $dateAndTime = $this->links->datePicker->dateAndTimeToLocal(
+                $dateAndTime = $this->linker->datePicker->dateAndTimeToLocal(
                     $lastConnection['date']
                 );
                 $values['user']['hasBeenConnected'] = true;
@@ -812,8 +812,8 @@ $values['aes']['phptest'] .=  $content.'<br />';
             $userId = $this->connection_step2($_POST['password']);
 
             if(!empty($userId)){
-                $isAdmins = $this->links->admin->isAdmin($userId,false);
-                $isMaster = $this->links->admin->isMaster($userId);
+                $isAdmins = $this->linker->admin->isAdmin($userId,false);
+                $isMaster = $this->linker->admin->isMaster($userId);
                 // We don't check if the site is restricted if the user is an admin
                 // or a master
                 $userData = $this->getOneUserData($userId);
@@ -844,12 +844,12 @@ $values['aes']['phptest'] .=  $content.'<br />';
                     $_SESSION[__CLASS__]['connected']['userId'] = $userId;
 
                     if($isAdmin){
-                        $this->links->admin->connect();
+                        $this->linker->admin->connect();
                     }
                     if($isMaster){
-                        $this->links->admin->connect(sh_admin::CONNECT_AS_MASTER);
+                        $this->linker->admin->connect(sh_admin::CONNECT_AS_MASTER);
                     }
-                    $this->links->path->refresh();
+                    $this->linker->path->refresh();
                     return true;
                 }else{
                     $values['error']['message'] = $this->getI18n(
@@ -863,8 +863,8 @@ $values['aes']['phptest'] .=  $content.'<br />';
                 $values['error']['message'] = $this->getI18n('WRONG_DATA');
             }
         }
-        $masterUrl = $this->links->user->getMasterUrl(false);
-        $values['createAccount']['link'] = $masterUrl.$this->links->path->getLink('user/createAccount/');
+        $masterUrl = $this->linker->user->getMasterUrl(false);
+        $values['createAccount']['link'] = $masterUrl.$this->linker->path->getLink('user/createAccount/');
         return $this->render('connection_step1', $values,false,$sendToHtml);
     }
 
@@ -889,10 +889,10 @@ $values['aes']['phptest'] .=  $content.'<br />';
      * redirects to the index page.
      */
     public function disconnect(){
-        $this->links->cache->disable();
+        $this->linker->cache->disable();
         $this->connected = false;
         unset($_SESSION[__CLASS__]['connected']);
-        $this->links->admin->disconnect();
+        $this->linker->admin->disconnect();
         header('location: /');
     }
 
@@ -1050,7 +1050,7 @@ $values['aes']['phptest'] .=  $content.'<br />';
             return true;
         }
         if($raiseErrorIfNotMaster){
-            $this->links->path->error(404);
+            $this->linker->path->error(404);
         }
         return false;
     }
@@ -1077,15 +1077,15 @@ $values['aes']['phptest'] .=  $content.'<br />';
      *
      */
     public function tryToConnect(){
-        $this->links->cache->disable();
+        $this->linker->cache->disable();
         $this->checkIntegrity();
         // We get the data
         $cryptedUserName = $this->getFromAnyServer('user');
         $cryptedPassword = $this->getFromAnyServer('password');
         $site = $this->getFromAnyServer('site');
         // We uncrypt it
-        $userName = $this->links->crypter->uncrypt($cryptedUserName, $site);
-        $password = $this->preparePassword($this->links->crypter->uncrypt($cryptedPassword, $site));
+        $userName = $this->linker->crypter->uncrypt($cryptedUserName, $site);
+        $password = $this->preparePassword($this->linker->crypter->uncrypt($cryptedPassword, $site));
         // We verify if the account exists
         list($user) = $this->db_execute(
             'verify',
@@ -1132,7 +1132,7 @@ $values['aes']['phptest'] .=  $content.'<br />';
      *
      */
     public function createAccount(){
-        $this->links->cache->disable();
+        $this->linker->cache->disable();
         $this->isMasterServer();
 
         // Checks if the form has been submitted
@@ -1171,7 +1171,7 @@ $values['aes']['phptest'] .=  $content.'<br />';
 
             // Email
             $mail = trim(stripslashes($_POST['mail']));
-            $mailer = $this->links->mailer->get();
+            $mailer = $this->linker->mailer->get();
             if(!$mailer->checkAddress($mail)){
                 $error = true;
                 $values['mail']['error'] = 'error';
@@ -1254,10 +1254,10 @@ $values['aes']['phptest'] .=  $content.'<br />';
                 );
 
                 // Prepares the confirmation on the server by adding the necessary file
-                $link = $this->links->path->getLink('user/confirmAccountCreation/');
+                $link = $this->linker->path->getLink('user/confirmAccountCreation/');
                 $key = MD5(__CLASS__.microtime());
                 $link .= '?key='.$key;
-                $this->links->helper->writeInFile(SH_SITE_FOLDER.__CLASS__.'/'.$key.'.php', $mail);
+                $this->linker->helper->writeInFile(SH_SITE_FOLDER.__CLASS__.'/'.$key.'.php', $mail);
 
                 // Renders the content of the mail
                 $values['confirmation']['link'] = str_replace('//','/',$this->masterUrl.$link);
@@ -1266,7 +1266,7 @@ $values['aes']['phptest'] .=  $content.'<br />';
                 $content = $this->render('mail_newAccount', $values, false, false);
 
                 // Preparation of the confirmation mail
-                $mailer = $this->links->mailer->get();
+                $mailer = $this->linker->mailer->get();
 
 
                 $mailObject = $mailer->em_create();
@@ -1322,7 +1322,7 @@ $values['aes']['phptest'] .=  $content.'<br />';
      *
      */
     public function confirmAccountCreation(){
-        $this->links->cache->disable();
+        $this->linker->cache->disable();
         $this->isMasterServer();
         $key = stripslashes($_GET['key']);
         if(file_exists(SH_SITE_FOLDER.__CLASS__.'/'.$key.'.php')){

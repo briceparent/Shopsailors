@@ -164,8 +164,8 @@ exit;/**/
      *
      */
     public function changeToRealFolder($askedFolder,$file = '',$buttonType = ''){
-        $templateFolder = $this->links->site->templateFolder;
-        $variation = $this->links->site->variation;
+        $templateFolder = $this->linker->site->templateFolder;
+        $variation = $this->linker->site->variation;
         if(substr($askedFolder,0,strlen(SH_SHAREDIMAGES_PATH)) == SH_SHAREDIMAGES_PATH){
             // We allow the templates to replace common icons with custom ones
             //which may be found in /templates/[template]/images/[path_to_the_image_from_sharedimagefolder]
@@ -208,8 +208,8 @@ exit;/**/
      *
      */
     public function changeToShortFolder($askedFolder){
-        $templateFolder = $this->links->site->templateFolder;
-        $variation = $this->links->site->variation;
+        $templateFolder = $this->linker->site->templateFolder;
+        $variation = $this->linker->site->variation;
         $askedFolder = str_replace('//','/',$askedFolder);
         
         $replace = array(
@@ -255,7 +255,7 @@ exit;/**/
         if(!is_null($method)){
             // In that case, we were given a class name, method name and eventually an id
             // instead of a pre-built url
-            $page = $this->links->$url->getClassName(true).'/'.$method.'/'.$id;
+            $page = $this->linker->$url->getClassName(true).'/'.$method.'/'.$id;
             $url = $this->getLink($page);
         }
         if($url == 'refresh'){
@@ -280,7 +280,7 @@ exit;/**/
      * @param int $type Index of the error (eg: 404 for Not Found).
      */
     public function error($type){
-        $this->links->error->prepare();
+        $this->linker->error->prepare();
         //array_shift($_SESSION['history']);
         if (!headers_sent()){
             header('location: '. $this->getLink('error/show/'.$type), true, $type);
@@ -325,7 +325,7 @@ exit;/**/
         }else{
             $formattedUri = $uri;
         }
-        $class = $this->links->helper->getRealClassName(
+        $class = $this->linker->helper->getRealClassName(
             trim(
                 array_shift(
                     explode('/',$formattedUri)
@@ -333,18 +333,18 @@ exit;/**/
             )
         );
         if($class !== false){
-            $page = $this->links->$class->translateUriToPage($uri);
+            $page = $this->linker->$class->translateUriToPage($uri);
             if($page !== false){
                 return $page;
             }
         }else{
             $classes = scandir(SH_CLASS_SHARED_FOLDER.$this->className);
             foreach($classes as $oneClass){
-                $class = $this->links->helper->getRealClassName(
+                $class = $this->linker->helper->getRealClassName(
                     substr($oneClass,0,-4)
                 );
                 if($class !== false){
-                    $page = $this->links->$class->translateUriToPage($uri);
+                    $page = $this->linker->$class->translateUriToPage($uri);
                     if($page !== false){
                         return $page;
                     }
@@ -403,9 +403,9 @@ exit;/**/
     public function getLink($page,$desc=''){
         // Trying with the in-class uri translation
         $class = array_shift(explode('/',$page));
-        if($this->links->helper->getRealClassName($class)){
+        if($this->linker->helper->getRealClassName($class)){
             $uri = $this->cleanUri(
-                $this->links->$class->translatePageToUri($page)
+                $this->linker->$class->translatePageToUri($page)
             );
             if($uri !== false){
                 return $uri;
@@ -413,10 +413,10 @@ exit;/**/
         }else{
             $classes = scandir(SH_CLASS_SHARED_FOLDER.$this->className);
             foreach($classes as $oneClass){
-                $class = $this->links->helper->getRealClassName(substr($oneClass,0,-4));
+                $class = $this->linker->helper->getRealClassName(substr($oneClass,0,-4));
                 if($class !== false){
                     $uri = $this->cleanUri(
-                        $this->links->$class->translatePageToUri($page)
+                        $this->linker->$class->translatePageToUri($page)
                     );
                     if($uri !== false){
                         return $uri;
@@ -446,7 +446,7 @@ exit;/**/
                         }
                     }elseif(substr($rep['reverse'],0,strlen('fct:')) == 'fct:'){
                         list($class,$method) = explode('|',substr($rep['reverse'],strlen('fct:')));
-                        $desc = '-'.urlencode($this->links->$class->$method($results[2]));
+                        $desc = '-'.urlencode($this->linker->$class->$method($results[2]));
                     }
                 }
                 $rep['uri'] .= $desc . '.php';

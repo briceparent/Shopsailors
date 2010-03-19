@@ -12,7 +12,7 @@ if(!defined('SH_MARKER')){header('location: directCallForbidden.php');}
  * Linker object.
  * Will contain the links to all objects extendinging the sh_core class
  */
-class sh_links{
+class sh_linker{
     /**
      * @var object Instance of the class
      */

@@ -20,8 +20,8 @@ class sh_variation extends sh_core{
      *
      */
     public function construct(){
-        $templateFolder = $this->links->site->templateFolder;
-        $variation = $this->links->site->variation;
+        $templateFolder = $this->linker->site->templateFolder;
+        $variation = $this->linker->site->variation;
         if(file_exists($templateFolder.'variations/'.$variation.'.params.php')){
             $this->paramsFile = $templateFolder.'variations/'.$variation.'.params.php';
         }elseif(file_exists($templateFolder.'variations/default.params.php')){
@@ -29,7 +29,7 @@ class sh_variation extends sh_core{
         }else{
             $this->paramsFile = $templateFolder.'variations/0.params.php';
         }
-        $this->links->params->addElement($this->paramsFile);
+        $this->linker->params->addElement($this->paramsFile);
         return true;
     }
 
@@ -41,7 +41,7 @@ class sh_variation extends sh_core{
         if($paramName == self::ALL_VALUES){
             $paramName = '';
         }
-        return $this->links->params->get(
+        return $this->linker->params->get(
             $this->paramsFile,
             $paramName
         );

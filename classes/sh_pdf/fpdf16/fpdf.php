@@ -87,7 +87,7 @@ function FPDF($orientation='P', $unit='mm', $format='A4')
 	$this->FontFiles=array();
 	$this->diffs=array();
 	$this->images=array();
-	$this->links=array();
+	$this->linker=array();
 	$this->InHeader=false;
 	$this->InFooter=false;
 	$this->lasth=0;
@@ -574,8 +574,8 @@ function SetFontSize($size)
 function AddLink()
 {
 	//Create a new internal link
-	$n=count($this->links)+1;
-	$this->links[$n]=array(0, 0);
+	$n=count($this->linker)+1;
+	$this->linker[$n]=array(0, 0);
 	return $n;
 }
 
@@ -586,7 +586,7 @@ function SetLink($link, $y=0, $page=-1)
 		$y=$this->y;
 	if($page==-1)
 		$page=$this->page;
-	$this->links[$link]=array($page, $y);
+	$this->linker[$link]=array($page, $y);
 }
 
 function Link($x, $y, $w, $h, $link)
@@ -1414,7 +1414,7 @@ function _putpages()
 					$annots.='/A <</S /URI /URI '.$this->_textstring($pl[4]).'>>>>';
 				else
 				{
-					$l=$this->links[$pl[4]];
+					$l=$this->linker[$pl[4]];
 					$h=isset($this->PageSizes[$l[0]]) ? $this->PageSizes[$l[0]][1] : $hPt;
 					$annots.=sprintf('/Dest [%d 0 R /XYZ 0 %.2F null]>>',1+2*$l[0],$h-$l[1]*$this->k);
 				}

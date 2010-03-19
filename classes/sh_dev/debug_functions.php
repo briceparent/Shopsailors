@@ -25,7 +25,7 @@ function endDebug(){
     if(defined('SH_DEBUG_VERIFY_FOLDER') && is_dir(SH_DEBUG_VERIFY_FOLDER)){
         if(defined('SH_DEBUG_COVERAGE_PAGE')){
             echo 'Ending coverage...<br />';
-            $links = sh_links::getInstance();
+            $linker = sh_linker::getInstance();
             if(file_exists(SH_DEBUG_COVERAGE_PAGE)){
                 include(SH_DEBUG_COVERAGE_PAGE);
             }else{
@@ -51,7 +51,7 @@ function endDebug(){
                 //$all_elements[$file] = array_merge($newCoverage[$file],$coverage[$file]);
             }
             echo 'Writing to '.SH_DEBUG_COVERAGE_PAGE.'<br />';
-            $links->helper->writeArrayInFile(SH_DEBUG_COVERAGE_PAGE,"coverage",$all_elements);
+            $linker->helper->writeArrayInFile(SH_DEBUG_COVERAGE_PAGE,"coverage",$all_elements);
             xdebug_stop_code_coverage();
         }
     }

@@ -7,7 +7,7 @@ $adminMenu['Newsletters'][] = array(
     'text'=>'Gérer la newsletter',
     'icon'=>'picto_tool.png'
 );
-$newsletterClass = sh_links::getInstance()->newsletters;
+$newsletterClass = sh_linker::getInstance()->newsletters;
 if($newsletterClass->isActivated()){
     $adminMenu['Newsletters'][] = array(
         'link'=>'newsletters/createNewsletter/0',

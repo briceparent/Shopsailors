@@ -78,7 +78,7 @@ class sh_browser extends sh_core {
 
     public function insertScript(){
         $singlePath = $this->getSinglePath();
-        $this->links->html->addScript($singlePath.'getBrowser.js');
+        $this->linker->html->addScript($singlePath.'getBrowser.js');
     }
 
     /**
@@ -170,7 +170,7 @@ class sh_browser extends sh_core {
                 if(file_exists(SH_CLASS_SHARED_FOLDER.__CLASS__.'/'.$_GET['folder'].'.browser.php')) {
                     $this->debug('We try to get the folder to show...', 3, __LINE__);
                     $class = trim(file_get_contents(SH_CLASS_SHARED_FOLDER.__CLASS__.'/'.$_GET['folder'].'.browser.php'));
-                    $theClass = $this->links->$class;
+                    $theClass = $this->linker->$class;
                     $this->debug('... in the class '.$class, 3, __LINE__);
                     $folderName = constant($_GET['folder']);
                     $this->debug('The folder is '.$folderName, 3, __LINE__);
@@ -233,7 +233,7 @@ class sh_browser extends sh_core {
             if(!$elements['browser']['initfolder']) {
                 $this->debug('The access to the folder is restricted', 2, __LINE__);
                 $vars['restrictions']['notallowed'] = true;
-                $vars['restrictions']['base'] = $this->links->path->protocol.'://'.$this->links->path->getDomain().'/';
+                $vars['restrictions']['base'] = $this->linker->path->protocol.'://'.$this->linker->path->getDomain().'/';
                 $vars['i18n'] = $this->__tostring();
                 echo $this->render('restriction',$vars,false,false);
                 return false;
@@ -241,7 +241,7 @@ class sh_browser extends sh_core {
         }else {
             $this->debug('The folder '.$folderName.' was not found', 2, __LINE__);
             $vars['restrictions']['nofolder'] = true;
-            $vars['restrictions']['base'] = $this->links->path->protocol.'://'.$this->links->path->getDomain().'/';
+            $vars['restrictions']['base'] = $this->linker->path->protocol.'://'.$this->linker->path->getDomain().'/';
             $vars['i18n'] = $this->__tostring();
             echo $this->render('restriction',$vars,false,false);
             return false;
@@ -253,7 +253,7 @@ class sh_browser extends sh_core {
             $elements['browser']['initFolder'] = $_SESSION[__CLASS__]['openedFolder'];
             unset($_SESSION[__CLASS__]['openedFolder']);
         }
-        $path = $this->links->path;
+        $path = $this->linker->path;
         $class = $this->shortClassName;
         $elements['links']['showContent'] = $path->getLink($class.'/showContent/');
         $elements['links']['addFolder'] = $path->getLink($class.'/addFolder/');
@@ -366,7 +366,7 @@ class sh_browser extends sh_core {
      *
      */
     public static function getRights($folder, $type = self::READ) {
-        $links = sh_links::getInstance();
+        $linker = sh_linker::getInstance();
         if(file_exists($folder.'/'.self::RIGHTSFILE)) {
             $rights = (int) file_get_contents($folder.'/'.self::RIGHTSFILE);
             if(!($rights & self::ANYONE) && file_exists($folder.'/'.self::OWNERFILE)) {
@@ -397,12 +397,12 @@ class sh_browser extends sh_core {
             $owner = self::createUserName();
         }
         if(is_dir($folder)){
-            $this->links->helper->writeInFile($newName.'/'.self::RIGHTSFILE, $rights);
-            $this->links->helper->writeInFile($newName.'/'.self::OWNERFILE, $owner);
+            $this->linker->helper->writeInFile($newName.'/'.self::RIGHTSFILE, $rights);
+            $this->linker->helper->writeInFile($newName.'/'.self::OWNERFILE, $owner);
             return true;
         }elseif(mkdir($newName)) {
-            $this->links->helper->writeInFile($newName.'/'.self::RIGHTSFILE, $rights);
-            $this->links->helper->writeInFile($newName.'/'.self::OWNERFILE, $owner);
+            $this->linker->helper->writeInFile($newName.'/'.self::RIGHTSFILE, $rights);
+            $this->linker->helper->writeInFile($newName.'/'.self::OWNERFILE, $owner);
             return $newName;
         }
         echo 'We couldn\'t build the directory '.$newName.'<br />';
@@ -415,7 +415,7 @@ class sh_browser extends sh_core {
     public function showContent() {
         $this->debug(__METHOD__, 2, __LINE__);
         if(!$this->isAdmin()) {
-            $this->links->path->error('403');
+            $this->linker->path->error('403');
         }
         $uid = $_GET['folder'];
         $folder = $_SESSION[__CLASS__][$uid]['path'];
@@ -438,7 +438,7 @@ class sh_browser extends sh_core {
         $message = $_SESSION[__CLASS__]['showContentMessage'];
         if(empty($message) && file_exists($folder.'/.message')) {
             include($folder.'/.message');
-            $lang = $this->links->i18n->getLang();
+            $lang = $this->linker->i18n->getLang();
             if(isset($message[$lang])) {
                 $message = $message[$lang];
             }else {
@@ -446,7 +446,7 @@ class sh_browser extends sh_core {
             }
         }
         $_SESSION[__CLASS__]['showContentMessage'] = '';
-        $vars['actions']['addfile'] = $this->links->path->getUri('browser/addFile/');
+        $vars['actions']['addfile'] = $this->linker->path->getUri('browser/addFile/');
 
 
         if(self::getRights(dirname($folder),self::DELETEFOLDER)) {
@@ -477,7 +477,7 @@ class sh_browser extends sh_core {
         }
         if(self::getRights($folder,self::READ)) {
             $vars['folder']['style'] = 'width:80px;height:80px;text-align:center;';
-            $renamePage = $this->links->path->getLink('browser/rename/');
+            $renamePage = $this->linker->path->getLink('browser/rename/');
             $cpt = 0;
             if(file_exists($folder.'/'.self::HIDDENFILES)) {
                 $hiddenFiles = file($folder.'/'.self::HIDDENFILES);
@@ -533,7 +533,7 @@ class sh_browser extends sh_core {
                             $vars['pictures'][$cpt]['description'] = $description.(round(filesize($folder.$element) / 1024)).'ko';
 
                             $vars['pictures'][$cpt]['imagestyle'] .= 'cursor:pointer;';
-                            $vars['pictures'][$cpt]['file'] = $this->links->path->changeToShortFolder(SH_ROOT_FOLDER.$picture);
+                            $vars['pictures'][$cpt]['file'] = $this->linker->path->changeToShortFolder(SH_ROOT_FOLDER.$picture);
                             $vars['pictures'][$cpt]['basename'] = basename($file);
                             $vars['pictures'][$cpt]['showedname'] = $showedName;
                             $vars['pictures'][$cpt]['folder'] = $folder;
@@ -544,7 +544,7 @@ class sh_browser extends sh_core {
                 }
             }
         }else {
-            $vars['restrictions']['base'] = $this->links->path->protocol.'://'.$this->links->path->getDomain().'/';
+            $vars['restrictions']['base'] = $this->linker->path->protocol.'://'.$this->linker->path->getDomain().'/';
             echo $this->render('restriction',$vars,false,false);
             return false;
         }
@@ -760,13 +760,13 @@ class sh_browser extends sh_core {
             $elements = explode('|',file_get_contents($folder.'/'.$event));
             $class = array_shift($elements);
             $method = array_shift($elements);
-            $this->links->$class->$method($event,$folder,$elements);
+            $this->linker->$class->$method($event,$folder,$elements);
         }
         if(file_exists($folder.'/'.self::ONCHANGE)) {
             $elements = explode('|',file_get_contents($folder.'/'.self::ONCHANGE));
             $class = array_shift($elements);
             $method = array_shift($elements);
-            $this->links->$class->$method($event,$folder,$elements);
+            $this->linker->$class->$method($event,$folder,$elements);
         }
     }
 
@@ -787,13 +787,13 @@ class sh_browser extends sh_core {
             $elements = explode('|',file_get_contents($parentFolder.'/'.$event));
             $class = array_shift($elements);
             $method = array_shift($elements);
-            $this->links->$class->$method($event,$parentFolder,$folder,$newName,$elements);
+            $this->linker->$class->$method($event,$parentFolder,$folder,$newName,$elements);
         }
         if(file_exists($parentFolder.'/'.self::ONCHANGEFOLDER)) {
             $elements = explode('|',file_get_contents($parentFolder.'/'.self::ONCHANGEFOLDER));
             $class = array_shift($elements);
             $method = array_shift($elements);
-            $this->links->$class->$method($event,$parentFolder,$folder,$newName,$elements);
+            $this->linker->$class->$method($event,$parentFolder,$folder,$newName,$elements);
         }
 
     }
@@ -809,8 +809,8 @@ class sh_browser extends sh_core {
      */
     public static function addEvent($event,$folder,$class,$method,$params = array()) {
         $content = $class.'|'.$method.'|'.implode('|',$params);
-        $links = sh_links::getInstance();
-        $links->helper->writeInFile($folder.'/'.$event, $content);
+        $linker = sh_linker::getInstance();
+        $linker->helper->writeInFile($folder.'/'.$event, $content);
     }
 
 
@@ -854,7 +854,7 @@ class sh_browser extends sh_core {
                         'destination' => $fullFolder,
                         'browserSession' => $_POST['browserSession']
                     );
-                    $this->links->path->redirect(__CLASS__,'editImage',$count);
+                    $this->linker->path->redirect(__CLASS__,'editImage',$count);
                     $added = true;
                     return true;
                 }elseif(!preg_match($this->forbiddenExtensions,strtolower($file))){
@@ -865,7 +865,7 @@ class sh_browser extends sh_core {
 
                 if($added && file_exists($fullFolder.self::ONADD.self::MESSAGEFILE)) {
                     include($fullFolder.self::ONADD.self::MESSAGEFILE);
-                    $lang = $this->links->i18n->getLang();
+                    $lang = $this->linker->i18n->getLang();
                     if(isset($message[$lang])) {
                         $message = $message[$lang];
                     }else {
@@ -888,12 +888,12 @@ class sh_browser extends sh_core {
     public function editImage(){
         $this->debug(__METHOD__, 2, __LINE__);
         sh_cache::disable();
-        $id = (int) $this->links->path->page['id'];
+        $id = (int) $this->linker->path->page['id'];
         $name = $_SESSION[__CLASS__]['uploaded_images'][$id]['name'];
         $srcFolder = $_SESSION[__CLASS__]['uploaded_images'][$id]['src'];
         $destFolder = $_SESSION[__CLASS__]['uploaded_images'][$id]['destination'];
         $filePath = $srcFolder.$name;
-        $values['img']['src'] = $this->links->path->changeToShortFolder($filePath);
+        $values['img']['src'] = $this->linker->path->changeToShortFolder($filePath);
         if(file_exists($destFolder.self::DIMENSIONFILE)) {
             // The file has to be resized
             $dims = file_get_contents($destFolder.self::DIMENSIONFILE);
@@ -903,7 +903,7 @@ class sh_browser extends sh_core {
         }
 
         if(isset($_GET['cancel'])){
-            $this->links->path->redirect(__CLASS__,__FUNCTION__,$id);
+            $this->linker->path->redirect(__CLASS__,__FUNCTION__,$id);
         }
         
         if(isset($_GET['crop'])){
@@ -914,12 +914,12 @@ class sh_browser extends sh_core {
             );
             $name = baseName($filePath);
             $_SESSION[__CLASS__]['uploaded_images'][$id]['name'] = $name;
-            $this->links->path->redirect(__CLASS__,__FUNCTION__,$id);
+            $this->linker->path->redirect(__CLASS__,__FUNCTION__,$id);
         }elseif(isset($_GET['rotation'])){
             $rotation = $_GET['rotation'];
             $filePath = $this->rotateImage($filePath,$rotation);
             $_SESSION[__CLASS__]['uploaded_images'][$id]['name'] = basename($filePath);
-            $this->links->path->redirect(__CLASS__,__FUNCTION__,$id);
+            $this->linker->path->redirect(__CLASS__,__FUNCTION__,$id);
         }
 
         if(isset($_GET['action'])){
@@ -947,7 +947,7 @@ class sh_browser extends sh_core {
                 $this->rotateImage($miniPath.'.180'.$ext,180);
                 copy($newFile,$miniPath.'.270'.$ext);
                 $this->rotateImage($miniPath.'.270'.$ext,270);
-                $values['images']['path'] = $this->links->path->changeToShortFolder($miniPath);
+                $values['images']['path'] = $this->linker->path->changeToShortFolder($miniPath);
                 echo $this->render('editor/rotate',$values,false,false);
             }elseif($action == 'validate'){
                 list($originalWidth,$originalHeight) = getImageSize($filePath);
@@ -1173,9 +1173,9 @@ class sh_browser extends sh_core {
         if(self::getRights($parentFolderName,self::ADDFOLDER)) {
             $folderName = self::modifyName($folderName);
             if(mkdir($parentFolderName.'/'.$folderName)) {
-                $this->links->helper->writeInFile($parentFolderName.'/'.$folderName.'/'.self::RIGHTSFILE,$rights);
-                $this->links->helper->writeInFile($parentFolderName.'/'.$folderName.'/'.self::DIMENSIONFILE,$dimension);
-                $this->links->helper->writeInFile($parentFolderName.'/'.$folderName.'/'.self::OWNERFILE,$owner);
+                $this->linker->helper->writeInFile($parentFolderName.'/'.$folderName.'/'.self::RIGHTSFILE,$rights);
+                $this->linker->helper->writeInFile($parentFolderName.'/'.$folderName.'/'.self::DIMENSIONFILE,$dimension);
+                $this->linker->helper->writeInFile($parentFolderName.'/'.$folderName.'/'.self::OWNERFILE,$owner);
                 if($echoName) {
                     echo $parentFolderName.'/'.$folderName;
                 }
@@ -1202,7 +1202,7 @@ class sh_browser extends sh_core {
         $error = 'You are not allowed to do this...';
         if(self::getRights(dirname($element),self::DELETEFOLDER)) {
             $this->raiseFolderEvent(self::ONDELETEFOLDER,dirname($element),dirname($element));
-            $this->links->helper->deleteDir($element);
+            $this->linker->helper->deleteDir($element);
             $_SESSION[__CLASS__]['goToFolder'] = dirname($element);
             return true;
         }
@@ -1333,8 +1333,8 @@ class sh_browser extends sh_core {
             }
         }*/
         $this->debug('The method is browser_changeImg(this,\''.$id.'\',\''.$folder.'\')', 3, __LINE__);
-        $this->links->html->addScript('/sh_browser/singles/getBrowser.js');
-        //$this->links->html->addScript('/sh_browser/singles/changeImg.js');
+        $this->linker->html->addScript('/sh_browser/singles/getBrowser.js');
+        //$this->linker->html->addScript('/sh_browser/singles/changeImg.js');
         return 'browser_changeImg(this,\''.$id.'\',\''.$folder.'\')';
     }
 
@@ -1347,7 +1347,7 @@ class sh_browser extends sh_core {
      */
     public function getOnClickShowBrowser($folder = 'SH_IMAGES_FOLDER') {
         $this->debug(__METHOD__, 2, __LINE__);
-        $this->links->html->addScript('/sh_browser/singles/getBrowser.js');
+        $this->linker->html->addScript('/sh_browser/singles/getBrowser.js');
         if(!defined($folder)) {
             $cpt = count($_SESSION[__CLASS__]['pathes']);
             $cpt += 1;
@@ -1355,7 +1355,7 @@ class sh_browser extends sh_core {
             $folder = $cpt;
         }
         return 'showBrowser(\''.$folder.'\')';
-        //$this->links->html->addScript('/sh_browser/singles/showBrowser.js');
+        //$this->linker->html->addScript('/sh_browser/singles/showBrowser.js');
         //return 'showBrowser(this,\''.$folder.'\')';
     }
 
@@ -1366,8 +1366,8 @@ class sh_browser extends sh_core {
      */
     public function render_imageSelector($attributes = array()) {
         $this->debug(__METHOD__, 2, __LINE__);
-        $this->links->html->addScript('/sh_browser/singles/getBrowser.js');
-        //$this->links->html->addScript('/sh_browser/singles/changeImg.js');
+        $this->linker->html->addScript('/sh_browser/singles/getBrowser.js');
+        //$this->linker->html->addScript('/sh_browser/singles/changeImg.js');
         if(empty($attributes['name'])) {
             $this->debug('There is no atribute name, so we don\'t create the imageSelector', 2, __LINE__);
             return false;
@@ -1433,8 +1433,8 @@ class sh_browser extends sh_core {
 
     public function render_multipleImagesSelector($attributes = array()) {
         $this->debug(__METHOD__, 2, __LINE__);
-        $this->links->html->addScript('/sh_browser/singles/getBrowser.js');
-        //$this->links->html->addScript('/sh_browser/singles/changeImg.js');
+        $this->linker->html->addScript('/sh_browser/singles/getBrowser.js');
+        //$this->linker->html->addScript('/sh_browser/singles/changeImg.js');
         if(empty($attributes['name'])) {
             $this->debug('There is no atribute name, so we don\'t create the imageSelector', 2, __LINE__);
             return false;
@@ -1537,7 +1537,7 @@ class sh_browser extends sh_core {
             // sh_html::render will not be called
             $values['js']['insert'] = true;
         }else{
-            $this->links->html->addScript('/sh_browser/singles/getBrowser.js');
+            $this->linker->html->addScript('/sh_browser/singles/getBrowser.js');
         }
 
         // Getting the folder
@@ -1577,8 +1577,8 @@ class sh_browser extends sh_core {
     
     public function render_showBrowser($attributes = array()) {
 
-        //$this->links->html->addScript('/sh_browser/singles/changeImg.js');
-        $this->links->html->addScript('/sh_browser/singles/getBrowser.js');
+        //$this->linker->html->addScript('/sh_browser/singles/changeImg.js');
+        $this->linker->html->addScript('/sh_browser/singles/getBrowser.js');
         if(!empty($attributes['folder'])) {
             $folder = $attributes['folder'];
             unset($attributes['folder']);
@@ -1609,7 +1609,7 @@ class sh_browser extends sh_core {
      *
      */
     public static function addDimension($folder,$w,$h) {
-        return sh_links::getInstance()->helper->writeInFile(
+        return sh_linker::getInstance()->helper->writeInFile(
                 $folder.'/'.self::DIMENSIONFILE, $w.'x'.$h
         );
     }
@@ -1620,7 +1620,7 @@ class sh_browser extends sh_core {
      */
     public static function setNoMargins($folder,$status = true) {
         if($status) {
-            sh_links::getInstance()->helper->writeInFile(
+            sh_linker::getInstance()->helper->writeInFile(
                     $folder.'/'.self::NOMARGINS , ''
             );
         }elseif(file_exists($folder.'/'.self::NOMARGINS)) {
@@ -1635,7 +1635,7 @@ class sh_browser extends sh_core {
      */
     public static function setHidden($folder,$status = true) {
         if($status) {
-            sh_links::getInstance()->helper->writeInFile(
+            sh_linker::getInstance()->helper->writeInFile(
                     $folder.'/'.self::HIDDEN , ''
             );
         }elseif(file_exists($folder.'/'.self::HIDDEN)) {
@@ -1649,7 +1649,7 @@ class sh_browser extends sh_core {
      *
      */
     public static function setRights($folder,$rights) {
-        return sh_links::getInstance()->helper->writeInFile(
+        return sh_linker::getInstance()->helper->writeInFile(
                 $folder.'/'.self::RIGHTSFILE, $rights
         );
     }
@@ -1662,7 +1662,7 @@ class sh_browser extends sh_core {
         if(is_null($owner)) {
             $owner = file_get_contents(dirname($folder).'/'.self::OWNERFILE);
         }
-        return sh_links::getInstance()->helper->writeInFile(
+        return sh_linker::getInstance()->helper->writeInFile(
                 $folder.'/'.self::OWNERFILE, $owner
         );
     }

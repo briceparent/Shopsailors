@@ -46,11 +46,11 @@ class sh_contact extends sh_core {
     public function show(){
         $this->debug('Show process started',1,__LINE__);
         if(!$this->getParam('activated',true)){
-            return $this->links->path->error(404);
+            return $this->linker->path->error(404);
         }
 
-        $this->links->cache->disable();
-        $this->links->html->browserCache(false);
+        $this->linker->cache->disable();
+        $this->linker->html->browserCache(false);
 
         $this->debug('We verify if the form is submitted',3,__LINE__);
 
@@ -58,7 +58,7 @@ class sh_contact extends sh_core {
         if($formSubmitted === true){
             $this->debug('It is',3,__LINE__);
 
-            $mailer = $this->links->mailer->get();
+            $mailer = $this->linker->mailer->get();
 
             $coordOK = true;
             $postedMail = trim($_POST['mail']);
@@ -161,9 +161,9 @@ class sh_contact extends sh_core {
             $this->getI18n(self::I18N_CONTACTINTRO)
         );
         $title = $this->getI18n(self::I18N_CONTACTTITLE);
-        $this->links->html->setTitle($title);
+        $this->linker->html->setTitle($title);
 
-        $rf = $this->links->template->get('contact>renderFile','show');
+        $rf = $this->linker->template->get('contact>renderFile','show');
         $this->render($rf,$content);
     }
 
@@ -171,11 +171,11 @@ class sh_contact extends sh_core {
         $this->onlyAdmin();
         if($this->formSubmitted('contactEditor')){
             $this->saveParams();
-            $this->links->path->redirect(
+            $this->linker->path->redirect(
                 $this->translatePageToUri($this->shortClassName.'/show/')
             );
         }
-        $site = $this->links->site;
+        $site = $this->linker->site;
         $content['form_contact'] = array(
             'showPhone' => 'contact[showPhone]',
             'showAddress' => 'contact[showAddress]',
@@ -330,7 +330,7 @@ class sh_contact extends sh_core {
         $this->db_execute('save',$replacements);
         if($_POST['active'] == true){
             header(
-                'location: '.$this->links->path->getLink('content/show/'.$id)
+                'location: '.$this->linker->path->getLink('content/show/'.$id)
             );
         }
     }

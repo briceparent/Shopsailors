@@ -24,7 +24,7 @@ class sh_helper extends sh_core{
         mb_http_input( "UTF-8" );
         mb_http_output( "UTF-8" );
 
-        $this->links->events->afterMinimalConstruction();
+        $this->linker->events->afterMinimalConstruction();
         return true;
     }
 
@@ -66,7 +66,7 @@ class sh_helper extends sh_core{
      * $ret[1][elements][0][state] =><br />
      */
     public function listLinks($startSelection = '', $exceptions = array()){
-        $addresses = $this->links->sitemap->getSitemapPagesList();
+        $addresses = $this->linker->sitemap->getSitemapPagesList();
         if(!empty($exceptions)){
             $reg = preg_replace(
                 array(
@@ -93,7 +93,7 @@ class sh_helper extends sh_core{
                     if($startSelection == $page){
                         $state='checked';
                     }
-                    $value = $this->links->$class->getPageName($action, $id);
+                    $value = $this->linker->$class->getPageName($action, $id);
                     $elements[$class][$action.$id] = array(
                         'name' => $page,
                         'value' => $value,
@@ -113,7 +113,7 @@ class sh_helper extends sh_core{
                 $classId = 0;
                 $className = $this->getI18n('singleEntry_title');
             }else{
-                $className = $this->links->i18n->get($class,'className');
+                $className = $this->linker->i18n->get($class,'className');
             }
             if($className == ''){
                 $className = $class;

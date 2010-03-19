@@ -18,7 +18,7 @@ class sh_form_verifier{
     const CAPTCHA_ERROR = 'Captcha Error';
 
     public function __construct(){
-        $this->links = sh_links::getInstance();
+        $this->linker = sh_linker::getInstance();
     }
 
     /**
@@ -52,7 +52,7 @@ class sh_form_verifier{
             return false;
         }
         if($verifyCaptcha){
-            if(!$this->links->captcha->verify($formName)){
+            if(!$this->linker->captcha->verify($formName)){
                 return sh_captcha::CAPTCHA_ERROR;
             }
             return true;

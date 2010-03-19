@@ -12,7 +12,7 @@ class sh_breadcrumbs extends sh_core{
      * argument.
      */
     public function render_breadcrumbs($attributes = array(),$contents = '', $renderValues = array()){
-        $this->links->helpToolTips->addJavascript();
+        $this->linker->helpToolTips->addJavascript();
         if(!isset($attributes['what']) || !isset($renderValues[$attributes['what']])){
             echo 'what, or $values['.$attributes['what'].'] is not set<br />';
             return false;

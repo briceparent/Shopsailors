@@ -23,7 +23,7 @@ class sh_fpdf extends FPDF{
     public function __construct($orientation='P', $unit='mm', $format='A4'){
         parent::__construct($orientation,$unit,$format);
         $this->SetCreator(utf8_decode('Websailors'));
-        $this->links = sh_links::getInstance();
+        $this->linker = sh_linker::getInstance();
     }
 
     function RoundedRect($x, $y, $w, $h, $r, $style = ''){

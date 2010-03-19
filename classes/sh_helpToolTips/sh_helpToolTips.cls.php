@@ -24,10 +24,10 @@ class sh_helpToolTips extends sh_core{
 
     public function addJavascript(){
         $singlePath = $this->getSinglePath().'wz_tooltip/';
-        $this->links->html->addAfterBody(
+        $this->linker->html->addAfterBody(
             '<script type="text/javascript" src="'.$singlePath.'wz_tooltip.js"/>'
         );
-        $this->links->html->addAfterBody(
+        $this->linker->html->addAfterBody(
             '<script type="text/javascript" src="'.$singlePath.'tip_balloon.js"/>'
         );
     }

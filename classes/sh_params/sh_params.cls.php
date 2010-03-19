@@ -20,10 +20,10 @@ if(!defined('SH_MARKER')){header('location: directCallForbidden.php');}
  *
  * For a file's param:
  * $fileParams = SH_ROOT_FOLDER.'file.php';
- * $this->links->params->addElement($fileParams);
- * $this->links->params->set($fileParams,'truc','bidule');
- * $this->links->params->write($fileParams);
- * $this->links->params->get($fileParams,'truc');
+ * $this->linker->params->addElement($fileParams);
+ * $this->linker->params->set($fileParams,'truc','bidule');
+ * $this->linker->params->write($fileParams);
+ * $this->linker->params->get($fileParams,'truc');
  *
  * In this last case, we may want to write the modifications into the original
  * file or into an other.
@@ -187,7 +187,7 @@ class sh_params_element{
      */
     public function __construct($className = null,$forceFile = false){
         $this->className = $className;
-        $this->links = sh_links::getInstance();
+        $this->linker = sh_linker::getInstance();
         $this->load($forceFile);
     }
 
@@ -324,7 +324,7 @@ class sh_params_element{
                 if(file_exists($this->fileToWrite)){
                     include($this->fileToWrite);
                     if(is_array($this->values)){
-                        $this->values = $this->links->helper->array_merge_recursive_replace(
+                        $this->values = $this->linker->helper->array_merge_recursive_replace(
                             $this->fileValues,
                             $this->values
                         );
@@ -376,7 +376,7 @@ class sh_params_element{
         if(!$this->onlyWriteDifferences){
             $valuesToWrite = $this->values;
         }else{
-            $valuesToWrite = $this->links->helper->array_diff_assoc_recursive(
+            $valuesToWrite = $this->linker->helper->array_diff_assoc_recursive(
                 $this->values,
                 $this->fileValues
             );

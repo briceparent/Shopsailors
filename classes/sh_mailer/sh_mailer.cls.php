@@ -18,7 +18,7 @@ class sh_mailer extends sh_core{
         if(file_exists($internalMailerFile)){
             include($internalMailerFile);
             $mailer = $this->getParam('mailers>internal>name');
-            $this->internalMailer = $this->links->$mailer;
+            $this->internalMailer = $this->linker->$mailer;
         }else{
             echo 'the file '.$internalMailerFile.' does not exist<br />';
             return false;
@@ -30,7 +30,7 @@ class sh_mailer extends sh_core{
                 include($externalMailerFile);
             }
             $mailer = $this->getParam('mailers>external>name');
-            $this->externalMailer = $this->links->$mailer;
+            $this->externalMailer = $this->linker->$mailer;
             return true;
         }
         // We didn't find the params for the external mailer, so we use the internal
@@ -66,7 +66,7 @@ class sh_mailer extends sh_core{
         }elseif($mailer == $intMailer || $mailer == SH_CUSTOM_PREFIX.$intMailer){
             $usedMailer = $this->get(false);
         }else{
-            $this->links->path->error(404);
+            $this->linker->path->error(404);
         }
         // We decode in order to use iso-8859-1 charset
         echo $usedMailer->nl_getContent($id,false);
@@ -82,7 +82,7 @@ class sh_mailer extends sh_core{
     }
 
     public function cleanContent($content){
-        $domain = $this->links->path->getBaseUri();
+        $domain = $this->linker->path->getBaseUri();
         preg_match_all(
             '`( (src|background)="(https?://)?)(\.\.+\/)*([^"]*")`',
             $content,

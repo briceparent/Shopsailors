@@ -18,11 +18,11 @@ class sh_wEditor extends sh_core{
 
     public function render_wEditor($attributes = array(),$content = ''){
         $singlePath = $this->getSinglePath();
-        $this->links->html->addScript($singlePath.'tiny_mce/tiny_mce.js');
-        $this->links->browser->insertScript();
-        $lang = $this->links->i18n->getLang();
+        $this->linker->html->addScript($singlePath.'tiny_mce/tiny_mce.js');
+        $this->linker->browser->insertScript();
+        $lang = $this->linker->i18n->getLang();
         $shortLang = substr($lang,0,strpos($lang,'_'));
-        $this->links->html->addScript($singlePath.'all.js?lang='.$shortLang.'&#38;variation='.$this->links->site->variation);
+        $this->linker->html->addScript($singlePath.'all.js?lang='.$shortLang.'&#38;variation='.$this->linker->site->variation);
 
         if(!isset($attributes['name'])){
             $attributes['name'] = 'wEditor';
@@ -54,7 +54,7 @@ class sh_wEditor extends sh_core{
      * @return str The css to add
      */
     public function addToMainCSS(){
-        /*$file = $this->links->site->templateFolder.'/css/forum.css';
+        /*$file = $this->linker->site->templateFolder.'/css/forum.css';
         if(file_exists($file)){
             return file_get_contents(
                 $file
@@ -85,7 +85,7 @@ class sh_wEditor extends sh_core{
         $actualAction = $this->getParam('action');
         $actualId = $this->getParam('id');
 
-        $datas['classes'] = $this->links->helper->listLinks(
+        $datas['classes'] = $this->linker->helper->listLinks(
             $actualClass.'/'.$actualAction.'/'.$actualId,
             array(
                 'templatesLister/show/*',

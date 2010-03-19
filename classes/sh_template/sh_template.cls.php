@@ -20,13 +20,13 @@ class sh_template extends sh_core{
      *
      */
     public function construct(){
-        $this->paramsFile = $this->links->site->templateFolder.'template.params.php';
-        $this->links->params->addElement($this->paramsFile);
+        $this->paramsFile = $this->linker->site->templateFolder.'template.params.php';
+        $this->linker->params->addElement($this->paramsFile);
         return true;
     }
 
     public function select(){
-        $this->links->javascript->get(sh_javascript::LIGHTWINDOW);
+        $this->linker->javascript->get(sh_javascript::LIGHTWINDOW);
         $this->onlyAdmin();
         if($this->formSubmitted('templateChooser')){
             $this->changeTemplate($_POST['template']);
@@ -39,15 +39,15 @@ class sh_template extends sh_core{
         if(is_array($scan)){
             foreach($scan as $element){
                 if(preg_match('`(((sh_|cm_)[0-9]*)-(.+))`', $element, $matches)){
-                    if($this->links->site->templateIsAuthorized($matches[1])){
-                        if($matches[1] == $this->links->site->templateName){
+                    if($this->linker->site->templateIsAuthorized($matches[1])){
+                        if($matches[1] == $this->linker->site->templateName){
                             $state = 'checked';
                             $values['template']['original'] = $matches[1];
                         }else{
                             $state = '';
                         }
 
-                        $imagesRoot = $this->links->templatesLister->getImagesRoot($element);
+                        $imagesRoot = $this->linker->templatesLister->getImagesRoot($element);
                         
                         if(file_exists(SH_TEMPLATE_FOLDER.$matches[1].'/template.description.php')){
                             list($id, $name) = explode('-',$matches[1]);
@@ -79,7 +79,7 @@ class sh_template extends sh_core{
 
     public function changeTemplate($template){
         $this->onlyAdmin();
-        $this->links->site->changeTemplate($template);
+        $this->linker->site->changeTemplate($template);
         $directory = SH_CLASS_SHARED_FOLDER.__CLASS__.'/change/';
         if(is_dir($directory)){
             $classes = scandir($directory);
@@ -87,12 +87,12 @@ class sh_template extends sh_core{
                 if(substr($class,0,1) != '.'){
                     $className = substr($class,0,-4);
                     // We have found a class on which to call template_change();
-                    $this->links->$className->template_change($template);
+                    $this->linker->$className->template_change($template);
                 }
             }
         }
         $_SESSION[__CLASS__]['templateHasChanged'] = true;
-        $this->links->path->refresh();
+        $this->linker->path->refresh();
         return true;
     }
 
@@ -104,7 +104,7 @@ class sh_template extends sh_core{
         if($paramName == self::ALL_VALUES){
             $paramName = '';
         }
-        return $this->links->params->get(
+        return $this->linker->params->get(
             $this->paramsFile,
             $paramName,
             $onNotSet
@@ -116,12 +116,12 @@ class sh_template extends sh_core{
      *
      */
     public function setMenuFont($menuId, $font){
-        $this->links->params->set(
+        $this->linker->params->set(
             $this->paramsFile,
             'menuButtons>'.$menuId.'>font',
             $font
         );
-        return $this->links->params->write($this->paramsFile);
+        return $this->linker->params->write($this->paramsFile);
     }
 
     /**

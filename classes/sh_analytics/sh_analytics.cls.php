@@ -39,7 +39,7 @@ class sh_sitemap extends sh_core {
                 if(substr($class,0,1) != '.'){
                     $class = substr($class,0,-4);
                     // We have found a class on which to call sitemap_renew();
-                    $this->links->$class->sitemap_renew();
+                    $this->linker->$class->sitemap_renew();
                 }
             }
         }
@@ -74,7 +74,7 @@ class sh_sitemap extends sh_core {
      *
      */
     public function show(){
-        $this->links->cache->disable();
+        $this->linker->cache->disable();
         $xml = $this->create();
         header('content-type: text/xml');
         echo $xml;
@@ -89,7 +89,7 @@ class sh_sitemap extends sh_core {
         if(file_exists($this->file)){
             include($this->file);
         }
-        $uri = $this->links->path->getLink($page);
+        $uri = $this->linker->path->getLink($page);
         $address = 'http://'.$_SERVER['HTTP_HOST'].$uri;
         $this->addresses['PAGES'][$page] = array(
             'address'=>$address,
@@ -105,7 +105,7 @@ class sh_sitemap extends sh_core {
      *
      */
     protected function buildFile(){
-        $this->links->helper->writeArrayInFile(
+        $this->linker->helper->writeArrayInFile(
             $this->file,
             'this->addresses',
             $this->addresses
@@ -163,7 +163,7 @@ class sh_sitemap extends sh_core {
         }else{
             $date = date('Y-m-d');
         }
-        $page = MD5($this->links->path->getPage());
+        $page = MD5($this->linker->path->getPage());
         $file = SH_SITE_FOLDER.__CLASS__.'/'.$page;
 
         echo $page;

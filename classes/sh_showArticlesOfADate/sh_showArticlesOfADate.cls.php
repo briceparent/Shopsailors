@@ -24,7 +24,7 @@ class sh_showArticlesOfADate extends sh_core {
      * @return boolean
      */
     public function show(){
-        $this->links->html->setTitle($this->getI18n('searchByDateTitle'));
+        $this->linker->html->setTitle($this->getI18n('searchByDateTitle'));
         if($this->formSubmitted('searchByDate_form')){
             $values['previous']['value'] = $_POST['date_searched'];
 
@@ -32,7 +32,7 @@ class sh_showArticlesOfADate extends sh_core {
             $rep = $this->db_execute('getByDate', $replacements,$qry);
             if(isset($rep[0]['id'])){
                 foreach($rep as $element){
-                    $link = $this->links->path->getLink('content/show/'.$element['id']);
+                    $link = $this->linker->path->getLink('content/show/'.$element['id']);
                     $values['responses'][] = array(
                         'title'=>$element['title'],
                         'link'=>$link

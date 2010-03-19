@@ -65,7 +65,7 @@ class sh_versionning extends sh_core{
         if(is_null($packageName)){
             return $this->actualMajorVersion;
         }
-        $version = $this->links->params->get($packageName,'actualMajorVersion','');
+        $version = $this->linker->params->get($packageName,'actualMajorVersion','');
         return $version;
     }
 

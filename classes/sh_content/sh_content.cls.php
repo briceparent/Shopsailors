@@ -15,11 +15,11 @@ class sh_content extends sh_core {
 
     public function construct(){
         if(!is_dir(SH_IMAGES_FOLDER.'small/')){
-            $this->links->browser->createFolder(
+            $this->linker->browser->createFolder(
                 SH_IMAGES_FOLDER.'small/',
                 sh_browser::ALL
             );
-            $this->links->browser->addDimension(
+            $this->linker->browser->addDimension(
                 SH_IMAGES_FOLDER.'small/',100,100
             );
         }
@@ -63,9 +63,9 @@ class sh_content extends sh_core {
 
     public function shortList(){
         $this->debug(__FUNCTION__.'();', 2, __LINE__);
-        $id = (int) $this->links->path->page['id'];
+        $id = (int) $this->linker->path->page['id'];
         $list = $this->getParam('list>'.$id.'>activated', false);
-        $this->links->html->setTitle(
+        $this->linker->html->setTitle(
             $this->getI18n($this->getParam('list>'.$id.'>name',array()))
         );
         $values['showList']['summary'] = $this->getI18n(
@@ -85,7 +85,7 @@ class sh_content extends sh_core {
             $values['contents'][] = $element;
         }
         foreach($values['contents'] as &$element){
-            $element['link'] = $this->links->path->getLink(
+            $element['link'] = $this->linker->path->getLink(
                 $this->shortClassName.'/show/'.$element['id']
             );
             $element['title'] = $this->getI18n($element['title']);
@@ -98,7 +98,7 @@ class sh_content extends sh_core {
     public function editShortList(){
         $this->debug(__FUNCTION__.'();', 2, __LINE__);
         $this->onlyAdmin();
-        $id = (int) $this->links->path->page['id'];
+        $id = (int) $this->linker->path->page['id'];
         if($this->formSubmitted('delete_shortList')){
             $name = $this->getParam('list>'.$id.'>name');
             $summary = $this->getParam('list>'.$id.'>summary');
@@ -106,7 +106,7 @@ class sh_content extends sh_core {
             $this->removeParam('list>'.$id);
             $this->writeParams();
             $this->removeFromSitemap($this->shortClassName.'/shortList/'.$id);
-            $this->links->path->redirect(
+            $this->linker->path->redirect(
                 $this->translatePageToUri('/'.__FUNCTION__.'/0')
             );
         }elseif($this->formSubmitted('contentListEditor')){
@@ -135,12 +135,12 @@ class sh_content extends sh_core {
             $this->removeFromSitemap($this->shortClassName.'/shortList/'.$id);
             $sitemapPriority = $this->getParam('sitemap>shortList>Priority',0.7);
             $this->addToSitemap($this->shortClassName.'/shortList/'.$id,$sitemapPriority);
-            $this->links->path->redirect(__CLASS__,'shortList',$id);
+            $this->linker->path->redirect(__CLASS__,'shortList',$id);
         }
 
         $lists = $this->getParam('list',array());
         $values['lists'][0] = array(
-            'link' => $this->links->path->getLink(
+            'link' => $this->linker->path->getLink(
                 $this->shortClassName.'/'.__FUNCTION__.'/0'
             ),
             'name' => $this->getI18n('newShortList')
@@ -148,7 +148,7 @@ class sh_content extends sh_core {
         if(is_array($lists)){
             foreach($lists as $oneId=>$oneList){
                 $values['lists'][] = array(
-                    'link' => $this->links->path->getLink(
+                    'link' => $this->linker->path->getLink(
                         $this->shortClassName.'/'.__FUNCTION__.'/'.$oneId
                     ),
                     'name' => $oneId.' - '.$this->getI18n($oneList['name'])
@@ -218,23 +218,23 @@ class sh_content extends sh_core {
     public function show(){
         $this->debug(__FUNCTION__.'();', 2, __LINE__);
 
-        $id = (int) $this->links->path->page['id'];
+        $id = (int) $this->linker->path->page['id'];
 
         if($id != ''){
-            $this->links->admin->insertPage(
+            $this->linker->admin->insertPage(
                 $this->shortClassName.'/edit/'.$id,'Contenu','bank1/picto_modify.png'
             );
         }
 
         if($id == 0){
-            $this->links->path->error('404');
+            $this->linker->path->error('404');
         }
 
         $replacements = array('id' => $id);
         list($content['content']) = $this->db_execute('get',$replacements);
 
         if(!isset($content['content']['id'])){
-            $this->links->path->error('404');
+            $this->linker->path->error('404');
         }
 
        $content['content']['content'] = $this->getI18n(
@@ -253,9 +253,9 @@ class sh_content extends sh_core {
         }
 
         if($content['content']['showTitle'] == 1){
-            $this->links->html->setTitle($content['content']['title']);
+            $this->linker->html->setTitle($content['content']['title']);
         }else{
-            $this->links->html->setTitle('');
+            $this->linker->html->setTitle('');
         }
 
         $rendered = $this->render('content',$content);
@@ -265,9 +265,9 @@ class sh_content extends sh_core {
     public function delete(){
         $this->debug(__FUNCTION__.'();', 2, __LINE__);
         $this->onlyAdmin();
-        $id = (int) $this->links->path->page['id'];
+        $id = (int) $this->linker->path->page['id'];
         if($id == 0){
-            $this->links->path->error('404');
+            $this->linker->path->error('404');
         }
         
         if($this->formSubmitted('delete_content')){
@@ -282,13 +282,13 @@ class sh_content extends sh_core {
             $this->removeI18n($content['title']);
             $this->removeI18n($content['summary']);
             $this->removeI18n($content['content']);
-            $this->links->path->redirect(
+            $this->linker->path->redirect(
                 $this->translatePageToUri('/showList/')
             );
             return true;
         }
 
-        $this->links->html->setTitle($this->getI18n('deletePage_title'));
+        $this->linker->html->setTitle($this->getI18n('deletePage_title'));
 
         list($values['content']) = $this->db_execute(
             'getWithInactive',
@@ -311,7 +311,7 @@ class sh_content extends sh_core {
     public function edit(){
         $this->debug(__FUNCTION__.'();', 2, __LINE__);
         $this->onlyAdmin();
-        $id = (int) $this->links->path->page['id'];
+        $id = (int) $this->linker->path->page['id'];
         if($id == 0){
             $content['editcontent']['title'] = $this->getI18n('new_page_title');
         }else{
@@ -322,13 +322,13 @@ class sh_content extends sh_core {
         if(!is_dir($folder)){
             // We don't use $this->addFolder because only masters may write in that folder
             mkdir($folder);
-            $this->links->helper->writeInFile(
+            $this->linker->helper->writeInFile(
                 $folder.sh_browser::RIGHTSFILE,sh_browser::ALL
             );
-            $this->links->helper->writeInFile(
+            $this->linker->helper->writeInFile(
                 $folder.sh_browser::DIMENSIONFILE,'100x100'
             );
-            $this->links->helper->writeInFile(
+            $this->linker->helper->writeInFile(
                 $folder.sh_browser::OWNERFILE,$this->userName
             );
         }
@@ -438,7 +438,7 @@ class sh_content extends sh_core {
                 $_POST['summary'],
                 $_POST['content']
             );
-            $this->links->path->redirect(__CLASS__,'show',$id);
+            $this->linker->path->redirect(__CLASS__,'show',$id);
         }
         return $isNew;
     }
@@ -463,7 +463,7 @@ class sh_content extends sh_core {
             $values['contents'][] = $element;
         }
         foreach($values['contents'] as &$element){
-            $element['link'] = $this->links->path->getLink(
+            $element['link'] = $this->linker->path->getLink(
                 $this->shortClassName.'/show/'.$element['id']
             );
             $element['title'] = $this->getI18n($element['title']);
@@ -553,7 +553,7 @@ class sh_content extends sh_core {
                     array('',''),
                     $this->__tostring()
                 ).'/'.$action.'/'.$id;
-            $link = $this->links->path->getLink($page);
+            $link = $this->linker->path->getLink($page);
         }
         if($name != ''){
             return $name;

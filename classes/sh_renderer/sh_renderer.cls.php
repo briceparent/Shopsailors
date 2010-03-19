@@ -76,7 +76,7 @@ class sh_renderer extends sh_core {
             }
         }
 
-        $variation = $this->links->site->variation;
+        $variation = $this->linker->site->variation;
         define('VARIATION',$variation);
 
         return true;
@@ -250,7 +250,7 @@ class sh_renderer extends sh_core {
             include(SH_ROOT_FOLDER.'tests/'.$valuesFile);
         }
 
-        $rendered = $this->links->renderer->render(
+        $rendered = $this->linker->renderer->render(
             SH_ROOT_FOLDER.'tests/'.$rf,$values,$this->debugging()
         );
         $tempNode = new domDocument('1.0', 'UTF-8');
@@ -639,7 +639,7 @@ class sh_renderer extends sh_core {
 
         $this->debug('We load the module "'.$module.'"',1,__LINE__);
 
-        $this->links->$module->loadModule($params);
+        $this->linker->$module->loadModule($params);
         return true;
     }
 
@@ -999,7 +999,7 @@ class sh_renderer extends sh_core {
                 }elseif(isset($this->plugins[$upperNodeName])){
                     $class = $this->plugins[$upperNodeName]['class'];
                     $method = $this->plugins[$upperNodeName]['method'];
-                    if(method_exists($this->links->$class->getClassName(),$method)){
+                    if(method_exists($this->linker->$class->getClassName(),$method)){
                         $attributes = array();
                         foreach ($item->attributes as $attribute){
                             $attributes[$attribute->name] = $this->changeValue(
@@ -1018,7 +1018,7 @@ class sh_renderer extends sh_core {
                         $this->enterChildren($item,$content);
                         $oldContents = $content->nodeValue;
                         $this->xml[$_SESSION['rendering']] = $tempXML;
-                        $newContent = $this->links->$class->$method(
+                        $newContent = $this->linker->$class->$method(
                             $attributes,
                             $oldContents,
                             $this->values
@@ -1031,7 +1031,7 @@ class sh_renderer extends sh_core {
                             $this->enterChildren($content, $dest);
                         }
                     }else{
-                        $this->debug('The "'.$method.'" method doesn\'t exist in the "'.$this->links->$class->getClassName().'" class',0,__LINE__);
+                        $this->debug('The "'.$method.'" method doesn\'t exist in the "'.$this->linker->$class->getClassName().'" class',0,__LINE__);
                     }
 
                 }else{
@@ -1126,7 +1126,7 @@ class sh_renderer extends sh_core {
             $class = strtolower($matches[2]);
             $element = strtolower($matches[3]);
             if($class == 'i18n'){
-                return $this->links->i18n->get(
+                return $this->linker->i18n->get(
                     $this->i18nClasses[$_SESSION['rendering']],$matches[3]
                 );
             }
@@ -1174,7 +1174,7 @@ class sh_renderer extends sh_core {
                 $textContent = trim($this->values[$class]);
             }else{
                 if($class == 'i18n'){
-                    $value = '<content>'.$this->links->i18n->get(
+                    $value = '<content>'.$this->linker->i18n->get(
                         $this->i18nClasses[$_SESSION['rendering']],
                         $element
                     ).'</content>';
@@ -1215,7 +1215,7 @@ class sh_renderer extends sh_core {
      * Gets the model from the file given as a parameter
      */
     protected function getModel($model){
-        $model = $this->links->html->replaceTemplateDir($model);
+        $model = $this->linker->html->replaceTemplateDir($model);
         if(file_exists($model)){
             $ret = file_get_contents($model);
         }

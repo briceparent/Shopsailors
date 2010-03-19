@@ -9,7 +9,7 @@
 if(!defined('SH_MARKER')){header('location: directCallForbidden.php');}
 
 /*
- * Calls events on every object in $this->links->helper->objects
+ * Calls events on every object in $this->linker->helper->objects
  * if they exist
  */
 class sh_events extends sh_core{
@@ -34,16 +34,16 @@ class sh_events extends sh_core{
         if(in_array($event, $this->events)){
             if(!$onUnloadedClasses){
                 if(is_array($args) && isset($args[0])){
-                    $isObject = is_object($this->links->helper->objects[$args[0]]);
-                    $methodExists = method_exists($this->links->helper->objects[$args[0]],$event);
+                    $isObject = is_object($this->linker->helper->objects[$args[0]]);
+                    $methodExists = method_exists($this->linker->helper->objects[$args[0]],$event);
                     if($isObject && $methodExists){
-                        return $this->links->helper->objects[$args[0]]->$event();
+                        return $this->linker->helper->objects[$args[0]]->$event();
                     }else{
                         return false;
                     }
                 }
-                if(is_array($this->links->helper->objects)){
-                    foreach($this->links->helper->objects as $object){
+                if(is_array($this->linker->helper->objects)){
+                    foreach($this->linker->helper->objects as $object){
                         if(method_exists($object, $event)){
                             $ret[] = $object->$event();
                         }
