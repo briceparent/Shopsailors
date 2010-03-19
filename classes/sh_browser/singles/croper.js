@@ -18,6 +18,7 @@ var crop_isMoving = false;
 var crop_isDrawn = false;
 var crop_selectedCorner = '';
 var crop_decayX = 0;var crop_decayY = 0;
+var crop_forcedFactor = 0;var crop_tempForcedFactor = 0;
 
 /*****************************/
 /*
@@ -58,6 +59,7 @@ function crop_startMoveMask(evt){
 }
 function crop_moveMask(evt){
     if(!crop_isMoving){
+        crop_redimMaskSelect(evt);
         return false;
     }
 
@@ -159,25 +161,46 @@ function crop_redimMask(evt){
             crop_startY = crop_y1;
         }
     }
+    // Defining new width and height
     if(crop_newX < crop_startX){
         // From right to left
-        $("mask").style.left = crop_newX+"px";
         crop_width = crop_startX - crop_newX;
     }else{
         // From left to right
-        $("mask").style.left = crop_startX+"px";
         crop_width = crop_newX - crop_startX;
     }
-    $("mask").style.width = crop_width+"px";
     if(crop_newY < crop_startY){
-        // From right to top
-        $("mask").style.top = crop_newY+"px";
+        // From bottom to top
         crop_height = crop_startY - crop_newY;
     }else{
-        // From left to bottom
-        $("mask").style.top = crop_startY+"px";
+        // From top to bottom
         crop_height = crop_newY - crop_startY;
     }
+
+    // We check if we have to restrain the values
+    if(crop_forcedFactor > 0){
+        if((crop_width / crop_height) > crop_forcedFactor){
+            crop_height = crop_width / crop_forcedFactor;
+        }else{
+            crop_width = crop_forcedFactor * crop_height;
+        }
+    }
+    
+    if(crop_newX < crop_startX){
+        // From right to left
+        $("mask").style.left = crop_newX+"px";
+    }else{
+        // From left to right
+        $("mask").style.left = crop_startX+"px";
+    }
+    if(crop_newY < crop_startY){
+        // From bottom to top
+        $("mask").style.top = crop_newY+"px";
+    }else{
+        // From top to bottom
+        $("mask").style.top = crop_startY+"px";
+    }
+    $("mask").style.width = crop_width+"px";
     $("mask").style.height = crop_height+"px";
     crop_showRedimDatas(evt);
     return false;
@@ -210,6 +233,12 @@ function crop_showRedimDatas(evt){
     $("textWidth").innerHTML = crop_realX2 - crop_realX1;
     $("textHeight").innerHTML = crop_realY2 - crop_realY1;
     $("shownDatas").style.display = 'block';
+
+    if(crop_forcedFactorX > (crop_realX2 - crop_realX1)){
+        $('crop_caution').style.display = '';
+    }else{
+        $('crop_caution').style.display = 'none';
+    }
     
 }
 
@@ -274,4 +303,13 @@ function crop_prepareDrawing(img){
     crop_maxX = crop_offsetLeft + crop_width;
     crop_minY = crop_offsetTop;
     crop_maxY = crop_offsetTop + crop_height;
+}
+
+function crop_forceFactor(value){
+    if(value){
+        crop_forcedFactor = crop_tempForcedFactor;
+    }else{
+        crop_tempForcedFactor = crop_forcedFactor;
+        crop_forcedFactor = 0;
+    }
 }

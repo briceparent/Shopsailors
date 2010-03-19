@@ -40,7 +40,7 @@ var myPrivateCounter = 0;
                 popupBrowser.clearParameters();
                 popupBrowser.parameters.set('type','url');
                 popupBrowser.parameters.set('folder',folder);
-                popupBrowser.parameters.set('action','selectImage');
+                popupBrowser.parameters.set('action','tinymce_insert');
                 popupBrowser.parameters.set('element','0');
                 popupBrowser.open();
             });

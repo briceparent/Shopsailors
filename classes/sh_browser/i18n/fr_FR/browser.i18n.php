@@ -45,6 +45,20 @@ droit, à l\'aide des deux boutons qui se trouvent à droite de leurs noms.</li>
     'crop_dimensions' => 'Dimensions :',
     'crop_dimensionsMax2' => 'pixels.<br />Cela signifie que si les dimensions choisies sont plus grandes que cellesrequises, l\'image sera automatiquement redimensionnée.',
     'crop_validate' => 'Retailler',
+    'crop_forceFactor' => 'Forcer les proportions',
+    'crop_forceFactor_explanation' => '<div>
+Pour être certain d\'obtenir une image aux bonnes dimensions, il suffit de cocher
+cette case.<br />
+Ainsi, le rectangle que vous pourrez sélectionner sera automatiquement ajusté
+pour conserver les proportions.<br /><br />
+Si vous décidez de ne pas cocher cette case, la sélection que vous ferez n\'aura
+certainement pas les bonnes proportions. Ce n\'est cependant pas grave, car des
+bandes transparentes seront ajoutées en haut et en bas, ou à gauche et à droite,
+de manière à finir avec une image aux bonnes dimensions.
+</div>
+',
+    'crop_notBigEnough' => 'Attention: La sélection actuelle est plus petite que
+        la taille requise pour l\'image. Des bandes transparentes seront donc ajoutées.',
     'editor_rotate' => 'Faire une rotation',
     'rotate_none' => 'Aucune rotation',
     'rotate_90' => 'Rotation de 90°',

@@ -6,11 +6,21 @@ tinymce.PluginManager.load(
 'advimagescale',
 '/sh_wEditor/singles/plugins/advimagescale/editor_plugin.js'
 );
-/*tinymce.PluginManager.load(
-'jmform',
-'/sh_wEditor/singles/plugins/jmform/editor_plugin.js'
-);*/
-
+<?php
+// Gets the site name (using the server name)
+$classFolder = dirname(dirname(__FILE__));
+$class = basename($classFolder);
+$classesFolder = dirname($classFolder);
+$pluginsSharedFolder = $classesFolder.'/shared/'.$class.'/plugins/';
+if(is_dir($pluginsSharedFolder)){
+    $classes = scandir($pluginsSharedFolder);
+    foreach($classes as $oneClass){
+        if(substr($oneClass,-4) == '.php'){
+            include($pluginsSharedFolder.$oneClass);
+        }
+    }
+}
+?>
 /* tinyMCE_advanced */
 tinyMCE.init({
 mode : "textareas",
@@ -22,19 +32,19 @@ theme_advanced_layout_manager : "SimpleLayout",
 theme_advanced_toolbar_location : "top",
 inline_styles : true,
 plugins : "style,paste,insertdatetime,media,diaporama,example,-shopsailors,"
-+"table,noneditable,-advimagescale",
+    +"table,noneditable,-advimagescale",
 paste_auto_cleanup_on_paste : true,
 plugin_insertdate_dateFormat : "%d/%m/%Y",
 theme_advanced_buttons1 : "bgcChanger,styleprops,|,formatselect,styleselect,|,"
-+"bold,italic,diaporamaInserter,|,imageInserter,image,|,insertdate,|,hr,|,"
-+"removeformat,undo,redo",
+    +"bold,italic,diaporamaInserter,|,imageInserter,image,|,insertdate,|,hr,|,"
+    +"removeformat,undo,redo",
 theme_advanced_buttons2 : "tablecontrols,|,linkInserter,link,unlink,anchor,|,"
-+"charmap,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,"
-+"numlist,|,sub,sup,outdent,indent,media,diaporama",
+    +"charmap,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,"
+    +"numlist,|,sub,sup,outdent,indent,media,diaporama",
 theme_advanced_buttons3 : "",
 extended_valid_elements : "render_diaporama[name|id|nodisplay],"
-+"object[width|height|classid|codebase],param[name|value],"
-+"embed[src|type|width|height|flashvars|wmode]",
+    +"object[width|height|classid|codebase],param[name|value],"
+    +"embed[src|type|width|height|flashvars|wmode]",
 content_css : "/CSS/" + (Math.floor(Math.random() * 1000)+1) + "/wEditor.css",
 relative_urls : false,
 theme_advanced_blockformats : "p,div,h3,h4,h5,h6,blockquote",

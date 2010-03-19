@@ -755,6 +755,7 @@ class sh_newsletters extends sh_core {
         $id = (int) $this->links->path->page['id'];
         // STEP 2
         if($this->formSubmitted('create_newsletter')){
+            // Creation of the newsletter itself
             $classesContents = '';
             foreach($_POST['classes'] as $class=>$value){
                 $classesContents .= $this->links->$class->createNewsletter($id);
@@ -790,6 +791,8 @@ class sh_newsletters extends sh_core {
                 ),
                 $content
             );
+
+            // Creation of the form
 
             $values['newsletter']['title'] = $title;
             $values['newsletter']['content'] = $content;

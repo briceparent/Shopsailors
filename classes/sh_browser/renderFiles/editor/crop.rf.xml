@@ -7,6 +7,13 @@
         <RENDER_SCRIPT file="PROTOTYPE" direct="direct"/>
         <RENDER_SCRIPT file="SCRIPTACULOUSONLY" direct="direct"/>
         <script type="text/javascript" src="/sh_browser/singles/croper.js"/>
+        <RENDER_IFSET what="dimensions>forced">
+            <script type="text/javascript">
+                crop_forcedFactorX = <RENDER_VALUE what="dimensions>forcedX"/>;
+                crop_forcedFactorY = <RENDER_VALUE what="dimensions>forcedY"/>;
+                crop_forcedFactor = crop_forcedFactorX / crop_forcedFactorY;
+            </script>
+        </RENDER_IFSET>
     </head>
     <body class="editImage_container">
         <script type="text/javascript" src="/sh_helpToolTips/singles/wz_tooltip/wz_tooltip.js"/>
@@ -25,7 +32,12 @@
                             <RENDER_VALUE what="i18n>crop_dimensionsForced"/>&#160;
                             <RENDER_VALUE what="dimensions>forcedX"/>&#160;x&#160;<RENDER_VALUE what="dimensions>forcedY"/>&#160;
                             <RENDER_VALUE what="i18n>crop_pixels"/>
-                            <RENDER_HELP what="{i18n>forced_dimensions_explanation}"/>
+                            <RENDER_HELP what="{i18n>forced_dimensions_explanation}"/><br />
+                            <input id="crop_forceFactor" type="checkbox" onclick="crop_forceFactor(this.checked);" checked="checked"/><RENDER_VALUE what="i18n>crop_forceFactor"/>
+                            <RENDER_HELP what="{i18n>crop_forceFactor_explanation}"/>
+                            <div id="crop_caution" style="display:none;color:red;">
+                                <RENDER_VALUE what="i18n>crop_notBigEnough"/>
+                            </div>
                         </RENDER_IFSET>
                         <RENDER_IFSET what="dimensions>max">
                             <RENDER_VALUE what="i18n>crop_dimensionsMax"/>&#160;
