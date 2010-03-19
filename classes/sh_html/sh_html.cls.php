@@ -44,14 +44,14 @@ class sh_html extends sh_core{
 
         public function construct(){
 
-            $site = $this->links->site;
+            $site = $this->linker->site;
             $this->templateName = $site->templateName;
             $this->template = $site->templateFolder;
             $this->variation = $site->variation;
             $this->title = $site->defaultTitle;
             $this->siteName = $site->siteName;
 
-            $this->menusNumber = $this->links->template->menusNumber;
+            $this->menusNumber = $this->linker->template->menusNumber;
 
             /*$this->addScript(SH_INCLUDE_FOLDER.'scriptaculous/lib/prototype.js');
             $this->addScript(SH_INCLUDE_FOLDER.'scriptaculous/src/scriptaculous.js');*/
@@ -110,7 +110,7 @@ class sh_html extends sh_core{
             if($this->metaDescription != ''){
                 return $this->metaDescription;
             }else{
-                return $this->links->site->metaDescription;
+                return $this->linker->site->metaDescription;
             }
         }
 
@@ -126,7 +126,7 @@ class sh_html extends sh_core{
         public function setTitle($title,$after=''){
             $this->debug('function : '.__FUNCTION__, 2, __LINE__);
             $this->title = $title.$after;
-            //$this->links->breadcrumbs->title = $title;
+            //$this->linker->breadcrumbs->title = $title;
         }
 
         public function addScript($script,$position = self::SCRIPT_LAST){
@@ -203,7 +203,7 @@ class sh_html extends sh_core{
         public function getBase(){
             $this->debug('function : '.__FUNCTION__, 2, __LINE__);
             if($this->base==''){
-                $base = $this->links->path->protocol.'://'.$this->links->path->getDomain().'/';
+                $base = $this->linker->path->protocol.'://'.$this->linker->path->getDomain().'/';
             }else{
                 $base = $this->basePath;
             }
@@ -245,7 +245,7 @@ class sh_html extends sh_core{
         public function getTitle($head = false){
             $this->debug('function : '.__FUNCTION__, 2, __LINE__);
             if($this->title == sh_params::VALUE_NOT_SET){
-                $rep = $this->links->site->defaultTitle;
+                $rep = $this->linker->site->defaultTitle;
             }else{
                 $rep = $this->title;
             }
@@ -269,7 +269,7 @@ class sh_html extends sh_core{
                 $ret .= '<meta http-equiv="pragma" content="no-cache" />';
             }
             $ret .= '<meta name="description" content="'.$this->getMetaDescription().'" />';
-            $ret .= '<link rel="shortcut icon" href="'.$this->links->favicon->getPath().'"/>';
+            $ret .= '<link rel="shortcut icon" href="'.$this->linker->favicon->getPath().'"/>';
             $ret .= $this->getCSS();
             self::$scriptsSent = true;
             $ret .= $this->getScripts();
@@ -457,7 +457,7 @@ class sh_html extends sh_core{
 
         public function createPopupLink($link,$content,$width = 250,$height = 200){
             $this->debug('function : '.__FUNCTION__, 2, __LINE__);
-            $link = $this->links->path->getLink($link);
+            $link = $this->linker->path->getLink($link);
             if(substr($link,0,4)!='http' && !($link)){
                 return $content;
             }
@@ -469,7 +469,7 @@ class sh_html extends sh_core{
         public function createLink($link,$content,$opt=array()){
             $this->debug('function : '.__FUNCTION__, 2, __LINE__);
             if(substr($link,0,4) != 'http' && strtolower(substr($link,0,7)) != 'mailto:'){
-                $link = $this->links->path->getLink($link);
+                $link = $this->linker->path->getLink($link);
                 if(!$link){
                     return $content;
                 }
@@ -521,13 +521,13 @@ class sh_html extends sh_core{
         public function render(){
             $this->debug('function : '.__FUNCTION__, 2, __LINE__);
             self::$willRender = false;
-            $this->links->javascript->get(sh_javascript::SCRIPTACULOUS);
+            $this->linker->javascript->get(sh_javascript::SCRIPTACULOUS);
             $this->addCSS('main.css','MAIN','/templates/global/global.css','GLOBAL');
 
-            $loadClasses = $this->links->template->get('loadClasses',array());
+            $loadClasses = $this->linker->template->get('loadClasses',array());
             if(is_array($loadClasses)){
                 foreach($loadClasses as $loadClass){
-                    $this->links->$loadClass;
+                    $this->linker->$loadClass;
                 }
             }
 
@@ -541,32 +541,32 @@ class sh_html extends sh_core{
             );
 
             // Sets the variables to fill the output
-            $data['body']['adminpanel'] = $this->links->admin->get();
+            $data['body']['adminpanel'] = $this->linker->admin->get();
 
-            $data['body']['searchEngine'] = $this->links->searcher->get();
+            $data['body']['searchEngine'] = $this->linker->searcher->get();
 
             $data['body']['headline'] = $this->getHeadLine();
-            $data['language']['selector'] = $this->links->i18n->getLanguageSelector();
+            $data['language']['selector'] = $this->linker->i18n->getLanguageSelector();
 
             for($menuNumber = 1;$menuNumber <= $this->menusNumber; $menuNumber++){
-                $data['body']['menu_'.$menuNumber] = $this->links->menu->get($menuNumber);
+                $data['body']['menu_'.$menuNumber] = $this->linker->menu->get($menuNumber);
             }
             $data['body']['title'] = $this->getTitle(true);
             $data['body']['content'] = $this->getBodyContent();
             $data['body']['global_image'] = str_replace(SH_ROOT_FOLDER,SH_ROOT_PATH,$this->global_image);
             $data['body']['global_image_text'] = $this->global_image_text;
-            $data['body']['logo'] = $this->links->site->logo;
+            $data['body']['logo'] = $this->linker->site->logo;
 
-            $data['body']['copyrights'] = $this->links->legacy->getLegacyLine();
+            $data['body']['copyrights'] = $this->linker->legacy->getLegacyLine();
 
-            $data['diaporamas']['display'] = $this->links->site->diaporamaDisplay;
+            $data['diaporamas']['display'] = $this->linker->site->diaporamaDisplay;
             $data['body']['otherContents'] = $this->getOtherContent();
 
-            $data['body']['analytics'] = $this->links->googleServices->getAnalytics(true);
+            $data['body']['analytics'] = $this->linker->googleServices->getAnalytics(true);
             $data['body']['analytics'] .=
             '<script type="text/javascript">'.$this->endingScripts.'</script>';
 
-            list($action,$link) = $this->links->user->getConnectionLink();
+            list($action,$link) = $this->linker->user->getConnectionLink();
 
             $data[$action]['link'] = $link;
 

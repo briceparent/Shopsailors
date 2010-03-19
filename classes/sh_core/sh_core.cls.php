@@ -16,7 +16,7 @@ if(!defined('SH_MARKER'))
  */
 abstract class sh_core{
     static $instances = array();
-    protected $links = null;
+    protected $linker = null;
     protected $debugger = null;
     protected static $form_verifier = null;
     protected $minimal = array();
@@ -34,22 +34,22 @@ abstract class sh_core{
      * @param str $class The name of the class
      */
     private final function __construct($class){/*
-        $this->links = sh_links::getInstance();
+        $this->linker = sh_linker::getInstance();
         $className = $this->__tostring();
-        $this->links->$className = $this;*/
-        $this->links = sh_links::getInstance();
+        $this->linker->$className = $this;*/
+        $this->linker = sh_linker::getInstance();
         self::$instances[$class] = $this;
         $className = $this->__tostring();
         $this->className = $className;
         $this->shortClassName = str_replace(SH_PREFIX,'',$className);
         $this->shortClassName = str_replace(SH_CUSTOM_PREFIX,'',$this->shortClassName);
-        $this->links->$className = $this;
+        $this->linker->$className = $this;
         if($className != 'sh_params'){
             $this->paramsFile = $className;
             $this->i18nClassName = $className;
-            $this->links->params->addElement($this->paramsFile);
+            $this->linker->params->addElement($this->paramsFile);
             if($className != 'sh_db'){
-                $this->links->db->addElement($className);
+                $this->linker->db->addElement($className);
             }
         }
         $this->debugger = new sh_debugger;
@@ -75,7 +75,7 @@ abstract class sh_core{
      * @return The return of sh_searcher::addEntry
      */
     protected function search_addEntry($method,$id,$level_1,$level_2,$level_3){
-        return $this->links->searcher->addEntry(
+        return $this->linker->searcher->addEntry(
             $this->shortClassName,
             $method,
             $id,
@@ -92,7 +92,7 @@ abstract class sh_core{
      * @return The return of sh_searcher::removeEntry
      */
     protected function search_removeEntry($method,$id,$language = sh_searcher::ALL_LANGUAGES){
-        return $this->links->searcher->removeEntry(
+        return $this->linker->searcher->removeEntry(
             $this->shortClassName,
             $method,
             $id,
@@ -138,11 +138,11 @@ abstract class sh_core{
     /**
      * This function only gives the class name.<br />
      * It is usefull to know which kind of class is sent when calling
-     * $this->links->[some_short_class_name]->getClassName().<br />
+     * $this->linker->[some_short_class_name]->getClassName().<br />
      * This way, it will permit to extend and replace original classes by others.<br />
      * After php 5.3, will be even more usefull because will help the calling of
      * class constants this way:<br />
-     * $this->links->[some_short_class_name]->getClassName()::[SOME_CONSTANT_NAME] without having
+     * $this->linker->[some_short_class_name]->getClassName()::[SOME_CONSTANT_NAME] without having
      * to know the real name of a class.
      * @param bool $short If false, will return the real class name, if true, will return
      * the short one (without the prefix).
@@ -186,7 +186,7 @@ abstract class sh_core{
                     array('',''),
                     $this->__tostring()
                 ).'/'.$action.'/'.$id;
-            $link = $this->links->path->getLink($page);
+            $link = $this->linker->path->getLink($page);
             $name = str_replace(
                 array('{id}','{link}'),
                 array($id,$link),
@@ -268,7 +268,7 @@ abstract class sh_core{
      * @see sh_i18n::remove()
      */
     protected function removeI18n($varName, $lang = null){
-        return $this->links->i18n->remove($this->i18nClassName,$varName,$lang);
+        return $this->linker->i18n->remove($this->i18nClassName,$varName,$lang);
     }
 
     /**
@@ -281,7 +281,7 @@ abstract class sh_core{
      * @see sh_i18n::get()
      */
     protected function getI18n($varName,$lang = null){
-        return $this->links->i18n->get($this->i18nClassName,$varName,$lang);
+        return $this->linker->i18n->get($this->i18nClassName,$varName,$lang);
     }
 
     /**
@@ -294,7 +294,7 @@ abstract class sh_core{
      * @return boolean Returns the return of the sh_i18n::set() function
      */
     protected function setI18n($varName,$value,$lang = NULL){
-        return $this->links->i18n->set($this->i18nClassName,$varName, $value, $lang);
+        return $this->linker->i18n->set($this->i18nClassName,$varName, $value, $lang);
     }
 
     /**
@@ -308,10 +308,10 @@ abstract class sh_core{
      */
     protected function db_execute($queryName,$replacements = array(),&$debug = false){
         if(!$this->db_element_added){
-            $this->links->db->addElement($this->className);
+            $this->linker->db->addElement($this->className);
             $this->db_element_added = true;
         }
-        return $this->links->db->execute($this->className,$queryName,$replacements,$debug);
+        return $this->linker->db->execute($this->className,$queryName,$replacements,$debug);
     }
 
     /**
@@ -320,7 +320,7 @@ abstract class sh_core{
      * @return id The id of the last insert element
      */
     protected function db_insertId(){
-        $ret = $this->links->db->insert_id($this->className);
+        $ret = $this->linker->db->insert_id($this->className);
         return $ret;
     }
 
@@ -349,7 +349,7 @@ abstract class sh_core{
         }elseif($this->paramsBase != ''){
             $paramName = $this->paramsBase;
         }
-        return $this->links->params->remove($this->paramsFile,$paramName);
+        return $this->linker->params->remove($this->paramsFile,$paramName);
     }
 
     /**
@@ -361,7 +361,7 @@ abstract class sh_core{
         }elseif($this->paramsBase != ''){
             $paramName = $this->paramsBase;
         }
-        return $this->links->params->remove($this->paramsFile,$paramName);
+        return $this->linker->params->remove($this->paramsFile,$paramName);
     }
 
     /**
@@ -378,7 +378,7 @@ abstract class sh_core{
         }elseif($this->paramsBase != ''){
             $paramName = $this->paramsBase;
         }
-        return $this->links->params->get($this->paramsFile,$paramName,$defaultValue);
+        return $this->linker->params->get($this->paramsFile,$paramName,$defaultValue);
     }
 
     /**
@@ -403,7 +403,7 @@ abstract class sh_core{
         }elseif($this->paramsBase != ''){
             $paramName = $this->paramsBase;
         }
-        return $this->links->params->set($this->paramsFile,$paramName,$paramValue);
+        return $this->linker->params->set($this->paramsFile,$paramName,$paramValue);
     }
 
     /**
@@ -418,7 +418,7 @@ abstract class sh_core{
      * @return mixed Returns result of the sh_params::write.
      */
     protected function writeParams(){
-        return $this->links->params->write($this->paramsFile);
+        return $this->linker->params->write($this->paramsFile);
     }
 
     /**
@@ -429,7 +429,7 @@ abstract class sh_core{
     }
 
     protected function countParams($paramName = ''){
-        return $this->links->params->count($this->paramsFile,$paramName);
+        return $this->linker->params->count($this->paramsFile,$paramName);
     }
 
     /**
@@ -446,9 +446,9 @@ abstract class sh_core{
      */
     protected function addToSitemap($page = '', $priority = '', $frequency = '', $date = ''){
         if($page == ''){
-            $page = $this->links->path->getPage();
+            $page = $this->linker->path->getPage();
         }
-        $sitemap = $this->links->sitemap;
+        $sitemap = $this->linker->sitemap;
         if($date != '' && preg_match('`([0-9]{4}-[0-9]{2}-[0-9]{2}).+`',$date,$match)){
             $date = $match[1];
         }elseif($date != '' && preg_match('`([0-9]{2})-([0-9]{2})-([0-9]{4}).+`',$date,$match)){
@@ -473,11 +473,11 @@ abstract class sh_core{
                 $priority = $defaultPriority;
             }
         }
-        if($this->links->menu->changeSitemapPriority($page) > $priority){
-            $priority = $this->links->menu->changeSitemapPriority($page);
+        if($this->linker->menu->changeSitemapPriority($page) > $priority){
+            $priority = $this->linker->menu->changeSitemapPriority($page);
         }
-        if($this->links->index->changeSitemapPriority($page) > $priority){
-            $priority = $this->links->index->changeSitemapPriority($page);
+        if($this->linker->index->changeSitemapPriority($page) > $priority){
+            $priority = $this->linker->index->changeSitemapPriority($page);
         }
 
         return $sitemap->addToSitemap($page, $priority, $date, $frequency);
@@ -489,9 +489,9 @@ abstract class sh_core{
      * @return mixed Returns the same that sh_sitemap::removeFromSitemap()
      */
     protected function removeFromSitemap($page = ''){
-        $sitemap = $this->links->sitemap;
+        $sitemap = $this->linker->sitemap;
         if($page == ''){
-            $page = $this->links->path->getPage();
+            $page = $this->linker->path->getPage();
         }
         return $sitemap->removeFromSitemap($page);
     }
@@ -537,9 +537,9 @@ abstract class sh_core{
         }else{
             $content = $file;
         }
-        $ret = $this->links->renderer->render($content,$values,$debug);
+        $ret = $this->linker->renderer->render($content,$values,$debug);
         if($sendToHTML === true){
-            return $this->links->html->insert($ret);
+            return $this->linker->html->insert($ret);
         }
         return $ret;
         // END OF TEST
@@ -552,22 +552,22 @@ abstract class sh_core{
         }
 
         if(file_exists(SH_CLASS_FOLDER.$this->__tostring().'/'.$filePath)){
-            $ret = $this->links->renderer->render(
+            $ret = $this->linker->renderer->render(
                 SH_CLASS_FOLDER.$this->__tostring().'/'.$filePath,
                 $values,
                 $debug
             );
         }elseif(file_exists(SH_CLASS_FOLDER.$this->__tostring().'/'.$file)){
-            $ret = $this->links->renderer->render(
+            $ret = $this->linker->renderer->render(
                 SH_CLASS_FOLDER.$this->__tostring().'/'.$file,
                 $values,
                 $debug
             );
         }else{
-            $ret = $this->links->renderer->render($file,$values,$debug);
+            $ret = $this->linker->renderer->render($file,$values,$debug);
         }
         if($sendToHTML === true){
-            return $this->links->html->insert($ret);
+            return $this->linker->html->insert($ret);
         }
         return $ret;
     }
@@ -706,7 +706,7 @@ abstract class sh_core{
      */
     protected function onlyAdmin(){
         if(!$this->isAdmin()){
-            $this->links->path->error('403');
+            $this->linker->path->error('403');
         }
         return true;
     }
@@ -718,11 +718,11 @@ abstract class sh_core{
      * Redirects with a 403 error if not
      */
     protected function isAdmin(){
-        $userId = $this->links->user->userId;
+        $userId = $this->linker->user->userId;
         if(!$userId){
             return false;
         }
-        return $this->links->admin->isAdmin($userId);
+        return $this->linker->admin->isAdmin($userId);
     }
 
     /**
@@ -733,7 +733,7 @@ abstract class sh_core{
      */
     protected function onlyMaster(){
         if(!$this->isMaster()){
-            $this->links->path->error('403');
+            $this->linker->path->error('403');
         }
         return true;
     }
@@ -745,11 +745,11 @@ abstract class sh_core{
      * Redirects with a 403 error if not
      */
     protected function isMaster(){
-        $userId = $this->links->user->userId;
+        $userId = $this->linker->user->userId;
         if(!$userId){
             return false;
         }
-        return $this->links->admin->isMaster($userId);
+        return $this->linker->admin->isMaster($userId);
     }
 
     public function __tostring(){
@@ -792,8 +792,8 @@ class sh_debugger{
      *
      */
     public function __construct(){
-        $this->links = sh_links::getInstance();
-        //$this->file = date('Ymd-His').md5(sh_links::getInstance()->path->url);
+        $this->linker = sh_linker::getInstance();
+        //$this->file = date('Ymd-His').md5(sh_linker::getInstance()->path->url);
     }
 
     /**

@@ -31,7 +31,7 @@ class sh_images extends sh_core{
     }
 
     public function imageExists($image){
-        $realImage = $this->links->path->changeToRealFolder(
+        $realImage = $this->linker->path->changeToRealFolder(
             $image
         );
         return (file_exists($realImage) || file_exists(SH_ROOT_FOLDER.$realImage));
@@ -46,7 +46,7 @@ class sh_images extends sh_core{
      * @return bool true on success
      */
     public function get(){
-        $this->links->cache->disable();
+        $this->linker->cache->disable();
         // we verify if the session exists.
         if(isset($_SESSION['SH_BUILT'])){
             // It does, so we verify if the image file exists
@@ -58,7 +58,7 @@ class sh_images extends sh_core{
                 return true;
             }
             // We translate path to folder
-            $folder = $this->links->path->changeToRealFolder($askedFolder,$file,$buttonType);
+            $folder = $this->linker->path->changeToRealFolder($askedFolder,$file,$buttonType);
             // we verify if the image file exists
             if(file_exists($folder.$file)){
                 // It does, so we send it with the apropriate header
@@ -97,7 +97,7 @@ class sh_images extends sh_core{
         $font = SH_FONTS_FOLDER.$font;
         $text = self::PREVIEW_TEXT;
         $image = SH_TEMPIMAGES_FOLDER.md5(microtime());
-        $imageBuilder = $this->links->imagesBuilder;
+        $imageBuilder = $this->linker->imagesBuilder;
         list($size) = $imageBuilder->getFontSizeByTextHeight(
             sh_fonts::FONT_THUMB_TEXT,$font,$height
         );
@@ -136,20 +136,20 @@ class sh_images extends sh_core{
         $oldPath = $path;
         $path = str_replace(
             self::LANG_DIR,
-            $this->links->i18n->getLang().'/',
+            $this->linker->i18n->getLang().'/',
             $path
         );
         list($image) = $this->db_execute('getImage',array('path'=>$path));
         if(!isset($image['type']) && $oldPath != $path){
             $path = str_replace(
                 self::LANG_DIR,
-                $this->links->i18n->getDefaultLang().'/',
+                $this->linker->i18n->getDefaultLang().'/',
                 $oldPath
             );
             return $this->create($path);
         }
 
-        $imageBuilder = $this->links->imagesBuilder;
+        $imageBuilder = $this->linker->imagesBuilder;
         $destImage = str_replace(
             array(SH_GENERATEDIMAGES_PATH,SH_TEMPIMAGES_PATH),
             array(SH_GENERATEDIMAGES_FOLDER,SH_TEMPIMAGES_FOLDER),
@@ -218,7 +218,7 @@ class sh_images extends sh_core{
         }
 
         if($type == ''){
-            $type = $this->links->template->defaultBuilder;
+            $type = $this->linker->template->defaultBuilder;
         }
         // Prepares a loop to build the states, if needed
         if($has3States){

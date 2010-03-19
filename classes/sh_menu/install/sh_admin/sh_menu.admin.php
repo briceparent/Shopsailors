@@ -2,7 +2,7 @@
 if(!defined('SH_MARKER'))
 	header('location: directCallForbidden.php');
 
-$myLinks = sh_links::getInstance();
+$myLinks = sh_linker::getInstance();
 
 $menusNumber = $myLinks->template->menusNumber;
 $menusDescription = $myLinks->template->menusDescription;

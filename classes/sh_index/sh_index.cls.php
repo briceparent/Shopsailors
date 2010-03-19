@@ -30,24 +30,24 @@ class sh_index extends sh_core{
      */
     public function choose(){
         $this->onlyAdmin();
-        $this->links->cache->disable();
+        $this->linker->cache->disable();
 
         if($this->formSubmitted('chooseIndexPage')){
             list($class,$action,$id) = explode('/',$_POST['page']);
             $this->setParam('class',$class);
             $this->setParam('action',$action);
             $this->setParam('id',$id);
-            $link = $this->links->path->getLink($class.'/'.$action.'/'.$id);
+            $link = $this->linker->path->getLink($class.'/'.$action.'/'.$id);
             $this->setParam('link',$link);
             $this->writeParams();
-            $this->links->path->redirect(__CLASS__,'show');
+            $this->linker->path->redirect(__CLASS__,'show');
         }
 
         $actualClass = $this->getParam('class');
         $actualAction = $this->getParam('action');
         $actualId = $this->getParam('id');
 
-        $datas['classes'] = $this->links->helper->listLinks(
+        $datas['classes'] = $this->linker->helper->listLinks(
             $actualClass.'/'.$actualAction.'/'.$actualId
         );
         $this->render('link_chooser',$datas);

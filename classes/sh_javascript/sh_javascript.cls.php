@@ -64,17 +64,17 @@ class sh_javascript extends sh_core{
                     if($inHTMLClass){
                         if(substr($oneLibrary,-4) != '_CSS'){
                             if($library == self::SCRIPTACULOUS){
-                                $return = $return && $this->links->html->addScript(
+                                $return = $return && $this->linker->html->addScript(
                                     $this->getSinglePath().constant('self::SRC_'.$id),
                                     sh_html::SCRIPT_FIRST
                                 );
                             }else{
-                                $return = $return && $this->links->html->addScript(
+                                $return = $return && $this->linker->html->addScript(
                                     $this->getSinglePath().constant('self::SRC_'.$id)
                                 );
                             }
                         }else{
-                            $return = $return && $this->links->html->addCSS(
+                            $return = $return && $this->linker->html->addCSS(
                                 $this->getSinglePath().constant('self::SRC_'.$id)
                             );
                         }
@@ -102,12 +102,12 @@ class sh_javascript extends sh_core{
             return '';
         }
         if(isset($params['absolute']) && strtolower($params['absolute']) == 'absolute'){
-            $file = $this->links->path->getBaseUri().$file;
+            $file = $this->linker->path->getBaseUri().$file;
         }
         if(isset($params['direct']) && strtolower($params['direct']) == 'direct'){
             return $this->inLine($file);
         }
-        $this->links->html->addScript($file);
+        $this->linker->html->addScript($file);
         return '';
     }
 

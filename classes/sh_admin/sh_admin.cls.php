@@ -20,10 +20,10 @@ class sh_admin extends sh_core{
     const CONNECT_AS_MASTER = 1;
 
     public function construct(){
-        if(!$this->links->user->isConnected()){
+        if(!$this->linker->user->isConnected()){
             return true;
         }
-        $userId = $this->links->user->userId;
+        $userId = $this->linker->user->userId;
         $this->admin = $this->isAdmin($userId);
         $this->master = $this->isMaster($userId);
 
@@ -35,8 +35,8 @@ class sh_admin extends sh_core{
         
         if(strtolower($browser['browser']) != 'firefox' && strtolower($browser['browser']) != 'mozilla'){
             if(!isset($_SESSION[__CLASS__]['notUsingFirefoxMessageShown'])){
-                $this->links->cache->disable();
-                $this->links->html->addToBody(
+                $this->linker->cache->disable();
+                $this->linker->html->addToBody(
                     'onload',
                     'alert(\''.$this->getI18n('youShouldUseFirefox').'\');'
                 );
@@ -46,7 +46,7 @@ class sh_admin extends sh_core{
         }
 
         sh_cache::removeCache();
-        $this->links->cache->disable();
+        $this->linker->cache->disable();
 
         if(isset($_SESSION[__CLASS__]['adminBoxPosX'])){
             $x = $_SESSION[__CLASS__]['adminBoxPosX'];
@@ -55,9 +55,9 @@ class sh_admin extends sh_core{
             $x = '50px';
             $y = '50px';
         }
-        $this->links->html->addCSS('/templates/global/admin.css','ADMINBOX');
-        $this->links->html->addScript('/'.__CLASS__.'/singles/admin.js');
-        $this->links->html->addToBody('onload','dragAdminBox(\''.$x.'\',\''.$y.'\');');
+        $this->linker->html->addCSS('/templates/global/admin.css','ADMINBOX');
+        $this->linker->html->addScript('/'.__CLASS__.'/singles/admin.js');
+        $this->linker->html->addToBody('onload','dragAdminBox(\''.$x.'\',\''.$y.'\');');
         return true;
     }
 
@@ -98,18 +98,18 @@ class sh_admin extends sh_core{
      * Redirects to an error page if the user is neither an admin nor a master
      */
     public function onlyAdmin($alsoVerifyIfIsMaster = true){
-        $userId = $this->links->user->userId;
+        $userId = $this->linker->user->userId;
         if(!$this->isAdmin($userId,$alsoVerifyIfIsMaster)){
-            $this->links->path->error(403);
+            $this->linker->path->error(403);
         }
     }
     /**
      * Redirects to an error page if the user is not a master
      */
     public function onlyMaster($alsoVerifyIfIsMaster = true){
-        $userId = $this->links->user->userId;
+        $userId = $this->linker->user->userId;
         if(!$this->isMaster($userId)){
-            $this->links->path->error(403);
+            $this->linker->path->error(403);
         }
     }
 
@@ -121,7 +121,7 @@ class sh_admin extends sh_core{
             $_SESSION[__CLASS__]['newConnexion'] = true;
             $this->admin = true;
             $this->master = true;
-            $this->links->events->onMasterConnection();
+            $this->linker->events->onMasterConnection();
             return true;
         }
 
@@ -130,7 +130,7 @@ class sh_admin extends sh_core{
         $_SESSION[__CLASS__]['newConnexion']=true;
         $this->master = false;
         $this->admin=true;
-        $this->links->events->onAdminConnection();
+        $this->linker->events->onAdminConnection();
         return true;
     }
 
@@ -140,7 +140,7 @@ class sh_admin extends sh_core{
         $_SESSION[__CLASS__]['newConnexion']=false;
         $this->master = false;
         $this->admin=false;
-        $this->links->events->onAdminDisconnection();
+        $this->linker->events->onAdminDisconnection();
         return true;
     }
 
@@ -154,11 +154,11 @@ class sh_admin extends sh_core{
             return '';
         }
 
-        $this->links->session->sessionKeeper();
+        $this->linker->session->sessionKeeper();
 
         $admin['admin']['paneltitle'] = SH_TEMPLATE_PATH.'/global/admin/pannel_title.png';
         $admin['admin']['closeimage'] = SH_TEMPLATE_PATH.'/global/admin/pannel_close.png';
-        $admin['admin']['closehref'] = $this->links->path->getLink('user/disconnect/');
+        $admin['admin']['closehref'] = $this->linker->path->getLink('user/disconnect/');
 
 
         $globalAdminFilesFolder = SH_CLASS_SHARED_FOLDER.__CLASS__.'/';
@@ -211,7 +211,7 @@ class sh_admin extends sh_core{
 
         $ret = $this->render('interface',$admin,false,false);
 
-        $root = $this->links->path->getBaseUri();
+        $root = $this->linker->path->getBaseUri();
         $ret = str_replace(
             array(' href="/','window.open(\'/'),
             array(' href="'.$root.'/','window.open(\''.$root.'/'),
@@ -239,7 +239,7 @@ class sh_admin extends sh_core{
         if($image != ''){
             $image = '<img src="/images/shared/icons/'. $image .'" alt="logo"/> ';
         }
-        $pageName = basename($this->links->path->getLink($page));
+        $pageName = basename($this->linker->path->getLink($page));
         if(strlen($pageName)<18){
             $pageName = 'Modifier la page "'.$pageName.'"';
         }elseif(strlen($pageName)>28){
@@ -248,7 +248,7 @@ class sh_admin extends sh_core{
             $pageName = 'Modifier la page <br />"'.$pageName.'"';
         }
         $this->elements[$category][]['element'] = $image . '<span>'.
-        $this->links->html->createLink($page,$pageName).'</span>'."\n";
+        $this->linker->html->createLink($page,$pageName).'</span>'."\n";
 
         return true;
     }
@@ -270,7 +270,7 @@ class sh_admin extends sh_core{
      */
     public function insert($element,$category,$image = '',$position = "bottom"){
         if($image != ''){
-            $root = $this->links->path->getBaseUri().'/';
+            $root = $this->linker->path->getBaseUri().'/';
             $image = '<img src="'.$root.'templates/global/admin/icons/'.$image.'" alt="logo"/> ';
         }
         if(!is_array($this->elements[$category])){
@@ -313,7 +313,7 @@ class sh_admin extends sh_core{
                             $options['target']=$menuElement['target'];
                         }
                         $this->insert(
-                            $this->links->html->createLink(
+                            $this->linker->html->createLink(
                                 $menuElement['link'],
                                 $menuElement['text'],
                                 $options
@@ -324,7 +324,7 @@ class sh_admin extends sh_core{
                         );
                     }else{
                         $this->insert(
-                            $this->links->html->createPopupLink(
+                            $this->linker->html->createPopupLink(
                                 $menuElement['link'],
                                 $menuElement['text'],
                                 $menuElement['width'],
@@ -344,7 +344,7 @@ class sh_admin extends sh_core{
                 foreach($menu as $position=>$menuElement){
                     if($menuElement['type'] != 'popup'){
                         $this->insert(
-                            $this->links->html->createLink(
+                            $this->linker->html->createLink(
                                 $menuElement['link'],
                                 $menuElement['text']
                             ),
@@ -354,7 +354,7 @@ class sh_admin extends sh_core{
                         );
                     }else{
                         $this->insert(
-                            $this->links->html->createPopupLink(
+                            $this->linker->html->createPopupLink(
                                 $menuElement['link'],
                                 $menuElement['text'],
                                 $menuElement['width'],

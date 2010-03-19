@@ -37,7 +37,7 @@ class sh_session extends sh_core{
      * It occurs when the class is called for first by the template.rf.xml .
      */
     public function sessionKeeper(){
-        $this->links->html->addScript($this->getSinglePath(true).'sessionKeeper.js');
+        $this->linker->html->addScript($this->getSinglePath(true).'sessionKeeper.js');
         return true;
     }
 
@@ -94,7 +94,7 @@ class sh_session extends sh_core{
      */
     public function onlyAdmin(){
         if(!$this->admin){
-            $this->links->path->error(403);
+            $this->linker->path->error(403);
         }
     }
 
@@ -111,8 +111,8 @@ class sh_session extends sh_core{
             $_SESSION[__CLASS__]['newConnexion'] = true;
             $this->admin = true;
             $this->master = true;
-            $this->links->events->onMasterConnection();
-            $this->links->path->redirect('sh_index','show');
+            $this->linker->events->onMasterConnection();
+            $this->linker->path->redirect('sh_index','show');
             return true;
         }
         if(isset($allowedAdmins[$_POST['id']]) && $allowedAdmins[$_POST['id']] == MD5('bRiCe'.$_POST['pass'])){
@@ -121,8 +121,8 @@ class sh_session extends sh_core{
             $_SESSION[__CLASS__]['newConnexion']=true;
             $this->master = false;
             $this->admin=true;
-            $this->links->events->onAdminConnection();
-            $this->links->path->redirect('sh_index','show');
+            $this->linker->events->onAdminConnection();
+            $this->linker->path->redirect('sh_index','show');
             return true;
         }
         return false;
@@ -135,7 +135,7 @@ class sh_session extends sh_core{
         $this->admin = false;
         $this->master = false;
         unset($_SESSION[__CLASS__]);
-        $this->links->path->redirect('sh_index','show');
+        $this->linker->path->redirect('sh_index','show');
     }*/
 
     /**
@@ -145,15 +145,15 @@ class sh_session extends sh_core{
         sh_cache::disable();
         //delays the script also to prevent brutforce attacks
         sleep(2);
-        if($this->links->admin->connection()){
+        if($this->linker->admin->connection()){
             $_SESSION['verif_connexion']='';
             if(!$this->priv_connect()){
                 $connectForm = 'Le pseudonyme ou le mot de passe est incorrect...<br /><br />';
             }
         }
         // Shows connection form
-        $form = $this->links->admin->getConnectionForm();
-        $this->links->html->insert($form);
+        $form = $this->linker->admin->getConnectionForm();
+        $this->linker->html->insert($form);
     }*/
 
     public function changeOrder($order){
@@ -192,7 +192,7 @@ class sh_session extends sh_core{
     }
 
     public function isConnectionPage(){
-        $page = $this->links->path->page['page'].'/';
+        $page = $this->linker->path->page['page'].'/';
         if($page == $this->shortClassName.'/connect/'){
             return true;
         }

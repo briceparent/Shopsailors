@@ -43,7 +43,7 @@ class sh_imagesBuilder extends sh_core{
 
 
     public function construct(){
-        $this->builderFolder = $this->links->site->templateFolder.'builder/';
+        $this->builderFolder = $this->linker->site->templateFolder.'builder/';
         if(!is_dir($this->builderFolder)){
             mkdir($this->builderFolder);
         }
@@ -84,7 +84,7 @@ class sh_imagesBuilder extends sh_core{
                 }
             }
             imagedestroy($maskImage);
-            $this->links->helper->writeArrayInFile(
+            $this->linker->helper->writeArrayInFile(
                 $phpMaskFile,
                 'mask',
                 $mask
@@ -169,7 +169,7 @@ class sh_imagesBuilder extends sh_core{
      */
     public function stretchImage($type,$position,$state,&$destImageName,$destWidth,$destHeight){
         $this->debug('function : '.__FUNCTION__, 2, __LINE__);
-        $site = $this->links->site;
+        $site = $this->linker->site;
         $variation = $site->variation;
 
         if(!is_dir(dirname($destImageName))){
@@ -496,7 +496,7 @@ class sh_imagesBuilder extends sh_core{
     public function tagImage($type,$position,$state,$file,$text,$font,$fontSize,$startX=null,$startY=null,$textColorRGB = 'variation'){
         $this->debug('function : '.__FUNCTION__, 2, __LINE__);
         $addReflect = true;
-        $site = $this->links->site;
+        $site = $this->linker->site;
         $templateFolder = $site->templateFolder;
 
         // Gets the font and its params
@@ -517,17 +517,17 @@ class sh_imagesBuilder extends sh_core{
         if($textColorRGB == 'variation'){
             $variation = $site->variation;
             if($state == 'active'){
-                $textColorRGB = str_replace('#','',$this->links->variation->get(
+                $textColorRGB = str_replace('#','',$this->linker->variation->get(
                     'buttonTextActive|buttonText',
                     '999999'
                 ));
             }elseif($state == 'selected'){
-                $textColorRGB = str_replace('#','',$this->links->variation->get(
+                $textColorRGB = str_replace('#','',$this->linker->variation->get(
                     'buttonTextSelected|buttonText',
                     '999999'
                 ));
             }else{
-               $textColorRGB = str_replace('#','',$this->links->variation->get(
+               $textColorRGB = str_replace('#','',$this->linker->variation->get(
                 'buttonText',
                  '999999'
                 ));
@@ -939,7 +939,7 @@ class sh_imagesBuilder extends sh_core{
         $ret['fixHeight'] = $ret['height'] - $ret['stopTop'] + $ret['startTop'];
 
         // Writes the params file for the image
-        $this->links->helper->writeArrayInFile($textFile,'image',$ret);
+        $this->linker->helper->writeArrayInFile($textFile,'image',$ret);
 
         $newImage = imagecreatetruecolor($ret['width'], $ret['height']);
         $transparent = imagecolorallocate($newImage, $transparentColor['R'], $transparentColor['G'], $transparentColor['B']);

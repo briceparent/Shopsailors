@@ -30,24 +30,24 @@ class sh_index_lvdc extends sh_core{
      */
     public function choose(){
         $this->onlyAdmin();
-        $this->links->cache->disable();
+        $this->linker->cache->disable();
 
         if($this->formSubmitted('chooseIndexPage')){
             list($class,$action,$id) = explode('/',$_POST['page']);
             $this->setParam('class',$class);
             $this->setParam('action',$action);
             $this->setParam('id',$id);
-            $link = $this->links->path->getLink($class.'/'.$action.'/'.$id);
+            $link = $this->linker->path->getLink($class.'/'.$action.'/'.$id);
             $this->setParam('link',$link);
             $this->writeParams();
-            $this->links->path->redirect(__CLASS__,'show');
+            $this->linker->path->redirect(__CLASS__,'show');
         }
 
         $actualClass = $this->getParam('class');
         $actualAction = $this->getParam('action');
         $actualId = $this->getParam('id');
 
-        $addresses = $this->links->sitemap->getSitemapPagesList();
+        $addresses = $this->linker->sitemap->getSitemapPagesList();
 
         if(is_array($addresses['PAGES'])){
             foreach($addresses['PAGES'] as $page=>$address){
@@ -62,7 +62,7 @@ class sh_index_lvdc extends sh_core{
                         $state='checked';
                     }
 
-                    $value = $this->links->$class->getPageName($action, $id);
+                    $value = $this->linker->$class->getPageName($action, $id);
                     $elements[$class][$action.$id] = array(
                         'name' => $page,
                         'value' => $value,
@@ -82,7 +82,7 @@ class sh_index_lvdc extends sh_core{
                 $classId = 0;
                 $className = $class;
             }else{
-                $className = $this->links->i18n->get($class,'className');
+                $className = $this->linker->i18n->get($class,'className');
             }
             if($className == ''){
                 $className = $class;

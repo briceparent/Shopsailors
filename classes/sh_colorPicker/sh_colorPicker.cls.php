@@ -15,7 +15,7 @@ class sh_colorPicker extends sh_core{
     const DEFAULTCOLOR = '6699CC';
 
     public function construct(){
-        $this->links->html->addScript($this->getSinglePath(true).'colorPicker.js');
+        $this->linker->html->addScript($this->getSinglePath(true).'colorPicker.js');
     }
 
     public function render_colorPicker($attributes = array()){

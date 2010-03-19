@@ -21,7 +21,7 @@ class sh_menu extends sh_core{
      * Construction of the class
      */
     public function construct(){
-        $this->links->html->addCSS(__CLASS__.'.css',__CLASS__);
+        $this->linker->html->addCSS(__CLASS__.'.css',__CLASS__);
         return true;
     }
 
@@ -30,7 +30,7 @@ class sh_menu extends sh_core{
      */
     public function reset(){
         // So the folder in which the images are is :
-        $this->links->helper->deleteDir(SH_GENERATEDIMAGES_FOLDER);
+        $this->linker->helper->deleteDir(SH_GENERATEDIMAGES_FOLDER);
     }
 
     /**
@@ -60,7 +60,7 @@ class sh_menu extends sh_core{
 
         $sectionsCount = $_POST['sectionsCount'];
 
-        $maxMenuWidth = $this->links->template->get(
+        $maxMenuWidth = $this->linker->template->get(
             'menuButtons>'.$id.'>maxWidth',
             false
         );
@@ -83,7 +83,7 @@ class sh_menu extends sh_core{
         $entriesIds = array_keys($_POST['categories']);
         $langs = array_keys($_POST['categories'][$entriesIds[0]]['name']);
 
-        $defaultLang = $this->links->site->lang;
+        $defaultLang = $this->linker->site->lang;
 
         foreach($_POST['categories'] as $key=>$value){
             foreach($langs as $lang){
@@ -98,21 +98,21 @@ class sh_menu extends sh_core{
         $font = SH_FONTS_FOLDER.$_POST['font'];
 
         // Reads all the parameters from the params file
-        $type = $this->links->template->get('menuButtons>'.$id.'>type');
-        $templateVariation = $this->links->html->getVariation();
+        $type = $this->linker->template->get('menuButtons>'.$id.'>type');
+        $templateVariation = $this->linker->html->getVariation();
 
         // do we have to expand the menu to fit the $menuWidth size?
-        $expand = $this->links->template->get(
+        $expand = $this->linker->template->get(
             'menuButtons>'.$id.'>expand',
             1
         );
-        $menuWidth = $this->links->template->get(
+        $menuWidth = $this->linker->template->get(
             'menuButtons>'.$id.'>totalWidth|width',
             900
         );
         $textHeight = $_POST['textHeight'];
 
-        $builder = $this->links->imagesBuilder;
+        $builder = $this->linker->imagesBuilder;
 
         $echo = 'OK';
         $addToEcho = '';
@@ -145,7 +145,7 @@ class sh_menu extends sh_core{
      *
      */
     public function chooseLink(){
-        $datas['classes'] = $this->links->helper->listLinks(
+        $datas['classes'] = $this->linker->helper->listLinks(
             $_GET['value']
         );
         $datas['category']['id'] = $_GET['id'];
@@ -158,19 +158,19 @@ class sh_menu extends sh_core{
      * Saves the menu
      */
     protected function updateDB(){
-        $id = (int) $this->links->path->page['id'];
+        $id = (int) $this->linker->path->page['id'];
 
         $this->setParam('activated>'.$id, isset($_POST['menuState']));
 
         $sectionsCount = $_POST['sectionsCount'];
 
-        $maxMenuWidth = $this->links->template->get(
+        $maxMenuWidth = $this->linker->template->get(
             'menuButtons>'.$id.'>maxWidth',false
         );
         $oneCategory = current($_POST['categories']);
         $langs = array_keys($oneCategory['name']);
 
-        $defaultLang = $this->links->site->lang;
+        $defaultLang = $this->linker->site->lang;
 
         // Reads all the parameters from the params file and POST datas
         $textHeight = $_POST['textHeight'];
@@ -178,29 +178,29 @@ class sh_menu extends sh_core{
         
         $this->writeParams();
 
-        $type = $this->links->template->get('menuButtons>'.$id.'>type');
-        $templateVariation = $this->links->html->getVariation();
+        $type = $this->linker->template->get('menuButtons>'.$id.'>type');
+        $templateVariation = $this->linker->html->getVariation();
 
-        $images = $this->links->images;
-        $site = $this->links->site;
+        $images = $this->linker->images;
+        $site = $this->linker->site;
         $variation = $site->variation;
 
         // Sets the font to use
-        $fonts = $this->links->template->fonts;
+        $fonts = $this->linker->template->fonts;
         if(in_array($_POST['font'],$fonts)){
-            $this->links->template->setMenuFont($id, $_POST['font']);
+            $this->linker->template->setMenuFont($id, $_POST['font']);
         }
-        $font = $this->links->template->get('menuButtons>'.$id.'>font');
+        $font = $this->linker->template->get('menuButtons>'.$id.'>font');
         $font = SH_FONTS_FOLDER.$font;
 
         $path = 'menu_'.$id.'/';
 
         // Removes all images from a folder on the disk and in the db
-        $this->links->helper->deleteDir(SH_GENERATEDIMAGES_FOLDER.$path);
+        $this->linker->helper->deleteDir(SH_GENERATEDIMAGES_FOLDER.$path);
         $images->removeOneFolder(SH_GENERATEDIMAGES_PATH.$path);
 
         // Creates the images builder
-        $imagesBuilder = $this->links->imagesBuilder;
+        $imagesBuilder = $this->linker->imagesBuilder;
 
         // We remove from the i18n the old i18n menu entries
         $oldI18nEntries = $this->db_execute(
@@ -239,8 +239,8 @@ class sh_menu extends sh_core{
                 $type
             );
             // If needed, we expand the buttons to fit the total width
-            if($this->links->template->get('menuButtons>'.$id.'>expand')){
-                $totalWidth = $this->links->template->get(
+            if($this->linker->template->get('menuButtons>'.$id.'>expand')){
+                $totalWidth = $this->linker->template->get(
                     'menuButtons>'.$id.'>totalWidth',900
                 );
                 $dispatch[$lang] = $totalWidth - $box['width'];
@@ -300,8 +300,8 @@ class sh_menu extends sh_core{
      * @return bool always returns true
      */
     public function edit(){
-        $this->links->admin->onlyAdmin();
-        $id = (int) $this->links->path->page['id'];
+        $this->linker->admin->onlyAdmin();
+        $id = (int) $this->linker->path->page['id'];
         if($this->formSubmitted('menuEditor')){
             // We verify another time that all is good in the form
             if($this->verifyLength(true)){
@@ -334,11 +334,11 @@ class sh_menu extends sh_core{
         }
 
         //loads the external files (JS & CSS)
-        $this->links->html->addScript('/sh_menu/singles/menuEditor.js');
-        $this->links->html->addToBody('onLoad', 'createSortables();');
+        $this->linker->html->addScript('/sh_menu/singles/menuEditor.js');
+        $this->linker->html->addToBody('onLoad', 'createSortables();');
 
         // Reads button type's params to get the available fonts
-        $type = $this->links->template->get('menuButtons>'.$id.'>type');
+        $type = $this->linker->template->get('menuButtons>'.$id.'>type');
 
         $_SESSION[__CLASS__] = array();
         $_SESSION[__CLASS__]['links']['menuId'] = $id;
@@ -350,14 +350,14 @@ class sh_menu extends sh_core{
         $values['sections'] = $this->getForRenderer($id);
         $values['menu']['id'] = $id;
         $values['menu']['type'] = $type;
-        $values['menu']['modifylink'] = $this->links->path->getUri(
+        $values['menu']['modifylink'] = $this->linker->path->getUri(
             'menu/modifyLink/'
         );
 
-        $fonts = $this->links->template->fonts;
+        $fonts = $this->linker->template->fonts;
         $values['fonts']['allowed'] = implode(',',$fonts);
 
-        $font = $this->links->template->get(
+        $font = $this->linker->template->get(
             'menuButtons>'.$id.'>font',
             null
         );
@@ -367,14 +367,14 @@ class sh_menu extends sh_core{
 
         $values['menu']['id'] = $id;
 
-        $values['menu']['state'] = $this->links->helper->addChecked(
+        $values['menu']['state'] = $this->linker->helper->addChecked(
             $this->getParam('activated>'.$id, true)
         );
 
         // Gets the actual text height from the user's params or the template's params
         $actualTextHeight = $this->getParam('textHeight>'.$id, false);
         if(!$actualTextHeight){
-            $actualTextHeight = $this->links->template->get(
+            $actualTextHeight = $this->linker->template->get(
                 'menuButtons>'.$id.'>textHeight',20
             );
         }
@@ -418,7 +418,7 @@ class sh_menu extends sh_core{
             foreach($elements as &$element){
                 $sections .= ',\'category_'.$element['category'].'\'';
             }
-            $this->links->html->addTextScript(
+            $this->linker->html->addTextScript(
 'sections = [\'absent\''.$sections.'];
     function createSortables(){
         Sortable.create(\'container\',{tag:\'div\',only:\'section\',handle:\'handle\'});
@@ -471,13 +471,13 @@ class sh_menu extends sh_core{
             );
 
             if(is_array($elements['sections'])){
-                $thisPage = $this->links->path->getPage();
+                $thisPage = $this->linker->path->getPage();
                 $cpt = 1;
                 foreach($elements['sections'] as &$section){
                     $section['title'] = ' '.$this->getI18n($section['title']).' ';
                     $section['id'] = $cpt++;
                     // We have to check if the page is the index page
-                    $rewrittenLink = $this->links->index->rewritePage($section['link']);
+                    $rewrittenLink = $this->linker->index->rewritePage($section['link']);
                     if($section['link'] == $thisPage || $rewrittenLink == $thisPage){
                         $section['state'] .= '_active';
                         $section['selected'] .= '_active';
@@ -486,7 +486,7 @@ class sh_menu extends sh_core{
                         $section['selected'] .= '_selected';
                     }
                     if(strtolower(substr($section['link'],0,4)) != 'http'){
-                        $section['href'] = $this->links->path->getUri(
+                        $section['href'] = $this->linker->path->getUri(
                             $section['link']
                         );
                     }else{
@@ -515,7 +515,7 @@ class sh_menu extends sh_core{
         sh_cache::removeCache();
 
         // We disable all the menus
-        $menus = array_keys($this->links->template->get('menuButtons'));
+        $menus = array_keys($this->linker->template->get('menuButtons'));
 
         foreach($menus as $menu){
             if(is_int($menu)){

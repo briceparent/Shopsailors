@@ -7,7 +7,7 @@ $adminMenu['Boutique'][] = array(
     'text'=>'Gérer la boutique',
     'icon'=>'picto_tool.png'
 );
-$shopClass = sh_links::getInstance()->shop;
+$shopClass = sh_linker::getInstance()->shop;
 if($shopClass->isActivated()){
     $adminMenu['Boutique'][] = array(
         'link'=>'shop/editProduct/0',

@@ -23,7 +23,7 @@ class sh_diaporama extends sh_core{
 
     public function construct(){
         $this->debug(__METHOD__, 2, __LINE__);
-        $this->links->html->addCSS('/templates/global/diaporama.css');
+        $this->linker->html->addCSS('/templates/global/diaporama.css');
         $this->acceptedTypes = $this->getParam('acceptedTypes');
         $this->diapoFolder = SH_IMAGES_FOLDER.'diaporamas/';
     }
@@ -33,7 +33,7 @@ class sh_diaporama extends sh_core{
      */
     public function edit(){
         $this->debug(__METHOD__, 2, __LINE__);
-        $id = (int) $this->links->path->page['id'];
+        $id = (int) $this->linker->path->page['id'];
         $datas = $this->getList(true);
 
         $max = 0;
@@ -79,7 +79,7 @@ class sh_diaporama extends sh_core{
         }
         $datas = array_merge($datas,$values);
 
-        $datas['new_diaporama']['link'] = $this->links->path->getLink('diaporama/edit/0');
+        $datas['new_diaporama']['link'] = $this->linker->path->getLink('diaporama/edit/0');
         $this->render('add_edit',$datas);
         return true;
     }
@@ -109,7 +109,7 @@ class sh_diaporama extends sh_core{
                         'name'=>$element,
                         'width'=>$width,
                         'height'=>$height,
-                        'link'=>$this->links->path->getLink('diaporama/edit/'.$id),
+                        'link'=>$this->linker->path->getLink('diaporama/edit/'.$id),
                         'id'=>$id
                     );
                 }
@@ -208,12 +208,12 @@ class sh_diaporama extends sh_core{
                 // The file is neither ".", nor "..", nor any hidden file or folder
                 $ext = array_pop(explode('.',$element));
                 if(in_array(strtolower($ext),$this->acceptedTypes)){
-                    $imagePath = $this->links->path->changeToShortFolder($folder).'/'.$element;
+                    $imagePath = $this->linker->path->changeToShortFolder($folder).'/'.$element;
                     $values['images'][]['src'] = $imagePath;
                 }
             }
         }
-        $this->links->helper->writeArrayInFile($file,'values',$values);
+        $this->linker->helper->writeArrayInFile($file,'values',$values);
         return $values;
     }
 
@@ -269,10 +269,10 @@ class sh_diaporama extends sh_core{
             $values['js']['added'] = true;
         }elseif(sh_html::$willRender){
             $values['js']['added'] = true;
-            $this->links->javascript->get(sh_javascript::SCRIPTACULOUS);
-            $this->links->html->addScript($this->getSinglePath().'fastinit.js');
-            $this->links->html->addScript($this->getSinglePath().'crossfade.js');
-            $this->links->html->addScript($this->getSinglePath().'actions.js');
+            $this->linker->javascript->get(sh_javascript::SCRIPTACULOUS);
+            $this->linker->html->addScript($this->getSinglePath().'fastinit.js');
+            $this->linker->html->addScript($this->getSinglePath().'crossfade.js');
+            $this->linker->html->addScript($this->getSinglePath().'actions.js');
             $this->jsAdded = true;
         }else{
             $this->jsAdded = true;
@@ -334,9 +334,9 @@ class sh_diaporama extends sh_core{
             $values['js']['added'] = true;
         }elseif(sh_html::$willRender){
             $values['js']['added'] = true;
-            $this->links->html->addScript($this->getSinglePath().'fastinit.js');
-            $this->links->html->addScript($this->getSinglePath().'crossfade.js');
-            $this->links->html->addScript($this->getSinglePath().'actions.js');
+            $this->linker->html->addScript($this->getSinglePath().'fastinit.js');
+            $this->linker->html->addScript($this->getSinglePath().'crossfade.js');
+            $this->linker->html->addScript($this->getSinglePath().'actions.js');
             $this->jsAdded = true;
         }else{
             $this->jsAdded = true;

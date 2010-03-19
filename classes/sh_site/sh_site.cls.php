@@ -54,11 +54,11 @@ class sh_site extends sh_core{
 
         if(!is_dir(SH_LOGO_FOLDER)){
             mkdir(SH_LOGO_FOLDER);
-            $this->links->helper->writeInFile(
+            $this->linker->helper->writeInFile(
                 SH_LOGO_FOLDER.sh_browser::RIGHTSFILE,
                 sh_browser::ADD
             );
-            $this->links->helper->writeInFile(
+            $this->linker->helper->writeInFile(
                 SH_LOGO_FOLDER.sh_browser::OWNERFILE,
                 sh_browser::createUserName()
             );
@@ -125,20 +125,20 @@ class sh_site extends sh_core{
             $newExt = 'png';
         }
         copy($folder.$newImage,$folder.'logo.'.$newExt);
-        $this->links->browser->resample_image(
+        $this->linker->browser->resample_image(
             $folder.'logo.'.$newExt,
             400,
             400
         );
 
         copy($folder.$newImage,$folder.'rectangular.'.$newExt);
-        $this->links->browser->resample_image(
+        $this->linker->browser->resample_image(
             $folder.'rectangular.'.$newExt,
             960,
             320
         );
         copy($folder.$newImage,$folder.'banner.'.$newExt);
-        $this->links->browser->resample_image(
+        $this->linker->browser->resample_image(
             $folder.'banner.'.$newExt,
             1200,
             240
@@ -152,12 +152,12 @@ class sh_site extends sh_core{
      * @deprecated
      */
     public function periodical_maintenance(){
-        $this->links->cache->disable();
-        $this->links->user->isMasterServer();
+        $this->linker->cache->disable();
+        $this->linker->user->isMasterServer();
         $this->onlyAdmin();
         include(SH_SITES_FOLDER.'list.php');
         $folders = scandir(SH_SITES_FOLDER);
-        $uri = $this->links->path->getUri('pages/maintenance/');
+        $uri = $this->linker->path->getUri('pages/maintenance/');
         foreach($folders as $element){
             if(is_dir(SH_SITES_FOLDER.$element) && substr($element,0,1)!='.'){
                 $domain = array_search($element,$sites);
@@ -183,19 +183,19 @@ class sh_site extends sh_core{
      * @access Allowed only to admins and masters
      */
     public function changeParams(){
-        $this->links->cache->disable();
+        $this->linker->cache->disable();
         $this->onlyAdmin();
         $formResult = $this->formSubmitted('paramsEditor');
         if($formResult === true){
             if($_POST['variation_value'] != $this->variation){
                 $this->setParam('variation',$_POST['variation_value']);
-                $this->links->menu->reset();
+                $this->linker->menu->reset();
             }
             // Gets the new values for i18n
-            $allowedI18n = $this->links->i18n->getSelectorValues(
+            $allowedI18n = $this->linker->i18n->getSelectorValues(
                 'change_site_languages'
             );
-            list($defaultI18n) = $this->links->i18n->getSelectorValues(
+            list($defaultI18n) = $this->linker->i18n->getSelectorValues(
                 'change_site_defaultLanguage'
             );
             $this->setI18n(self::I18N_DEFAULTTITLE, $_POST['defaultTitle']);
@@ -214,37 +214,37 @@ class sh_site extends sh_core{
             $this->defaultHeadLine = $this->getParam('defaultHeadLine');
             $this->metaDescription = $this->getParam('metaDescription');
 
-            $this->links->googleServices->setAnalytics($_POST['analytics']);
-            $this->links->googleServices->setGoogleForWebmasters(
+            $this->linker->googleServices->setAnalytics($_POST['analytics']);
+            $this->linker->googleServices->setGoogleForWebmasters(
                 $_POST['googleForWebmasters']
             );
 
-            $this->links->path->redirect();
+            $this->linker->path->redirect();
         }
         $values['config']['logoPath'] = SH_IMAGES_FOLDER.'logo/';
 
-        $values['i18nclass']['activeLanguages'] = $this->links->i18n->createSelector(
+        $values['i18nclass']['activeLanguages'] = $this->linker->i18n->createSelector(
             'change_site_languages',
             $this->getParam('langs'),
             'checkbox',
             false
         );
         $values['i18nclass']['defaultLanguage'] =
-            $this->links->i18n->createSelector(
+            $this->linker->i18n->createSelector(
                 'change_site_defaultLanguage',
                 array($this->getParam('lang')
             ),
             'radio',
             true
         );
-        $values['favicon']['changer'] = $this->links->favicon->getChanger();
+        $values['favicon']['changer'] = $this->linker->favicon->getChanger();
 
         $values['analytics']['code'] =
-            $this->links->googleServices->getAnalytics(true);
+            $this->linker->googleServices->getAnalytics(true);
         $values['googleForWebmasters']['link'] =
-            $this->links->googleServices->getGoogleForWebmasters(true);
+            $this->linker->googleServices->getGoogleForWebmasters(true);
 
-        $values['config']['variation_value'] = $this->links->site->variation;
+        $values['config']['variation_value'] = $this->linker->site->variation;
         $this->render('changeParams',$values);
         return true;
     }

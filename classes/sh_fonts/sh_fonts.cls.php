@@ -22,7 +22,7 @@ class sh_fonts extends sh_core {
      */
     protected function prepareFonts(){
         $files = scandir(SH_FONTS_FOLDER);
-        $imagesBuilder = $this->links->imagesBuilder;
+        $imagesBuilder = $this->linker->imagesBuilder;
         echo 'Fonts that are already ready: <br />';
         $none = 'None';
         if(is_array($files)){
@@ -90,7 +90,7 @@ class sh_fonts extends sh_core {
                 }
 
                 $done++;
-                $this->links->helper->writeArrayInFile(
+                $this->linker->helper->writeArrayInFile(
                     SH_FONTS_FOLDER.$shortFileName.'.php',
                     'boxes',
                     $boxes
@@ -174,13 +174,13 @@ class sh_fonts extends sh_core {
                     rename(SH_TEMP_FOLDER.$fileName,SH_FONTS_FOLDER.basename($fileName));
                 }
             }else{
-                $this->links->html->insert('Il y a eu une erreur lors de l\'envoi du fichier. Si le problème persiste, contactez l\'administrateur du site.<br />');
+                $this->linker->html->insert('Il y a eu une erreur lors de l\'envoi du fichier. Si le problème persiste, contactez l\'administrateur du site.<br />');
                 return false;
             }
             $this->prepareFonts();
             echo 'Done!<br />Press "F5" to exit.';
         }else{
-            header('location: '.$this->links->path->getLink('fonts/add/'));
+            header('location: '.$this->linker->path->getLink('fonts/add/'));
         }
         return true;
     }
@@ -191,8 +191,8 @@ class sh_fonts extends sh_core {
      */
     public function add(){
         $this->onlyMaster();
-        $this->links->html->setTitle($this->getI18n('title_add'));
-        $vars['font']['addlink'] = $this->links->path->getLink('fonts/addThisFont/');
+        $this->linker->html->setTitle($this->getI18n('title_add'));
+        $vars['font']['addlink'] = $this->linker->path->getLink('fonts/addThisFont/');
         $this->render('add',$vars);
         return true;
     }
@@ -207,7 +207,7 @@ class sh_fonts extends sh_core {
         if(!is_dir(dirname($to))){
             mkdir(dirname($to));
         }
-        $this->links->zipper->extract($from,$to,$types);
+        $this->linker->zipper->extract($from,$to,$types);
 /*        $typesReg = '('.implode('|',$types).')';
         require_once('include/libphp-pclzip/pclzip.lib.php');
         $archive = new PclZip($from);
@@ -227,9 +227,9 @@ class sh_fonts extends sh_core {
      */
     public function showList(){
         if(!$this->isMaster()){header('location: access_forbiden.php');}
-        $this->links->html->setTitle('Polices');
+        $this->linker->html->setTitle('Polices');
         $loop['fonts'] = $this->getList();
-        $loop['add']['link'] = $this->links->path->getLink('fonts/add/');
+        $loop['add']['link'] = $this->linker->path->getLink('fonts/add/');
         $this->render('list',$loop);
     }
 
@@ -259,7 +259,7 @@ class sh_fonts extends sh_core {
     public function modify(){
         if(!$this->isMaster()){header('location: access_forbiden.php');}
         $buttonName = $_GET['name'];
-        $this->links->html->setTitle('Modification du bouton "'.$buttonName.'"');
+        $this->linker->html->setTitle('Modification du bouton "'.$buttonName.'"');
         $values = new sh_params(SH_TEMPLATE_FOLDER.'builder/'.$buttonName.'/params.php');
         $template['GET'][0] = array(
             'width' => $values->get('width'),
@@ -279,7 +279,7 @@ class sh_fonts extends sh_core {
             $cpt++;
             $loops['FONTS'][$cpt]['name'] = $fontName;
         }
-        $this->links->html->insert($this->renderer->render(dirname(__FILE__).'/modify.php',$template,$loops));
+        $this->linker->html->insert($this->renderer->render(dirname(__FILE__).'/modify.php',$template,$loops));
     }
 
 

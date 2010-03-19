@@ -22,12 +22,12 @@ class sh_testSite extends sh_core{
 
     public function startPage(){
         sh_cache::disable();
-        $this->links->html->setTitle($this->getI18n('startPage_title'));
+        $this->linker->html->setTitle($this->getI18n('startPage_title'));
         $values = array(
             'login' => $this->getParam('models>0>login')
         );
         $values['links']['try'] = $this->getParam('models>0>link');
-        $values['links']['createAccount'] = $this->links->path->getLink('user/createAccount/');
+        $values['links']['createAccount'] = $this->linker->path->getLink('user/createAccount/');
         $this->render('startPage',$values);
 
         return true;
@@ -82,21 +82,21 @@ class sh_testSite extends sh_core{
          *
          */
         // As only masters are able to add new sites, this page can be shown only on master server
-        $this->links->user->isMasterServer();
-        $this->links->html->setTitle($this->getI18n('request_title'));
-        if(!$this->links->user->isConnected()){
-            $masterUrl = $this->links->user->getMasterUrl(false);
-            $values['links']['createAccount'] = $masterUrl.$this->links->path->getLink('user/createAccount/');
+        $this->linker->user->isMasterServer();
+        $this->linker->html->setTitle($this->getI18n('request_title'));
+        if(!$this->linker->user->isConnected()){
+            $masterUrl = $this->linker->user->getMasterUrl(false);
+            $values['links']['createAccount'] = $masterUrl.$this->linker->path->getLink('user/createAccount/');
             $this->render('request_intro',$values);
-            $ret = $this->links->user->connect(true,true);
+            $ret = $this->linker->user->connect(true,true);
             if(!$ret){
                 return true;
             }
         }
-        $values['form']['login'] = $this->links->user->get('login');
-        $values['form']['name'] = $this->links->user->get('name');
-        $values['form']['lastName'] = $this->links->user->get('lastName');
-        $values['form']['mail'] = $this->links->user->get('mail');
+        $values['form']['login'] = $this->linker->user->get('login');
+        $values['form']['name'] = $this->linker->user->get('name');
+        $values['form']['lastName'] = $this->linker->user->get('lastName');
+        $values['form']['mail'] = $this->linker->user->get('mail');
         $this->render('request_connected', $values);
     }
 
@@ -129,7 +129,7 @@ class sh_testSite extends sh_core{
                     }
                 }
             }
-            $this->links->helper->writeArrayInFile($splittedFile,'queries',$queries);
+            $this->linker->helper->writeArrayInFile($splittedFile,'queries',$queries);
         }
         return true;
     }

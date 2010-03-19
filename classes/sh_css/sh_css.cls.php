@@ -21,11 +21,11 @@ class sh_css extends sh_core{
      */
     public function get(){
         // TODO: enable the cache for this
-        $this->links->cache->disable();
+        $this->linker->cache->disable();
 
         $file = $_GET['file'];
         
-        $templateFolder = $this->links->site->templateFolder;
+        $templateFolder = $this->linker->site->templateFolder;
         header("Content-type: text/css");
        
         // We check if we have things to add at the end
@@ -38,9 +38,9 @@ class sh_css extends sh_core{
                     continue;
                 }
                 $class = substr($class,0,-4);
-                if($this->links->method_exists($class,$method)){
+                if($this->linker->method_exists($class,$method)){
                     $addToContent .= "\n".'/* Added contents from '.$class.' */'."\n";
-                    $ret = trim($this->links->$class->$method());
+                    $ret = trim($this->linker->$class->$method());
                     // We remove the xml intro and content tag, which are here unnecessary
                     $ret = preg_replace(
                         array('`<\?xml[^>]*>`','`<\/?content[^>]*>`'),
@@ -58,12 +58,12 @@ class sh_css extends sh_core{
         }
         
         if($_GET['action'] == 'replace'){
-            $templateName = $this->links->site->templateName;
-            $variation = $this->links->site->variation;
-            $siteName = $this->links->site->siteName;
+            $templateName = $this->linker->site->templateName;
+            $variation = $this->linker->site->variation;
+            $siteName = $this->linker->site->siteName;
             $replacements['template'] = array('name'=>$templateName);
             $variationReplacements = array_change_key_case(
-                $this->links->variation->get(sh_variation::ALL_VALUES)
+                $this->linker->variation->get(sh_variation::ALL_VALUES)
             );
             $replacements['variation'] = $variationReplacements;
             $replacements['variation']['name'] = $variation;
