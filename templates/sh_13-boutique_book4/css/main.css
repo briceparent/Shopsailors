@@ -63,7 +63,8 @@ body{
 
 #connectionContainer{
 	height: 20px;
-	width: 900px;
+	width: 200px;
+	margin-left: 700px;
 	text-align: right;
 	position: absolute;
 	font-weight: bold;

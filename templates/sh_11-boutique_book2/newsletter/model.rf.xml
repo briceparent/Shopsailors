@@ -1,51 +1,61 @@
 <div>
-    <font face="arial">
-        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center">
-            <tr bgcolor="#ffffff" background="http://dev.client2.safetyrent-online.com/images/template/variation/nl_header.png">
-                <td width="10">&#160;
-                </td>
-                <td width="600" height="138" align="left">
-                    <div>
-                        <a href="http://dev.client2.safetyrent-online.com/"><font face="arial" color="{variation>title}" size="4"><strong><img src="http://dev.client2.safetyrent-online.com/images/site/logo/rectangular.png" border="0" alt="La villa des chefs : Une journée avec de grands Chefs et sommeliers" title="La villa des chefs" width="240" height="80"/></strong></font></a>
-                    </div>
-                    <div align="right">
-                        <font size="2" face="arial" color="#333333"><strong>Newsletter du&#160;<RENDER_VALUE what="content>date"/></strong></font>
-                    </div>
-                </td>
-                <td width="10">&#160;
-                </td>
-            </tr>
-            <tr bgcolor="#ffffff" background="http://dev.client2.safetyrent-online.com/images/template/nl_bg_middle.png">
-                <td width="10">&#160;
-                </td>
-                <td height="40" valign="top">
-                    <div>
-                        <br />
-                        <font face="arial" color="{variation>title}" size="4"><strong><RENDER_VALUE what="content>title"/></strong></font>
-                    </div>
-                </td>
-                <td width="10">&#160;
-                </td>
-            </tr>
-            <tr bgcolor="#ffffff" background="http://dev.client2.safetyrent-online.com/images/template/nl_bg_middle.png">
-                <td width="10">&#160;
-                </td>
-                <td width="590">
-                    <br/>
-                    <RENDER_VALUE what="content>plugins"/>
-                    <br/>
-                </td>
-                <td width="10">&#160;
-                </td>
-            </tr>
-            <tr bgcolor="#ffffff" background="http://dev.client2.safetyrent-online.com/images/template/nl_bg_bottom.png">
-                <td width="10">&#160;
-                </td>
-                <td  width="600" height="70" align="center">&#160;
-                </td>
-                <td width="10">&#160;
-                </td>
-            </tr>
-        </table>
-    </font>
+    <table id="Tableau_01" width="600" border="0" cellpadding="0" cellspacing="0" align="center">
+        <tr bgcolor="#000000">
+            <td background="/images/template/nw_bg-top.png" width="15" height="40">
+            </td>
+            <td background="/images/template/nw_bg-top.png" width="570">
+                <div align="right">
+                    <font face="arial" color="#ffffff" size="2">
+                        <strong>
+                            Newsletter n°...&#160;le&#160;<RENDER_VALUE what="content>date"/>
+                        </strong>
+                    </font>
+                </div>
+            </td>
+            <td background="/images/template/nw_bg-top.png" width="15">
+            </td>
+        </tr>
+        <tr bgcolor="#000000">
+            <td colspan="3" background="/images/template/variation/nw_bg-top2.png" width="600" height="20">
+            </td>
+        </tr>
+        <tr bgcolor="#000000">
+            <td background="/images/template/variation/nw_bg-top2.png" width="15">
+            </td>
+            <td background="/images/template/variation/nw_bg-top2.png" width="570">
+                <div align="center">
+                    <a href="/index.php">
+                        <font face="times" color="#ffffff" size="25">
+                            <strong>
+                                <img src="/images/site/logo/rectangular.png" border="0" alt="logo" title="my store" width="240" height="80"/>
+                            </strong>
+                        </font>
+                    </a>
+                </div>
+                <div align="left">
+                    <font face="arial" color="#ffffff" size="4">
+                        <strong>
+                            <RENDER_VALUE what="content>title"/>
+                        </strong>
+                    </font>
+                </div>
+                <div>
+                    <font face="arial" color="#ffffff" size="1">
+                        Contenu
+                    </font>
+                </div>
+                <div>
+                    <font face="arial" color="#ffffff" size="1">
+                        <RENDER_VALUE what="content>plugins"/>
+                    </font>
+                </div>
+            </td>
+            <td background="/images/template/variation/nw_bg-top2.png" width="15">
+            </td>
+        </tr>
+        <tr bgcolor="#000000">
+            <td colspan="3" background="/images/template/nw_bg-top.png" width="600" height="40">
+            </td>
+        </tr>
+    </table>
 </div>

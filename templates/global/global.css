@@ -499,3 +499,6 @@ padding-top: 10px;;
 .borderGray_66{
 	border: 1px solid #666666;
 }
+.test{
+	border: 1px solid red;
+}
