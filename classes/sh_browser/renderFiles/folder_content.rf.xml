@@ -48,7 +48,7 @@
             <RENDER_LOOP what="pictures">
                 <tr>
                     <td class="mini">
-                        <img src="{pictures>file}" style="{pictures>imageStyle}" onclick="returnElement('{pictures>file}');" alt="{pictures>baseName}" title="{pictures>baseName}"/>
+                        <img src="{pictures>icon}" style="{pictures>imageStyle}" onclick="returnElement('{pictures>file}');" alt="{pictures>baseName}" title="{pictures>baseName}"/>
                     </td>
                     <td class="desc">
                         <div id="{pictures>folder}{pictures>element}_form">

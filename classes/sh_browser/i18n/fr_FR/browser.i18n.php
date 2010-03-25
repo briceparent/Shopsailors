@@ -17,7 +17,10 @@ $i18n = array(
     'fileCoundntBeDeleted' => "Le fichier n\'a pas pu être effacé...",
 
     'replaceImage_alt' => 'Cliquez ici pour choisir l\'image',
-    'file_sent_successfully' => 'Votre fichier a été envoyé avec succès',
+    'file_sent_successfully' => 'Votre fichier a été envoyé avec succès.',
+    'file_forbiddenFileType' => 'Le type de fichier que vous tentez d\'envoyer est interdit
+        car il pourrait compromettre la sécurité du site.',
+    'file_notSent' => 'Votre fichier n\'a pas pu être envoyé car une erreur est survenue.',
     'showBrowser' => 'Accéder à l\'explorateur d\'images',
     'emptyFolder_message' => 'Ce dossier est vide.<hr />
 <ul>

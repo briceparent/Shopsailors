@@ -24,7 +24,7 @@ class sh_browser extends sh_core {
     protected $goToFolder = '';
 
     protected $imagesExtensions = '`(jpe?g|png|gif)$`';
-    protected $forbiddenExtensions = '`(php.*|exe|html?|\..*)$`';
+    protected $forbiddenExtensions = '`(php.*|exe|html?|^\..*)$`';
 
     // Write accesses. Bitwise
     const READ = 1;
@@ -191,7 +191,7 @@ class sh_browser extends sh_core {
             }
 
             $this->debug('The folder to show is '.$folderName, 2, __LINE__);
-            $types = $_GET['types'];
+            //$types = $_GET['types'];
             $action = $_GET['returnAction'];
             $id = $_GET['id'];
             if(!isset($fromSession)){
@@ -420,12 +420,15 @@ class sh_browser extends sh_core {
         $uid = $_GET['folder'];
         $folder = $_SESSION[__CLASS__][$uid]['path'];
         // We check for the types list in the session, in the get args, and at last we give a default to 'images'
-        $types = $this->getParam('types>'.$_SESSION[__CLASS__][$_GET['folder']]['types'],false);
-        if(!$types && isset($_GET['types'])) {
-            $types = $this->getParam('types>'.$_GET['types'],false);
-        }
-        if(!$types) {
-            $types = $this->getParam('types>images',array());
+        $types = $_SESSION[__CLASS__][$_GET['folder']]['types'];
+        if(!is_array($types)){
+            $types = $this->getParam('types>'.$_SESSION[__CLASS__][$_GET['folder']]['types'],false);
+            if(!$types && isset($_GET['types'])) {
+                $types = $this->getParam('types>'.$_GET['types'],false);
+            }
+            if(!$types) {
+                $types = $this->getParam('types>medias',array());
+            }
         }
         $shownAsImage = $this->getParam('shownAsImage');
 
@@ -492,6 +495,7 @@ class sh_browser extends sh_core {
                         $file = $shortFolder.$element;
                         if(in_array($ext,$types)) {
                             $cpt++;
+                            $theFile = SH_ROOT_FOLDER.$file;
                             if(in_array($ext,$shownAsImage)) {
                                 $imageSize = getimagesize($folder.$element);
                                 $w = $imageSize[0];
@@ -501,20 +505,20 @@ class sh_browser extends sh_core {
                                 }else {
                                     $vars['pictures'][$cpt]['imagestyle'] = 'height:80px;';
                                 }
-                                $picture = $file;
+                                $icon = SH_ROOT_FOLDER.$file;
                                 $description = $w.'x'.$h.' px<br />';
                             }else {
                                 if(file_exists(SH_SHAREDIMAGES_FOLDER.'/icons/'.$ext.'.png')) {
-                                    $picture = SH_SHAREDIMAGES_PATH.'/icons/'.$ext.'.png';
+                                    $icon = SH_SHAREDIMAGES_PATH.'/icons/'.$ext.'.png';
                                 }else {
-                                    $picture = SH_SHAREDIMAGES_PATH.'/icons/default.png';
+                                    $icon = SH_SHAREDIMAGES_PATH.'/icons/default.png';
                                 }
                             }
                             if(strlen(basename($file)) <= 30) {
-                                $showedName = basename($file);
+                                $shownName = basename($file);
                             }else {
-                                $showedName = substr(basename($file),0,12).' [...] '.substr(basename($file),-12);
-                                $showedName = basename($file);
+                                $shownName = substr(basename($file),0,12).' [...] '.substr(basename($file),-12);
+                                $shownName = basename($file);
                             }
 
 
@@ -531,11 +535,11 @@ class sh_browser extends sh_core {
                             }
 
                             $vars['pictures'][$cpt]['description'] = $description.(round(filesize($folder.$element) / 1024)).'ko';
-
                             $vars['pictures'][$cpt]['imagestyle'] .= 'cursor:pointer;';
-                            $vars['pictures'][$cpt]['file'] = $this->linker->path->changeToShortFolder(SH_ROOT_FOLDER.$picture);
+                            $vars['pictures'][$cpt]['icon'] = $this->linker->path->changeToShortFolder($icon);
+                            $vars['pictures'][$cpt]['file'] = $this->linker->path->changeToShortFolder($theFile);
                             $vars['pictures'][$cpt]['basename'] = basename($file);
-                            $vars['pictures'][$cpt]['showedname'] = $showedName;
+                            $vars['pictures'][$cpt]['showedname'] = $shownName;
                             $vars['pictures'][$cpt]['folder'] = $folder;
                             $vars['pictures'][$cpt]['element'] = $element;
                             $containsSomething = true;
@@ -827,7 +831,7 @@ class sh_browser extends sh_core {
     public static function addFolderEvent($event,$folder,$class,$method,$params = array()) {
         return self::addEvent($event, $folder, $class, $method, $params);
     }
-
+    
     /**
      * public function addFile
      *
@@ -836,7 +840,6 @@ class sh_browser extends sh_core {
         $this->debug(__METHOD__, 2, __LINE__);
         $folder = $_POST['folder'];
         $fullFolder = str_replace('//','/',$folder.'/');
-        
         if(self::getRights($fullFolder, self::ADDFILE)) {
             $file = $_FILES['file']['name'];
             $file = self::modifyName($file);
@@ -857,7 +860,9 @@ class sh_browser extends sh_core {
                     $this->linker->path->redirect(__CLASS__,'editImage',$count);
                     $added = true;
                     return true;
-                }elseif(!preg_match($this->forbiddenExtensions,strtolower($file))){
+                }elseif(preg_match($this->forbiddenExtensions,strtolower($file))){
+                    $forbiddenFileType = true;
+                }else{
                     // The file is not an image, so we just copy it
                     move_uploaded_file($_FILES['file']['tmp_name'], $filePath);
                     $added = true;
@@ -871,8 +876,12 @@ class sh_browser extends sh_core {
                     }else {
                         $message = array_shift($message);
                     }
-                }else{
+                }elseif($added){
                     $message = $this->getI18n('file_sent_successfully');
+                }elseif($forbiddenFileType){
+                    $message = $this->getI18n('file_forbiddenFileType');
+                }else{
+                    $message = $this->getI18n('file_notSent');
                 }
             }
         }
