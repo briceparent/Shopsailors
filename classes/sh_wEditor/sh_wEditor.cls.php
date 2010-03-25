@@ -13,10 +13,15 @@ if(!defined('SH_MARKER')){header('location: directCallForbidden.php');}
  * It also may replace permalinks by calls to the flash objects.
  */
 class sh_wEditor extends sh_core{
-    protected $minimal = array('chooseLink'=>true,'addBlock'=>true,'image'=>true);
+    protected $minimal = array(
+        'chooseLink'=>true,'addBlock'=>true,'image'=>true,
+        'insertVideo'=>true,'insertDiaporama'=>true,'insertFlash'=>true
+    );
     const DEFAULT_TYPE = 'advanced';
+    protected $rendering = false;
 
     public function render_wEditor($attributes = array(),$content = ''){
+        $this->rendering = true;
         $singlePath = $this->getSinglePath();
         $this->linker->html->addScript($singlePath.'tiny_mce/tiny_mce.js');
         $this->linker->browser->insertScript();
@@ -46,7 +51,13 @@ class sh_wEditor extends sh_core{
         }
         $values['textarea']['args'] = $args;
 
-        return $this->render('wEditor',$values,false,false);
+        $return = $this->render('wEditor',$values,false,false);
+        $this->rendering = false;
+        return $return;
+    }
+
+    public function isRendering(){
+        return $this->rendering;
     }
 
     /**
@@ -76,6 +87,17 @@ class sh_wEditor extends sh_core{
         return true;
     }
 
+    public function insertVideo(){
+        echo $this->render('insertVideo',$datas,false,false);
+        return true;
+    }
+
+    public function insertDiaporama(){
+        $datas = $this->linker->diaporama->getList(true);
+        echo $this->render('insertDiaporama',$datas,false,false);
+        return true;
+    }
+
     /**
      * public function chooseLink
      *
@@ -95,6 +117,13 @@ class sh_wEditor extends sh_core{
         echo $this->render('link_chooser',$datas,false,false);
         return true;
     }
+    
+    public function insertFlash(){
+        $this->onlyAdmin();
+        $code = stripslashes($_POST['code']);
+        $id = $this->linker->flash->save(0,$code);
+        echo $id;
+    }
 
     /**
      * Returns the uri from the given page
@@ -106,6 +135,14 @@ class sh_wEditor extends sh_core{
         if($method == 'chooseLink'){
             // To change this, we also have to do it in menuEditor.js
             return '/menu/chooseLink.php';
+        }
+        if($method == 'insertVideo'){
+            // To change this, we also have to do it in menuEditor.js
+            return '/menu/insertVideo.php';
+        }
+        if($method == 'insertDiaporama'){
+            // To change this, we also have to do it in menuEditor.js
+            return '/menu/insertDiaporama.php';
         }
         if($method == 'image'){
             // To change this, we also have to do it in menuEditor.js
@@ -128,6 +165,14 @@ class sh_wEditor extends sh_core{
         if($uri == '/menu/image.php'){
             // To change this, we also have to do it in menuEditor.js
             return 'menu/image/';
+        }
+        if($uri == '/menu/insertVideo.php'){
+            // To change this, we also have to do it in menuEditor.js
+            return 'menu/insertVideo/';
+        }
+        if($uri == '/menu/insertDiaporama.php'){
+            // To change this, we also have to do it in menuEditor.js
+            return 'menu/insertDiaporama/';
         }
         if($uri == '/menu/chooseLink.php'){
             // To change this, we also have to do it in menuEditor.js

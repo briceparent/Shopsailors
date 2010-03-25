@@ -507,7 +507,7 @@ class sh_browser extends sh_core {
                                 }
                                 $icon = SH_ROOT_FOLDER.$file;
                                 $description = $w.'x'.$h.' px<br />';
-                            }else {
+                            }else{
                                 if(file_exists(SH_SHAREDIMAGES_FOLDER.'/icons/'.$ext.'.png')) {
                                     $icon = SH_SHAREDIMAGES_PATH.'/icons/'.$ext.'.png';
                                 }else {
@@ -534,7 +534,7 @@ class sh_browser extends sh_core {
                                 $vars['pictures'][$cpt]['noDeleteFile'] = true;
                             }
 
-                            $vars['pictures'][$cpt]['description'] = $description.(round(filesize($folder.$element) / 1024)).'ko';
+                            $vars['pictures'][$cpt]['description'] = $description.(round(filesize($folder.$element) / 1024)).'kio';
                             $vars['pictures'][$cpt]['imagestyle'] .= 'cursor:pointer;';
                             $vars['pictures'][$cpt]['icon'] = $this->linker->path->changeToShortFolder($icon);
                             $vars['pictures'][$cpt]['file'] = $this->linker->path->changeToShortFolder($theFile);
@@ -542,6 +542,9 @@ class sh_browser extends sh_core {
                             $vars['pictures'][$cpt]['showedname'] = $shownName;
                             $vars['pictures'][$cpt]['folder'] = $folder;
                             $vars['pictures'][$cpt]['element'] = $element;
+                            if($ext == 'mp3'){
+                                $vars['pictures'][$cpt]['playSound'] = true;
+                            }
                             $containsSomething = true;
                         }
                     }

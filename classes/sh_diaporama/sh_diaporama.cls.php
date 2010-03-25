@@ -217,6 +217,12 @@ class sh_diaporama extends sh_core{
         return $values;
     }
 
+    public function shallWe_render_diaporama($attributes = array()){
+        $this->isRenderingWEditor = $this->isRenderingWEditor || $this->linker->wEditor->isRendering();
+        $rep = !$this->isRenderingWEditor;
+        return $rep;
+    }
+
     /**
      * Method called by the sh_render class to render the tag RENDER_DIAPORAMA.
      * @param array $attributes An associative array containing all the tag's attributes.
@@ -247,6 +253,10 @@ class sh_diaporama extends sh_core{
             $attributes['commands'] = true;
         }
         if(isset($attributes['commands'])){
+            if(strtolower($attributes['commands']) == 'commands'){
+                $values['diapo']['commands'] = true;
+            }
+        }elseif(file_exists($folder.'/.commands')){
             $values['diapo']['commands'] = true;
         }
 
@@ -257,7 +267,11 @@ class sh_diaporama extends sh_core{
         }
 
         $values['diapo']['id'] = 'd_'.$id;
-        $values['diapo']['class'] = $attributes['class'];
+        if(!empty($attributes['class'])){
+            $values['diapo']['class'] = $attributes['class'];
+        }elseif(file_exists($folder.'/.classes')){
+            $values['diapo']['class'] = file_get_contents($folder.'/.classes');
+        }
         if(isset($values['images'][$first]['src'])){
             $values['defaultImage']['src'] = $values['images'][$first]['src'];
         }else{

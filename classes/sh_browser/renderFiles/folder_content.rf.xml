@@ -69,7 +69,10 @@
                             </RENDER_IFSET>
                         </div>
                         <br />
-                        <RENDER_VALUE what="pictures>description"/>
+                        <RENDER_VALUE what="pictures>description"/><br />
+                        <RENDER_IFSET what="pictures>playSound">
+                            <RENDER_SOUND file="{pictures>file}"/>
+                        </RENDER_IFSET>
                     </td>
                 </tr>
             </RENDER_LOOP>
