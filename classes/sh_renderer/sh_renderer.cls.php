@@ -314,7 +314,7 @@ class sh_renderer extends sh_core {
             $this->debug($key.' = '.$element,3,0,false);
         }else{
             foreach($element as $newKey=>$value){
-                $this->debugAll_element($key.'>'.$newKey,$value);
+                $this->debugAll_element($key.':'.$newKey,$value);
             }
         }
     }
@@ -871,8 +871,8 @@ class sh_renderer extends sh_core {
         }
         $this->debug('We apply the function '.__FUNCTION__. ' on "'.$what.'"',3,__LINE__);
         if($what){
-            $exploded = explode('>',$what);
-            if(count($exploded) == 1){
+            $this->separateArgs($what, $class, $var);
+            if(empty($var)){
                 if(is_array($this->values[$what])){
                     $this->debug($what.' is an array',1,__LINE__);
                     $this->enterChildren($tag,$dest);
@@ -880,16 +880,13 @@ class sh_renderer extends sh_core {
                     $this->debug($what.' is not set, so we don\'t display the content',1,__LINE__);
                 }
             }else{
-                if(
-                    isset($this->values[$exploded[0]][$exploded[1]])
-                    && trim($this->values[$exploded[0]][$exploded[1]]) != ''
-                ){
-                    $this->debug($what.' is set to '.$this->values[$exploded[0]][$exploded[1]],1,__LINE__);
+                if(isset($this->values[$class][$var]) && !empty($this->values[$class][$var])){
+                    $this->debug($what.' is set to '.$this->values[$class][$var],1,__LINE__);
                     $this->enterChildren($tag,$dest);
                 }else{
-                    if($exploded[0] == 'session'){
-                        if(($exploded[1] == 'admin' && $this->isAdmin()) ||
-                           ($exploded[1] == 'master' && $this->isMaster())){
+                    if($class == 'session'){
+                        if(($var == 'admin' && $this->isAdmin()) ||
+                           ($var == 'master' && $this->isMaster())){
                             $this->debug('We are allowed to show this part',1,__LINE__);
                             $this->enterChildren($tag,$dest);
                         }
@@ -916,8 +913,8 @@ class sh_renderer extends sh_core {
         }
         $this->debug('We verify that "'.$what.'" is not set',3,__LINE__);
         if($what){
-            $exploded = explode('>',$what);
-            if(count($exploded) == 1){
+            $isVar = $this->separateArgs($what, $class, $var);
+            if(empty($var)){
                 if(is_array($this->values[$what])){
                     $this->debug($what.' is an array, so we don\'t display the content',1,__LINE__);
                 }else{
@@ -925,10 +922,7 @@ class sh_renderer extends sh_core {
                     $this->enterChildren($tag,$dest);
                 }
             }else{
-                if(
-                    isset($this->values[$exploded[0]][$exploded[1]])
-                    && trim($this->values[$exploded[0]][$exploded[1]]) != ''
-                ){
+                if(isset($this->values[$class][$var]) && trim($this->values[$class][$var]) != ''){
                     $this->debug($what.' is set, so we don\'t display the content',1,__LINE__);
                 }else{
                     $this->debug($what.' is not set, so we display the content',1,__LINE__);
@@ -939,6 +933,25 @@ class sh_renderer extends sh_core {
         }
         $this->debug('We didn\'t find the class name (in attribute "what")',0,__LINE__);
         return false;
+    }
+
+    /**
+     * This method separates the arguments like class>element or class:element.
+     * @param str $text The text to separate
+     * @param str $class The class that is found (should be passed by ref)
+     * @param str $var The variable in the class $class (should be passed by ref)
+     * @return bool True if class and var were found, false if not
+     */
+    protected function separateArgs($text,&$class,&$var){
+        $text = strtolower($text);
+        if(strpos($text,'>') > 0){
+            list($class,$var) = explode('>',$text);
+        }elseif(strpos($text,':') > 0){
+            list($class,$var) = explode(':',$text);
+        }else{
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -999,36 +1012,42 @@ class sh_renderer extends sh_core {
                 }elseif(isset($this->plugins[$upperNodeName])){
                     $class = $this->plugins[$upperNodeName]['class'];
                     $method = $this->plugins[$upperNodeName]['method'];
-                    if(method_exists($this->linker->$class->getClassName(),$method)){
-                        $attributes = array();
-                        foreach ($item->attributes as $attribute){
-                            $attributes[$attribute->name] = $this->changeValue(
-                                $attribute->value
-                            );
-                        }
+                    $className = $this->linker->$class->getClassName();
+                    if(method_exists($className,$method)){
+                        $shallWeMethod = 'shallWe_'.$method;
+                        if(method_exists($className,$shallWeMethod) && !$this->linker->$class->$shallWeMethod()){
+                            $this->enterTag($item,$dest);
+                        }else{
+                            $attributes = array();
+                            foreach ($item->attributes as $attribute){
+                                $attributes[$attribute->name] = $this->changeValue(
+                                    $attribute->value
+                                );
+                            }
 
-                        // Changes the values that are in the content of the tag
-                        $tempXML = $this->xml[$_SESSION['rendering']];
-                        $this->xml[$_SESSION['rendering']] = new domDocument(
-                            '1.0',
-                            'UTF-8'
-                        );
-                        $this->xml[$_SESSION['rendering']]->loadXML('<RF></RF>');
-                        $content = $this->xml[$_SESSION['rendering']]->firstChild;
-                        $this->enterChildren($item,$content);
-                        $oldContents = $content->nodeValue;
-                        $this->xml[$_SESSION['rendering']] = $tempXML;
-                        $newContent = $this->linker->$class->$method(
-                            $attributes,
-                            $oldContents,
-                            $this->values
-                        );
-                        // If the function returns true, we don't have to loop in it.
-                        if($newContent && $newContent !== true){
-                            $tempNode = new domDocument('1.0', 'UTF-8');
-                            $tempNode->loadXML('<RF>'.$newContent.'</RF>');
-                            $content = $tempNode->firstChild;
-                            $this->enterChildren($content, $dest);
+                            // Changes the values that are in the content of the tag
+                            $tempXML = $this->xml[$_SESSION['rendering']];
+                            $this->xml[$_SESSION['rendering']] = new domDocument(
+                                '1.0',
+                                'UTF-8'
+                            );
+                            $this->xml[$_SESSION['rendering']]->loadXML('<RF></RF>');
+                            $content = $this->xml[$_SESSION['rendering']]->firstChild;
+                            $this->enterChildren($item,$content);
+                            $oldContents = $content->nodeValue;
+                            $this->xml[$_SESSION['rendering']] = $tempXML;
+                            $newContent = $this->linker->$class->$method(
+                                $attributes,
+                                $oldContents,
+                                $this->values
+                            );
+                            // If the function returns true, we don't have to loop in it.
+                            if($newContent && $newContent !== true){
+                                $tempNode = new domDocument('1.0', 'UTF-8');
+                                $tempNode->loadXML('<RF>'.$newContent.'</RF>');
+                                $content = $tempNode->firstChild;
+                                $this->enterChildren($content, $dest);
+                            }
                         }
                     }else{
                         $this->debug('The "'.$method.'" method doesn\'t exist in the "'.$this->linker->$class->getClassName().'" class',0,__LINE__);
@@ -1059,10 +1078,7 @@ class sh_renderer extends sh_core {
         $args = '';
         foreach ($tag->attributes as $attribute){
             if($attribute->name == 'what'){
-                list($class, $element) = explode(
-                    '>',
-                    strtolower($attribute->value)
-                );
+                $this->separateArgs($attribute->value, $class, $element);
             }elseif($attribute->name == 'type'){
                 $type = strtolower($this->changeValue($attribute->value));
             }else{
@@ -1115,23 +1131,19 @@ class sh_renderer extends sh_core {
      */
     protected function changeValue($valueToChange,$secondLevel = false){
         $old = $valueToChange;
-        if(preg_match('`(.*)\{([^ >]+)\}(.*)`',$valueToChange,$matches)){
-            $element = strtolower($matches[2]);
-            $value = trim($this->values[$element]);
-            $ret = $matches[1].$value.$matches[3];
-            $valueToChange = $this->changeValue($ret,true);
+        // Looking for the {class:element} or {class>element} format
+        if(preg_match('`(.*)\{([^ >]+)\:([^\}]+)\}(.*)`',$valueToChange,$matches)){
+            $found = true;
+        }elseif(preg_match('`(.*)\{([^ >]+)>([^\}]+)\}(.*)`',$valueToChange,$matches)){
+            $found = true;
         }
-        
-        if(preg_match('`(.*)\{([^ >]+)>([^\}]+)\}(.*)`',$valueToChange,$matches)){
+        if($found){
             $class = strtolower($matches[2]);
             $element = strtolower($matches[3]);
             if($class == 'i18n'){
                 return $this->linker->i18n->get(
                     $this->i18nClasses[$_SESSION['rendering']],$matches[3]
                 );
-            }
-            if($class == 'constants' && defined(strtoupper($matches[3]))){
-                $value = constant(strtoupper($matches[3]));
             }
             if($class == 'constants' && defined(strtoupper($matches[3]))){
                 $value = constant(strtoupper($matches[3]));
@@ -1169,7 +1181,8 @@ class sh_renderer extends sh_core {
         if(trim($what) != ''){
             $this->debug('We want to replace the value of "'.$what.'"',3,__LINE__);
             $content = $this->changeValue($what);
-            list($class, $element) = explode('>',strtolower($content));
+
+            $this->separateArgs($what, $class, $element);
             if($element == ''){
                 $textContent = trim($this->values[$class]);
             }else{
