@@ -1,6 +1,7 @@
 AddDefaultCharset UTF-8
 
-php_value upload_max_filesize 12M
+php_value upload_max_filesize 40M
+php_value post_max_size 40M
 
 RewriteEngine On
 
