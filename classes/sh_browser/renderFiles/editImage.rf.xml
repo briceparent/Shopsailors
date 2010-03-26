@@ -9,19 +9,19 @@
         <table>
             <tr>
                 <td class="editImage_image">
-                    <img class="theImage" src="{img>src}" id="{img>direction}" alt="The image"/>
+                    <img class="theImage" src="{img:src}" id="{img:direction}" alt="The image"/>
                 </td>
                 <td class="editImage_actionsTop">
                     <div class="actionsTitle">
-                        <RENDER_VALUE what="i18n>edtiImage_title"/>
+                        <RENDER_VALUE what="i18n:edtiImage_title"/>
                     </div>
                     <div class="actionsOption">
-                        <RENDER_VALUE what="i18n>edtiImage_actionsTitle"/>
+                        <RENDER_VALUE what="i18n:edtiImage_actionsTitle"/>
                         <ul>
                             <RENDER_LOOP what="actions">
                                 <li>
-                                    <a href="?action={actions>name}">
-                                        <RENDER_VALUE what="actions>description"/>
+                                    <a href="?action={actions:name}">
+                                        <RENDER_VALUE what="actions:description"/>
                                     </a>
                                 </li>
                             </RENDER_LOOP>

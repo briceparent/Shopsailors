@@ -1,4 +1,4 @@
 <span class="browser_imageSelector">
-    <RENDER_TAG type="img" what="args>list"/>
-    <input type="hidden" id="{selector>inputId}" name="{selector>name}" value="{selector>value}"/>
+    <RENDER_TAG type="img" what="args:list"/>
+    <input type="hidden" id="{selector:inputId}" name="{selector:name}" value="{selector:value}"/>
 </span>

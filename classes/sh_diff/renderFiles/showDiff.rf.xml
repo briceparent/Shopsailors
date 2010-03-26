@@ -42,8 +42,8 @@
         </style>
     </head>
     <body>
-        <h1><RENDER_VALUE what="titles>h1"/></h1>
-        <h3><RENDER_VALUE what="titles>h3"/></h3>
+        <h1><RENDER_VALUE what="titles:h1"/></h1>
+        <h3><RENDER_VALUE what="titles:h3"/></h3>
         <table class="showDiff" cellspacing="0">
             <tr>
                 <td class="top left lineNumbers">
@@ -58,28 +58,28 @@
             </tr>
             <RENDER_LOOP what="lines">
                 <tr>
-                    <td class="{lines>class} left top center lineNumbers">
-                        <RENDER_IFNOTSET what="lines>old">
+                    <td class="{lines:class} left top center lineNumbers">
+                        <RENDER_IFNOTSET what="lines:old">
                             &#160;
                         </RENDER_IFNOTSET>
-                        <RENDER_IFSET what="lines>old">
-                            <RENDER_VALUE what="lines>old"/>
+                        <RENDER_IFSET what="lines:old">
+                            <RENDER_VALUE what="lines:old"/>
                         </RENDER_IFSET>
                     </td>
-                    <td class="{lines>class} top center lineNumbers">
-                        <RENDER_IFNOTSET what="lines>new">
+                    <td class="{lines:class} top center lineNumbers">
+                        <RENDER_IFNOTSET what="lines:new">
                             &#160;
                         </RENDER_IFNOTSET>
-                        <RENDER_IFSET what="lines>new">
-                            <RENDER_VALUE what="lines>new"/>
+                        <RENDER_IFSET what="lines:new">
+                            <RENDER_VALUE what="lines:new"/>
                         </RENDER_IFSET>
                     </td>
-                    <td class="{lines>class} notop lineContent">
-                        <RENDER_IFNOTSET what="lines>content">
+                    <td class="{lines:class} notop lineContent">
+                        <RENDER_IFNOTSET what="lines:content">
                             &#160;
                         </RENDER_IFNOTSET>
-                        <RENDER_IFSET what="lines>content">
-                            <RENDER_VALUE what="lines>content"/>
+                        <RENDER_IFSET what="lines:content">
+                            <RENDER_VALUE what="lines:content"/>
                         </RENDER_IFSET>
                     </td>
                 </tr>

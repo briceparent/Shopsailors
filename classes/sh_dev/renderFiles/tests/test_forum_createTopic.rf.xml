@@ -1,26 +1,26 @@
 <div class="forumContainer">
-	<h1><RENDER_VALUE what="i18n2>newTopic"/></h1>
+	<h1><RENDER_VALUE what="i18n2:newTopic"/></h1>
 	<div class="forum_createTopic_bgTop">
 	</div>
 	<div class="forum_createTopic_bgMiddle">
 		<div class="forum_topicTitle">
-			<RENDER_VALUE what="i18n2>forum_topicTitle"/><br />
-			<input  name="forum_topicTitle" value="{forum>forum_topicTitle}"/>
+			<RENDER_VALUE what="i18n2:forum_topicTitle"/><br />
+			<input  name="forum_topicTitle" value="{forum:forum_topicTitle}"/>
 		</div>
 		<div class="forum_topicCat">
-			<RENDER_VALUE what="i18n2>forum_topicCat"/>
+			<RENDER_VALUE what="i18n2:forum_topicCat"/>
 		</div>
 		<div class="forum_topicCatList">
 			<select>
 				<RENDER_LOOP what="forum_categories">
 					<option>
-						<RENDER_VALUE what="forum_categories>name"/>
+						<RENDER_VALUE what="forum_categories:name"/>
 					</option>
 				</RENDER_LOOP>
 			</select>
 		</div>
 		<div class="forum_topic_firstPost">
-			<RENDER_VALUE what="i18n2>forum_topic_firstPost"/>
+			<RENDER_VALUE what="i18n2:forum_topic_firstPost"/>
 		</div>
 		<table cellspacing="0" class="forum_table">
 			<tr>
@@ -40,6 +40,6 @@
 	<div class="forum_createTopic_bgBottom">
 	</div>
 	<div class="forum_createTopic_validation">
-		<input type="submit" value="{i18n2>forum_createTopic_validation}"/>
+		<input type="submit" value="{i18n2:forum_createTopic_validation}"/>
 	</div>
 </div>

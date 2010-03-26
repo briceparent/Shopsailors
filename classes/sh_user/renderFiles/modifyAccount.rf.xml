@@ -4,102 +4,102 @@
         </div>
         <div class="bg_identification_middle">
             <div  class="createAccount_title">
-                <RENDER_VALUE what="i18n>createAccount"/>
+                <RENDER_VALUE what="i18n:createAccount"/>
             </div>
             <div class="createAccount_contents">
-                <RENDER_IFSET what="message>error">
+                <RENDER_IFSET what="message:error">
                     <div class="alertError">
-                        <RENDER_VALUE what="message>error"/>
+                        <RENDER_VALUE what="message:error"/>
                     </div>
                 </RENDER_IFSET>
                 <table>
                     <tr>
                         <td class="partTitle">
-                            <RENDER_VALUE what="i18n>stepOne"/>
+                            <RENDER_VALUE what="i18n:stepOne"/>
                         </td>
                     </tr>
                     <tr>
-                        <td class="formAccount_{name>error}">
-                            <RENDER_VALUE what="i18n>accountName"/>
+                        <td class="formAccount_{name:error}">
+                            <RENDER_VALUE what="i18n:accountName"/>
                             <br />
-                            <input name="name" value="{old>name}"/>
+                            <input name="name" value="{old:name}"/>
                         </td>
                     </tr>
                     <tr>
-                        <td class="formAccount_{lastname>error}">
-                            <RENDER_VALUE what="i18n>accountLastname"/>
+                        <td class="formAccount_{lastname:error}">
+                            <RENDER_VALUE what="i18n:accountLastname"/>
                             <br />
-                            <input name="lastName" value="{old>lastName}"/>
+                            <input name="lastName" value="{old:lastName}"/>
                         </td>
                     </tr>
                     <tr>
-                        <td class="formAccount_{phone>error}">
-                            <RENDER_VALUE what="i18n>accountPhone"/>
+                        <td class="formAccount_{phone:error}">
+                            <RENDER_VALUE what="i18n:accountPhone"/>
                             <br />
-                            <input name="phone" value="{old>phone}"/>
+                            <input name="phone" value="{old:phone}"/>
                         </td>
                     </tr>
                     <tr>
-                        <td class="formAccount_{mail>error}">
-                            <RENDER_VALUE what="i18n>accountEmail"/>
+                        <td class="formAccount_{mail:error}">
+                            <RENDER_VALUE what="i18n:accountEmail"/>
                             <br />
-                            <input name="mail" value="{old>mail}"/>
+                            <input name="mail" value="{old:mail}"/>
                         </td>
                     </tr>
                     <tr>
                         <td class="formAccount_">
-                            <RENDER_VALUE what="i18n>accountAddress"/>
+                            <RENDER_VALUE what="i18n:accountAddress"/>
                             <br />
                             <textarea name="address">
-                                <RENDER_VALUE what="old>address"/>
+                                <RENDER_VALUE what="old:address"/>
                             </textarea>
                             <br />
                             <div class="noteText">
-                                <RENDER_VALUE what="i18n>addressNote"/>
+                                <RENDER_VALUE what="i18n:addressNote"/>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td class="partTitle">
-                            <RENDER_VALUE what="i18n>stepTwo"/>
+                            <RENDER_VALUE what="i18n:stepTwo"/>
                         </td>
                     </tr>
                     <tr>
-                        <td class="formAccount_{login>error}">
-                            <RENDER_VALUE what="i18n>login"/>
+                        <td class="formAccount_{login:error}">
+                            <RENDER_VALUE what="i18n:login"/>
                             <br />
-                            <input name="login" value="{old>login}"/>
+                            <input name="login" value="{old:login}"/>
                             <div class="noteText">
-                                <RENDER_VALUE what="i18n>notification"/>
+                                <RENDER_VALUE what="i18n:notification"/>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td class="formAccount_{password>error}">
-                            <RENDER_VALUE what="i18n>password"/>
+                        <td class="formAccount_{password:error}">
+                            <RENDER_VALUE what="i18n:password"/>
                             <br />
-                            <input type="password" name="password" value="{old>password}"/>
+                            <input type="password" name="password" value="{old:password}"/>
                             <div class="noteText">
-                                <RENDER_VALUE what="i18n>notification"/>
+                                <RENDER_VALUE what="i18n:notification"/>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td class="formAccount_{password>error}">
-                            <RENDER_VALUE what="i18n>passwordConfirm"/>
+                        <td class="formAccount_{password:error}">
+                            <RENDER_VALUE what="i18n:passwordConfirm"/>
                             <br />
-                            <input type="password" name="passwordConfirm" value="{old>password}"/>
+                            <input type="password" name="passwordConfirm" value="{old:password}"/>
                         </td>
                     </tr>
                 </table>
-                <div class="marginTop_10px formAccount_{captcha>error}">
+                <div class="marginTop_10px formAccount_{captcha:error}">
                     <RENDER_CAPTCHA what="createAccountForm"/>
                 </div>
                 <div class="submitAccount">
-                    <input type="submit" value="{i18n>send}"/>
+                    <input type="submit" value="{i18n:send}"/>
                 </div>
                 <div id="sendMailConfirm">
-                    <RENDER_VALUE what="i18n>sendMailConfirm"/>
+                    <RENDER_VALUE what="i18n:sendMailConfirm"/>
                 </div>
             </div>
         </div>

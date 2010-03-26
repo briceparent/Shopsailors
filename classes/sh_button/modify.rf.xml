@@ -10,7 +10,7 @@
             </td>
             <td>
                 <RENDER_LOOP what="fonts">
-                    <input type="checkbox" name="fonts[]" value="{fonts>name}" state="{fonts>active}"/><RENDER_VALUE what="fonts>name" /><br />
+                    <input type="checkbox" name="fonts[]" value="{fonts:name}" state="{fonts:active}"/><RENDER_VALUE what="fonts:name" /><br />
                 </RENDER_LOOP>
             </td>
         </tr>

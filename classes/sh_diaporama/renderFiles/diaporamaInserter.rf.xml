@@ -9,8 +9,8 @@
 <body>
 <RENDER_LOOP what="diaporamas">
     <div>
-        <a href="" onclick="javascript:diaporamaInserterDialog.insert('{diaporamas>name}','{diaporamas>width}','{diaporamas>height}');">
-            <RENDER_VALUE what="diaporamas>name"/> (<RENDER_VALUE what="diaporamas>width"/>x<RENDER_VALUE what="diaporamas>height"/>)
+        <a href="" onclick="javascript:diaporamaInserterDialog.insert('{diaporamas:name}','{diaporamas>width}','{diaporamas>height}');">
+            <RENDER_VALUE what="diaporamas:name"/> (<RENDER_VALUE what="diaporamas:width"/>x<RENDER_VALUE what="diaporamas:height"/>)
         </a>
     </div>
 </RENDER_LOOP>

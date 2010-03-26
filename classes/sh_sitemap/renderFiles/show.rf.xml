@@ -1,10 +1,10 @@
 <urlset xmlns="http://www.google.com/schemas/sitemap/0.84">
     <RENDER_LOOP what="pages">
      <url>
-		<loc><RENDER_VALUE what="pages>address"/></loc>
-		<lastmod><RENDER_VALUE what="pages>date"/></lastmod>
-		<changefreq><RENDER_VALUE what="pages>frequency"/></changefreq>
-		<priority><RENDER_VALUE what="pages>priority"/></priority>
+		<loc><RENDER_VALUE what="pages:address"/></loc>
+		<lastmod><RENDER_VALUE what="pages:date"/></lastmod>
+		<changefreq><RENDER_VALUE what="pages:frequency"/></changefreq>
+		<priority><RENDER_VALUE what="pages:priority"/></priority>
 	</url>
     </RENDER_LOOP>
 </urlset>

@@ -1,28 +1,28 @@
 <div>
     <NORENDER>breadcrumbs</NORENDER>
     <span id="shop_navigator" class="shop_arboText">
-        <RENDER_VALUE what="i18n>navigator_title"/>
-        <RENDER_BREADCRUMBS what="nav_levels" sameLevelText="{i18n>breadCrumbs_sameCategoryText}"/>
+        <RENDER_VALUE what="i18n:navigator_title"/>
+        <RENDER_BREADCRUMBS what="nav_levels" sameLevelText="{i18n:breadCrumbs_sameCategoryText}"/>
     </span>
 
     <NORENDER>active category</NORENDER>
     <div class="marginTop_10px">
         <div class="active_category_preview">
-                <img src="{category>image}" alt="navigator_preview"/>
+                <img src="{category:image}" alt="navigator_preview"/>
         </div>
         <div class="bg_active_category">
             <div class="active_category_descriptionContainer">
                 <div class="active_category_describe">
-                        <RENDER_VALUE what="category>description"/>
+                        <RENDER_VALUE what="category:description"/>
                 </div>
             </div>
         </div>
     </div>
     
-    <RENDER_IFNOTSET what="category_elements>empty">
+    <RENDER_IFNOTSET what="category_elements:empty">
     
     <div class="selectAcategory">
-        <RENDER_VALUE what="i18n>selectAcategory"/>
+        <RENDER_VALUE what="i18n:selectAcategory"/>
     </div>
     
     <NORENDER>list of the subcategories</NORENDER>
@@ -32,16 +32,16 @@
                 <tr>
                     <td>
                         <div class="subcategory_image">
-                            <a href="{category_elements>link}"><img src="{category_elements>image}" alt="category_image"/></a>
+                            <a href="{category_elements:link}"><img src="{category_elements:image}" alt="category_image"/></a>
                         </div>
                     </td>
                     <td>
                         <div class="subcategory_descriptionContainer">
                             <div class="subcategory_name">
-                                <a href="{category_elements>link}"><RENDER_VALUE what="category_elements>name"/></a>
+                                <a href="{category_elements:link}"><RENDER_VALUE what="category_elements:name"/></a>
                             </div>
                                 <div class="subcategory_describe">
-                                    <RENDER_VALUE what="category_elements>shortDescription"/>
+                                    <RENDER_VALUE what="category_elements:shortDescription"/>
                                 </div>
                         </div>
                     </td>
@@ -51,20 +51,20 @@
     </RENDER_LOOP>
     
     <NORENDER>Page navigator</NORENDER>
-        <RENDER_IFSET what="pages>0">
+        <RENDER_IFSET what="pages:0">
             <div class="pageNavigator">
                 <table>
                     <tr>
                         <td>
-                            <a href="{pagenavigation>previous_link}"><img src="images/shared/variations/{constants>variation}/navigation/model1_previous.png" alt="{i18n>nav_previous}"/></a>
+                            <a href="{pagenavigation:previous_link}"><img src="images/shared/variations/{constants:variation}/navigation/model1_previous.png" alt="{i18n:nav_previous}"/></a>
                         </td>
                         <RENDER_LOOP what="pages">
                             <td class="pagesNumbers">
-                                <a href="{pages>link}"><RENDER_VALUE what="pages>number"/></a>
+                                <a href="{pages:link}"><RENDER_VALUE what="pages:number"/></a>
                             </td>
                         </RENDER_LOOP>
                         <td>
-                            <a href="{pagenavigation>next_link}"><img src="images/shared/variations/{constants>variation}/navigation/model1_next.png" alt="{i18n>nav_next}"/></a>
+                            <a href="{pagenavigation:next_link}"><img src="images/shared/variations/{constants:variation}/navigation/model1_next.png" alt="{i18n:nav_next}"/></a>
                         </td>
                     </tr>
                 </table>
@@ -74,11 +74,11 @@
     </RENDER_IFNOTSET>
     
     <NORENDER>navigator_emptyCategory</NORENDER>
-    <RENDER_IFSET what="category_elements>empty">
+    <RENDER_IFSET what="category_elements:empty">
         <div id="shop_emptyCategory">
             <RENDER_NOTIF size="M">
                 <div class="bold">
-                    <RENDER_VALUE what="i18n>emptyCategory"/>
+                    <RENDER_VALUE what="i18n:emptyCategory"/>
                 </div>
             </RENDER_NOTIF>
         </div>

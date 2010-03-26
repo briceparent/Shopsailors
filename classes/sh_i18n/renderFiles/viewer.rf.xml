@@ -1,8 +1,8 @@
 <div class="i18n_viewer">
-    <div id="{action>container}">
+    <div id="{action:container}">
     <RENDER_LOOP what="langs">
-        <img src="{langs>flag}" alt="{langs>language}" title="{langs>languageName}"/>
+        <img src="{langs:flag}" alt="{langs:language}" title="{langs:languageName}"/>
     </RENDER_LOOP>
     </div>
-    <div class="falseLink" onclick="{action>langsChanger}"> <RENDER_VALUE what="i18n>modify"/></div>
+    <div class="falseLink" onclick="{action:langsChanger}"> <RENDER_VALUE what="i18n:modify"/></div>
 </div>

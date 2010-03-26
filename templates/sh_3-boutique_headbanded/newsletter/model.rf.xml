@@ -5,9 +5,9 @@
             </td>
             <td background="/images/template/nw_bg-top_middle.png" width="576">
                 <div align="right">
-                    <font face="arial" color="{variation>globalText}" size="2">
+                    <font face="arial" color="{variation:globalText}" size="2">
                         <strong>
-                            Newsletter n°...&#160;le&#160;<RENDER_VALUE what="content>date"/>
+                            Newsletter n°...&#160;le&#160;<RENDER_VALUE what="content:date"/>
                         </strong>
                     </font>
                 </div>
@@ -15,11 +15,11 @@
             <td background="/images/template/nw_bg-top_right.png" width="12" height="29">
             </td>
         </tr>
-        <tr bgcolor="{variation>globalText}">
+        <tr bgcolor="{variation:globalText}">
             <td colspan="3" background="/images/template/variation/nw_hb-top.png" width="600" height="10">
             </td>
         </tr>
-        <tr bgcolor="{variation>globalText}">
+        <tr bgcolor="{variation:globalText}">
             <td background="/images/template/variation/nw_hb-middle.png" width="12">
             </td>
             <td background="/images/template/variation/nw_hb-middle.png" width="576" align="center">
@@ -34,7 +34,7 @@
             <td background="/images/template/variation/nw_hb-middle.png" width="12">
             </td>
         </tr>
-        <tr bgcolor="{variation>globalText}">
+        <tr bgcolor="{variation:globalText}">
             <td colspan="3" background="/images/template/variation/nw_hb-bottom.png" width="600" height="30">
             </td>
         </tr>
@@ -43,9 +43,9 @@
             </td>
             <td background="/images/template/nw_bg-middle_middle.png" width="576">
                 <div>
-                    <font face="arial" color="{variation>globalText}" size="4">
+                    <font face="arial" color="{variation:globalText}" size="4">
                         <strong>
-                            <RENDER_VALUE what="content>title"/>
+                            <RENDER_VALUE what="content:title"/>
                         </strong>
                     </font>
                 </div>
@@ -55,7 +55,7 @@
                     </font>
                 </div>
                 <div>
-                    <RENDER_VALUE what="content>plugins"/>
+                    <RENDER_VALUE what="content:plugins"/>
                 </div>
             </td>
             <td background="/images/template/nw_bg-middle_right.png" width="12">

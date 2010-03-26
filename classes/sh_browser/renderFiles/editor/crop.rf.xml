@@ -7,17 +7,17 @@
         <RENDER_SCRIPT file="PROTOTYPE" direct="direct"/>
         <RENDER_SCRIPT file="SCRIPTACULOUSONLY" direct="direct"/>
         <script type="text/javascript" src="/sh_browser/singles/croper.js"/>
-        <RENDER_IFSET what="dimensions>forced">
+        <RENDER_IFSET what="dimensions:forced">
             <script type="text/javascript">
-                crop_forcedFactorX = <RENDER_VALUE what="dimensions>forcedX"/>;
-                crop_forcedFactorY = <RENDER_VALUE what="dimensions>forcedY"/>;
+                crop_forcedFactorX = <RENDER_VALUE what="dimensions:forcedX"/>;
+                crop_forcedFactorY = <RENDER_VALUE what="dimensions:forcedY"/>;
                 crop_forcedFactor = crop_forcedFactorX / crop_forcedFactorY;
             </script>
         </RENDER_IFSET>
-        <RENDER_IFSET what="dimensions>max">
+        <RENDER_IFSET what="dimensions:max">
             <script type="text/javascript">
-                crop_forcedFactorX = <RENDER_VALUE what="dimensions>maxX"/>;
-                crop_forcedFactorY = <RENDER_VALUE what="dimensions>maxY"/>;
+                crop_forcedFactorX = <RENDER_VALUE what="dimensions:maxX"/>;
+                crop_forcedFactorY = <RENDER_VALUE what="dimensions:maxY"/>;
                 crop_tempForcedFactor = crop_forcedFactorX / crop_forcedFactorY;
                 /*alert('factor : '+crop_forcedFactor);*/
             </script>
@@ -29,40 +29,40 @@
         <table>
             <tr>
                 <td class="editImage_image">
-                    <img src="{img>src}" id='editedImage' alt="The image" onload="crop_prepareDrawing(this);"/>
+                    <img src="{img:src}" id='editedImage' alt="The image" onload="crop_prepareDrawing(this);"/>
                 </td>
                 <td class="editImage_actionsTop">
                     <div class="actionsTitle">
-                        <RENDER_VALUE what="i18n>edtiImage_cropTitle"/>
+                        <RENDER_VALUE what="i18n:edtiImage_cropTitle"/>
                     </div>
                     <div class="actionsOption">
-                        <RENDER_IFSET what="dimensions>forced">
-                            <RENDER_VALUE what="i18n>crop_dimensionsForced"/>&#160;
-                            <RENDER_VALUE what="dimensions>forcedX"/>&#160;x&#160;<RENDER_VALUE what="dimensions>forcedY"/>&#160;
-                            <RENDER_VALUE what="i18n>crop_pixels"/>
-                            <RENDER_HELP what="{i18n>forced_dimensions_explanation}"/><br />
-                            <input id="crop_forceFactor" type="checkbox" onclick="crop_forceFactor(this.checked);" checked="checked"/><RENDER_VALUE what="i18n>crop_forceFactor"/>
-                            <RENDER_HELP what="{i18n>crop_forceFactor_explanation}"/>
+                        <RENDER_IFSET what="dimensions:forced">
+                            <RENDER_VALUE what="i18n:crop_dimensionsForced"/>&#160;
+                            <RENDER_VALUE what="dimensions:forcedX"/>&#160;x&#160;<RENDER_VALUE what="dimensions:forcedY"/>&#160;
+                            <RENDER_VALUE what="i18n:crop_pixels"/>
+                            <RENDER_HELP what="{i18n:forced_dimensions_explanation}"/><br />
+                            <input id="crop_forceFactor" type="checkbox" onclick="crop_forceFactor(this.checked);" checked="checked"/><RENDER_VALUE what="i18n:crop_forceFactor"/>
+                            <RENDER_HELP what="{i18n:crop_forceFactor_explanation}"/>
                             <div id="crop_caution" style="display:none;color:red;">
-                                <RENDER_VALUE what="i18n>crop_notBigEnough"/>
+                                <RENDER_VALUE what="i18n:crop_notBigEnough"/>
                             </div>
                         </RENDER_IFSET>
-                        <RENDER_IFSET what="dimensions>max">
-                            <RENDER_VALUE what="i18n>crop_dimensionsMax"/>&#160;
-                            <RENDER_VALUE what="dimensions>maxX"/>&#160;x&#160;<RENDER_VALUE what="dimensions>maxY"/>&#160;
-                            <RENDER_VALUE what="i18n>crop_dimensionsMax2"/><br />
-                            <input id="crop_forceFactor" type="checkbox" onclick="crop_forceFactor(this.checked);"/><RENDER_VALUE what="i18n>crop_forceFactor"/>
-                            <RENDER_HELP what="{i18n>crop_forceFactor_explanation}"/>
+                        <RENDER_IFSET what="dimensions:max">
+                            <RENDER_VALUE what="i18n:crop_dimensionsMax"/>&#160;
+                            <RENDER_VALUE what="dimensions:maxX"/>&#160;x&#160;<RENDER_VALUE what="dimensions:maxY"/>&#160;
+                            <RENDER_VALUE what="i18n:crop_dimensionsMax2"/><br />
+                            <input id="crop_forceFactor" type="checkbox" onclick="crop_forceFactor(this.checked);"/><RENDER_VALUE what="i18n:crop_forceFactor"/>
+                            <RENDER_HELP what="{i18n:crop_forceFactor_explanation}"/>
                             <div id="crop_caution" style="display:none;color:red;">
-                                <RENDER_VALUE what="i18n>crop_notBigEnough"/>
+                                <RENDER_VALUE what="i18n:crop_notBigEnough"/>
                             </div>
                         </RENDER_IFSET>
                         <div id="shownDatas" style="display:none;">
-                            <RENDER_VALUE what="i18n>crop_dimensions"/>&#160;
+                            <RENDER_VALUE what="i18n:crop_dimensions"/>&#160;
                             <span id="textWidth"></span>&#160;x&#160;
                             <span id="textHeight"></span>
-                            <RENDER_VALUE what="i18n>crop_pixels2"/>&#160;
-                            <RENDER_VALUE what="i18n>pixels2"/>
+                            <RENDER_VALUE what="i18n:crop_pixels2"/>&#160;
+                            <RENDER_VALUE what="i18n:pixels2"/>
                         </div>
                         <div class="editImage_input">
                             <form action="">
@@ -71,8 +71,8 @@
                                 <input name="stopX" id="stopX" type="hidden"/>
                                 <input name="startY" id="startY" type="hidden"/>
                                 <input name="stopY" id="stopY" type="hidden"/>
-                                <input type="submit" name="crop" value="{i18n>crop_validate}"/>
-                                <input type="submit" name="cancel" value="{i18n>cancel}"/>
+                                <input type="submit" name="crop" value="{i18n:crop_validate}"/>
+                                <input type="submit" name="cancel" value="{i18n:cancel}"/>
                             </form>
                         </div>
                         <div id="debug"></div>

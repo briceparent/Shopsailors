@@ -22,19 +22,19 @@
 		}
 	</style>
 	<meta name="robots" content="noindex,noarchive,nofollow"/>
-	<title><RENDER_VALUE what="i18n>unauthorizedAccess"/></title>
-	<base href="{restriction>base}"/>
+	<title><RENDER_VALUE what="i18n:unauthorizedAccess"/></title>
+	<base href="{restriction:base}"/>
 	<meta name="description" content="Les droits nécéssaires à la connexion n'ont pas été activés"/>
 	<meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
 	<link rel="stylesheet" media="screen" type="text/css" href="/templates/global/admin.css">
 	</link>
 </head>
 <body id="body"><div id="texte">
-    <RENDER_IFSET what="restrictions>notallowed">
-        <RENDER_VALUE what="i18n>notallowed"/>
+    <RENDER_IFSET what="restrictions:notallowed">
+        <RENDER_VALUE what="i18n:notallowed"/>
     </RENDER_IFSET>
-    <RENDER_IFSET what="restrictions>nofolder">
-        <RENDER_VALUE what="i18n>nofolder"/>
+    <RENDER_IFSET what="restrictions:nofolder">
+        <RENDER_VALUE what="i18n:nofolder"/>
     </RENDER_IFSET>
 	</div>
 	<div id="close_button">

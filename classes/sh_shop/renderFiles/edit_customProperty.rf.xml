@@ -4,18 +4,18 @@
             <NORENDER>Existing custom properties</NORENDER>
             <div class="form_box_top">
                 <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>customPropertiesEditor_title"/>
+                    <RENDER_VALUE what="i18n:customPropertiesEditor_title"/>
                 </h3>
             </div>
             <div class="form_box_middle">
                 <div class="formContent">
-                    <RENDER_IFSET what="customProperties>0">
+                    <RENDER_IFSET what="customProperties:0">
                         <ul>
-                            <RENDER_IFSET what="customProperty>newLink">
+                            <RENDER_IFSET what="customProperty:newLink">
                                 <li>
-                                    <a href="{customProperty>newLink}">
+                                    <a href="{customProperty:newLink}">
                                         <span style="font-weight:bold;">
-                                            <RENDER_VALUE what="i18n>customProperty_new_linkName"/>
+                                            <RENDER_VALUE what="i18n:customProperty_new_linkName"/>
                                         </span>
                                     </a>
                                 </li>
@@ -23,27 +23,27 @@
                             <RENDER_LOOP what="customProperties">
                                 <li>
                                     <span style="font-weight:bold;">
-                                        <RENDER_VALUE what="customProperties>name"/>
+                                        <RENDER_VALUE what="customProperties:name"/>
                                     </span>&#160;:&#160;
-                                    <a href="{customProperties>editLink}">
-                                        <RENDER_VALUE what="i18n>customProperties_edit"/>
+                                    <a href="{customProperties:editLink}">
+                                        <RENDER_VALUE what="i18n:customProperties_edit"/>
                                     </a>&#160;-&#160;
-                                    <span class="falseLink" onclick="deleteCustomProperty('{customProperties>deleteLink}')">
-                                        <RENDER_VALUE what="i18n>customProperties_delete"/>
+                                    <span class="falseLink" onclick="deleteCustomProperty('{customProperties:deleteLink}')">
+                                        <RENDER_VALUE what="i18n:customProperties_delete"/>
                                     </span>
                                 </li>
                             </RENDER_LOOP>
                         </ul>
                         <script type="text/javascript">
                             function deleteCustomProperty(link){
-                                if(confirm('<RENDER_VALUE what="i18n>customProperties_confirmDelete"/>')){
+                                if(confirm('<RENDER_VALUE what="i18n:customProperties_confirmDelete"/>')){
                                     location.href = link;
                                 }
                             }
                         </script>
                     </RENDER_IFSET>
-                    <RENDER_IFNOTSET what="customProperties>0">
-                        <RENDER_VALUE what="i18n>customProperties_notAny"/>
+                    <RENDER_IFNOTSET what="customProperties:0">
+                        <RENDER_VALUE what="i18n:customProperties_notAny"/>
                     </RENDER_IFNOTSET>
                 </div>
             </div>
@@ -52,42 +52,42 @@
             <NORENDER>New custom property</NORENDER>
             <div class="form_box_top">
                 <h3 class="box_title">
-                    <RENDER_IFSET what="customProperty>newLink">
-                        <RENDER_VALUE what="i18n>editCustomPropertiesEditor_title"/>
+                    <RENDER_IFSET what="customProperty:newLink">
+                        <RENDER_VALUE what="i18n:editCustomPropertiesEditor_title"/>
                     </RENDER_IFSET>
-                    <RENDER_IFNOTSET what="customProperty>newLink">
-                        <RENDER_VALUE what="i18n>addCustomPropertiesEditor_title"/>
+                    <RENDER_IFNOTSET what="customProperty:newLink">
+                        <RENDER_VALUE what="i18n:addCustomPropertiesEditor_title"/>
                     </RENDER_IFNOTSET>
                 </h3>
             </div>
             <div class="form_box_middle">
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>customPropertyName"/>
-                    <RENDER_HELP what="{i18n>customPropertyName_explanation}"/><br />
-                    <RENDER_I18NINPUT class="sh_shop" i18n="{customProperty>name}" name="name"/>
+                    <RENDER_VALUE what="i18n:customPropertyName"/>
+                    <RENDER_HELP what="{i18n:customPropertyName_explanation}"/><br />
+                    <RENDER_I18NINPUT class="sh_shop" i18n="{customProperty:name}" name="name"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>customPropertyType"/>
-                    <RENDER_HELP what="{i18n>customPropertyType_explanation}"/><br />
+                    <RENDER_VALUE what="i18n:customPropertyType"/>
+                    <RENDER_HELP what="{i18n:customPropertyType_explanation}"/><br />
                     <select name="type" id="type" onchange="cp_showHideList(this.value)">
-                        <option value="text" state="{customProperty>isText}">
-                            <RENDER_VALUE what="i18n>customPropertyType_text"/>
+                        <option value="text" state="{customProperty:isText}">
+                            <RENDER_VALUE what="i18n:customPropertyType_text"/>
                         </option>
-                        <option value="i18nText" state="{customProperty>isI18nText}">
-                            <RENDER_VALUE what="i18n>customPropertyType_i18nText"/>
+                        <option value="i18nText" state="{customProperty:isI18nText}">
+                            <RENDER_VALUE what="i18n:customPropertyType_i18nText"/>
                         </option>
-                        <option value="bool" state="{customProperty>isBool}">
-                            <RENDER_VALUE what="i18n>customPropertyType_bool"/>
+                        <option value="bool" state="{customProperty:isBool}">
+                            <RENDER_VALUE what="i18n:customPropertyType_bool"/>
                         </option>
-                        <option value="list" state="{customProperty>isList}">
-                            <RENDER_VALUE what="i18n>customPropertyType_list"/>
+                        <option value="list" state="{customProperty:isList}">
+                            <RENDER_VALUE what="i18n:customPropertyType_list"/>
                         </option>
                     </select>
                 </div>
                 <div class="formContent" id="customPropertyList">
-                    <RENDER_VALUE what="i18n>customPropertyList"/>
-                    <RENDER_HELP what="{i18n>customPropertyList_explanation}"/><br />
-                    <RENDER_I18NTEXTAREA class="sh_shop" i18n="{customProperty>list}" name="list"/>
+                    <RENDER_VALUE what="i18n:customPropertyList"/>
+                    <RENDER_HELP what="{i18n:customPropertyList_explanation}"/><br />
+                    <RENDER_I18NTEXTAREA class="sh_shop" i18n="{customProperty:list}" name="list"/>
                     <input type="hidden" name="saveTextarea" id="saveTextarea" value="false"/>
                 </div>
                 <script type="text/javascript">
@@ -104,7 +104,7 @@
                 </script>
                 <div class="formContent">
                     <NORENDER></NORENDER>
-                    <RENDER_CHECKBOX text="{i18n>customPropertyActive}" help="{i18n>customPropertyActive_explanation}" name="active" state="{customProperty>state}"/>
+                    <RENDER_CHECKBOX text="{i18n:customPropertyActive}" help="{i18n:customPropertyActive_explanation}" name="active" state="{customProperty:state}"/>
                     
                 </div>
             </div>

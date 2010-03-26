@@ -1,17 +1,17 @@
 <div>
     <RENDER_FORM id="content_edit">
-        <RENDER_IFSET what="content>newAndNotActive">
+        <RENDER_IFSET what="content:newAndNotActive">
             <div class="form_messageContainer">
                 <div class="form_message_top">
                 </div>
                 <div class="form_message_middle">
                     <div class="messageContainer">
                         <div class="message">
-                            <RENDER_VALUE what="i18n>newAndNotActive"/>
+                            <RENDER_VALUE what="i18n:newAndNotActive"/>
                         </div>
                         <div class="link">
-                            <a href="{content>newAndNotActiveLink}">
-                                <RENDER_VALUE what="content>newAndNotActiveLink"/>
+                            <a href="{content:newAndNotActiveLink}">
+                                <RENDER_VALUE what="content:newAndNotActiveLink"/>
                             </a>
                         </div>
                     </div>
@@ -23,39 +23,39 @@
 
         <div class="form_box_container">
             <div class="form_box_top">
-                <h3 class="box_title"><RENDER_VALUE what="editContent>title"/></h3>
+                <h3 class="box_title"><RENDER_VALUE what="editContent:title"/></h3>
             </div>
             <div class="form_box_middle">
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>title"/><br />
-                    <RENDER_I18NINPUT class="sh_content" i18n="{content>title}" name="title"/>
-                    <input name="lang" type="hidden" value="{content>lang}"/>
+                    <RENDER_VALUE what="i18n:title"/><br />
+                    <RENDER_I18NINPUT class="sh_content" i18n="{content:title}" name="title"/>
+                    <input name="lang" type="hidden" value="{content:lang}"/>
                     <div>
-                        <RENDER_CHECKBOX text="{i18n>activated}" name="active" state="{content>active}"/>
+                        <RENDER_CHECKBOX text="{i18n:activated}" name="active" state="{content:active}"/>
                     </div>
-                    <div class="noteText">(<RENDER_VALUE what="i18n>activated_descrition"/>)</div>
-                    <RENDER_CHECKBOX text="{i18n>showTitle}" name="showTitle" state="{content>showTitle}"/><br />
-                    <RENDER_CHECKBOX text="{i18n>showDate}" name="showDate" state="{content>showDate}"/><br />
-                    <RENDER_VALUE what="i18n>contentImage"/>
-                    <RENDER_HELP what="{i18n>contentImage_explanation}"/><br />
-                    <RENDER_IMAGESELECTOR name="image" value="{content>image}" folder="small" style="width:100px;height:100px;"/>
+                    <div class="noteText">(<RENDER_VALUE what="i18n:activated_descrition"/>)</div>
+                    <RENDER_CHECKBOX text="{i18n:showTitle}" name="showTitle" state="{content:showTitle}"/><br />
+                    <RENDER_CHECKBOX text="{i18n:showDate}" name="showDate" state="{content:showDate}"/><br />
+                    <RENDER_VALUE what="i18n:contentImage"/>
+                    <RENDER_HELP what="{i18n:contentImage_explanation}"/><br />
+                    <RENDER_IMAGESELECTOR name="image" value="{content:image}" folder="small" style="width:100px;height:100px;"/>
                     <br />
-                    <RENDER_VALUE what="i18n>summary"/>
-                    <RENDER_HELP what="{i18n>summary_explanation}"/><br />
-                    <RENDER_I18NTEXTAREA class="sh_content" i18n="{content>summary}" name="summary"/>
+                    <RENDER_VALUE what="i18n:summary"/>
+                    <RENDER_HELP what="{i18n:summary_explanation}"/><br />
+                    <RENDER_I18NTEXTAREA class="sh_content" i18n="{content:summary}" name="summary"/>
                 </div>
             </div>
             <div class="form_box_bottom">
             </div>
         </div>
         <h3 class="contentTitle">
-            <RENDER_VALUE what="i18n>content"/>
+            <RENDER_VALUE what="i18n:content"/>
         </h3>
         <div class="content_edit">
-            <RENDER_I18NWEDITOR class="content_editor" i18nClass="sh_content" i18n="{content>content}" name="content"/>
+            <RENDER_I18NWEDITOR class="content_editor" i18nClass="sh_content" i18n="{content:content}" name="content"/>
         </div>
         <div style="text-align:center">
-            <input type="submit" value="{i18n>save}"/>
+            <input type="submit" value="{i18n:save}"/>
         </div>
     </RENDER_FORM>
 </div>

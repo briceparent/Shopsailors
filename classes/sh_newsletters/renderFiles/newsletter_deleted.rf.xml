@@ -1,6 +1,6 @@
 <div>
     <RENDER_NOTIF size="M" title="Newsletter supprimée">
         La newsletter a été supprimée avec succès.<br /><br />
-        <a href="{links>showInvisible}">Retourner à la liste des newsletters</a>
+        <a href="{links:showInvisible}">Retourner à la liste des newsletters</a>
     </RENDER_NOTIF>
 </div>

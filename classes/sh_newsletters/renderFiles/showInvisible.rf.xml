@@ -2,74 +2,74 @@
     <div class="form_box_container">
         <div class="form_box_top">
             <h3 class="box_title">
-                <RENDER_VALUE what="i18n>newsletter_list"/>
+                <RENDER_VALUE what="i18n:newsletter_list"/>
             </h3>
         </div>
         <div class="form_box_middle">
             <div class="form_box_content">
                 <div class="formContent">
-                    <RENDER_IFSET what="newsletters>none">
-                        <RENDER_VALUE what="i18n>noNewsletterToList"/>
+                    <RENDER_IFSET what="newsletters:none">
+                        <RENDER_VALUE what="i18n:noNewsletterToList"/>
                     </RENDER_IFSET>
-                    <RENDER_IFSET what="newsletters>sent">
+                    <RENDER_IFSET what="newsletters:sent">
                         <div class="bold" style="margin-top:5px;">
-                            <RENDER_VALUE what="i18n>newsletters_sent"/>
+                            <RENDER_VALUE what="i18n:newsletters_sent"/>
                         </div>
                         <ul>
                         <RENDER_LOOP what="newsletters_planned">
                             <li>
-                                <RENDER_VALUE what="newsletters_sent>title"/><br />
-                                <a href="{newsletters_sent>showLink}">
-                                    <RENDER_VALUE what="i18n>showLink"/>
+                                <RENDER_VALUE what="newsletters_sent:title"/><br />
+                                <a href="{newsletters_sent:showLink}">
+                                    <RENDER_VALUE what="i18n:showLink"/>
                                 </a>&#160;
-                                <a href="{newsletters_sent>editLink}">
-                                    <RENDER_VALUE what="i18n>editLink"/>
+                                <a href="{newsletters_sent:editLink}">
+                                    <RENDER_VALUE what="i18n:editLink"/>
                                 </a>&#160;
-                                <a href="{newsletters_sent>deleteLink}">
-                                    <RENDER_VALUE what="i18n>deleteLink"/>
+                                <a href="{newsletters_sent:deleteLink}">
+                                    <RENDER_VALUE what="i18n:deleteLink"/>
                                 </a>
                             </li>
                         </RENDER_LOOP>
                         </ul>
                     </RENDER_IFSET>
-                    <RENDER_IFSET what="newsletters>planned">
+                    <RENDER_IFSET what="newsletters:planned">
                         <div class="bold" style="margin-top:5px;">
-                            <RENDER_VALUE what="i18n>newsletters_planned"/>
+                            <RENDER_VALUE what="i18n:newsletters_planned"/>
                         </div>
                         <ul>
                         <RENDER_LOOP what="newsletters_planned">
                             <li>
-                                <RENDER_VALUE what="newsletters_planned>title"/>
-                                (<RENDER_VALUE what="newsletters_planned>date"/>)<br />
-                                <a href="{newsletters_planned>showLink}">
-                                    <RENDER_VALUE what="i18n>showLink"/>
+                                <RENDER_VALUE what="newsletters_planned:title"/>
+                                (<RENDER_VALUE what="newsletters_planned:date"/>)<br />
+                                <a href="{newsletters_planned:showLink}">
+                                    <RENDER_VALUE what="i18n:showLink"/>
                                 </a>&#160;
-                                <a href="{newsletters_planned>editLink}">
-                                    <RENDER_VALUE what="i18n>editLink"/>
+                                <a href="{newsletters_planned:editLink}">
+                                    <RENDER_VALUE what="i18n:editLink"/>
                                 </a>&#160;
-                                <a href="{newsletters_planned>deleteLink}">
-                                    <RENDER_VALUE what="i18n>deleteLink"/>
+                                <a href="{newsletters_planned:deleteLink}">
+                                    <RENDER_VALUE what="i18n:deleteLink"/>
                                 </a>
                             </li>
                         </RENDER_LOOP>
                         </ul>
                     </RENDER_IFSET>
-                    <RENDER_IFSET what="newsletters>notPlanned">
+                    <RENDER_IFSET what="newsletters:notPlanned">
                         <div class="bold" style="margin-top:5px;">
-                            <RENDER_VALUE what="i18n>newsletters_notPlanned"/>
+                            <RENDER_VALUE what="i18n:newsletters_notPlanned"/>
                         </div>
                         <ul>
                         <RENDER_LOOP what="newsletters_notPlanned">
                             <li>
-                                <RENDER_VALUE what="newsletters_notPlanned>title"/><br />
-                                <a href="{newsletters_notPlanned>showLink}">
-                                    <RENDER_VALUE what="i18n>showLink"/>
+                                <RENDER_VALUE what="newsletters_notPlanned:title"/><br />
+                                <a href="{newsletters_notPlanned:showLink}">
+                                    <RENDER_VALUE what="i18n:showLink"/>
                                 </a>&#160;
-                                <a href="{newsletters_notPlanned>editLink}">
-                                    <RENDER_VALUE what="i18n>editLink"/>
+                                <a href="{newsletters_notPlanned:editLink}">
+                                    <RENDER_VALUE what="i18n:editLink"/>
                                 </a>&#160;
-                                <a href="{newsletters_notPlanned>deleteLink}">
-                                    <RENDER_VALUE what="i18n>deleteLink"/>
+                                <a href="{newsletters_notPlanned:deleteLink}">
+                                    <RENDER_VALUE what="i18n:deleteLink"/>
                                 </a>
                             </li>
                         </RENDER_LOOP>

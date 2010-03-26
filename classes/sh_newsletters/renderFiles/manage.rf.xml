@@ -3,63 +3,63 @@
         <div class="form_box_container">
             <div class="form_box_top">
                 <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>manage_title"/>
+                    <RENDER_VALUE what="i18n:manage_title"/>
                 </h3>
             </div>
             <div class="form_box_middle">
                 <div class="formContent">
-                    <RENDER_CHECKBOX text="{i18n>manage_activate}" name="activated" state="{content>activated}"/>
+                    <RENDER_CHECKBOX text="{i18n:manage_activate}" name="activated" state="{content:activated}"/>
                 </div>
             </div>
             <div class="form_box_bottom">
             </div>
             <div class="form_box_top">
                 <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>editSubscribePage_title"/>
+                    <RENDER_VALUE what="i18n:editSubscribePage_title"/>
                 </h3>
             </div>
             <div class="form_box_middle">
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>pageTitle"/>
-                    <RENDER_HELP what="{i18n>subscribPageTitle_explanations}"/>
+                    <RENDER_VALUE what="i18n:pageTitle"/>
+                    <RENDER_HELP what="{i18n:subscribPageTitle_explanations}"/>
                     <br />
-                    <RENDER_I18NINPUT class="sh_newsletters" i18n="{constants>subscription_title}" name="subscription_title"/>
+                    <RENDER_I18NINPUT class="sh_newsletters" i18n="{constants:subscription_title}" name="subscription_title"/>
                     <br />
-                    <RENDER_CHECKBOX text="{i18n>showTitle}" name="subscription_showTitle" state="{content>subscription_showTitle}"/>
+                    <RENDER_CHECKBOX text="{i18n:showTitle}" name="subscription_showTitle" state="{content:subscription_showTitle}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>editSubscribePage_intro"/>
-                    <RENDER_HELP what="{i18n>editSubscribePage_intro_explanations}"/>
+                    <RENDER_VALUE what="i18n:editSubscribePage_intro"/>
+                    <RENDER_HELP what="{i18n:editSubscribePage_intro_explanations}"/>
                     <br />
-                    <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_newsletters" i18n="{constants>subscription_intro}" name="subscription_intro"/>
+                    <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_newsletters" i18n="{constants:subscription_intro}" name="subscription_intro"/>
                 </div>
             </div>
             <div class="form_box_bottom">
             </div>
             <div class="form_box_top">
                 <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>editNewslettersList_title"/>
+                    <RENDER_VALUE what="i18n:editNewslettersList_title"/>
                 </h3>
             </div>
             <div class="form_box_middle">
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>pageTitle"/>
-                    <RENDER_HELP what="{i18n>NL_PageTitle_explanations}"/>
+                    <RENDER_VALUE what="i18n:pageTitle"/>
+                    <RENDER_HELP what="{i18n:NL_PageTitle_explanations}"/>
                     <br />
-                    <RENDER_I18NINPUT class="sh_newsletters" i18n="{constants>list_title}" name="list_title"/>
+                    <RENDER_I18NINPUT class="sh_newsletters" i18n="{constants:list_title}" name="list_title"/>
                     <br />
-                    <RENDER_CHECKBOX text="{i18n>showTitle}" name="list_showTitle" state="{content>list_showTitle}"/>
+                    <RENDER_CHECKBOX text="{i18n:showTitle}" name="list_showTitle" state="{content:list_showTitle}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>edit_newsList_intro"/>
-                    <RENDER_HELP what="{i18n>edit_newsList_intro_explanation}"/>
+                    <RENDER_VALUE what="i18n:edit_newsList_intro"/>
+                    <RENDER_HELP what="{i18n:edit_newsList_intro_explanation}"/>
                     <br />
-                    <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_newsletters" i18n="{constants>list_intro}" name="list_intro"/>
+                    <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_newsletters" i18n="{constants:list_intro}" name="list_intro"/>
                 </div>
             </div>
             <div class="form_box_bottom">
             </div>
-            <input type="submit" value="{i18n>validate}"/>
+            <input type="submit" value="{i18n:validate}"/>
         </div>
     </RENDER_FORM>
 </div>

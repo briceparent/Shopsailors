@@ -1,9 +1,9 @@
 <RENDER_LOOP what="folders">
-    <RENDER_VALUE what="folders>name"/><br />
-    <RENDER_IFSET what="folders>content">
+    <RENDER_VALUE what="folders:name"/><br />
+    <RENDER_IFSET what="folders:content">
         <ul>
             <li>
-                <RENDER_VALUE what="folders>content"/>
+                <RENDER_VALUE what="folders:content"/>
             </li>
         </ul>
     </RENDER_IFSET>

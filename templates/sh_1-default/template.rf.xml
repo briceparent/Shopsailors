@@ -1,50 +1,50 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{constants>xmllang}" lang="{constants>xmllang}">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{constants:xmllang}" lang="{constants:xmllang}">
     <head>
-        <RENDER_VALUE what="head>content"/>
+        <RENDER_VALUE what="head:content"/>
     </head>
-    <RENDER_TAG type="body" what="body>data">
-        <RENDER_VALUE what="body>beginning"/>
+    <RENDER_TAG type="body" what="body:data">
+        <RENDER_VALUE what="body:beginning"/>
         <div class="tmp_background">
             <div id="tmp_mainLogo">
                 <img src="/images/site/logo/banner.png" alt="logo" title="logo"/>
             </div>
             <div>
                 <h1 class="tmp_topTitle">
-                    <RENDER_VALUE what="body>headline"/>
+                    <RENDER_VALUE what="body:headline"/>
                 </h1>
             </div>
             <div class="tmp_topBox">
-                <RENDER_IFSET what="connect>link">
+                <RENDER_IFSET what="connect:link">
                     <div id="connectionContainer">
-                        <a href="{connect>link}"><RENDER_VALUE what="i18n>connectAccountClient"/></a>
+                        <a href="{connect:link}"><RENDER_VALUE what="i18n:connectAccountClient"/></a>
                     </div>
                 </RENDER_IFSET>
-                <RENDER_IFSET what="disconnect>link">
+                <RENDER_IFSET what="disconnect:link">
                     <div id="connectionContainer">
-                        <a href="{disconnect>link}"><RENDER_VALUE what="i18n>disconnectAccountClient"/></a>
+                        <a href="{disconnect:link}"><RENDER_VALUE what="i18n:disconnectAccountClient"/></a>
                     </div>
                 </RENDER_IFSET>
-                <RENDER_VALUE what="language>selector"/>
+                <RENDER_VALUE what="language:selector"/>
             </div>
             <div class="tmp_middleBox">
-                <RENDER_VALUE what="body>searchEngine"/>
+                <RENDER_VALUE what="body:searchEngine"/>
                 <div class="tmp_menu1">
-                <RENDER_VALUE what="body>menu_1"/>
+                <RENDER_VALUE what="body:menu_1"/>
                 </div>
                 <div class="tmp_mainContent">
-                    <RENDER_IFSET what="body>title">
-                        <h1 class="bodyTitle"><RENDER_VALUE what="body>title"/></h1>
+                    <RENDER_IFSET what="body:title">
+                        <h1 class="bodyTitle"><RENDER_VALUE what="body:title"/></h1>
                     </RENDER_IFSET>
-                <RENDER_VALUE what="body>content"/>
+                <RENDER_VALUE what="body:content"/>
                 </div>
-                <RENDER_VALUE what="body>otherContents"/>
+                <RENDER_VALUE what="body:otherContents"/>
                 <div class="clearBoth" > 
                 </div>
             </div>
             <div class="tmp_bottomBox">
             </div>
             <div id="tmp_legacy">
-                <RENDER_VALUE what="body>copyrights"/>
+                <RENDER_VALUE what="body:copyrights"/>
             </div>
         </div>
      </RENDER_TAG>

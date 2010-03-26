@@ -10,7 +10,7 @@
             <td background="/images/template/variation/nw_bg-top2_middle.png" width="564">
                 <div align="center">
                     <a href="/index.php">
-                        <font face="times" color="{variation>globalText}" size="25">
+                        <font face="times" color="{variation:globalText}" size="25">
                             <strong>
                                 <img src="/images/site/logo/rectangular.png" border="0" alt="logo" title="my store" width="240" height="80"/>
                             </strong>
@@ -26,16 +26,16 @@
             </td>
             <td background="/images/template/variation/nw_bg-middle_middle.png" width="564">
                 <div align="right">
-                    <font face="arial" color="{variation>globalText}" size="2">
+                    <font face="arial" color="{variation:globalText}" size="2">
                         <strong>
-                            Newsletter n°...&#160;le&#160;<RENDER_VALUE what="content>date"/>
+                            Newsletter n°...&#160;le&#160;<RENDER_VALUE what="content:date"/>
                         </strong>
                     </font>
                 </div>
                 <div>
-                    <font face="arial" color="{variation>globalText}" size="4">
+                    <font face="arial" color="{variation:globalText}" size="4">
                         <strong>
-                            <RENDER_VALUE what="content>title"/>
+                            <RENDER_VALUE what="content:title"/>
                         </strong>
                     </font>
                 </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div>
                     <font face="arial" size="1">
-                        <RENDER_VALUE what="content>plugins"/>
+                        <RENDER_VALUE what="content:plugins"/>
                     </font>
                 </div>
             </td>

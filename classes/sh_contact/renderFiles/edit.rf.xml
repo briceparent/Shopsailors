@@ -3,59 +3,59 @@
         <div class="form_box_container">
             <div class="form_box_top">
                 <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>contactBox"/>
+                    <RENDER_VALUE what="i18n:contactBox"/>
                 </h3>
             </div>
             <div class="form_box_middle">
                 <div class="formContent">
-                    <RENDER_CHECKBOX text="{i18n>activated}" name="contact[activated]" state="{contact>activated}" help="{i18n>activated_explanation}"/>
+                    <RENDER_CHECKBOX text="{i18n:activated}" name="contact[activated]" state="{contact:activated}" help="{i18n:activated_explanation}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>contact_title"/>
-                    <RENDER_I18NINPUT class="sh_contact" i18n="{constants>i18n_contactTitle}" name="{form_contact>contact_title}"/>
+                    <RENDER_VALUE what="i18n:contact_title"/>
+                    <RENDER_I18NINPUT class="sh_contact" i18n="{constants:i18n_contactTitle}" name="{form_contact:contact_title}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>contact_intro"/><br />
-                    <RENDER_I18NTEXTAREA class="sh_contact" i18n="{constants>i18n_contactIntro}" name="{form_contact>contact_intro}"/>
+                    <RENDER_VALUE what="i18n:contact_intro"/><br />
+                    <RENDER_I18NTEXTAREA class="sh_contact" i18n="{constants:i18n_contactIntro}" name="{form_contact:contact_intro}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>address"/>
-                    <RENDER_HELP what="{i18n>address_explanation}"/>
+                    <RENDER_VALUE what="i18n:address"/>
+                    <RENDER_HELP what="{i18n:address_explanation}"/>
                     <br />
-                    <textarea class="textAreaForm" name="{form_contact>address}">
-                        <RENDER_VALUE what="contact>address"/>
+                    <textarea class="textAreaForm" name="{form_contact:address}">
+                        <RENDER_VALUE what="contact:address"/>
                     </textarea>
                     <br />
-                    <RENDER_CHECKBOX text="{i18n>showaddress}" name="contact[showAddress]" state="{contact>showAddress}"/>
+                    <RENDER_CHECKBOX text="{i18n:showaddress}" name="contact[showAddress]" state="{contact:showAddress}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>phone"/>
-                    <RENDER_HELP what="{i18n>phone_explanation}"/>
+                    <RENDER_VALUE what="i18n:phone"/>
+                    <RENDER_HELP what="{i18n:phone_explanation}"/>
                     <br />
-                    <textarea class="textAreaForm" name="{form_contact>phone}">
-                        <RENDER_VALUE what="contact>phone"/>
+                    <textarea class="textAreaForm" name="{form_contact:phone}">
+                        <RENDER_VALUE what="contact:phone"/>
                     </textarea>
                     <br />
-                    <RENDER_CHECKBOX text="{i18n>showPhone}" name="contact[showPhone]" state="{contact>showPhone}"/>
+                    <RENDER_CHECKBOX text="{i18n:showPhone}" name="contact[showPhone]" state="{contact:showPhone}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>mail"/>
-                    <RENDER_HELP what="{i18n>mail_explanation}"/>
+                    <RENDER_VALUE what="i18n:mail"/>
+                    <RENDER_HELP what="{i18n:mail_explanation}"/>
                     <br />
-                    <textarea  class="textAreaForm" name="{form_contact>mail}">
-                        <RENDER_VALUE what="contact>mail"/>
+                    <textarea  class="textAreaForm" name="{form_contact:mail}">
+                        <RENDER_VALUE what="contact:mail"/>
                     </textarea>
                     <br />
-                    <RENDER_CHECKBOX text="{i18n>showMail}" name="contact[showMail]" state="{contact>showMail}" help="{i18n>showMail_explanation}"/>
+                    <RENDER_CHECKBOX text="{i18n:showMail}" name="contact[showMail]" state="{contact:showMail}" help="{i18n:showMail_explanation}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_CHECKBOX text="{i18n>sendMail}" name="contact[sendMail]" state="{contact>sendMail}" help="{i18n>sendmail_explanation}"/>
+                    <RENDER_CHECKBOX text="{i18n:sendMail}" name="contact[sendMail]" state="{contact:sendMail}" help="{i18n:sendmail_explanation}"/>
                 </div>
             </div>
             <div class="form_box_bottom">
             </div>
             <div class="formSubmitContainer">
-                <input type="submit" value="{i18n>save}"/>
+                <input type="submit" value="{i18n:save}"/>
             </div>
         </div>
     </RENDER_FORM>

@@ -4,9 +4,9 @@
     <div class="bg_identification_middle">
         <div class="createAccount_contents">
             <div class="accountConfirm">
-            <RENDER_VALUE what="i18n>accountCreationCongratulation"/>
-           <RENDER_VALUE what="user>name"/>&#160;<RENDER_VALUE what="user>lastName"/>!<br />
-            <RENDER_VALUE what="i18n>accountCreationValidated"/>
+            <RENDER_VALUE what="i18n:accountCreationCongratulation"/>
+           <RENDER_VALUE what="user:name"/>&#160;<RENDER_VALUE what="user:lastName"/>!<br />
+            <RENDER_VALUE what="i18n:accountCreationValidated"/>
             </div>
         </div>
     </div>

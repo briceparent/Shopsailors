@@ -3,49 +3,49 @@
         <div class="form_box_container">
             <div class="form_box_top">
                 <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>newsletter_list"/>
+                    <RENDER_VALUE what="i18n:newsletter_list"/>
                 </h3>
             </div>
             <div class="form_box_middle">
                 <div class="form_box_content">
                     <div class="formContent">
-                        <RENDER_IFSET what="newsletters>none">
-                            <RENDER_VALUE what="i18n>noNewsletterToList"/>
+                        <RENDER_IFSET what="newsletters:none">
+                            <RENDER_VALUE what="i18n:noNewsletterToList"/>
                         </RENDER_IFSET>
-                        <RENDER_IFNOTSET what="newsletters>none">
-                            <RENDER_VALUE what="i18n>newsletters_notAlreadySent"/>
+                        <RENDER_IFNOTSET what="newsletters:none">
+                            <RENDER_VALUE what="i18n:newsletters_notAlreadySent"/>
                             <RENDER_LOOP what="newsletters">
                                 <div class="marginBottom_5px">
                                     <span class="bold">
-                                        <RENDER_VALUE what="newsletters>title"/>&#160;
-                                        (<RENDER_VALUE what="newsletters>date"/>)
+                                        <RENDER_VALUE what="newsletters:title"/>&#160;
+                                        (<RENDER_VALUE what="newsletters:date"/>)
                                     </span>
-                                    <a href="{newsletters>link}">
-                                        <RENDER_VALUE what="i18n>showLink"/>
+                                    <a href="{newsletters:link}">
+                                        <RENDER_VALUE what="i18n:showLink"/>
                                     </a>&#160;&#160;
-                                    <a href="{newsletters>editLink}">
-                                        <RENDER_VALUE what="i18n>editLink"/>
+                                    <a href="{newsletters:editLink}">
+                                        <RENDER_VALUE what="i18n:editLink"/>
                                     </a>&#160;&#160;
-                                    <a href="{newsletters>deleteLink}">
-                                        <RENDER_VALUE what="i18n>deleteLink"/>
+                                    <a href="{newsletters:deleteLink}">
+                                        <RENDER_VALUE what="i18n:deleteLink"/>
                                     </a>
                                 </div>
                             </RENDER_LOOP>
-                            <RENDER_VALUE what="i18n>newsletters_alreadySent"/>
+                            <RENDER_VALUE what="i18n:newsletters_alreadySent"/>
                             <RENDER_LOOP what="sentNewsletters">
                                 <div class="marginBottom_5px">
                                     <span class="bold">
-                                        <RENDER_VALUE what="sentNewsletters>title"/>&#160;
-                                        (<RENDER_VALUE what="sentNewsletters>date"/>)
+                                        <RENDER_VALUE what="sentNewsletters:title"/>&#160;
+                                        (<RENDER_VALUE what="sentNewsletters:date"/>)
                                     </span>
-                                    <a href="{sentNewsletters>link}">
-                                        <RENDER_VALUE what="i18n>showLink"/>
+                                    <a href="{sentNewsletters:link}">
+                                        <RENDER_VALUE what="i18n:showLink"/>
                                     </a>&#160;&#160;
-                                    <a href="{sentNewsletters>editLink}">
-                                        <RENDER_VALUE what="i18n>editLink"/>
+                                    <a href="{sentNewsletters:editLink}">
+                                        <RENDER_VALUE what="i18n:editLink"/>
                                     </a>&#160;&#160;
-                                    <a href="{sentNewsletters>deleteLink}">
-                                        <RENDER_VALUE what="i18n>deleteLink"/>
+                                    <a href="{sentNewsletters:deleteLink}">
+                                        <RENDER_VALUE what="i18n:deleteLink"/>
                                     </a>
                                 </div>
                             </RENDER_LOOP>
@@ -55,7 +55,7 @@
             </div>
             <div class="form_box_bottom">
             </div>
-            <input type="submit" value="{i18n>validate}"/>
+            <input type="submit" value="{i18n:validate}"/>
         </div>
     </RENDER_FORM>
 </div>
