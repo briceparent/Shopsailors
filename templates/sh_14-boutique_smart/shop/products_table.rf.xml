@@ -3,21 +3,21 @@
         <tr>
             <td>
                 <NORENDER>navigator_display_mode</NORENDER>
-                <RENDER_IFSET what="nav_bar>display">
+                <RENDER_IFSET what="nav_bar:display">
                     <span class="icon_display">
-                        <RENDER_IFSET what="selectors>link_list">
-                            <a href="{selectors>link_list}">
-                                <img src="/images/shared/icons/icon_list.png" alt="{i18n>list_view}" title="{i18n>list_view}"/>
+                        <RENDER_IFSET what="selectors:link_list">
+                            <a href="{selectors:link_list}">
+                                <img src="/images/shared/icons/icon_list.png" alt="{i18n:list_view}" title="{i18n:list_view}"/>
                             </a>&#160;
                         </RENDER_IFSET>
-                        <RENDER_IFSET what="selectors>link_miniature">
-                            <a href="{selectors>link_miniature}">
-                                <img src="/images/shared/icons/icon_miniature.png" alt="{i18n>miniature_view}" title="{i18n>miniature_view}"/>
+                        <RENDER_IFSET what="selectors:link_miniature">
+                            <a href="{selectors:link_miniature}">
+                                <img src="/images/shared/icons/icon_miniature.png" alt="{i18n:miniature_view}" title="{i18n:miniature_view}"/>
                             </a>&#160;
                         </RENDER_IFSET>
-                        <RENDER_IFSET what="selectors>link_table">
-                            <a href="{selectors>link_table}">
-                                <img src="/images/shared/icons/icon_table.png" alt="{i18n>table_view}" title="{i18n>table_view}"/>
+                        <RENDER_IFSET what="selectors:link_table">
+                            <a href="{selectors:link_table}">
+                                <img src="/images/shared/icons/icon_table.png" alt="{i18n:table_view}" title="{i18n:table_view}"/>
                             </a>&#160;
                         </RENDER_IFSET>
                     </span>
@@ -26,8 +26,8 @@
             <td>
                 <NORENDER>breadcrumbs</NORENDER>
                 <span id="shop_navigator" class="shop_arboText">
-                    <RENDER_VALUE what="i18n>navigator_title"/>
-                    <RENDER_BREADCRUMBS what="nav_levels" sameLevelText="{i18n>breadCrumbs_sameCategoryText}"/>
+                    <RENDER_VALUE what="i18n:navigator_title"/>
+                    <RENDER_BREADCRUMBS what="nav_levels" sameLevelText="{i18n:breadCrumbs_sameCategoryText}"/>
                 </span>
             </td>
         </tr>
@@ -36,19 +36,19 @@
     <NORENDER>active category</NORENDER>
     <div class="marginTop_10px">
         <div class="active_category_preview">
-            <img src="{category>image}" alt="navigator_preview"/>
+            <img src="{category:image}" alt="navigator_preview"/>
         </div>
         <div class="bg_active_category">
             <div class="active_category_descriptionContainer">
                 <div class="active_category_describe">
-                    <RENDER_VALUE what="category>description"/>
+                    <RENDER_VALUE what="category:description"/>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="selectAcategory">
-        <RENDER_VALUE what="i18n>selectAproduct"/>
+        <RENDER_VALUE what="i18n:selectAproduct"/>
     </div>
     
     <NORENDER>navigator_table</NORENDER>
@@ -56,66 +56,66 @@
             <tr class="navigator_table_title">
                 <th class="border-bottom">&#160;</th>
                 <th class="border-bottom border-left border-top bg_table">
-                    <RENDER_VALUE what="i18n>productsTable_name"/>
+                    <RENDER_VALUE what="i18n:productsTable_name"/>
                 </th>
                 <th class="border-bottom border-left border-top bg_table">
-                    <RENDER_VALUE what="i18n>productsTable_desc"/>
+                    <RENDER_VALUE what="i18n:productsTable_desc"/>
                 </th>
-                <RENDER_IFSET what="constants>showQuantity">
+                <RENDER_IFSET what="constants:showQuantity">
                     <th class="border-bottom border-left border-top bg_table">
-                        <RENDER_VALUE what="i18n>productsTable_stock"/>
+                        <RENDER_VALUE what="i18n:productsTable_stock"/>
                     </th>
                 </RENDER_IFSET>
                 <th class="border-bottom border-left border-top border-right bg_table">
-                    <RENDER_VALUE what="i18n>productsTable_price"/>
+                    <RENDER_VALUE what="i18n:productsTable_price"/>
                 </th>
                 <th>&#160;</th>
             </tr>
             <RENDER_LOOP what="category_elements">
             <tr>
                 <td class="table_preview border-left border-bottom">
-                    <a href="{category_elements>link}">
-                        <img src="{category_elements>image}" alt="navigator_preview"/>
+                    <a href="{category_elements:link}">
+                        <img src="{category_elements:image}" alt="navigator_preview"/>
                     </a>
                 </td>
                 <td class="navigator_table_name border-left border-bottom bg_table">
-                    <a href="{category_elements>link}">
-                        <RENDER_VALUE what="category_elements>name"/>
+                    <a href="{category_elements:link}">
+                        <RENDER_VALUE what="category_elements:name"/>
                     </a>
                     <div class="navigator_table_reference">
-                        <a href="{category_elements>link}">
-                            <RENDER_VALUE what="category_elements>reference"/>
+                        <a href="{category_elements:link}">
+                            <RENDER_VALUE what="category_elements:reference"/>
                         </a>
                     </div>
                 </td>
                 <td class="navigator_table_shortDesc border-left border-bottom bg_table">
-                    <RENDER_VALUE what="category_elements>shortDescription"/>
+                    <RENDER_VALUE what="category_elements:shortDescription"/>
                 </td>
-                <RENDER_IFSET what="constants>showQuantity">
+                <RENDER_IFSET what="constants:showQuantity">
                     <td class="border-left border-bottom bg_table navigator_table_stock">
-                        <RENDER_VALUE what="category_elements>stock"/>
+                        <RENDER_VALUE what="category_elements:stock"/>
                     </td>
                 </RENDER_IFSET>
                 <td class="border-left border-bottom border-right bg_table navigator_table_price nobr">
-                    <span class="nobr"><RENDER_VALUE what="category_elements>price"/></span>
+                    <span class="nobr"><RENDER_VALUE what="category_elements:price"/></span>
                 </td>
                 <td class="nobr picto_table">
-                    <RENDER_IFSET what="category_elements>picto_addtocart_link">
-                        <a href="{category_elements>picto_addtocart_link}">
-                            <img src="/images/shared/icons/picto_cart.png" class="onePicto" alt="add_to_cart" title="{i18n>pictoAddTocart}"/>
+                    <RENDER_IFSET what="category_elements:picto_addtocart_link">
+                        <a href="{category_elements:picto_addtocart_link}">
+                            <img src="/images/shared/icons/picto_cart.png" class="onePicto" alt="add_to_cart" title="{i18n:pictoAddTocart}"/>
                         </a>
                     </RENDER_IFSET>
-                    <RENDER_IFNOTSET what="category_elements>picto_addtocart_link">
-                            <img src="/images/shared/icons/picto_nocart.png" class="onePicto" alt="add_to_cart" title="{i18n>pictoAddToCart}"/>
+                    <RENDER_IFNOTSET what="category_elements:picto_addtocart_link">
+                            <img src="/images/shared/icons/picto_nocart.png" class="onePicto" alt="add_to_cart" title="{i18n:pictoAddToCart}"/>
                     </RENDER_IFNOTSET>
-                    <RENDER_IFSET what="category_elements>picto_show_link">
-                        <a href="{category_elements>picto_show_link}">
-                            <img src="/images/shared/icons/picto_details.png" class="onePicto" alt="view_details_sheet" title="{i18n>pictoShow}"/>
+                    <RENDER_IFSET what="category_elements:picto_show_link">
+                        <a href="{category_elements:picto_show_link}">
+                            <img src="/images/shared/icons/picto_details.png" class="onePicto" alt="view_details_sheet" title="{i18n:pictoShow}"/>
                         </a>
                     </RENDER_IFSET>
-                    <RENDER_IFSET what="category_elements>picto_sendmail_link">
-                        <a href="{category_elements>picto_sendmail_link}">
-                            <img src="/images/shared/icons/picto_mail.png" class="onePicto" alt="send_by_mail" title="{i18n>pictoSendmail}"/>
+                    <RENDER_IFSET what="category_elements:picto_sendmail_link">
+                        <a href="{category_elements:picto_sendmail_link}">
+                            <img src="/images/shared/icons/picto_mail.png" class="onePicto" alt="send_by_mail" title="{i18n:pictoSendmail}"/>
                         </a>
                     </RENDER_IFSET>
                 </td>
@@ -124,33 +124,33 @@
         </table>
 
     <NORENDER>Page navigator</NORENDER>
-    <RENDER_IFSET what="pages>0">
+    <RENDER_IFSET what="pages:0">
         <div class="pageNavigator">
             <table>
                 <tr>
-                    <RENDER_IFSET what="pagenavigation>previous_link">
+                    <RENDER_IFSET what="pagenavigation:previous_link">
                         <td>
-                            <a href="{pagenavigation>previous_link}"><img src="images/shared/variations/{constants>variation}/navigation/model1_previous.png" alt="{i18n>nav_previous}"/></a>
+                            <a href="{pagenavigation:previous_link}"><img src="images/shared/variations/{constants:variation}/navigation/model1_previous.png" alt="{i18n:nav_previous}"/></a>
                         </td>
                     </RENDER_IFSET>
-                    <RENDER_IFNOTSET what="pagenavigation>previous_link">
+                    <RENDER_IFNOTSET what="pagenavigation:previous_link">
                         <td>
-                            <img src="images/shared/variations/{constants>variation}/navigation/model1_noprevious.png" alt="{i18n>nav_previous}"/>
+                            <img src="images/shared/variations/{constants:variation}/navigation/model1_noprevious.png" alt="{i18n:nav_previous}"/>
                         </td>
                     </RENDER_IFNOTSET>
                     <RENDER_LOOP what="pages">
                         <td>
-                            <a href="{pages>link}" class="{pages>class}"><RENDER_VALUE what="pages>number"/></a>
+                            <a href="{pages:link}" class="{pages:class}"><RENDER_VALUE what="pages:number"/></a>
                         </td>
                     </RENDER_LOOP>
-                    <RENDER_IFNOTSET what="pagenavigation>next_link">
+                    <RENDER_IFNOTSET what="pagenavigation:next_link">
                         <td>
-                            <img src="images/shared/variations/{constants>variation}/navigation/model1_nonext.png" alt="{i18n>nav_next}"/>
+                            <img src="images/shared/variations/{constants:variation}/navigation/model1_nonext.png" alt="{i18n:nav_next}"/>
                         </td>
                     </RENDER_IFNOTSET>
-                    <RENDER_IFSET what="pagenavigation>next_link">
+                    <RENDER_IFSET what="pagenavigation:next_link">
                         <td>
-                            <a href="{pagenavigation>next_link}"><img src="images/shared/variations/{constants>variation}/navigation/model1_next.png" alt="{i18n>nav_next}"/></a>
+                            <a href="{pagenavigation:next_link}"><img src="images/shared/variations/{constants:variation}/navigation/model1_next.png" alt="{i18n:nav_next}"/></a>
                         </td>
                     </RENDER_IFSET>
                 </tr>

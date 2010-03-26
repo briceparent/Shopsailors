@@ -1,8 +1,8 @@
-<span id="global_{help>id}">
-    <img src="/images/shared/icons/help.png" class="aLink helpToolTip" title="{i18n>help}" onclick="UnTip();TagToTip('{help>id}',BORDERCOLOR,'#003366',TITLEBGCOLOR,'#336699', BALLOON, true, ABOVE, true)"/>
-    <span id="{help>id}">
+<span id="global_{help:id}">
+    <img src="/images/shared/icons/help.png" class="aLink helpToolTip" title="{i18n:help}" onclick="UnTip();TagToTip('{help:id}',BORDERCOLOR,'#003366',TITLEBGCOLOR,'#336699', BALLOON, true, ABOVE, true)"/>
+    <span id="{help:id}">
         <span class="render_help_explanation">
-            <RENDER_VALUE what="help>what"/>
+            <RENDER_VALUE what="help:what"/>
         </span>
     </span>
 </span>

@@ -1,22 +1,22 @@
 <div id="connection_mainContainer">
-    <RENDER_FORM method="post" action="" id="{form>id}">
+    <RENDER_FORM method="post" action="" id="{form:id}">
         <div class="bg_identification_top">
         </div>
         <div class="bg_identification_middle">
             <div id="identificationContainer">
-                <RENDER_VALUE what="i18n>login"/><br /><input name="id" />
+                <RENDER_VALUE what="i18n:login"/><br /><input name="id" />
                 <div class="marginTop_5px">
-                <RENDER_VALUE what="i18n>password"/><br /><input type="password" name="pass" />
+                <RENDER_VALUE what="i18n:password"/><br /><input type="password" name="pass" />
                 </div>
                 <div class="marginTop_15px">
-                <RENDER_CAPTCHA what="{form>id}"/>
+                <RENDER_CAPTCHA what="{form:id}"/>
                 </div>
                 <div class="marginTop_15px">
                     <input type="submit" value="Se connecter"/>
                 </div>
                 <div class="adminConnection_firefox">
                 <a href="http://www.mozilla-europe.org/fr/firefox/"><img src="/templates/global/admin/firefox.png"/></a><br />
-                <RENDER_VALUE what="i18n>firefox"/>
+                <RENDER_VALUE what="i18n:firefox"/>
                 </div>
             </div>
         </div>

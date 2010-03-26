@@ -1,36 +1,36 @@
 <table class="form_checkbox form_radiobox">
     <tr>
         <td class="form_elementTd">
-            <RENDER_TAG type="input" what="element>attributes"/>
+            <RENDER_TAG type="input" what="element:attributes"/>
         </td>
-        <td onclick="{element>jsmethod}();" id="{element>uid}_span">
-            <RENDER_VALUE what="element>text"/>
-            <RENDER_IFNOTSET what="element>disabled">
+        <td onclick="{element:jsmethod}();" id="{element:uid}_span">
+            <RENDER_VALUE what="element:text"/>
+            <RENDER_IFNOTSET what="element:disabled">
                 <script type="text/javascript">
-                    <RENDER_IFNOTSET what="userAgent>IE">
-                        <RENDER_IFSET what="element>checkUncheck">
-                            $('<RENDER_VALUE what="element>uid"/>_span').style.cursor='pointer';
-                            function <RENDER_VALUE what="element>jsmethod"/>(){
-                                if($('<RENDER_VALUE what="element>uid"/>').checked){
-                                    $('<RENDER_VALUE what="element>uid"/>').click();
+                    <RENDER_IFNOTSET what="userAgent:IE">
+                        <RENDER_IFSET what="element:checkUncheck">
+                            $('<RENDER_VALUE what="element:uid"/>_span').style.cursor='pointer';
+                            function <RENDER_VALUE what="element:jsmethod"/>(){
+                                if($('<RENDER_VALUE what="element:uid"/>').checked){
+                                    $('<RENDER_VALUE what="element:uid"/>').click();
                                 }else{
-                                    $('<RENDER_VALUE what="element>uid"/>').click();
+                                    $('<RENDER_VALUE what="element:uid"/>').click();
                                 }
                             }
                         </RENDER_IFSET>
-                        <RENDER_IFNOTSET what="element>checkUncheck">
-                            $('<RENDER_VALUE what="element>uid"/>_span').style.cursor='pointer';
-                            function <RENDER_VALUE what="element>jsmethod"/>(){
-                                $('<RENDER_VALUE what="element>uid"/>').click();
+                        <RENDER_IFNOTSET what="element:checkUncheck">
+                            $('<RENDER_VALUE what="element:uid"/>_span').style.cursor='pointer';
+                            function <RENDER_VALUE what="element:jsmethod"/>(){
+                                $('<RENDER_VALUE what="element:uid"/>').click();
                             }
                         </RENDER_IFNOTSET>
                     </RENDER_IFNOTSET>
                 </script>
             </RENDER_IFNOTSET>
         </td>
-        <RENDER_IFSET what="help>content">
+        <RENDER_IFSET what="help:content">
             <td>
-                <RENDER_HELP what="{help>content}"/>
+                <RENDER_HELP what="{help:content}"/>
             </td>
         </RENDER_IFSET>
     </tr>

@@ -33,9 +33,9 @@
         <form id="diaporamaChooser">
             <RENDER_LOOP what="diaporamas">
                 <div>
-                    <RENDER_RADIOBOX name="diaporama" value="{diaporamas>name}" text="{diaporamas>name} ({diaporamas>width}x{diaporamas>height})" onclick="preSelectDiaporama(this.value);"/>
-                    <input type="hidden" id="{diaporamas>name}_width" value="{diaporamas>width}"/>
-                    <input type="hidden" id="{diaporamas>name}_height" value="{diaporamas>height}"/>
+                    <RENDER_RADIOBOX name="diaporama" value="{diaporamas:name}" text="{diaporamas:name} ({diaporamas>width}x{diaporamas>height})" onclick="preSelectDiaporama(this.value);"/>
+                    <input type="hidden" id="{diaporamas:name}_width" value="{diaporamas:width}"/>
+                    <input type="hidden" id="{diaporamas:name}_height" value="{diaporamas:height}"/>
                 </div>
             </RENDER_LOOP>
             <input type="button" onclick="selectDiaporama();" value="OK"/>

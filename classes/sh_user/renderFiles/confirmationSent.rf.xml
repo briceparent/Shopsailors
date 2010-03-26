@@ -4,10 +4,10 @@
     <div class="bg_identification_middle">
         <div class="createAccount_contents">
             <div class="accountConfirm">
-            <RENDER_VALUE what="i18n>mailConfirmSent"/><br />
-            <RENDER_VALUE what="user>mail"/><br />
-            <RENDER_VALUE what="i18n>wayToConfirm"/><br /><br />
-            <RENDER_VALUE what="i18n>websailorsThanksYou"/><br />
+            <RENDER_VALUE what="i18n:mailConfirmSent"/><br />
+            <RENDER_VALUE what="user:mail"/><br />
+            <RENDER_VALUE what="i18n:wayToConfirm"/><br /><br />
+            <RENDER_VALUE what="i18n:websailorsThanksYou"/><br />
             </div>
         </div>
     </div>

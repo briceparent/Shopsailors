@@ -3,18 +3,18 @@
         <div class="form_box_container">
             <div class="form_box_top">
                 <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>editShipModesTitle"/>
+                    <RENDER_VALUE what="i18n:editShipModesTitle"/>
                 </h3>
             </div>
             <div class="form_box_middle">
                 <div class="formContent">
                     <div class="ship_activeExpedition">
-                        <RENDER_CHECKBOX text="{i18n>activateShipping}" help="{i18n>activateShipping_explanation}" name="activateShipping" state="{activateShipping>checked}"/>
+                        <RENDER_CHECKBOX text="{i18n:activateShipping}" help="{i18n:activateShipping_explanation}" name="activateShipping" state="{activateShipping:checked}"/>
                     </div>
                 </div>
                 <div class="formContent">
                     <div class="ship_showExpeditionInLegacy">
-                        <RENDER_CHECKBOX text="{i18n>ship_showExpeditionInLegacy}" help="{i18n>ship_showExpeditionInLegacy_explanation}" name="showExpeditionInLegacy" state="{showExpeditionInLegacy>checked}"/>
+                        <RENDER_CHECKBOX text="{i18n:ship_showExpeditionInLegacy}" help="{i18n:ship_showExpeditionInLegacy_explanation}" name="showExpeditionInLegacy" state="{showExpeditionInLegacy:checked}"/>
                     </div>
                 </div>
                 <div class="formContent">
@@ -24,58 +24,58 @@
                                 <div class="ship_mode_top"></div>
                                 <div class="ship_mode_middle">
                                     <div class="ship_providerName">
-                                        <RENDER_VALUE what="i18n>ship_providerName"/><br /><input name="supplyers[{modes>id}][name]" value="{modes>name}"/>
+                                        <RENDER_VALUE what="i18n:ship_providerName"/><br /><input name="supplyers[{modes:id}][name]" value="{modes:name}"/>
                                     </div>
                                     <div class="ship_logoSelector ship_global">
-                                        <RENDER_VALUE what="i18n>shipLogo"/>&#160;
-                                        <RENDER_HELP what="{i18n>shipLogo_explanation}"/>
+                                        <RENDER_VALUE what="i18n:shipLogo"/>&#160;
+                                        <RENDER_HELP what="{i18n:shipLogo_explanation}"/>
                                         <div class="ship_logoImage">
-                                            <RENDER_IMAGESELECTOR name="supplyers[{modes>id}][logo]" value="{modes>logo}" folder="{ship>imagesFolder}" style="width:100px;height:80px;vertical-align:top;"/>
+                                            <RENDER_IMAGESELECTOR name="supplyers[{modes:id}][logo]" value="{modes:logo}" folder="{ship:imagesFolder}" style="width:100px;height:80px;vertical-align:top;"/>
                                         </div>
                                     </div>
                                     <div class="ship_price ship_global">
-                                    <RENDER_VALUE what="i18n>shipPrice"/><br />
-                                    <RENDER_VALUE what="constants>currencyBefore"/>
-                                    <input name="supplyers[{modes>id}][price]" value="{modes>price}"/>
-                                    <RENDER_VALUE what="constants>currencyAfter"/>
+                                    <RENDER_VALUE what="i18n:shipPrice"/><br />
+                                    <RENDER_VALUE what="constants:currencyBefore"/>
+                                    <input name="supplyers[{modes:id}][price]" value="{modes:price}"/>
+                                    <RENDER_VALUE what="constants:currencyAfter"/>
                                     </div>
                                     <div class="ship_description ship_global">
-                                        <RENDER_VALUE what="i18n>shipDescription"/>&#160;
-                                        <RENDER_HELP what="{i18n>shipDescription_explanation}"/><br />
-                                        <textarea name="supplyers[{modes>id}][description]">
-                                            <RENDER_VALUE what="modes>description"/>
+                                        <RENDER_VALUE what="i18n:shipDescription"/>&#160;
+                                        <RENDER_HELP what="{i18n:shipDescription_explanation}"/><br />
+                                        <textarea name="supplyers[{modes:id}][description]">
+                                            <RENDER_VALUE what="modes:description"/>
                                         </textarea>
                                     </div>
                                     <div class="ship_activateMode ship_global">
-                                        <RENDER_CHECKBOX text="{i18n>activateMode}" name="supplyers[{modes>id}][activated]" state="{modes>activated}"/>
+                                        <RENDER_CHECKBOX text="{i18n:activateMode}" name="supplyers[{modes:id}][activated]" state="{modes:activated}"/>
                                     </div>
                                     <div class="ship_delete ship_global">
-                                        <input type="image" name="removeShipMode[{modes>id}]" value="{i18n>shipMode_remove}"/>
+                                        <input type="image" name="removeShipMode[{modes:id}]" value="{i18n:shipMode_remove}"/>
                                     </div>
                                 </div>
                                 <div class="ship_mode_bottom"></div>
                             </div>
                         </RENDER_LOOP>
                         <div class="ship_addMode">
-                            <input type="submit" name="addShipMode" value="{i18n>shipMode_add}"/>
+                            <input type="submit" name="addShipMode" value="{i18n:shipMode_add}"/>
                         </div>
                         <div class="shipMode">
                             <div class="ship_come_top"></div>
                             <div class="ship_come_middle">
                                 <div class="ship_address">
-                                    <RENDER_CHECKBOX text="{i18n>ship_comeTakeIt}" help="{i18n>ship_comeTakeIt_explanation}" name="comeTakeIt_activated" state="{comeTakeIt>activated}"/><br />
+                                    <RENDER_CHECKBOX text="{i18n:ship_comeTakeIt}" help="{i18n:ship_comeTakeIt_explanation}" name="comeTakeIt_activated" state="{comeTakeIt:activated}"/><br />
                                     <textarea name="comeTakeIt_addresses">
-                                        <RENDER_VALUE what="comeTakeIt>addresses"/>
+                                        <RENDER_VALUE what="comeTakeIt:addresses"/>
                                     </textarea>
                                     <div class="noteText">
-                                        <RENDER_VALUE what="i18n>ship_multiAddress_note"/>
+                                        <RENDER_VALUE what="i18n:ship_multiAddress_note"/>
                                     </div>
                                 </div>
                                 <div class="ship_addressPrice ship_global">
-                                <RENDER_VALUE what="i18n>ship_comeTakeIt_price"/>&#160;
-                                <RENDER_VALUE what="constants>currencyBefore"/>
-                                <input name="comeTakeIt_price" value="{comeTakeIt>price}"/>
-                                <RENDER_VALUE what="constants>currencyAfter"/>
+                                <RENDER_VALUE what="i18n:ship_comeTakeIt_price"/>&#160;
+                                <RENDER_VALUE what="constants:currencyBefore"/>
+                                <input name="comeTakeIt_price" value="{comeTakeIt:price}"/>
+                                <RENDER_VALUE what="constants:currencyAfter"/>
                                 </div>
                             </div>
                             <div class="ship_come_bottom"></div>
@@ -85,17 +85,17 @@
                         <div class="ship_come_top"></div>
                         <div class="ship_come_middle">
                             <div class="marginLeft_5px">
-                                <RENDER_VALUE what="i18n>shipPriceRules"/>&#160;
-                                <RENDER_HELP what="{i18n>shipPriceRules_explanation}"/>
+                                <RENDER_VALUE what="i18n:shipPriceRules"/>&#160;
+                                <RENDER_HELP what="{i18n:shipPriceRules_explanation}"/>
                             </div>
                             <div class="ship_global">
-                                <RENDER_VALUE what="i18n>shipPriceRule0"/>
+                                <RENDER_VALUE what="i18n:shipPriceRule0"/>
                             </div>
                             <div class="ship_global">
-                                <RENDER_VALUE what="i18n>shipPriceRule1"/>
+                                <RENDER_VALUE what="i18n:shipPriceRule1"/>
                             </div>
                             <div class="ship_global">
-                                <RENDER_VALUE what="i18n>shipPriceRule2"/>
+                                <RENDER_VALUE what="i18n:shipPriceRule2"/>
                             </div>
                         </div>
                         <div class="ship_come_bottom"></div>

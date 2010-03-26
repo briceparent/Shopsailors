@@ -20,7 +20,7 @@
             var ed = tinyMCE.get('content');
             content = ed.getContent();
             response = $('test_mail_response');
-            response.innerHTML = '<RENDER_VALUE what="i18n>test_sending"/>';
+            response.innerHTML = '<RENDER_VALUE what="i18n:test_sending"/>';
 
             var getParameters = new Array();
             getParameters['content'] = content;
@@ -43,58 +43,58 @@
         }
         function newsletter_save(){
             if($('title').value.trim() == ''){
-                alert('<RENDER_VALUE what="i18n>titleIsEmpty"/>');
+                alert('<RENDER_VALUE what="i18n:titleIsEmpty"/>');
             }else{
                 $('edit_newsletter').submit();
             }
         }
     </RENDER_JS>
     <RENDER_FORM id="edit_newsletter">
-        <RENDER_ADMINBOX title="{i18n>editNewsletter_title}">
+        <RENDER_ADMINBOX title="{i18n:editNewsletter_title}">
             <RENDER_ADMINBOXCONTENT>
-                <RENDER_VALUE what="i18n>newsletterTitle"/>
-                <RENDER_HELP what="{i18n>newsletterTitle_explanations}"/>
+                <RENDER_VALUE what="i18n:newsletterTitle"/>
+                <RENDER_HELP what="{i18n:newsletterTitle_explanations}"/>
                 <br />
-                <input class="inputForm" name="title" id="title" value="{newsletter>title}"/>
+                <input class="inputForm" name="title" id="title" value="{newsletter:title}"/>
             </RENDER_ADMINBOXCONTENT>
-            <RENDER_IFNOTSET what="newsletter>sent">
+            <RENDER_IFNOTSET what="newsletter:sent">
                 <RENDER_ADMINBOXCONTENT>
-                    <RENDER_VALUE what="i18n>newsletterDate"/>
+                    <RENDER_VALUE what="i18n:newsletterDate"/>
                     <br />
-                    <RENDER_DATEPICKER from="(0,0,1)" to="(0,2,0)" name="date" value="{newsletter>date}"/>
-                    <RENDER_HELP what="{i18n>newsletterDate_explanations}"/>
+                    <RENDER_DATEPICKER from="(0,0,1)" to="(0,2,0)" name="date" value="{newsletter:date}"/>
+                    <RENDER_HELP what="{i18n:newsletterDate_explanations}"/>
                     <br />
                 </RENDER_ADMINBOXCONTENT>
                 <RENDER_ADMINBOXCONTENT>
-                        <RENDER_CHECKBOX text="{i18n>sendNewsletter}" name="sendIt" state="{newsletter>sendIt}" help="{i18n>sendNewsletter_explanations}"/>
+                        <RENDER_CHECKBOX text="{i18n:sendNewsletter}" name="sendIt" state="{newsletter:sendIt}" help="{i18n:sendNewsletter_explanations}"/>
                 </RENDER_ADMINBOXCONTENT>
                 <RENDER_ADMINBOXCONTENT>
                     Cette newsletter sera envoyée aux listes suivantes :
                     <ul>
                         <RENDER_LOOP what="newsletters">
                             <li>
-                                <RENDER_VALUE what="newsletters>name"/>
-                                <input type="hidden" name="newsletters[{newsletters>id}]" value="set"/>
+                                <RENDER_VALUE what="newsletters:name"/>
+                                <input type="hidden" name="newsletters[{newsletters:id}]" value="set"/>
                             </li>
                         </RENDER_LOOP>
                     </ul>
                 </RENDER_ADMINBOXCONTENT>
             </RENDER_IFNOTSET>
-            <RENDER_IFSET what="newsletter>sent">
+            <RENDER_IFSET what="newsletter:sent">
                 <RENDER_ADMINBOXCONTENT>
-                    <RENDER_VALUE what="i18n>newsletter_hasBeenSent"/>
+                    <RENDER_VALUE what="i18n:newsletter_hasBeenSent"/>
                 </RENDER_ADMINBOXCONTENT>
                 <RENDER_ADMINBOXCONTENT>
-                    <RENDER_VALUE what="i18n>newsletter_hasBeenSent_date"/>
-                    <RENDER_VALUE what="newsletter>date"/>
+                    <RENDER_VALUE what="i18n:newsletter_hasBeenSent_date"/>
+                    <RENDER_VALUE what="newsletter:date"/>
                 </RENDER_ADMINBOXCONTENT>
                 <RENDER_ADMINBOXCONTENT>
-                    <RENDER_VALUE what="i18n>newsletter_hasBeenSent_dest"/>
+                    <RENDER_VALUE what="i18n:newsletter_hasBeenSent_dest"/>
                     <ul>
                         <RENDER_LOOP what="newsletters">
                             <li>
-                                <RENDER_VALUE what="newsletters>name"/>
-                                <input type="hidden" name="newsletters[{newsletters>id}]" value="set"/>
+                                <RENDER_VALUE what="newsletters:name"/>
+                                <input type="hidden" name="newsletters[{newsletters:id}]" value="set"/>
                             </li>
                         </RENDER_LOOP>
                     </ul>
@@ -103,19 +103,19 @@
         </RENDER_ADMINBOX>
         <div class="news_editorContainer">
             <h3 class="contentTitle">
-                <RENDER_VALUE what="i18n>editNewsletter_contentTitle"/>
+                <RENDER_VALUE what="i18n:editNewsletter_contentTitle"/>
             </h3>
             <div class="news_editor">
-                <RENDER_WEDITOR style="width:620px;height:400px;" id="content" class="content_editor" type="newsletter" content="{newsletter>content}" name="content"/>
+                <RENDER_WEDITOR style="width:620px;height:400px;" id="content" class="content_editor" type="newsletter" content="{newsletter:content}" name="content"/>
             </div>
             <div>
                 <input id="test_mail" value="brice.parent@websailors.fr"/>
-                <input type="button" id="test_mail_response_btn" value="{i18n>test_newsletter}" onclick="newsletter_test();"/>
+                <input type="button" id="test_mail_response_btn" value="{i18n:test_newsletter}" onclick="newsletter_test();"/>
                     <img id="test_mail_response_img" src="/templates/global/admin/icons/sh_loading.gif" style="display:none;"/>
                 <div id="test_mail_response">
                 </div>
             </div>
-            <input type="button" value="{i18n>validate}" onclick="newsletter_save();"/>
+            <input type="button" value="{i18n:validate}" onclick="newsletter_save();"/>
         </div>
     </RENDER_FORM>
 </div>

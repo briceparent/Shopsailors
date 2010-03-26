@@ -35,25 +35,25 @@
                 <div class="form_box_container">
                     <div class="form_box_top">
                         <h3 class="box_title">
-                            <RENDER_VALUE what="i18n>chooseLinkTitle"/>
+                            <RENDER_VALUE what="i18n:chooseLinkTitle"/>
                         </h3>
                     </div>
                     <div class="form_box_middle">
                         <div class="form_box_content">
                             <div class="formContent">
                                 <RENDER_LOOP what="classes">
-                                    <div onclick="$('class_{classes>name}').toggle();" style="cursor:pointer;font-weight:bold;">
-                                        <RENDER_VALUE what="classes>description"/>
+                                    <div onclick="$('class_{classes:name}').toggle();" style="cursor:pointer;font-weight:bold;">
+                                        <RENDER_VALUE what="classes:description"/>
                                     </div>
-                                    <div class="index_class" id="class_{classes>name}" style="display:none">
+                                    <div class="index_class" id="class_{classes:name}" style="display:none">
                                         <RENDER_LOOP what="elements">
                                             <div>
-                                                <input type="radio" class="page" name="page" state="{elements>state}" value="{elements>address}"/>
-                                                <RENDER_VALUE what="elements>value"/>
+                                                <input type="radio" class="page" name="page" state="{elements:state}" value="{elements:address}"/>
+                                                <RENDER_VALUE what="elements:value"/>
                                             </div>
-                                            <RENDER_IFSET what="classes>unfolded">
+                                            <RENDER_IFSET what="classes:unfolded">
                                                 <script type="text/javascript">
-                                                    $('class_<RENDER_VALUE what="classes>name"/>').toggle();
+                                                    $('class_<RENDER_VALUE what="classes:name"/>').toggle();
                                                 </script>
                                             </RENDER_IFSET>
                                         </RENDER_LOOP>
@@ -70,7 +70,7 @@
                     </div>
                     <div class="form_box_bottom">
                     </div>
-                <input type="submit" value="{i18n>validate}"/>
+                <input type="submit" value="{i18n:validate}"/>
                 </div>
             </RENDER_FORM>
         </div>

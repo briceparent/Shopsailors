@@ -1,17 +1,17 @@
 <div>
     <table id="Tableau_01" width="600" border="0" cellpadding="0" cellspacing="0" align="center">
-        <tr bgcolor="{variation>borderColor}">
+        <tr bgcolor="{variation:borderColor}">
             <td colspan="3" background="/images/template/variation/nw_bg-top.png" width="600" height="117">
             </td>
         </tr>
-        <tr bgcolor="{variation>borderColor}">
+        <tr bgcolor="{variation:borderColor}">
             <td background="/images/template/variation/nw_bg-middle_left.png" width="15">
             </td>
             <td background="/images/template/variation/nw_bg-middle.png" width="570">
                 <div align="right">
                     <font face="arial" color="#cccccc" size="2">
                         <strong>
-                           Newsletter n°...&#160;le&#160;<RENDER_VALUE what="content>date"/>
+                           Newsletter n°...&#160;le&#160;<RENDER_VALUE what="content:date"/>
                         </strong>
                     </font>
                 </div>
@@ -27,7 +27,7 @@
                 <div>
                     <font face="arial" color="#ffffff" size="4">
                         <strong>
-                            <RENDER_VALUE what="content>title"/>
+                            <RENDER_VALUE what="content:title"/>
                         </strong>
                     </font>
                 </div>
@@ -38,14 +38,14 @@
                 </div>
                 <div>
                     <font face="arial" color="#ffffff" size="1">
-                        <RENDER_VALUE what="content>plugins"/>
+                        <RENDER_VALUE what="content:plugins"/>
                     </font>
                 </div>
             </td>
             <td background="/images/template/variation/nw_bg-middle_right.png" width="15">
             </td>
         </tr>
-        <tr bgcolor="{variation>borderColor}">
+        <tr bgcolor="{variation:borderColor}">
             <td background="/images/template/variation/nw_bg-middle_left.png" width="15" height="40">
             </td>
             <td background="/images/template/variation/nw_bg-middle.png" width="570">

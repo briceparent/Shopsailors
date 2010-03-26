@@ -7,12 +7,12 @@
                 <td width="600" height="138" align="left">
                     <div>
                         <a href="/index.php">
-                            <font face="arial" color="{variation>title}" size="4">
+                            <font face="arial" color="{variation:title}" size="4">
                                 <strong>
                                     <img src="/images/site/logo/rectangular.png" border="0" alt="logo" title="my store" width="240" height="80"/></strong></font></a>
                     </div>
                     <div align="right">
-                        <font size="2" face="arial" color="#333333"><strong>Newsletter du&#160;<RENDER_VALUE what="content>date"/></strong></font>
+                        <font size="2" face="arial" color="#333333"><strong>Newsletter du&#160;<RENDER_VALUE what="content:date"/></strong></font>
                     </div>
                 </td>
                 <td width="10">&#160;
@@ -24,7 +24,7 @@
                 <td height="40" valign="top">
                     <div>
                         <br />
-                        <font face="arial" color="{variation>title}" size="4"><strong><RENDER_VALUE what="content>title"/></strong></font>
+                        <font face="arial" color="{variation:title}" size="4"><strong><RENDER_VALUE what="content:title"/></strong></font>
                     </div>
                 </td>
                 <td width="10">&#160;
@@ -35,7 +35,7 @@
                 </td>
                 <td width="590">
                     <br/>
-                    <RENDER_VALUE what="content>plugins"/>
+                    <RENDER_VALUE what="content:plugins"/>
                     <br/>
                 </td>
                 <td width="10">&#160;

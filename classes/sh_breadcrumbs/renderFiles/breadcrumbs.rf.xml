@@ -1,23 +1,23 @@
 <span class="breadcrumbs">
     <RENDER_LOOP what="parents">
         <span class="bc_same_level">
-            <span id="{parents>id}" class="bc_parents" onmouseover="UnTip();TagToTip('bc_sisters_{parents>uid}',BORDERCOLOR,'#000000',STICKY,true)" onmouseout="UnTip()">
-                <RENDER_VALUE what="parents>separator"/>
-                <a href="{parents>link}" class="hideLink">
-                    <RENDER_VALUE what="parents>name"/>
+            <span id="{parents:id}" class="bc_parents" onmouseover="UnTip();TagToTip('bc_sisters_{parents:uid}',BORDERCOLOR,'#000000',STICKY,true)" onmouseout="UnTip()">
+                <RENDER_VALUE what="parents:separator"/>
+                <a href="{parents:link}" class="hideLink">
+                    <RENDER_VALUE what="parents:name"/>
                 </a>
             </span>
-            <RENDER_IFSET what="parents>hassisters">
-                <span id="bc_sisters_{parents>uid}" class="bc_sister_container">
-                    <RENDER_IFSET what="sameLevel>text">
+            <RENDER_IFSET what="parents:hassisters">
+                <span id="bc_sisters_{parents:uid}" class="bc_sister_container">
+                    <RENDER_IFSET what="sameLevel:text">
                         <span class="bc_sameLevelText">
-                            <RENDER_VALUE what="sameLevel>text"/>
+                            <RENDER_VALUE what="sameLevel:text"/>
                         </span>
                     </RENDER_IFSET>
                     <RENDER_LOOP what="sisters">
                         <span class="bc_sisters">
-                            <a href="{sisters>link}" class="bc_sisters">
-                                <RENDER_VALUE what="sisters>name"/>
+                            <a href="{sisters:link}" class="bc_sisters">
+                                <RENDER_VALUE what="sisters:name"/>
                             </a>
                         </span>
                     </RENDER_LOOP>

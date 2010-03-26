@@ -1,70 +1,70 @@
 <span class="sh_date_picker">
-    <RENDER_IFSET what="datepicker>callback">
+    <RENDER_IFSET what="datepicker:callback">
         <script type="text/javascript">
-            function <RENDER_VALUE what="datePicker>id"/>_callback(){
-                <RENDER_VALUE what="datePicker>callback"/>
+            function <RENDER_VALUE what="datePicker:id"/>_callback(){
+                <RENDER_VALUE what="datePicker:callback"/>
             }
         </script>
     </RENDER_IFSET>
-    <input type="hidden" id="{datePicker>id}_real" name="{datePicker>name}" value="{datePicker>value}"/>
+    <input type="hidden" id="{datePicker:id}_real" name="{datePicker:name}" value="{datePicker:value}"/>
     <span class="nobr">
-        <RENDER_TAG style="width:80px;vertical-align:middle;" type="input" what="datePicker>data" readonly="readonly"/>
-        <img src="/images/shared/icons/picto_calendar.png" style="width:20px;height:20px;vertical-align:middle;" id="btn_{datePicker>id}" value="{i18n>choose}" onclick="dp_showDatePicker('{datePicker>id}','{year>method}');"/>
+        <RENDER_TAG style="width:80px;vertical-align:middle;" type="input" what="datePicker:data" readonly="readonly"/>
+        <img src="/images/shared/icons/picto_calendar.png" style="width:20px;height:20px;vertical-align:middle;" id="btn_{datePicker:id}" value="{i18n:choose}" onclick="dp_showDatePicker('{datePicker:id}','{year>method}');"/>
     </span>
-    <div class="oneDatePicker" id="div_{datePicker>id}" style="display:none;">
+    <div class="oneDatePicker" id="div_{datePicker:id}" style="display:none;">
         <div class="oneDatePicker_monthAndYear">
             <NORENDER>We separate the choices for the month and for the year</NORENDER>
-            <RENDER_IFSET what="year>separatedFromMonth">
+            <RENDER_IFSET what="year:separatedFromMonth">
                 <NORENDER>Month</NORENDER>
-                <span class="oneDatePicker_month" id="{datePicker>id}_month" onclick="dp_showSelectMonth('{datePicker>id}')">
-                    <RENDER_VALUE what="i18n>month_{month>selected}"/>
+                <span class="oneDatePicker_month" id="{datePicker:id}_month" onclick="dp_showSelectMonth('{datePicker:id}')">
+                    <RENDER_VALUE what="i18n:month_{month:selected}"/>
                 </span>
-                <select id="{datePicker>id}_selMonth" style="display:none;" onchange="dp_selectMonth('{datePicker>id}')">
+                <select id="{datePicker:id}_selMonth" style="display:none;" onchange="dp_selectMonth('{datePicker:id}')">
                     <RENDER_LOOP what="monthes">
-                        <option value="{monthes>id}" state="{monthes>state}">
-                            <RENDER_VALUE what="i18n>month_{monthes>id}"/>
+                        <option value="{monthes:id}" state="{monthes:state}">
+                            <RENDER_VALUE what="i18n:month_{monthes:id}"/>
                         </option>
                     </RENDER_LOOP>
                 </select>&#160;
                 <NORENDER>Year</NORENDER>
-                <span class="oneDatePicker_year" id="{datePicker>id}_year" onclick="dp_showSelectYear('{datePicker>id}')">
-                    <RENDER_VALUE what="year>selected"/>
+                <span class="oneDatePicker_year" id="{datePicker:id}_year" onclick="dp_showSelectYear('{datePicker:id}')">
+                    <RENDER_VALUE what="year:selected"/>
                 </span>
-                <select id="{datePicker>id}_selYear" style="display:none;" onchange="dp_selectYear('{datePicker>id}')">
+                <select id="{datePicker:id}_selYear" style="display:none;" onchange="dp_selectYear('{datePicker:id}')">
                     <RENDER_LOOP what="years">
-                        <option value="{years>value}" state="{years>state}">
-                            <RENDER_VALUE what="years>value"/>
+                        <option value="{years:value}" state="{years:state}">
+                            <RENDER_VALUE what="years:value"/>
                         </option>
                     </RENDER_LOOP>
                 </select>
             </RENDER_IFSET>
             
             <NORENDER>The choices for month and for year are combined</NORENDER>
-            <RENDER_IFSET what="year>groupedWithMonth">
-                <span class="oneDatePicker_year" id="{datePicker>id}_monthAndYear" onclick="dp_showSelectMonthAndYear('{datePicker>id}')">
-                    <RENDER_VALUE what="i18n>month_{monthAndYear>month}"/>&#160;
-                    <RENDER_VALUE what="monthAndYear>year"/>
+            <RENDER_IFSET what="year:groupedWithMonth">
+                <span class="oneDatePicker_year" id="{datePicker:id}_monthAndYear" onclick="dp_showSelectMonthAndYear('{datePicker:id}')">
+                    <RENDER_VALUE what="i18n:month_{monthAndYear:month}"/>&#160;
+                    <RENDER_VALUE what="monthAndYear:year"/>
                 </span>
-                <select id="{datePicker>id}_selMonthAndYear" style="display:none;" onchange="dp_selectMonthAndYear('{datePicker>id}')">
+                <select id="{datePicker:id}_selMonthAndYear" style="display:none;" onchange="dp_selectMonthAndYear('{datePicker:id}')">
                     <RENDER_LOOP what="monthesAndYears">
-                        <option value="{monthesAndYears>value}" state="{monthesAndYears>state}">
-                            <RENDER_VALUE what="i18n>month_{monthesAndYears>month}"/>&#160;
-                            <RENDER_VALUE what="monthesAndYears>year"/>
+                        <option value="{monthesAndYears:value}" state="{monthesAndYears:state}">
+                            <RENDER_VALUE what="i18n:month_{monthesAndYears:month}"/>&#160;
+                            <RENDER_VALUE what="monthesAndYears:year"/>
                         </option>
                     </RENDER_LOOP>
                 </select>
             </RENDER_IFSET>
             
             <NORENDER>There is a single proposal for the year</NORENDER>
-            <RENDER_IFSET what="year>singleProposal">
+            <RENDER_IFSET what="year:singleProposal">
                 <span class="oneDatePicker_year_noChange">
-                    <RENDER_VALUE what="i18n>month_{monthAndYear>month}"/>&#160;
-                    <RENDER_VALUE what="monthAndYear>year"/>
+                    <RENDER_VALUE what="i18n:month_{monthAndYear:month}"/>&#160;
+                    <RENDER_VALUE what="monthAndYear:year"/>
                 </span>
-                <input type="hidden" id="{datePicker>id}_selMonthAndYear" value="{monthAndYear>value}"/>
+                <input type="hidden" id="{datePicker:id}_selMonthAndYear" value="{monthAndYear:value}"/>
             </RENDER_IFSET>
         </div>
-        <div id="{datePicker>id}_content">
+        <div id="{datePicker:id}_content">
             <img src="/templates/global/admin/icons/sh_loading.gif" alt="loading"/>
         </div>
     </div>

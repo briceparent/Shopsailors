@@ -6,7 +6,7 @@
             <td background="/images/template/variation/nw_bg-top_middle.png" width="560">
                 <div align="right">
                     <a href="/index.php">
-                        <font face="times" color="{variation>globalText}" size="25">
+                        <font face="times" color="{variation:globalText}" size="25">
                             <strong>
                                 <img src="/images/site/logo/rectangular.png" border="0" alt="logo" title="my store" width="240" height="80"/>
                             </strong>
@@ -24,14 +24,14 @@
                 <div align="right">
                     <font face="arial" color="#ffffff" size="2">
                         <strong>
-                            Newsletter n°...&#160;le&#160;<RENDER_VALUE what="content>date"/>
+                            Newsletter n°...&#160;le&#160;<RENDER_VALUE what="content:date"/>
                         </strong>
                     </font>
                 </div>
                 <div align="left">
-                    <font face="arial" color="{variation>globalText}" size="4">
+                    <font face="arial" color="{variation:globalText}" size="4">
                         <strong>
-                            <RENDER_VALUE what="content>title"/>
+                            <RENDER_VALUE what="content:title"/>
                         </strong>
                     </font>
                 </div>
@@ -42,14 +42,14 @@
                 </div>
                 <div>
                     <font face="arial" color="#333333" size="1">
-                        <RENDER_VALUE what="content>plugins"/>
+                        <RENDER_VALUE what="content:plugins"/>
                     </font>
                 </div>
             </td>
             <td background="/images/template/variation/nw_bg-middle_right.png" width="20">
             </td>
         </tr>
-        <tr bgcolor="{variation>globalText}">
+        <tr bgcolor="{variation:globalText}">
             <td colspan="3" background="/images/template/variation/nw_bg-bottom.png" width="600" height="27">
             </td>
         </tr>

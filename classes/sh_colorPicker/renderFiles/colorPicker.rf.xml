@@ -1,6 +1,6 @@
 <span class="sh_date_picker">
-    <input id="{colorPicker>id}" name="{colorPicker>name}" value="{colorPicker>text}" onchange="colorPicker_directChangeColor('{colorPicker>id}',this.value);" style="width:80px;"/>
-    <span onclick="colorPicker_button_showPopup('{colorPicker>id}',$('{colorPicker>id}').value);" id="{colorPicker>id}_preview" style="border:1px solid black;background-color:#{colorPicker>default}">
+    <input id="{colorPicker:id}" name="{colorPicker:name}" value="{colorPicker:text}" onchange="colorPicker_directChangeColor('{colorPicker:id}',this.value);" style="width:80px;"/>
+    <span onclick="colorPicker_button_showPopup('{colorPicker:id}',$('{colorPicker>id}').value);" id="{colorPicker:id}_preview" style="border:1px solid black;background-color:#{colorPicker:default}">
         <img src="images/shared/icons/transparent.png" style="width:10px;height:10px"/>
     </span>
 </span>

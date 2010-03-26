@@ -5,7 +5,7 @@
         body{
         }
         #banner{
-            background:transparent url(<RENDER_VALUE what="banner>image"/>) no-repeat top center;
+            background:transparent url(<RENDER_VALUE what="banner:image"/>) no-repeat top center;
             width:400px;
             height:100px;
         }
@@ -35,11 +35,11 @@
         <div id="page_container">
             <div id="banner"></div>
             <h1 id="title">
-                <RENDER_VALUE what="site>name"/>
+                <RENDER_VALUE what="site:name"/>
             </h1>
-            <RENDER_VALUE what="page>connectionForm"/>
+            <RENDER_VALUE what="page:connectionForm"/>
             <div id="explanantions">
-                <RENDER_VALUE what="i18n>requires_connection"/>
+                <RENDER_VALUE what="i18n:requires_connection"/>
             </div>
         </div>
     </body>

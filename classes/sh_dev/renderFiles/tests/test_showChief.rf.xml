@@ -1,6 +1,6 @@
 <div>
-	<h1><RENDER_VALUE what="showChief>pageTitle"/></h1>
+	<h1><RENDER_VALUE what="showChief:pageTitle"/></h1>
 	<div class="showChief_content">
-		<RENDER_VALUE what="showChief>content"/>
+		<RENDER_VALUE what="showChief:content"/>
 	</div>
 </div>

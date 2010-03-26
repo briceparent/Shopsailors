@@ -2,7 +2,7 @@
     <NORENDER>
         <RENDER_JS>
             function user_md5izePassword(){
-                var challenge = '<RENDER_VALUE what="security>challenge"/>';
+                var challenge = '<RENDER_VALUE what="security:challenge"/>';
                 var pass = $('user_passwordField');
                 var md5Pass = MD5(pass.value.toLowerCase);
                 pass.value = MD5(challenge + '-' + md5Pass);
@@ -15,27 +15,27 @@
     </div>
     <div class="bg_identification_middle">
         <div id="identificationContainer">
-            <RENDER_IFSET what="error>message">
-                <RENDER_VALUE what="error>message"/>
+            <RENDER_IFSET what="error:message">
+                <RENDER_VALUE what="error:message"/>
             </RENDER_IFSET>
             <RENDER_FORM id="user_connection_step2">
                 <div  id="clientConnection">
                     <div class="clientConnection_title">
-                        <RENDER_VALUE what="i18n>client_identification_title_step2"/><br />
+                        <RENDER_VALUE what="i18n:client_identification_title_step2"/><br />
                     </div>
-                    <RENDER_VALUE what="i18n>client_identification_passPhrase"/><br />
+                    <RENDER_VALUE what="i18n:client_identification_passPhrase"/><br />
                     <div style="margin:5px;font-style:italic;font-weight:bold;">
-                        <RENDER_VALUE what="verif>phrase"/>
+                        <RENDER_VALUE what="verif:phrase"/>
                     </div>
                     <div>
-                        <RENDER_VALUE what="i18n>client_password"/><br />
+                        <RENDER_VALUE what="i18n:client_password"/><br />
                         <input id="user_passwordField" type="password" name="password"/>
                         <input id="user_md5PasswordField" type="hidden" name="md5Password" value="false"/>
                     </div>
                 </div>
                 <div class="adminLink">
-                    <a href="{link>passPhrase_link}">
-                        <RENDER_VALUE what="i18n>password_forgotten"/>
+                    <a href="{link:passPhrase_link}">
+                        <RENDER_VALUE what="i18n:password_forgotten"/>
                     </a>
                 </div>
                 <div class="marginTop_10px">

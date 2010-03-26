@@ -1,12 +1,12 @@
-<div id="{captcha>name}" class="captchaText" >
+<div id="{captcha:name}" class="captchaText" >
     <script type="text/javascript">
 function changeFavicon(){
     window.open(
-        '<RENDER_VALUE what="links>faviconChanger"/>',
+        '<RENDER_VALUE what="links:faviconChanger"/>',
         'sh_favicon',
         config='height=250, width=450, toolbar=no, menubar=no'
     );
 }
     </script>
-    <div class="falseLink" onclick="changeFavicon();return false;"><RENDER_VALUE what="i18n>titleFavicon"/></div>
+    <div class="falseLink" onclick="changeFavicon();return false;"><RENDER_VALUE what="i18n:titleFavicon"/></div>
 </div>

@@ -5,24 +5,24 @@
         <div class="notifL_middle">
             <div class="notifL_content">
                 <div class="payments_proposed">
-                    <RENDER_IFSET what="payment>moreThanOneMode">
-                        <RENDER_VALUE what="i18n>payments_proposed"/>
+                    <RENDER_IFSET what="payment:moreThanOneMode">
+                        <RENDER_VALUE what="i18n:payments_proposed"/>
                     </RENDER_IFSET>
-                    <RENDER_IFNOTSET what="payment>moreThanOneMode">
-                        <RENDER_VALUE what="i18n>payments_oneMode"/>
+                    <RENDER_IFNOTSET what="payment:moreThanOneMode">
+                        <RENDER_VALUE what="i18n:payments_oneMode"/>
                     </RENDER_IFNOTSET>
                 </div>
                 <table cellspacing="0" class="border-top cursorArrow">
                     <RENDER_LOOP what="paymentModes">
                         <tr>
                             <td class="payment_logoMode border-left border-right border-bottom">
-                                <img src="{paymentModes>logo}"/>
+                                <img src="{paymentModes:logo}"/>
                             </td>
                             <td class="border-right border-bottom payment_modeName">
-                                <RENDER_VALUE what="paymentModes>name"/>
+                                <RENDER_VALUE what="paymentModes:name"/>
                             </td>
                             <td class="border-right border-bottom payment_modeDescription">
-                                <RENDER_VALUE what="paymentModes>description"/>
+                                <RENDER_VALUE what="paymentModes:description"/>
                             </td>
                         </tr>
                     </RENDER_LOOP>

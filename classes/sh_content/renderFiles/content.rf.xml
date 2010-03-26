@@ -1,6 +1,6 @@
 <div class="content">
-    <RENDER_IFSET what="content>date">
-        <div class="content_date"><RENDER_VALUE what="content>date"/></div>
+    <RENDER_IFSET what="content:date">
+        <div class="content_date"><RENDER_VALUE what="content:date"/></div>
     </RENDER_IFSET>
-    <RENDER_VALUE what="content>content"/>
+    <RENDER_VALUE what="content:content"/>
 </div>
