@@ -121,7 +121,7 @@ class sh_diff extends sh_core {
 
     public function showChanges($project = null, $file = null, $from = null, $to = null){
         $this->onlyMaster();
-        $dev = $this->links->dev;
+        $dev = $this->linker->dev;
         if(is_null($project)){
             list($project,$file) = explode('/',$_GET['file'],2);
         }
@@ -233,7 +233,7 @@ class sh_diff extends sh_core {
             }
         }
 
-        $this->links->helper->writeInFile(
+        $this->linker->helper->writeInFile(
             $patchFile,
             implode("",$lines)
         );
@@ -276,7 +276,7 @@ class sh_diff extends sh_core {
             return $new;
         }
 
-        $this->links->helper->writeInFile(
+        $this->linker->helper->writeInFile(
             $newFile,
             implode("",$new)
         );

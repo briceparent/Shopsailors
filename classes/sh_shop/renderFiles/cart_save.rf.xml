@@ -1,6 +1,6 @@
 <div class="shop_tableCartContainer">
-    <RENDER_IFSET what="cart>existing">
-        <RENDER_VALUE what="i18n>cart_alreadyExistingCart"/>
+    <RENDER_IFSET what="cart:existing">
+        <RENDER_VALUE what="i18n:cart_alreadyExistingCart"/>
         <RENDER_FORM id="cart_save_existing">
             <RENDER_RADIOBOX text="Remplacer le contenu anciennement enregistré." name="action" state="checked" value="replace"/><br />
             <RENDER_RADIOBOX text="Annuler." name="action" value="cancel"/><br />
@@ -8,7 +8,7 @@
             <input type="submit" value="OK"/>
         </RENDER_FORM>
     </RENDER_IFSET>
-    <RENDER_IFNOTSET what="cart>existing">
-        <RENDER_VALUE what="i18n>cart_saved_successfully"/>
+    <RENDER_IFNOTSET what="cart:existing">
+        <RENDER_VALUE what="i18n:cart_saved_successfully"/>
     </RENDER_IFNOTSET>
 </div>

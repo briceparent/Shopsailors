@@ -26,8 +26,8 @@ class sh_variations extends sh_model{
      */
     public function showList(){
         if(!$this->isMaster()){header('location: access_forbiden.php');}
-        $templateName = $this->links->html->getTemplateName();
-        $this->links->html->setTitle('Liste des variations pour le template '.$templateName);
+        $templateName = $this->linker->html->getTemplateName();
+        $this->linker->html->setTitle('Liste des variations pour le template '.$templateName);
         $list = $this->getList();
         $this->render('add.rf.xml','','');
     }

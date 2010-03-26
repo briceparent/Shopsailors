@@ -6,8 +6,8 @@
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
         <script type="text/javascript">
             window.opener.submitI18n(
-                '<RENDER_VALUE what="response>container"/>',
-                '<RENDER_VALUE what="response>content"/>'
+                '<RENDER_VALUE what="response:container"/>',
+                '<RENDER_VALUE what="response:content"/>'
             );
             window.close();
         </script>

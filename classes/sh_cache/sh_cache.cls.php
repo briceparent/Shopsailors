@@ -44,8 +44,8 @@ class sh_cache extends sh_core{
      */
     public static function removeCache(){
         $path = self::staticGetPath();
-        $links = sh_links::getInstance();
-        $links->helper->deleteDir($path);
+        $linker = sh_linker::getInstance();
+        $linker->helper->deleteDir($path);
         return true;
     }
 

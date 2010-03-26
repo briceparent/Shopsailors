@@ -100,21 +100,21 @@ class sh_i18n extends sh_core{
      *
      */
     public function getLanguageSelector(){
-        $site = $this->links->site;
+        $site = $this->linker->site;
         $langs = $site->langs;
         $lang = $this->getLang();
         if(is_array($langs)){
             foreach($langs as $oneLang){
                 if($lang != $oneLang){
                     // We update the args list to create the url
-                    $this->links->path->parsed_url['parsed_query']['lang'] = $oneLang;
+                    $this->linker->path->parsed_url['parsed_query']['lang'] = $oneLang;
                     $args = '';
                     $separator = '';
-                    foreach($this->links->path->parsed_url['parsed_query'] as $argName=>$argValue){
+                    foreach($this->linker->path->parsed_url['parsed_query'] as $argName=>$argValue){
                         $args .= $separator.$argName.'='.$argValue;
                         $separator = '&';
                     }
-                    $destPage = $this->links->path->uri.'?'.$args;
+                    $destPage = $this->linker->path->uri.'?'.$args;
 
                     $values['language'][] = array(
                         'image'=>'/images/shared/flags/'.$oneLang.'.png',
@@ -123,7 +123,7 @@ class sh_i18n extends sh_core{
                     );
                 }
             }
-            $this->renderer = $this->links->renderer;
+            $this->renderer = $this->linker->renderer;
             return $this->render('select_language',$values,false,false);
         }
         return false;
@@ -146,12 +146,12 @@ class sh_i18n extends sh_core{
      *
      */
     public function getSelector(){
-        $this->links->cache->disable();
-        $this->renderer = $this->links->renderer;
+        $this->linker->cache->disable();
+        $this->renderer = $this->linker->renderer;
         $id = $_GET['id'];
 
         if($_SESSION[__CLASS__.'changer'][$id]['onEnabledOnly']){
-            $site = $this->links->site;
+            $site = $this->linker->site;
             $langs = $site->langs;
         }else{
             $availableLanguages = scandir(SH_SHAREDIMAGES_FOLDER.'flags');
@@ -220,7 +220,7 @@ class sh_i18n extends sh_core{
      *
      */
     public function createSelector($id,$default,$type = 'checkbox',$onEnabledOnly = true){
-        $this->renderer = $this->links->renderer;
+        $this->renderer = $this->linker->renderer;
 
         $_SESSION[__CLASS__.'changer'][$id]['type'] = $type;
         $_SESSION[__CLASS__.'changer'][$id]['onEnabledOnly'] = $onEnabledOnly;
@@ -240,7 +240,7 @@ class sh_i18n extends sh_core{
         $values['action']['container'] = $id;
         $values['action']['langsChanger'] = 'changeI18nValues(\''.$id.'\');';
 
-        $this->links->html->addScript($this->getSinglePath().'changeContent.js');
+        $this->linker->html->addScript($this->getSinglePath().'changeContent.js');
         return $this->render('viewer',$values,false,false);
     }
 
@@ -252,8 +252,8 @@ class sh_i18n extends sh_core{
         if(is_null($lang)){
             $lang = $this->getLang();
         }
-        if($lang != $this->links->site->lang){
-            $tryThisNext = $this->links->site->lang;
+        if($lang != $this->linker->site->lang){
+            $tryThisNext = $this->linker->site->lang;
         }
         list($text) = $this->db_execute('get',array('class'=>$class,'id'=>$id,'lang'=>$lang),$qry);
 
@@ -302,7 +302,7 @@ class sh_i18n extends sh_core{
             $this->debug('The class name was not filled, we can\'t read the values in that case',0,__LINE__);
             $className = __CLASS__;
         }else{
-            $className = $this->links->cleanObjectName($className);
+            $className = $this->linker->cleanObjectName($className);
         }
         $this->debug('We get the value for "'.$varName.'" in the class "'.$className.'"',2,__LINE__);
         if(!is_array($this->translations[$className][$lang])){
@@ -339,16 +339,16 @@ class sh_i18n extends sh_core{
       if(is_numeric($varName)){
           // We set the value in the database
             if(is_array($value)){
-                $old = $this->get($className, $varName, $this->links->site->lang);
+                $old = $this->get($className, $varName, $this->linker->site->lang);
                 foreach($value as $entryName=>$entryValue){
                     $forceIt = $force;
-                    if($entryName == $this->links->site->lang){
+                    if($entryName == $this->linker->site->lang){
                         // If it is the default language, we have to write a
                         // value, even if it is an empty string
                         $forceIt = true;
                     }
-                    if($entryValue == $value[$this->links->site->lang] || $entryValue == $old){
-                        if($entryName != $this->links->site->lang){
+                    if($entryValue == $value[$this->linker->site->lang] || $entryValue == $old){
+                        if($entryName != $this->linker->site->lang){
                             $entryValue = '';
                         }
                     }
@@ -388,7 +388,7 @@ class sh_i18n extends sh_core{
      *
      */
     public function setLang($moveEntries = false){
-        $site = $this->links->site;
+        $site = $this->linker->site;
         $langs = $site->langs;
         
         if(isset($_GET['lang'])){
@@ -451,14 +451,14 @@ class sh_i18n extends sh_core{
         if(!isset($attributes['i18n']) || !isset($attributes['name'])){
             return false;
         }
-        $this->links->html->addScript($this->getSinglePath().'editorLangChooser.js');
+        $this->linker->html->addScript($this->getSinglePath().'editorLangChooser.js');
         $class = $attributes['class'];
         $i18n = $attributes['i18n'];
         $name = $attributes['name'];
 
         $id = 'i18n_'.substr(md5(microtime()),0,8);
 
-        $langs = $this->links->site->langs;
+        $langs = $this->linker->site->langs;
         
         if(is_array($langs) && count($langs)>0){
             foreach($langs as $oneLang){
@@ -488,7 +488,7 @@ class sh_i18n extends sh_core{
         if(!isset($attributes['i18n']) || !isset($attributes['name'])){
             return false;
         }
-        $this->links->html->addScript($this->getSinglePath().'editorLangChooser.js');
+        $this->linker->html->addScript($this->getSinglePath().'editorLangChooser.js');
         $classes = explode(' ',$attributes['class']);
         $class = array_shift($classes);
         $classes = ' '.implode($classes);
@@ -497,7 +497,7 @@ class sh_i18n extends sh_core{
         $name = $attributes['name'];
 
 
-        $langs = $this->links->site->langs;
+        $langs = $this->linker->site->langs;
 
         if(is_array($langs) && count($langs)>0){
             foreach($langs as $oneLang){
@@ -532,7 +532,7 @@ class sh_i18n extends sh_core{
         }else{
             $type = $attributes['type'];
         }
-        $this->links->html->addScript($this->getSinglePath().'editorLangChooser.js');
+        $this->linker->html->addScript($this->getSinglePath().'editorLangChooser.js');
         $class = $attributes['class'];
         $i18nClass = $attributes['i18nClass'];
         $i18n = $attributes['i18n'];
@@ -540,7 +540,7 @@ class sh_i18n extends sh_core{
 
         $id = 'i18n_'.substr(md5(microtime()),0,8);
 
-        $langs = $this->links->site->langs;
+        $langs = $this->linker->site->langs;
 
         if(is_array($langs) && count($langs)>0){
             foreach($langs as $oneLang){
@@ -583,7 +583,7 @@ class sh_i18n extends sh_core{
      *
      */
     public function getDefaultLang(){
-        return $this->links->site->lang;
+        return $this->linker->site->lang;
     }
 
     /**

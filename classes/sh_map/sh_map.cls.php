@@ -19,19 +19,19 @@ class sh_map extends sh_model{
     }
 
     public function show(){
-      $this->links->html->addScript('/sh_map/singles/maps.js');
-      $this->links->html->addScript('/sh_map/singles/extInfoWindow.js');
+      $this->linker->html->addScript('/sh_map/singles/maps.js');
+      $this->linker->html->addScript('/sh_map/singles/extInfoWindow.js');
 
-      $this->links->html->addScript('http://maps.google.com/maps?file=api&v=2&key='.$this->params->get('mapKey'));
+      $this->linker->html->addScript('http://maps.google.com/maps?file=api&v=2&key='.$this->params->get('mapKey'));
       
-      $this->links->html->setTitle('Carte');
+      $this->linker->html->setTitle('Carte');
       
-        if(isset($this->links->path->page['id']))
-          $id = $this->links->path->page['id'];
+        if(isset($this->linker->path->page['id']))
+          $id = $this->linker->path->page['id'];
       else
           $id = $this->params->get('defaultId');
-      $this->links->html->addToBody('onload','loadMap(\''. $id .'\')');
-      $this->links->html->insert('<div id="map" style="width: 800px; height: 500px"></div><div id="mapSidebar"></div>');
+      $this->linker->html->addToBody('onload','loadMap(\''. $id .'\')');
+      $this->linker->html->insert('<div id="map" style="width: 800px; height: 500px"></div><div id="mapSidebar"></div>');
     }
     
     public function save($id,$new=false){
@@ -47,7 +47,7 @@ class sh_map extends sh_model{
         if($address != ''){
             $csv = explode(',',$this->getCoords($address,&$lat,&$lng));
             if($csv[0] != '200'){
-                $this->links->html->insert('Adresse non trouvée...<br />');
+                $this->linker->html->insert('Adresse non trouvée...<br />');
                 $_SESSION['verif_map_'.$id]='';
                 $this->edit(true);
                 return false;
@@ -66,7 +66,7 @@ class sh_map extends sh_model{
         
         $this->buildXML();
 
-        header('location: ' . $this->links->path->getLink('map/show/'.$id,$name));
+        header('location: ' . $this->linker->path->getLink('map/show/'.$id,$name));
     }
         
     public function add(){
@@ -77,26 +77,26 @@ class sh_map extends sh_model{
         if(!$this->isAdmin())
           header('location: /restricted_area.php');
         
-        $id=(int) $this->links->path->page['id'];
+        $id=(int) $this->linker->path->page['id'];
         $this->db->delete('###gMarkers',array('id'=>$id),'LIMIT 1');
         
         $this->buildXML();
         
-        header('location: '.$this->links->path->getLink('map/editMap/'));
+        header('location: '.$this->linker->path->getLink('map/editMap/'));
     }
     
     public function edit($new = false){
         if(!$this->isAdmin())
           header('location: /restricted_area.php');
-        $this->links->html->setTitle('Modifier un élément de la carte GMaps');
-        $id=(int) $this->links->path->page['id'];
+        $this->linker->html->setTitle('Modifier un élément de la carte GMaps');
+        $id=(int) $this->linker->path->page['id'];
         if(isset($_POST['verif']) && $_POST['verif']==$_SESSION['verif_map_'.$id]){
           if(! $this->save($id,$new)){
               return false;
           }
         }
         
-        $this->links->html->addCSS('#TEMPLATE_DIR#CSS/edit.css');
+        $this->linker->html->addCSS('#TEMPLATE_DIR#CSS/edit.css');
         // gets variables from db
         
         if($new)
@@ -114,33 +114,33 @@ class sh_map extends sh_model{
         
         $ret .= '<br /><input type="submit" value="Enregistrer"/>';
         $ret .= '</form>';
-        $this->links->html->insert($ret);
+        $this->linker->html->insert($ret);
         return true;
     }
     
     public function editMap(){
         if(!$this->isAdmin())
           header('location: /restricted_area.php');
-        $this->links->html->addTextScript('
+        $this->linker->html->addTextScript('
 function confirmation(page){
     if(confirm(\'Etes-vous sur de vouloir supprimer cet élément?\')){
       window.location.href = page;
     }
 }');
         $xml = simplexml_load_file($this->params->get('xml'));
-        $this->links->html->setTitle('Modifier les éléments de la carte GMaps');
+        $this->linker->html->setTitle('Modifier les éléments de la carte GMaps');
         $ret = '<ul>';
         foreach($xml->marker as $xmlPart){
-            $ret .= '<li><a href="'.$this->links->path->getLink('map/edit/'.$xmlPart->attributes()->id,$xmlPart->attributes()->name).'">Modifier '.$xmlPart->attributes()->name.'</a><br />';
-            $address = 'http://'.$this->links->path->getDomain().$this->links->path->getLink('map/show/'.$xmlPart->attributes()->id,$xmlPart->attributes()->name);
+            $ret .= '<li><a href="'.$this->linker->path->getLink('map/edit/'.$xmlPart->attributes()->id,$xmlPart->attributes()->name).'">Modifier '.$xmlPart->attributes()->name.'</a><br />';
+            $address = 'http://'.$this->linker->path->getDomain().$this->linker->path->getLink('map/show/'.$xmlPart->attributes()->id,$xmlPart->attributes()->name);
             $ret .= 'Voir la page : <a href="'.$address.'">'.$address.'</a>';
             if($xmlPart->attributes()->id != $this->params->get('defaultId'))
-                $ret .= '<br />(Pour supprimer cet élément, <span class="falseLink" onclick="confirmation(\''.$this->links->path->getLink('map/remove/'.$xmlPart->attributes()->id,$xmlPart->attributes()->name).'\')">cliquer ici</span>)';
+                $ret .= '<br />(Pour supprimer cet élément, <span class="falseLink" onclick="confirmation(\''.$this->linker->path->getLink('map/remove/'.$xmlPart->attributes()->id,$xmlPart->attributes()->name).'\')">cliquer ici</span>)';
             $ret .= '</li>'."\n";
         }
         $ret .= '</ul>';
-        $ret .= '<br /><br /><a href="'.$this->links->path->getLink('map/add/').'">Ajouter un élément sur la carte</a>'."\n";
-        $this->links->html->insert($ret);
+        $ret .= '<br /><br /><a href="'.$this->linker->path->getLink('map/add/').'">Ajouter un élément sur la carte</a>'."\n";
+        $this->linker->html->insert($ret);
     }
     
     private function buildXML(){

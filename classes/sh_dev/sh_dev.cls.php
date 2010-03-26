@@ -98,7 +98,7 @@ class sh_dev extends sh_core{
             echo $this->render('showCheckList_general',$values,false,false);
             exit;
         }elseif(isset($_GET['type']) && $_GET['type'] == 'templates'){
-            $values['templatesList'] = $this->links->templatesLister->getList(true);
+            $values['templatesList'] = $this->linker->templatesLister->getList(true);
             $classes = $this->getClassesFromSharedFolder('checklist');
 
             if(is_array($classes)){
@@ -133,8 +133,8 @@ class sh_dev extends sh_core{
     
 
     public function showFileHistory(){
-        $this->links->cache->disable();
-        $this->links->html->setTitle('File history');
+        $this->linker->cache->disable();
+        $this->linker->html->setTitle('File history');
         if(isset($_GET['project'])){
             if(isset($_GET['file'])){
                 $projectName = $_GET['project'];
@@ -234,7 +234,7 @@ class sh_dev extends sh_core{
 
     public function showProject(){
         if(isset($_GET['project'])){
-            $this->links->html->setTitle('Projet : '.$_GET['project']);
+            $this->linker->html->setTitle('Projet : '.$_GET['project']);
 
             $projectName = $_GET['project'];
             if(is_dir(SH_DEVPARAMS_PATH.$projectName)){
@@ -299,7 +299,7 @@ class sh_dev extends sh_core{
                 }
             }
         }else{
-            $this->links->html->setTitle('Choix du projet');
+            $this->linker->html->setTitle('Choix du projet');
             $this->chooseProject(__FUNCTION__);
         }
         return true;
@@ -359,10 +359,10 @@ class sh_dev extends sh_core{
         if(is_array($_POST['files'])){
             $actualRevision = file_get_contents(SH_DEV_PATH.$project.'/actualRevision.txt');
             $newRevision = $actualRevision + 1;
-            $this->links->helper->writeInFile(SH_DEV_PATH.$project.'/actualRevision.txt',$newRevision);
+            $this->linker->helper->writeInFile(SH_DEV_PATH.$project.'/actualRevision.txt',$newRevision);
             $revisionFolder = SH_DEV_PATH.$project.'/'.$newRevision.'/';
             mkdir($revisionFolder);
-            $this->links->helper->writeInFile(
+            $this->linker->helper->writeInFile(
                 $revisionFolder.'description.php',
                 $_POST['text']['global']
             );
@@ -394,7 +394,7 @@ class sh_dev extends sh_core{
                             $newFile
                         );
                         $revisionFile = $newFile;
-                        $this->links->helper->writeInFile(
+                        $this->linker->helper->writeInFile(
                             SH_DEV_PATH.$project.'/revisions/deletedFiles.php',
                             $newRevision.' '.$file.' '.$newFileName."\n",
                             true
@@ -404,7 +404,7 @@ class sh_dev extends sh_core{
                         if($this->isTextFile($fileName)){
                             // We create the patch from its first revision to now
                             list($firstRevision, $md5) = explode(' ',array_shift($revisions),2);
-                            $this->links->diff->createPatch(
+                            $this->linker->diff->createPatch(
                                 SH_DEV_PATH.$project.'/'.$firstRevision.'/'.$file.'.php',
                                 SH_ROOT_FOLDER.$fileName,
                                 $revisionFolder.'/'.$file.'.diff'
@@ -436,13 +436,13 @@ class sh_dev extends sh_core{
                         );
                     }
                     // We add a line for this revision
-                    $this->links->helper->writeInFile(
+                    $this->linker->helper->writeInFile(
                         $revisionFile,
                         $fileName."\n"
                     );
                 }
                 // We add a line for this revision
-                $this->links->helper->writeInFile(
+                $this->linker->helper->writeInFile(
                     $revisionFile,
                     $newRevision.' '.$filemd5.' '.$_POST['text'][$file]."\n",
                     true
@@ -469,7 +469,7 @@ class sh_dev extends sh_core{
                     'name' => $project['name']
                 );
                 if(is_dir(SH_DEV_PATH.$projectName)){
-                    $this->links->html->setTitle($project['name'].' - Soumission de mise à jour');
+                    $this->linker->html->setTitle($project['name'].' - Soumission de mise à jour');
 
                     $files = $this->getProjectElements($projectName);
 
@@ -534,7 +534,7 @@ class sh_dev extends sh_core{
                         }
                     }
 
-                    $values['showChangesLink']['base'] = $this->links->path->getLink(
+                    $values['showChangesLink']['base'] = $this->linker->path->getLink(
                         'diff/showChanges/'
                     );
                     if($values['files'] == array()){
@@ -569,15 +569,15 @@ class sh_dev extends sh_core{
     protected function initializeProject($projectName){
         include(SH_DEVPARAMS_PATH.$projectName.'/description.params.php');
         
-        $this->links->helper->deleteDir(SH_DEV_PATH.$projectName.'/revisions/');
-        $this->links->helper->writeInFile(
+        $this->linker->helper->deleteDir(SH_DEV_PATH.$projectName.'/revisions/');
+        $this->linker->helper->writeInFile(
             SH_DEV_PATH.$projectName.'/actualRevision.txt',
             '0'
         );
         mkdir(SH_DEV_PATH.$projectName.'/revisions/');
         mkdir(SH_DEV_PATH.$projectName.'/0/');
         
-        $this->links->helper->writeInFile(
+        $this->linker->helper->writeInFile(
             SH_DEV_PATH.$projectName.'/0/description.php',
             $_POST['description']
         );
@@ -588,13 +588,13 @@ class sh_dev extends sh_core{
             $fileName = $file['name'];
             if($file['type'] == 'text'){
                 copy($file['name'],SH_DEV_PATH.$projectName.'/0/'.md5($fileName).'.php');
-                $this->links->helper->writeInFile(
+                $this->linker->helper->writeInFile(
                     SH_DEV_PATH.$projectName.'/revisions/'.md5($fileName).'.php',
                     $fileName."\n0 ".md5_file(SH_ROOT_FOLDER.$fileName)."\n"
                 );
             }elseif($file['type'] == 'bin'){
                 copy($file['name'],SH_DEV_PATH.$projectName.'/0/'.md5($fileName).'.bin');
-                $this->links->helper->writeInFile(
+                $this->linker->helper->writeInFile(
                     SH_DEV_PATH.$projectName.'/revisions/'.md5($fileName).'.php',
                     $fileName."\n0 ".md5_file(SH_ROOT_FOLDER.$fileName)."\n"
                 );
@@ -773,7 +773,7 @@ include("'.dirname(__FILE__).'/debug_functions.php");
                 $this->setParam('debug>activated', '');
             }
             $this->writeParams();
-            $this->links->path->refresh();
+            $this->linker->path->refresh();
         }
         $az++;
         $values['default']['debug_activated'] = $this->getParam('debug>activated','');
@@ -801,7 +801,7 @@ include("'.dirname(__FILE__).'/debug_functions.php");
             $this->render('tests/'.$rf,$values);
             return true;
         }
-        $this->links->html->insert('L\'url doit se finir par ?rf=nom_du_rf_sans_extension');
+        $this->linker->html->insert('L\'url doit se finir par ?rf=nom_du_rf_sans_extension');
         return false;
     }
 

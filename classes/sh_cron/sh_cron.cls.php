@@ -45,8 +45,8 @@ class sh_cron extends sh_core{
                 $this->getParam('launchers',array())
             )
         ){
-            $id = (int) $this->links->path->page['id'];
-            $this->links->helper->writeInFile(
+            $id = (int) $this->linker->path->page['id'];
+            $this->linker->helper->writeInFile(
                 SH_TEMP_FOLDER.'cron.php',
                 $id.' - '.date('Y-m-d H:i:s')."\n",
                 true
@@ -57,7 +57,7 @@ class sh_cron extends sh_core{
                 $method = 'cron_job';
                 if(method_exists($class['long'],$method )){
                     $shortClassName = $class['short'];
-                    $ret = $this->links->$shortClassName->$method($id) && $ret;
+                    $ret = $this->linker->$shortClassName->$method($id) && $ret;
                 }
             }
             

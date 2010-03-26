@@ -58,7 +58,8 @@ body{
 
 #connectionContainer{
 	height: 20px;
-	width: 900px;
+	width: 700px;
+	margin-left: 200px;
 	text-align: right;
 	padding-top: 7px;
 	position: absolute;
@@ -534,6 +535,9 @@ color: #333333;
 	margin-right: auto;
 	text-align: center;
 }
+#sendMailForm_container input, #sendMailForm_container textarea{
+	border: 1px solid #666666;
+}
 .sendmailContent{
 	padding-left: 0px;
 }
@@ -550,20 +554,6 @@ color: #333333;
 .sendmailInput input {
 	width: 150px;
 }
-
-/*ADMIN: edtion d'un nouvel article*/
-
-.content_edit_shorter{
-	margin-left: auto;
-	margin-right: auto;
-	width: 600px;
-}
-
-
-.content_edit_shorter textarea{
-	width: 400px;
-}
-
 /*CAPTCHA*/
 .captchaText{
 }
@@ -593,10 +583,10 @@ color: #333333;
 	width:60px;
 }
 .captcha_input input{
-	border: 1px solid #333333;
+	border: 1px solid #666666;
 }
 .captcha_code img{
-	border: 1px solid #333333;
+	border: 1px solid #666666;
 	width:130px;
 	height:30px;
 }

@@ -1,5 +1,5 @@
 <span class="browser_show">
-    <div onclick="browser_show('{session>id}')">
-        <RENDER_VALUE what="link>text"/>
+    <div onclick="browser_show('{session:id}')">
+        <RENDER_VALUE what="link:text"/>
     </div>
 </span>

@@ -3,40 +3,40 @@
         <table class="prodResult_container" cellspacing="0">
             <tr>
                 <td class="prodResult_image">
-                    <a href="{category_elements>link}">
-                        <img src="{category_elements>image}" alt="product_preview"/>
+                    <a href="{category_elements:link}">
+                        <img src="{category_elements:image}" alt="product_preview"/>
                     </a>
                 </td>
                 <td class="prodResult_description">
                 <span class="prodResult_name">
-                    <a href="{category_elements>link}">
-                        <RENDER_VALUE what="category_elements>name"/>
+                    <a href="{category_elements:link}">
+                        <RENDER_VALUE what="category_elements:name"/>
                     </a>
                 </span>&#160;
                 <span class="prodResult_reference">
-                    <a href="{category_elements>link}">
-                        <RENDER_VALUE what="category_elements>reference"/>
+                    <a href="{category_elements:link}">
+                        <RENDER_VALUE what="category_elements:reference"/>
                     </a>
                 </span><br />
-                <RENDER_VALUE what="category_elements>shortDescription"/><br />
-                <RENDER_IFSET what="constants>showQuantity">
-                    <RENDER_VALUE what="i18n>navigator_stock_name"/>
-                    <RENDER_VALUE what="category_elements>stock"/><br />
+                <RENDER_VALUE what="category_elements:shortDescription"/><br />
+                <RENDER_IFSET what="constants:showQuantity">
+                    <RENDER_VALUE what="i18n:navigator_stock_name"/>
+                    <RENDER_VALUE what="category_elements:stock"/><br />
                 </RENDER_IFSET>
-                <span class="nobr productResult_price"><RENDER_VALUE what="category_elements>price"/></span>
+                <span class="nobr productResult_price"><RENDER_VALUE what="category_elements:price"/></span>
                 </td>
                 <td class="prodResult_pictos">
-                    <RENDER_IFSET what="category_elements>picto_addtocart_link">
-                        <a href="{category_elements>picto_addtocart_link}">
-                            <img src="/images/shared/icons/picto_cart_small.png" alt="add_to_cart" title="{i18n>pictoAddTocart}"/>
+                    <RENDER_IFSET what="category_elements:picto_addtocart_link">
+                        <a href="{category_elements:picto_addtocart_link}">
+                            <img src="/images/shared/icons/picto_cart_small.png" alt="add_to_cart" title="{i18n:pictoAddTocart}"/>
                         </a>
                     </RENDER_IFSET>
-                    <RENDER_IFNOTSET what="category_elements>picto_addtocart_link">
-                            <img src="/images/shared/icons/picto_nocart_small.png" alt="add_to_cart" title="{i18n>pictoAddToCart}"/>
+                    <RENDER_IFNOTSET what="category_elements:picto_addtocart_link">
+                            <img src="/images/shared/icons/picto_nocart_small.png" alt="add_to_cart" title="{i18n:pictoAddToCart}"/>
                     </RENDER_IFNOTSET>
-                    <RENDER_IFSET what="category_elements>picto_sendmail_link">
-                        <a href="{category_elements>picto_sendmail_link}">
-                            <img src="/images/shared/icons/picto_mail.png" class="onePicto" alt="send_by_mail" title="{i18n>pictoSendmail}"/>
+                    <RENDER_IFSET what="category_elements:picto_sendmail_link">
+                        <a href="{category_elements:picto_sendmail_link}">
+                            <img src="/images/shared/icons/picto_mail.png" class="onePicto" alt="send_by_mail" title="{i18n:pictoSendmail}"/>
                         </a>
                     </RENDER_IFSET>
                 </td>

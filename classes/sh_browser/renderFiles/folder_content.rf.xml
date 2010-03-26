@@ -1,75 +1,78 @@
 <div>
     <div id="folder">
         <img style="cursor:pointer;" class="icons" src="/templates/global/admin/sh_browser/folder.png" />
-        <RENDER_VALUE what="folder>baseName"/>
+        <RENDER_VALUE what="folder:baseName"/>
     </div>
     <div id="menu">
-        <RENDER_IFSET what="folder>addFolder">
-            <img style="cursor:pointer;" class="icons" src="/templates/global/admin/sh_browser/addFolder.png" onclick="addFolder('{folder>folder}')"/>
+        <RENDER_IFSET what="folder:addFolder">
+            <img style="cursor:pointer;" class="icons" src="/templates/global/admin/sh_browser/addFolder.png" onclick="addFolder('{folder:folder}')"/>
         </RENDER_IFSET>
-        <RENDER_IFSET what="folder>noaddFolder">
+        <RENDER_IFSET what="folder:noaddFolder">
             <img class="icons" src="/templates/global/admin/sh_browser/addFolderGrey.png"/>
         </RENDER_IFSET>
-        <RENDER_IFSET what="folder>renamePreviousFolder">
-            <img style="cursor:pointer;" class="icons" src="/templates/global/admin/sh_browser/renameFolder.png" onclick="renameFolder('{folder>folder}','{folder>baseName}')"/>
+        <RENDER_IFSET what="folder:renamePreviousFolder">
+            <img style="cursor:pointer;" class="icons" src="/templates/global/admin/sh_browser/renameFolder.png" onclick="renameFolder('{folder:folder}','{folder>baseName}')"/>
         </RENDER_IFSET>
-        <RENDER_IFSET what="folder>norenamePreviousFolder">
+        <RENDER_IFSET what="folder:norenamePreviousFolder">
             <img class="icons" src="/templates/global/admin/sh_browser/renameFolderGrey.png"/>
         </RENDER_IFSET>
-        <RENDER_IFSET what="folder>deletePreviousFolder">
-            <img style="cursor:pointer;" class="icons" src="/templates/global/admin/sh_browser/deleteFolder.png" onclick="deleteFolder('{folder>folder}')"/>
+        <RENDER_IFSET what="folder:deletePreviousFolder">
+            <img style="cursor:pointer;" class="icons" src="/templates/global/admin/sh_browser/deleteFolder.png" onclick="deleteFolder('{folder:folder}')"/>
         </RENDER_IFSET>
-        <RENDER_IFSET what="folder>nodeletePreviousFolder">
+        <RENDER_IFSET what="folder:nodeletePreviousFolder">
             <img class="icons" src="/templates/global/admin/sh_browser/deleteFolderGrey.png"/>
         </RENDER_IFSET>
     </div>
     <div id="images_list">
         <table>
-            <RENDER_IFSET what="folder>addFile">
+            <RENDER_IFSET what="folder:addFile">
                 <tr>
                     <td class="mini">
-                        <img src="/templates/global/admin/sh_browser/addDoc.png" style="{pictures>imageStyle}" alt="{i18n>newFile}"/>
+                        <img src="/templates/global/admin/sh_browser/addDoc.png" style="{pictures:imageStyle}" alt="{i18n:newFile}"/>
                     </td>
                     <td class="desc">
-                        <form action="{actions>addFile}" method="post" enctype="multipart/form-data">
-                            <RENDER_VALUE what="i18n>file"/> :
+                        <form action="{actions:addFile}" method="post" enctype="multipart/form-data">
+                            <RENDER_VALUE what="i18n:file"/> :
                             <br />
                             <input type="file" name="file"/>
-                            <input type="hidden" name="folder" value="{folder>folder}" />
-                            <input type="hidden" name="folderUid" value="{folder>uid}" />
-                            <input type="hidden" name="browserSession" value="{browser>session}" />
+                            <input type="hidden" name="folder" value="{folder:folder}" />
+                            <input type="hidden" name="folderUid" value="{folder:uid}" />
+                            <input type="hidden" name="browserSession" value="{browser:session}" />
                             <br />
-                            <input type="submit" value="{i18n>send}"/>
+                            <input type="submit" value="{i18n:send}"/>
                         </form>
                     </td>
                 </tr>
             </RENDER_IFSET>
-            <tr><td colspan="2"><RENDER_VALUE what="folder>message"/></td></tr>
+            <tr><td colspan="2"><RENDER_VALUE what="folder:message"/></td></tr>
             <RENDER_LOOP what="pictures">
                 <tr>
                     <td class="mini">
-                        <img src="{pictures>file}" style="{pictures>imageStyle}" onclick="returnElement('{pictures>file}');" alt="{pictures>baseName}" title="{pictures>baseName}"/>
+                        <img src="{pictures:icon}" style="{pictures:imageStyle}" onclick="returnElement('{pictures:file}');" alt="{pictures:baseName}" title="{pictures:baseName}"/>
                     </td>
                     <td class="desc">
-                        <div id="{pictures>folder}{pictures>element}_form">
-                            <span id="{pictures>folder}{pictures>element}">
-                                <RENDER_VALUE what="pictures>showedName"/>
+                        <div id="{pictures:folder}{pictures>element}_form">
+                            <span id="{pictures:folder}{pictures>element}">
+                                <RENDER_VALUE what="pictures:showedName"/>
                             </span>
-                            <RENDER_IFSET what="pictures>renameFile">
-                                <img style="cursor:pointer;" class="icons" src="/templates/global/admin/sh_browser/rename.png" onclick="inPlaceRename('{pictures>folder}{pictures>element}');" id="{pictures>folder}{pictures>element}_rn"/>
+                            <RENDER_IFSET what="pictures:renameFile">
+                                <img style="cursor:pointer;" class="icons" src="/templates/global/admin/sh_browser/rename.png" onclick="inPlaceRename('{pictures:folder}{pictures>element}');" id="{pictures:folder}{pictures>element}_rn"/>
                             </RENDER_IFSET>
-                            <RENDER_IFSET what="pictures>noRenameFile">
+                            <RENDER_IFSET what="pictures:noRenameFile">
                                 <img class="icons" src="/templates/global/admin/sh_browser/renameGrey.png"/>
                             </RENDER_IFSET>
-                            <RENDER_IFSET what="pictures>deleteFile">
-                                <img style="cursor:pointer;" class="icons" src="/templates/global/admin/sh_browser/delete.png" onclick="deleteFile('{pictures>folder}{pictures>element}')" />
+                            <RENDER_IFSET what="pictures:deleteFile">
+                                <img style="cursor:pointer;" class="icons" src="/templates/global/admin/sh_browser/delete.png" onclick="deleteFile('{pictures:folder}{pictures>element}')" />
                             </RENDER_IFSET>
-                            <RENDER_IFSET what="pictures>noDeleteFile">
+                            <RENDER_IFSET what="pictures:noDeleteFile">
                                 <img class="icons" src="/templates/global/admin/sh_browser/deleteGrey.png"/>
                             </RENDER_IFSET>
                         </div>
                         <br />
-                        <RENDER_VALUE what="pictures>description"/>
+                        <RENDER_VALUE what="pictures:description"/><br />
+                        <RENDER_IFSET what="pictures:playSound">
+                            <RENDER_SOUND file="{pictures:file}"/>
+                        </RENDER_IFSET>
                     </td>
                 </tr>
             </RENDER_LOOP>

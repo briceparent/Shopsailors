@@ -5,7 +5,7 @@
         <div class="notifM_middle">
             <div class="notifM_content">
                 <div class="bold">
-                <RENDER_VALUE what="i18n>mailSent"/>
+                <RENDER_VALUE what="i18n:mailSent"/>
                 </div>
             </div>
         </div>

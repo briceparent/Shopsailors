@@ -2,18 +2,18 @@
     <RENDER_FORM id="productEditor" >
         <div class="form_box_container">
             <NORENDER>First box (product datas)</NORENDER>
-            <RENDER_IFSET what="message>content">
+            <RENDER_IFSET what="message:content">
                 <div class="form_messageContainer">
                     <div class="form_message_top">
                     </div>
                     <div class="form_message_middle">
                         <div class="messageContainer">
                             <div class="message">
-                                <RENDER_VALUE what="message>content"/>
+                                <RENDER_VALUE what="message:content"/>
                             </div>
                             <div class="link">
-                                <a href="{message>link}">
-                                    <RENDER_VALUE what="message>link"/>
+                                <a href="{message:link}">
+                                    <RENDER_VALUE what="message:link"/>
                                 </a>
                             </div>
                         </div>
@@ -22,14 +22,14 @@
                     </div>
                 </div>
             </RENDER_IFSET>           
-            <RENDER_IFSET what="error>noCategory">
+            <RENDER_IFSET what="error:noCategory">
                 <div class="form_messageContainer">
                     <div class="form_message_top">
                     </div>
                     <div class="form_message_middle">
                         <div class="messageContainer">
                             <div class="alertError">
-                                <RENDER_VALUE what="i18n>errorNocategory"/>
+                                <RENDER_VALUE what="i18n:errorNocategory"/>
                             </div>
                         </div>
                     </div>
@@ -39,54 +39,54 @@
             </RENDER_IFSET>
             <div class="form_box_top">
                 <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>productEditor_title"/>
+                    <RENDER_VALUE what="i18n:productEditor_title"/>
                 </h3>
             </div>
             <div class="form_box_middle">
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_name"/><br />
-                    <RENDER_I18NINPUT class="sh_shop" i18n="{product>name}" name="{inputs>name}"/>
+                    <RENDER_VALUE what="i18n:productEditor_name"/><br />
+                    <RENDER_I18NINPUT class="sh_shop" i18n="{product:name}" name="{inputs:name}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_reference"/><br />
-                    <input class="inputForm" name="{inputs>reference}" value="{product>reference}"/>
+                    <RENDER_VALUE what="i18n:productEditor_reference"/><br />
+                    <input class="inputForm" name="{inputs:reference}" value="{product:reference}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_price"/><br />
-                    <input class="inputForm" name="{inputs>price}" value="{product>price}"/>
+                    <RENDER_VALUE what="i18n:productEditor_price"/><br />
+                    <input class="inputForm" name="{inputs:price}" value="{product:price}"/>
                     <div class="noteText">
-                        <RENDER_VALUE what="i18n>productEditor_priceNote"/>                        
+                        <RENDER_VALUE what="i18n:productEditor_priceNote"/>                        
                     </div>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_stock"/><br />
-                    <input class="inputForm" name="{inputs>stock}" value="{product>stock}"/>
+                    <RENDER_VALUE what="i18n:productEditor_stock"/><br />
+                    <input class="inputForm" name="{inputs:stock}" value="{product:stock}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_description"/>
-                    <RENDER_HELP what="{i18n>productEditor_descriptionExplanation}"/>
-                    <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_shop" i18n="{product>description}" name="{inputs>description}"/>
+                    <RENDER_VALUE what="i18n:productEditor_description"/>
+                    <RENDER_HELP what="{i18n:productEditor_descriptionExplanation}"/>
+                    <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_shop" i18n="{product:description}" name="{inputs:description}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_shortDescription"/>
-                    <RENDER_HELP what="{i18n>productEditor_shortDescriptionExplanation}"/>
-                    <RENDER_I18NINPUT class="sh_shop" i18n="{product>shortDescription}" name="{inputs>shortDescription}"/>
+                    <RENDER_VALUE what="i18n:productEditor_shortDescription"/>
+                    <RENDER_HELP what="{i18n:productEditor_shortDescriptionExplanation}"/>
+                    <RENDER_I18NINPUT class="sh_shop" i18n="{product:shortDescription}" name="{inputs:shortDescription}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_image"/>
-                    <RENDER_HELP what="{i18n>productEditor_imageExplanation}"/>
+                    <RENDER_VALUE what="i18n:productEditor_image"/>
+                    <RENDER_HELP what="{i18n:productEditor_imageExplanation}"/>
                     <div class="preview_image">
-                        <img src="{product>image}" onclick="{product>onClickReplaceImage}" alt="{i18n>productEditor_clickHere}"/>
-                        <input type="hidden" name="{inputs>image}" value="{product>image}" id="{inputs>image}"/>
+                        <img src="{product:image}" onclick="{product:onClickReplaceImage}" alt="{i18n:productEditor_clickHere}"/>
+                        <input type="hidden" name="{inputs:image}" value="{product:image}" id="{inputs:image}"/>
                     </div>
                 </div>
                 <div id="test"></div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_smallImages"/> 
-                    <RENDER_MULTIPLEIMAGESSELECTOR name="{inputs>images}" value="{product>images}" folder="{product>imagesFolder}"/>
+                    <RENDER_VALUE what="i18n:productEditor_smallImages"/> 
+                    <RENDER_MULTIPLEIMAGESSELECTOR name="{inputs:images}" value="{product:images}" folder="{product:imagesFolder}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_CHECKBOX text="{i18n>productEditor_activateProduct}" help="{i18n>productEditor_activateProductExplanation}" name="{inputs>active}" state="{product>active}"/>
+                    <RENDER_CHECKBOX text="{i18n:productEditor_activateProduct}" help="{i18n:productEditor_activateProductExplanation}" name="{inputs:active}" state="{product:active}"/>
                 </div>
             </div>
             <div class="form_box_bottom">
@@ -94,25 +94,25 @@
             <NORENDER>Second box (Custom properties)</NORENDER>
             <div class="form_box_top">
                 <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>productEditor_custumProperties"/>
+                    <RENDER_VALUE what="i18n:productEditor_custumProperties"/>
                 </h3>
             </div>
             <div class="form_box_middle">
                 <RENDER_LOOP what="customProperties">
                     <div class="formContent">
-                        <input type="checkbox" name="active[{customProperties>id}]" state="{customProperties>state}"/>
-                        <RENDER_VALUE what="customProperties>name"/>&#160;:&#160;
-                        <RENDER_IFSET what="customProperties>isText">
-                            <input name="values[{customProperties>name}]" value="{customProperties>value}"/>
+                        <input type="checkbox" name="active[{customProperties:id}]" state="{customProperties:state}"/>
+                        <RENDER_VALUE what="customProperties:name"/>&#160;:&#160;
+                        <RENDER_IFSET what="customProperties:isText">
+                            <input name="values[{customProperties:name}]" value="{customProperties:value}"/>
                         </RENDER_IFSET>
-                        <RENDER_IFSET what="customProperties>isI18nText">
-                            <br /><RENDER_I18NINPUT class="sh_shop" name="values[{customProperties>name}]" i18n="{customProperties>value}"/>
+                        <RENDER_IFSET what="customProperties:isI18nText">
+                            <br /><RENDER_I18NINPUT class="sh_shop" name="values[{customProperties:name}]" i18n="{customProperties:value}"/>
                         </RENDER_IFSET>
-                        <RENDER_IFSET what="customProperties>isList">
-                            <select name="values[{customProperties>id}]">
+                        <RENDER_IFSET what="customProperties:isList">
+                            <select name="values[{customProperties:id}]">
                                 <RENDER_LOOP what="values">
-                                    <option value="{values>id}" state="{values>state}">
-                                        <RENDER_VALUE what="values>value"/>
+                                    <option value="{values:id}" state="{values:state}">
+                                        <RENDER_VALUE what="values:value"/>
                                     </option>
                                 </RENDER_LOOP>
                             </select>
@@ -125,15 +125,15 @@
             <NORENDER>Third box (categories)</NORENDER>
             <div class="form_box_top">
                 <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>productEditor_categoriesTitle"/>
+                    <RENDER_VALUE what="i18n:productEditor_categoriesTitle"/>
                 </h3>
             </div>
             <div class="form_box_middle">
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_categoriesExplanantion"/>
+                    <RENDER_VALUE what="i18n:productEditor_categoriesExplanantion"/>
                     <RENDER_LOOP what="categories">
                         <div>
-                            <RENDER_CHECKBOX text="{categories>name}" name="{categories>inputName}" state="{categories>checked}"/>
+                            <RENDER_CHECKBOX text="{categories:name}" name="{categories:inputName}" state="{categories:checked}"/>
                         </div>
                     </RENDER_LOOP>
                 </div>

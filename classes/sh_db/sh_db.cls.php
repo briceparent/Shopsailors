@@ -27,11 +27,11 @@ class sh_db extends sh_core{
     public function construct(){
         $domain = $_SERVER['SERVER_NAME'];
 
-        $this->host = $this->links->params->get('sh_db','host');
-        $this->user = $this->links->params->get('sh_db','user');
-        $this->password = $this->links->params->get('sh_db','password');
-        $this->db = $this->links->params->get('sh_db','database');
-        $this->prefix = $this->links->params->get('sh_db','prefix');
+        $this->host = $this->linker->params->get('sh_db','host');
+        $this->user = $this->linker->params->get('sh_db','user');
+        $this->password = $this->linker->params->get('sh_db','password');
+        $this->db = $this->linker->params->get('sh_db','database');
+        $this->prefix = $this->linker->params->get('sh_db','prefix');
         return true;
     }
 
@@ -90,8 +90,8 @@ class sh_db extends sh_core{
         $this->disconnect($link);
         if($rep === false && $this->errorId == 1146 && !$dbShouldBeConstructed){
             // We have to ask the class to construct the db.
-            if(method_exists($this->links->$shortClassName,'constructDb')){
-                $this->links->$shortClassName->constructDb();
+            if(method_exists($this->linker->$shortClassName,'constructDb')){
+                $this->linker->$shortClassName->constructDb();
                 $this->execute($element,$qryName,$replacements,&$qry,true);
             }
         }
@@ -212,7 +212,7 @@ class sh_db_element{
      *
      */
     public function __construct($className){
-        $this->links = sh_links::getInstance();
+        $this->linker = sh_linker::getInstance();
         $this->className = $className;
     }
 
@@ -248,7 +248,7 @@ class sh_db_element{
      */
     public function getQueries(){
         if(!$this->queriesAreRead){
-            $this->queries = $this->links->params->getQueries($this->className);
+            $this->queries = $this->linker->params->getQueries($this->className);
             $this->queriesAreRead = true;
         }
         return $this->queries;

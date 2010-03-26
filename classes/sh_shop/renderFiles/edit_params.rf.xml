@@ -3,37 +3,37 @@
         <div class="form_box_container">
             <div class="form_box_top">
                 <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>editTitle"/>
+                    <RENDER_VALUE what="i18n:editTitle"/>
                 </h3>
             </div>
             <div class="form_box_middle">
                 <div class="formContent">
-                    <RENDER_CHECKBOX text="{i18n>activateShop}" name="activateShop" state="{activateShop>checked}"/>
+                    <RENDER_CHECKBOX text="{i18n:activateShop}" name="activateShop" state="{activateShop:checked}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_CHECKBOX help="{i18n>activateCart_explanation}" text="{i18n>activateCart}" name="activateCart" state="{activateCart>checked}" disabled="disabled"/>
+                    <RENDER_CHECKBOX help="{i18n:activateCart_explanation}" text="{i18n:activateCart}" name="activateCart" state="{activateCart:checked}" disabled="disabled"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>command_mail"/><br />
+                    <RENDER_VALUE what="i18n:command_mail"/><br />
                     <textarea class="textAreaForm_3lines" name="command_mail" >
-                        <RENDER_VALUE what="command_mail>value"/>
+                        <RENDER_VALUE what="command_mail:value"/>
                     </textarea>
                     <div class="noteText">
-                        <RENDER_VALUE what="i18n>command_mailNote"/>
+                        <RENDER_VALUE what="i18n:command_mailNote"/>
                     </div>
                 </div>
                 <div class="formContent">
-                    <RENDER_CHECKBOX text="{i18n>hideNullQuantityProducts}" name="hideNullQuantityProducts" state="{hideNullQuantityProducts>checked}"/>
+                    <RENDER_CHECKBOX text="{i18n:hideNullQuantityProducts}" name="hideNullQuantityProducts" state="{hideNullQuantityProducts:checked}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_CHECKBOX text="{i18n>showQuantity}" name="showQuantity" state="{showQuantity>checked}"/>
+                    <RENDER_CHECKBOX text="{i18n:showQuantity}" name="showQuantity" state="{showQuantity:checked}"/>
                 </div>
             </div>
             <div class="form_box_bottom">
             </div>
             <div class="form_box_top">
                 <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>prices_Title"/>
+                    <RENDER_VALUE what="i18n:prices_Title"/>
                 </h3>
             </div>
             <div class="form_box_middle">
@@ -41,13 +41,13 @@
                     <table>
                         <tr>
                             <td>
-                                <RENDER_VALUE what="i18n>prices_monney_format"/>
+                                <RENDER_VALUE what="i18n:prices_monney_format"/>
                             </td>
                             <td>
                                 <select name="monney_format">
                                     <RENDER_LOOP what="monneyFormats">
-                                        <option value="{monneyFormats>name}" state="{monneyFormats>state}">
-                                            <RENDER_VALUE what="monneyFormats>name"/>
+                                        <option value="{monneyFormats:name}" state="{monneyFormats:state}">
+                                            <RENDER_VALUE what="monneyFormats:name"/>
                                         </option>
                                     </RENDER_LOOP>
                                 </select>
@@ -55,14 +55,14 @@
                         </tr>
                         <tr>
                             <td>
-                                <RENDER_VALUE what="i18n>prices_showCurrency"/>
-                                <RENDER_HELP what="{i18n>prices_showCurrency_explanation}"/>
+                                <RENDER_VALUE what="i18n:prices_showCurrency"/>
+                                <RENDER_HELP what="{i18n:prices_showCurrency_explanation}"/>
                             </td>
                             <td>
                                 <select name="currency">
                                     <RENDER_LOOP what="currencies">
-                                        <option value="{currencies>name}" state="{currencies>state}">
-                                            <RENDER_VALUE what="currencies>value"/>
+                                        <option value="{currencies:name}" state="{currencies:state}">
+                                            <RENDER_VALUE what="currencies:value"/>
                                         </option>
                                     </RENDER_LOOP>
                                 </select>
@@ -70,22 +70,22 @@
                         </tr>
                         <tr>
                             <td>
-                                <RENDER_VALUE what="i18n>prices_taxRate"/>
+                                <RENDER_VALUE what="i18n:prices_taxRate"/>
                             </td>
                             <td>
-                                <input class="greyBorder" name="taxRate" value="{tax>rate}" style="width:45px;"/>%
+                                <input class="greyBorder" name="taxRate" value="{tax:rate}" style="width:45px;"/>%
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <RENDER_VALUE what="i18n>prices_taxesMode"/>
-                                <RENDER_HELP what="{i18n>prices_showPrice_explanation}"/>
+                                <RENDER_VALUE what="i18n:prices_taxesMode"/>
+                                <RENDER_HELP what="{i18n:prices_showPrice_explanation}"/>
                             </td>
                             <td>
                                 <select name="taxes" onchange="check_showTaxSymbol_ifHT(this.value);">
                                     <RENDER_LOOP what="taxes">
-                                        <option value="{taxes>value}" state="{taxes>selected}">
-                                            <RENDER_VALUE what="taxes>text"/>
+                                        <option value="{taxes:value}" state="{taxes:selected}">
+                                            <RENDER_VALUE what="taxes:text"/>
                                         </option>
                                     </RENDER_LOOP>
                                 </select>
@@ -100,19 +100,19 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <RENDER_CHECKBOX help="{i18n>prices_showTaxSymbol_explanation}" text="{i18n>prices_showTaxSymbol}" id="showTaxSymbol" name="showTaxSymbol" state="{showTaxSymbol>state}"/>&#160;
+                                <RENDER_CHECKBOX help="{i18n:prices_showTaxSymbol_explanation}" text="{i18n:prices_showTaxSymbol}" id="showTaxSymbol" name="showTaxSymbol" state="{showTaxSymbol:state}"/>&#160;
                             </td>
                         </tr>
                     </table>
                 </div>
                 <NORENDER>
                     <div class="formContent">
-                        <input type="checkbox" name="activateMail" state="{activateMail>checked}"/>
-                        <RENDER_VALUE what="i18n>activateMail"/>
+                        <input type="checkbox" name="activateMail" state="{activateMail:checked}"/>
+                        <RENDER_VALUE what="i18n:activateMail"/>
                     </div>
                     <div class="formContent">
-                        <input type="checkbox" name="activateCom" state="{activateCom>checked}"/>
-                        <RENDER_VALUE what="i18n>activateCom"/>
+                        <input type="checkbox" name="activateCom" state="{activateCom:checked}"/>
+                        <RENDER_VALUE what="i18n:activateCom"/>
                     </div>
                 </NORENDER>
             </div>
@@ -120,56 +120,56 @@
             </div>
             <div class="form_box_top">
                 <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>bill_editBoxTitle"/>
+                    <RENDER_VALUE what="i18n:bill_editBoxTitle"/>
                 </h3>
             </div>
             <div class="form_box_middle">
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>bill_companyName"/>
-                    <input class="inputForm" name="command_companyName" value="{command>companyName}"/>
+                    <RENDER_VALUE what="i18n:bill_companyName"/>
+                    <input class="inputForm" name="command_companyName" value="{command:companyName}"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>bill_companyAddress"/>
+                    <RENDER_VALUE what="i18n:bill_companyAddress"/>
                     <textarea class="textAreaForm" name="command_companyAddress">
-                        <RENDER_VALUE what="command>companyAddress"/>
+                        <RENDER_VALUE what="command:companyAddress"/>
                     </textarea>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>bill_headline"/>
-                    <RENDER_HELP what="{i18n>bill_headlineExplanation}"/>
-                    <RENDER_I18NTEXTAREA class="sh_shop" i18n="{constants>i18n_billheadLine}" name="command_headLine"/>
+                    <RENDER_VALUE what="i18n:bill_headline"/>
+                    <RENDER_HELP what="{i18n:bill_headlineExplanation}"/>
+                    <RENDER_I18NTEXTAREA class="sh_shop" i18n="{constants:i18n_billheadLine}" name="command_headLine"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>bill_logo"/>
-                    <RENDER_HELP what="{i18n>bill_logoExplanation}"/>
+                    <RENDER_VALUE what="i18n:bill_logo"/>
+                    <RENDER_HELP what="{i18n:bill_logoExplanation}"/>
                     <div class="bill_defaultArea">
-                        <img src="{command>logo}" onclick="{command>onClickReplaceImage}" alt="{i18n>bill_logoCompany}"/>
-                        <input type="hidden" name="command_logo" value="{command>logo}" id="{command>onClickReplaceId}"/>
+                        <img src="{command:logo}" onclick="{command:onClickReplaceImage}" alt="{i18n:bill_logoCompany}"/>
+                        <input type="hidden" name="command_logo" value="{command:logo}" id="{command:onClickReplaceId}"/>
                     </div>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>bill_legal"/>
-                    <RENDER_HELP what="{i18n>bill_legalExplanation}"/>
-                    <RENDER_I18NTEXTAREA class="sh_shop" i18n="{constants>i18n_billfooter}" name="command_footer"/>
+                    <RENDER_VALUE what="i18n:bill_legal"/>
+                    <RENDER_HELP what="{i18n:bill_legalExplanation}"/>
+                    <RENDER_I18NTEXTAREA class="sh_shop" i18n="{constants:i18n_billfooter}" name="command_footer"/>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>bill_color"/>
-                    <RENDER_HELP what="{i18n>bill_colorExplanation}"/>
+                    <RENDER_VALUE what="i18n:bill_color"/>
+                    <RENDER_HELP what="{i18n:bill_colorExplanation}"/>
                     <select name="billColor" id="billColor" style="width:60px;" onchange="this.style.backgroundColor=this.options[this.selectedIndex].style.backgroundColor;">
                         <RENDER_LOOP what="billColors">
-                            <option value="{billColors>id}" style="background-color:#{billColors>color};">&#160;</option>
+                            <option value="{billColors:id}" style="background-color:#{billColors:color};">&#160;</option>
                         </RENDER_LOOP>
                     </select>
                     <script type="text/javascript">
                         billColor = $("billColor")
-                        billColor.value=<RENDER_VALUE what="bill>color"/>;
+                        billColor.value=<RENDER_VALUE what="bill:color"/>;
                         billColor.style.backgroundColor=billColor.options[billColor.selectedIndex].style.backgroundColor;
                     </script>
                 </div>
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>bill_customerService"/>
-                    <RENDER_HELP what="{i18n>bill_customerServiceExplanation}"/><br />
-                    <RENDER_I18NTEXTAREA class="sh_shop threeLines" i18n="{constants>i18n_billcustomerService}" name="command_customerService"/>
+                    <RENDER_VALUE what="i18n:bill_customerService"/>
+                    <RENDER_HELP what="{i18n:bill_customerServiceExplanation}"/><br />
+                    <RENDER_I18NTEXTAREA class="sh_shop threeLines" i18n="{constants:i18n_billcustomerService}" name="command_customerService"/>
                 </div>
             </div>
             <div class="form_box_bottom">

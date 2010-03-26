@@ -55,7 +55,7 @@ class sh_searcher extends sh_core {
             $this->shortClassName.'/search/'
         );
         // Verifies if there is a custom searchEngine or if we should show the default one
-        $rfFromTemplate =  $this->links->site->templateFolder.'searcher/searchEngine.rf.xml';
+        $rfFromTemplate =  $this->linker->site->templateFolder.'searcher/searchEngine.rf.xml';
         if(file_exists($rfFromTemplate)){
             $rf = $rfFromTemplate;
         }else{
@@ -123,7 +123,7 @@ class sh_searcher extends sh_core {
                 )
             );
         }elseif($language == self::ACTUAL_LANGUAGE){
-            $lang = $this->links->i18n->getLang();
+            $lang = $this->linker->i18n->getLang();
             $this->db_execute(
                 'removeElement',
                 array(
@@ -197,11 +197,11 @@ class sh_searcher extends sh_core {
          * the results.
          */
         if($this->getParam('activated',true) === false){
-            $this->links->path->error(404);
+            $this->linker->path->error(404);
         }
         sh_cache::disable();
         $search = stripslashes(urldecode($_GET['value']));
-        $this->links->html->setTitle(
+        $this->linker->html->setTitle(
             $this->getI18n('theQueryWas').' ['.$search.']'
         );
         $this->activeSearch = $search;
@@ -209,7 +209,7 @@ class sh_searcher extends sh_core {
             $this->removeSpecialChars($search)
         );
 
-        $rfNoResultsTemplate =  $this->links->site->templateFolder.'searcher/show_noResults.rf.xml';
+        $rfNoResultsTemplate =  $this->linker->site->templateFolder.'searcher/show_noResults.rf.xml';
         if(file_exists($rfNoResultsTemplate)){
             $rfNoResults = $rfNoResultsTemplate;
         }else{
@@ -226,7 +226,7 @@ class sh_searcher extends sh_core {
             'searchAllWords',
             array(
                 'search' => $search,
-                'lang' => $this->links->i18n->getLang()
+                'lang' => $this->linker->i18n->getLang()
             )
         );
 
@@ -246,7 +246,7 @@ class sh_searcher extends sh_core {
             'search',
             array(
                 'search' => $search,
-                'lang' => $this->links->i18n->getLang(),
+                'lang' => $this->linker->i18n->getLang(),
                 'level' => 1,
                 'weight' => 8
             )
@@ -255,7 +255,7 @@ class sh_searcher extends sh_core {
             'search',
             array(
                 'search' => $search,
-                'lang' => $this->links->i18n->getLang(),
+                'lang' => $this->linker->i18n->getLang(),
                 'level' => 2,
                 'weight' => 3
             )
@@ -264,7 +264,7 @@ class sh_searcher extends sh_core {
             'search',
             array(
                 'search' => $search,
-                'lang' => $this->links->i18n->getLang(),
+                'lang' => $this->linker->i18n->getLang(),
                 'level' => 3,
                 'weight' => 1
             )
@@ -314,10 +314,10 @@ class sh_searcher extends sh_core {
         foreach($showingOrder as $type){
             if(isset($sorted[$type])){
                 foreach($sorted[$type] as $method=>$element){
-                    if($this->links->method_exists($type,'searcher_showResults')){
+                    if($this->linker->method_exists($type,'searcher_showResults')){
                         $link = $resultsLink.'?searchId='.$searchId;
                         $link .= '&scope='.$type.'&action='.$method;
-                        $rendered = $this->links->$type->searcher_showResults(
+                        $rendered = $this->linker->$type->searcher_showResults(
                             $method,
                             array_keys($element[0])
                         );
@@ -334,7 +334,7 @@ class sh_searcher extends sh_core {
             }
         }
 
-        $rfFromTemplate =  $this->links->site->templateFolder.'searcher/show_results.rf.xml';
+        $rfFromTemplate =  $this->linker->site->templateFolder.'searcher/show_results.rf.xml';
         if(file_exists($rfFromTemplate)){
             $rf = $rfFromTemplate;
         }else{
@@ -346,7 +346,7 @@ class sh_searcher extends sh_core {
 
     public function showResults(){
         if($this->getParam('activated',true) === false){
-            $this->links->path->error(404);
+            $this->linker->path->error(404);
         }
         $searchId = $_GET['searchId'];
         $scope = $_GET['scope'];
@@ -363,7 +363,7 @@ class sh_searcher extends sh_core {
             $page = 1;
         }
 
-        $rendered = $this->links->$scope->searcher_showResults(
+        $rendered = $this->linker->$scope->searcher_showResults(
             $action,
             array_keys($element[$page])
         );
@@ -388,7 +388,7 @@ class sh_searcher extends sh_core {
                 }
             }
         }
-        $rfFromTemplate =  $this->links->site->templateFolder.'searcher/show_results_filtered.rf.xml';
+        $rfFromTemplate =  $this->linker->site->templateFolder.'searcher/show_results_filtered.rf.xml';
         if(file_exists($rfFromTemplate)){
             $rf = $rfFromTemplate;
         }else{
@@ -416,7 +416,7 @@ class sh_searcher extends sh_core {
         $allowedScopes = $this->getParam('showingOrder');
         $scopesClasses = $this->getScopesClasses();
         foreach($scopesClasses as $scopesClasses){
-            $scope = $this->links->$scopesClasses->searcher_getScope();
+            $scope = $this->linker->$scopesClasses->searcher_getScope();
             if(in_array($scope['scope'],$allowedScopes)){
                 $checked = 'checked';
             }else{

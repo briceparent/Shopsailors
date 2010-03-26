@@ -3,7 +3,7 @@
     </div>
     <div class="notifM_middle">
         <div class="notifM_content">
-            <RENDER_VALUE what="i18n>error_product_not_found_content"/>
+            <RENDER_VALUE what="i18n:error_product_not_found_content"/>
         </div>
     </div>
     <div class="notifM_bottom">

@@ -21,8 +21,8 @@ class sh_datePicker extends sh_core {
     const TO = '(=2050,=12,=31)';
     
     public function construct() {
-        $this->links->html->addScript('/'.__CLASS__.'/singles/datePicker.js');
-        $this->links->html->addCSS('/templates/global/datePicker.css','DATEPICKER');
+        $this->linker->html->addScript('/'.__CLASS__.'/singles/datePicker.js');
+        $this->linker->html->addCSS('/templates/global/datePicker.css','DATEPICKER');
         self::$year = date('Y');
         self::$month = date('n');
         self::$day = date('j');
@@ -76,8 +76,8 @@ class sh_datePicker extends sh_core {
     }
     
     public function render_datePicker($attributes = array()) {
-        $this->links->html->addScript('/'.__CLASS__.'/singles/sh_datePicker.js');
-        $this->links->html->addCSS('/'.__CLASS__.'/singles/sh_datePicker.css');
+        $this->linker->html->addScript('/'.__CLASS__.'/singles/sh_datePicker.js');
+        $this->linker->html->addCSS('/'.__CLASS__.'/singles/sh_datePicker.css');
         if(isset($attributes['name'])) {
             $name = $attributes['name'];
         }elseif(isset($attributes['id'])) {

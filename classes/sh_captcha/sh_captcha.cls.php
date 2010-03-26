@@ -40,13 +40,13 @@ class sh_captcha extends sh_core {
      * public function create
      */
     public function create($form,$error = false){
-        $this->links->html->addScript('/'.__CLASS__.'/singles/captcha.js');
+        $this->linker->html->addScript('/'.__CLASS__.'/singles/captcha.js');
 
         $uid = str_replace(' ','_',microtime());
         $captcha['captcha']['image'] = $this->getParam('imagePath').$form.'&#38;id='.$uid;
         $captcha['captcha']['name'] = 'captcha_'.$form;
         $captcha['captcha']['form'] = $form;
-        $captcha['captcha']['change'] = $this->links->path->getUri('captcha/change/');
+        $captcha['captcha']['change'] = $this->linker->path->getUri('captcha/change/');
         if($error){
             $captcha['captcha']['error'] = 'input_error';
         }

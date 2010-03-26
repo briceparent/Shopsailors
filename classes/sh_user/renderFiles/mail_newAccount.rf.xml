@@ -2,11 +2,11 @@
     Bonjour,<br />
     Vous avez souhaité créer un compte Websailors.<br />
     Pour confirmer cette création, il vous suffit de cliquer sur le lien ci-dessous: <br />
-    <a href="{confirmation>link}"><RENDER_VALUE what="confirmation>link"/></a><br /><br />
+    <a href="{confirmation:link}"><RENDER_VALUE what="confirmation:link"/></a><br /><br />
     Si vous n'avez pas créé de compte et que vous ne voulez donc pas confirmer sa création,<br />
     il vous suffit de ne rien faire.<br /><br />
     Pour rappel, votre identifiant pour la connexion est: <br />
-    <RENDER_VALUE what="user>login"/><br /><br />
+    <RENDER_VALUE what="user:login"/><br /><br />
     Nous vous remercions pour l'intérêt que vous nous portez.<br />
     L'équipe de Websailors
 </div>

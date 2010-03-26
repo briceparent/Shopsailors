@@ -23,14 +23,14 @@ class sh_newsletters extends sh_core {
 
     public function construct(){
         if(!is_dir(SH_IMAGES_FOLDER.'newsletters/')){
-            $this->links->browser->createFolder(
+            $this->linker->browser->createFolder(
                 SH_IMAGES_FOLDER.'newsletters/',
                 sh_browser::ALL
             );
-            $this->links->browser->addDimension(
+            $this->linker->browser->addDimension(
                 SH_IMAGES_FOLDER.'newsletters/',500,500
             );
-            $this->links->browser->setNoMargins(
+            $this->linker->browser->setNoMargins(
                 SH_IMAGES_FOLDER.'newsletters/'
             );
         }
@@ -67,8 +67,8 @@ class sh_newsletters extends sh_core {
         );
 
         $newsletters = NEWSLETTERS_PARAMSFOLDER.'list.params.php';
-        $this->links->params->addElement($newsletters,true);
-        $list = $this->links->params->get(
+        $this->linker->params->addElement($newsletters,true);
+        $list = $this->linker->params->get(
             $newsletters,
             '',
             array()
@@ -109,15 +109,15 @@ class sh_newsletters extends sh_core {
         $name = $this->getI18n('action_'.$action);
 
         $newsletters = NEWSLETTERS_PARAMSFOLDER.'list.params.php';
-        $this->links->params->addElement($newsletters,true);
-        $list = $this->links->params->get(
+        $this->linker->params->addElement($newsletters,true);
+        $list = $this->linker->params->get(
             $newsletters,
             '',
             array()
         );
 
         if($action == 'show'){
-            $title = $this->links->params->get($newsletters,$id.'>title');
+            $title = $this->linker->params->get($newsletters,$id.'>title');
             $name = str_replace(
                 array('{id}','{link}','{title}'),
                 array($id,$link,$title),
@@ -140,7 +140,7 @@ class sh_newsletters extends sh_core {
                     array('',''),
                     $this->__tostring()
                 ).'/'.$action.'/'.$id;
-            $link = $this->links->path->getLink($page);
+            $link = $this->linker->path->getLink($page);
         }
         if($name != ''){
             return $name;
@@ -239,12 +239,12 @@ class sh_newsletters extends sh_core {
 
     public function removeList(){
         $this->onlyAdmin();
-        $id = (int) $this->links->path->page['id'];
-        $mailer = $this->links->mailer->get(true);
+        $id = (int) $this->linker->path->page['id'];
+        $mailer = $this->linker->mailer->get(true);
         if($this->formSubmitted('delete_newslettersList')){
             $mailer->debugging(3);
             $ret = $mailer->ml_delete($id);
-            $this->links->path->redirect(
+            $this->linker->path->redirect(
                 __CLASS__,'manageLists',0
             );
         }
@@ -261,8 +261,8 @@ class sh_newsletters extends sh_core {
      */
     public function manageLists(){
         $this->onlyAdmin();
-        $id = (int) $this->links->path->page['id'];
-        $mailer = $this->links->mailer->get(true);
+        $id = (int) $this->linker->path->page['id'];
+        $mailer = $this->linker->mailer->get(true);
 
         if($this->formSubmitted('edit_diffusionList')){
             if($id == 0){
@@ -291,7 +291,7 @@ class sh_newsletters extends sh_core {
                 );
             }
 
-            $this->links->path->redirect(
+            $this->linker->path->redirect(
                 __CLASS__,'showList'
             );
         }
@@ -328,7 +328,7 @@ class sh_newsletters extends sh_core {
         if($result = $this->formSubmitted('subscribeNewsForm', true)){
             $submitted = true;
             $mailAddress = $_POST['mail'];
-            $mailer = $this->links->mailer->get(false);
+            $mailer = $this->linker->mailer->get(false);
             $mailOk = $mailer->checkAddress($mailAddress);
             if($result === true){
                 if($mailOk && is_array($_POST['newsletters'])){
@@ -337,8 +337,8 @@ class sh_newsletters extends sh_core {
 
                     foreach(array_keys($_POST['newsletters']) as $newsletter){
                         $paramsFile = SH_SITEPARAMS_FOLDER.__CLASS__.'_sub_'.$newsletter;
-                        $this->links->params->addElement($paramsFile,true);
-                        $needConfirmation = $this->links->params->get(
+                        $this->linker->params->addElement($paramsFile,true);
+                        $needConfirmation = $this->linker->params->get(
                             $paramsFile,
                             'needConfirmation',
                             array()
@@ -350,12 +350,12 @@ class sh_newsletters extends sh_core {
                                 mktime(0,0,0,date("m"),date("d")+15,date("Y"))
                             )
                         );
-                        $this->links->params->set($paramsFile,'needConfirmation',$needConfirmation);
-                        $this->links->params->write($paramsFile);
+                        $this->linker->params->set($paramsFile,'needConfirmation',$needConfirmation);
+                        $this->linker->params->write($paramsFile);
 
                     }
                     // We send a mail
-                    $site = $this->links->path->getBaseUri();
+                    $site = $this->linker->path->getBaseUri();
                     $link .= $site.$this->translatePageToUri('/confirmSubscription/');
                     $link .= '?mail='.$mailAddress.'!AMP!verif='.$verifyer;
                     $values['confirmation']['link'] = $link;
@@ -383,7 +383,7 @@ class sh_newsletters extends sh_core {
                 $values['captcha']['error'] = 'true';
             }
         }
-        $this->links->html->setTitle(
+        $this->linker->html->setTitle(
             $this->getI18n($this->constants['subscription_title'])
         );
         $intro = $this->getI18n(
@@ -407,7 +407,7 @@ class sh_newsletters extends sh_core {
             }
         }
 
-        $mailer = $this->links->mailer->get(true);
+        $mailer = $this->linker->mailer->get(true);
         $values['newsletters'] = $mailer->ml_getAll();
         foreach($values['newsletters'] as &$newsletter){
             $newsletter['description'] = '<div>'.nl2br($newsletter['description']).'</div>';
@@ -428,14 +428,14 @@ class sh_newsletters extends sh_core {
 
     public function unsubscribe(){
         sh_cache::disable();
-        $this->links->html->setTitle(
+        $this->linker->html->setTitle(
             $this->getI18n('unsubscription_title')
         );
         $mail = $_GET['mail'];
         $values = array();
         if(trim($mail) != ''){
             $values['mail']['value'] = $mail;
-            $mailer = $this->links->mailer->get(true);
+            $mailer = $this->linker->mailer->get(true);
             if(is_array($_GET['mailingLists'])){
                 // The mailingLists are chosen
                 foreach(array_keys($_GET['mailingLists']) as $mailingList){
@@ -464,13 +464,13 @@ class sh_newsletters extends sh_core {
         $mail = $_GET['mail'];
         $verif = $_GET['verif'];
 
-        $mailer = $this->links->mailer->get(true);
+        $mailer = $this->linker->mailer->get(true);
         $list = $mailer->ml_getAll();
         if(is_array($list)){
             foreach($list as $id=>$newsletter){
                 $paramsFile = SH_SITEPARAMS_FOLDER.__CLASS__.'_sub_'.$id;
-                $this->links->params->addElement($paramsFile,true);
-                $preliminaryList = $this->links->params->get(
+                $this->linker->params->addElement($paramsFile,true);
+                $preliminaryList = $this->linker->params->get(
                     $paramsFile,
                     'needConfirmation',
                     array()
@@ -480,14 +480,14 @@ class sh_newsletters extends sh_core {
                     $date = $preliminaryList[$mail]['date'];
                     if($date > date('U')){
                         if($verif == $preliminaryList[$mail]['verif']){
-                            $this->links->params->set(
+                            $this->linker->params->set(
                                 $paramsFile,
                                 'needConfirmation>'.$mail.'>verif',
                                 'DONE'
                             );
-                            $this->links->params->write($paramsFile);
+                            $this->linker->params->write($paramsFile);
 
-                            $mailer = $this->links->mailer->get(true);
+                            $mailer = $this->linker->mailer->get(true);
                             $mailer->ml_addAddress($newsletter['id'],$mail);
 
                             $values['response']['ok'] = true;
@@ -506,7 +506,7 @@ class sh_newsletters extends sh_core {
             '/subscribe/'
         );
 
-        $values['site']['base'] = $this->links->path->getBaseUri();
+        $values['site']['base'] = $this->linker->path->getBaseUri();
         $this->render('subscription_confirmation', $values);
         return true;
     }
@@ -514,8 +514,8 @@ class sh_newsletters extends sh_core {
 //          NEWSLETTERS PART            \\
     public function getNewsletterTitle($id){
         $newsletters = NEWSLETTERS_PARAMSFOLDER.'list.params.php';
-        $this->links->params->addElement($newsletters);
-        return $this->links->params->get(
+        $this->linker->params->addElement($newsletters);
+        return $this->linker->params->get(
             $newsletters,
             $id.'>title'
         );
@@ -527,21 +527,21 @@ class sh_newsletters extends sh_core {
      * authorized
      */
     public function show(){
-        $id = (int) $this->links->path->page['id'];
+        $id = (int) $this->linker->path->page['id'];
 
-        $mailer = $this->links->mailer->get(true);
+        $mailer = $this->linker->mailer->get(true);
         $hasBeenSent = $mailer->nl_hasBeenSent($id);
 
         if(
             $hasBeenSent == sh_mailsenders::ERROR_NL_DOESNOTEXIST
             || ($hasBeenSent == false && !$this->isAdmin())
         ){
-            $this->links->path->error(404);
+            $this->linker->path->error(404);
             return false;
         }
 
         // Adds an entry in the command panel
-        $this->links->admin->insert(
+        $this->linker->admin->insert(
             '<a href="'.$this->translatePageToUri(
                 '/createNewsletter/'.$id
             ).'">Modifier cette newsletter</a>',
@@ -549,7 +549,7 @@ class sh_newsletters extends sh_core {
             'bank1/picto_modify.png'
         );
 
-        $this->links->html->setTitle(
+        $this->linker->html->setTitle(
             $mailer->nl_getTitle($id)
         );
         $values['newsletter']['content'] = $mailer->nl_getContent($id);
@@ -559,10 +559,10 @@ class sh_newsletters extends sh_core {
     }
 
     public function showList(){
-        $id = (int) $this->links->path->page['id'];
+        $id = (int) $this->linker->path->page['id'];
         $newsletters = NEWSLETTERS_PARAMSFOLDER.'list.params.php';
-        $this->links->params->addElement($newsletters);
-        $lists = $this->links->params->get($newsletters,'',array());
+        $this->linker->params->addElement($newsletters);
+        $lists = $this->linker->params->get($newsletters,'',array());
         foreach($lists as $id=>$newsletter){
             if($newsletter['sent'] && !$newsletter['hidden']){
                 list($year,$month,$day) = explode('-',$newsletter['date']);
@@ -574,7 +574,7 @@ class sh_newsletters extends sh_core {
                 $values['monthes'][$year.$month]['newsletters'][$day.$id] = array(
                     'id'=>$id,
                     'title'=>$newsletter['title'],
-                    'date'=>$this->links->datePicker->dateToLocal(
+                    'date'=>$this->linker->datePicker->dateToLocal(
                         $newsletter['date']
                     ),
                     'link'=>$this->translatePageToUri('/show/'.$id)
@@ -602,7 +602,7 @@ class sh_newsletters extends sh_core {
         $title = $this->getI18n(
             $this->constants['list_title']
         );
-        $this->links->html->setTitle($title);
+        $this->linker->html->setTitle($title);
 
         $this->render('showList', $values);
     }
@@ -610,13 +610,13 @@ class sh_newsletters extends sh_core {
     public function showInvisible(){
         $this->onlyAdmin();
 
-        $mailer = $this->links->mailer->get(true);
+        $mailer = $this->linker->mailer->get(true);
 
         $sent = $mailer->nl_getAll(sh_mailsenders::NL_SENT);
         foreach($sent as $id=>$newsletter){
             $values['newsletters_sent'][$newsletter['date'].'-'.$id] = array(
                 'id'=>$id,
-                'date'=>$this->links->datePicker->dateToLocal($newsletter['date']),
+                'date'=>$this->linker->datePicker->dateToLocal($newsletter['date']),
                 'title'=>$newsletter['title'],
                 'showLink'=>$this->translatePageToUri('/show/'.$id),
                 'editLink'=>$this->translatePageToUri('/createNewsletter/'.$id),
@@ -629,7 +629,7 @@ class sh_newsletters extends sh_core {
         foreach($planned as $id=>$newsletter){
             $values['newsletters_planned'][$newsletter['date'].'-'.$id] = array(
                 'id'=>$id,
-                'date'=>$this->links->datePicker->dateToLocal($newsletter['date']),
+                'date'=>$this->linker->datePicker->dateToLocal($newsletter['date']),
                 'title'=>$newsletter['title'],
                 'showLink'=>$this->translatePageToUri('/show/'.$id),
                 'editLink'=>$this->translatePageToUri('/createNewsletter/'.$id),
@@ -658,9 +658,9 @@ class sh_newsletters extends sh_core {
 
         $newsletters = NEWSLETTERS_PARAMSFOLDER.'list.params.php';
 
-        $this->links->params->addElement($newsletters,true);
+        $this->linker->params->addElement($newsletters,true);
         // We get the next newsletter id
-        $list = $this->links->params->get(
+        $list = $this->linker->params->get(
             $newsletters,
             '',
             array()
@@ -677,7 +677,7 @@ class sh_newsletters extends sh_core {
                         $category = 'newsletters';
                     }
                     $values[$category][$element]['title'] = $newsletter['title'];
-                    $values[$category][$element]['date'] = $this->links->datePicker->dateToLocal(
+                    $values[$category][$element]['date'] = $this->linker->datePicker->dateToLocal(
                         $newsletter['date']
                     );
                     $values[$category][$element]['link'] = $this->translatePageToUri(
@@ -729,12 +729,12 @@ class sh_newsletters extends sh_core {
 
     public function delete(){
         $this->onlyAdmin();
-        $id = (int) $this->links->path->page['id'];
-        $mailer = $this->links->mailer->get(true);
+        $id = (int) $this->linker->path->page['id'];
+        $mailer = $this->linker->mailer->get(true);
         $values['links']['showInvisible'] = $this->translatePageToUri('/showInvisible/');
         if($this->formSubmitted('confirmNLDeletion')){
             if(isset($_POST['cancel'])){
-                $this->links->path->redirect($values['links']['showInvisible']);
+                $this->linker->path->redirect($values['links']['showInvisible']);
             }
             $rep = $mailer->nl_delete($id);
             $this->render('newsletter_deleted',$values);
@@ -750,14 +750,15 @@ class sh_newsletters extends sh_core {
 
     public function createNewsletter(){
         $this->onlyAdmin();
-        $templatePath = $this->links->html->getTemplatePath();
+        $templatePath = $this->linker->html->getTemplatePath();
         $files = scandir(SH_CLASS_SHARED_FOLDER.__CLASS__);
-        $id = (int) $this->links->path->page['id'];
+        $id = (int) $this->linker->path->page['id'];
         // STEP 2
         if($this->formSubmitted('create_newsletter')){
+            // Creation of the newsletter itself
             $classesContents = '';
             foreach($_POST['classes'] as $class=>$value){
-                $classesContents .= $this->links->$class->createNewsletter($id);
+                $classesContents .= $this->linker->$class->createNewsletter($id);
             }
             $title = stripslashes($_POST['title']);
             $date = stripslashes($_POST['date']);
@@ -766,10 +767,10 @@ class sh_newsletters extends sh_core {
             $values['content']['title'] = $title;
             $values['content']['plugins'] = $classesContents;
             $model = $_POST['model'];
-            $templateName = $this->links->site->templateName;
-            $variation = $this->links->site->variation;
+            $templateName = $this->linker->site->templateName;
+            $variation = $this->linker->site->variation;
             $variationReplacements = array_change_key_case(
-                $this->links->variation->get(sh_variation::ALL_VALUES)
+                $this->linker->variation->get(sh_variation::ALL_VALUES)
             );
             $values['variation'] = $variationReplacements;
             $content = $this->render(
@@ -791,12 +792,14 @@ class sh_newsletters extends sh_core {
                 $content
             );
 
+            // Creation of the form
+
             $values['newsletter']['title'] = $title;
             $values['newsletter']['content'] = $content;
             $values['newsletter']['date'] = $date;
 
             if(is_array($_POST['newsletters'])){
-                $mailer = $this->links->mailer->get(true);
+                $mailer = $this->linker->mailer->get(true);
                 $newsletters = $mailer->ml_getAll();
                 foreach($_POST['newsletters'] as $id=>$newsletter){
                     $name = $newsletters[$id]['name'];
@@ -810,7 +813,7 @@ class sh_newsletters extends sh_core {
         }elseif($this->formSubmitted('edit_newsletter')){// Saving
             return $this->saveNewsletter();
         }elseif($id > 0){
-            $mailer = $this->links->mailer->get(true);
+            $mailer = $this->linker->mailer->get(true);
             $date = $mailer->nl_getPlannedDate($id);
             if($date == false){
                 $date = '';
@@ -841,7 +844,7 @@ class sh_newsletters extends sh_core {
         }
 
         // Step 1
-        $mailer = $this->links->mailer->get(true);
+        $mailer = $this->linker->mailer->get(true);
 
         $addToForm = '';
         if(is_dir(SH_CLASS_SHARED_FOLDER.__CLASS__)){
@@ -850,7 +853,7 @@ class sh_newsletters extends sh_core {
                 if(preg_match('`([-_a-zA-Z0-9]+)\.php`',$file,$match)){
                     $file = $match[1];
                     if(method_exists($file,'editNewsletter')){
-                        $addToForm .= $this->links->$file->editNewsletter($id);
+                        $addToForm .= $this->linker->$file->editNewsletter($id);
                         $values['classes'][]['name'] = $file;
                     }
                 }
@@ -876,8 +879,8 @@ class sh_newsletters extends sh_core {
     }
 
     public function saveNewsletter(){
-        $id = (int) $this->links->path->page['id'];
-        $mailer = $this->links->mailer->get(true);
+        $id = (int) $this->linker->path->page['id'];
+        $mailer = $this->linker->mailer->get(true);
         if($id == 0){
             $id = $mailer->nl_create();
         }
@@ -900,7 +903,7 @@ class sh_newsletters extends sh_core {
             if(isset($_POST['sendIt'])){
                 $mailer->nl_sendPlanned($id,$_POST['date']);
                 $values['newsletter']['toBeSent'] = true;
-                $values['newsletter']['sendDate'] = $this->links->datePicker->dateToLocal(
+                $values['newsletter']['sendDate'] = $this->linker->datePicker->dateToLocal(
                     $_POST['date']
                 );
             }else{
@@ -931,14 +934,14 @@ class sh_newsletters extends sh_core {
             array('?','&','='),
             $_GET['page']
         );
-        $this->links->path->redirect($page);
+        $this->linker->path->redirect($page);
         return true;
     }
 
     public function sendTest(){
         $this->onlyAdmin();
         $content = stripslashes($_POST['content']);
-        $domain = $this->links->path->getBaseUri();
+        $domain = $this->linker->path->getBaseUri();
         $page = $this->translatePageToUri('/showPage/');
         $linkRoot = $domain.$page.'?nl=test&page=';
         //Removing the ? and & in links
@@ -971,9 +974,9 @@ class sh_newsletters extends sh_core {
             }
         }*/
         $content = $this->getI18n('test_intro').$content.$this->getI18n('test_outro');
-        $content = $this->links->mailer->cleanContent($content);
+        $content = $this->linker->mailer->cleanContent($content);
 
-        $mailer = $this->links->mailer->get(false);
+        $mailer = $this->linker->mailer->get(false);
 
         $mail = $mailer->em_create();
         $mailer->em_from(

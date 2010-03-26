@@ -1,24 +1,24 @@
 <div id="form_box_container">
     <div id="form_box_top">
         <h3 class="box_title">
-            <RENDER_VALUE what="i18n>Diaposlist_title"/>
+            <RENDER_VALUE what="i18n:Diaposlist_title"/>
         </h3>
     </div>
     <div id="form_box_middle">
         <RENDER_LOOP what="diaporamas">
             <div class="params2">
-                <a href="{diaporamas>link}">
-                    <RENDER_VALUE what="diaporamas>name"/>
+                <a href="{diaporamas:link}">
+                    <RENDER_VALUE what="diaporamas:name"/>
                 </a>
                 (
-                <RENDER_VALUE what="diaporamas>width"/> x
-                <RENDER_VALUE what="diaporamas>height"/>
+                <RENDER_VALUE what="diaporamas:width"/> x
+                <RENDER_VALUE what="diaporamas:height"/>
                 )
             </div>
         </RENDER_LOOP>
         <div class="params2">
-            <a href="{new_diaporama>link}">
-                <RENDER_VALUE what="i18n>new_diaporama"/>
+            <a href="{new_diaporama:link}">
+                <RENDER_VALUE what="i18n:new_diaporama"/>
             </a>
         </div>
     </div>
@@ -26,28 +26,28 @@
     </div>
     <div id="form_box_top">
         <h3 class="box_title">
-            <RENDER_VALUE what="diapo>name"/>
+            <RENDER_VALUE what="diapo:name"/>
         </h3>
     </div>
     <div id="form_box_middle">
         <RENDER_FORM id="form_admin" >
             <RENDER_LOOP what="input">
                 <div class="params3">
-                    <RENDER_IFSET what="input>title">
-                        <RENDER_VALUE what="input>text"/>
+                    <RENDER_IFSET what="input:title">
+                        <RENDER_VALUE what="input:text"/>
                     </RENDER_IFSET>
-                    <RENDER_IFSET what="input>input">
-                        <RENDER_VALUE what="input>text"/>
-                        <input name="{input>name}" value="{input>value}"/>
-                        <RENDER_IFSET what="input>help">
-                            <RENDER_HELP what="input>help_content"/>
+                    <RENDER_IFSET what="input:input">
+                        <RENDER_VALUE what="input:text"/>
+                        <input name="{input:name}" value="{input:value}"/>
+                        <RENDER_IFSET what="input:help">
+                            <RENDER_HELP what="input:help_content"/>
                         </RENDER_IFSET>
                     </RENDER_IFSET>
-                    <RENDER_IFSET what="input>radio">
-                        <input type="radio" name="{input>name}" state="{input>checked}"/>
-                        <RENDER_VALUE what="input>text"/>
-                        <RENDER_IFSET what="input>help">
-                            <RENDER_HELP what="input>help_content"/>
+                    <RENDER_IFSET what="input:radio">
+                        <input type="radio" name="{input:name}" state="{input:checked}"/>
+                        <RENDER_VALUE what="input:text"/>
+                        <RENDER_IFSET what="input:help">
+                            <RENDER_HELP what="input:help_content"/>
                         </RENDER_IFSET>
                     </RENDER_IFSET>
                 </div>

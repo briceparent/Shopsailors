@@ -20,10 +20,10 @@ function __autoload($className) {
 }
 
 // Create the linker object
-$links = sh_links::getInstance();
+$linker = sh_linker::getInstance();
 
 // Verifies if the site can be accessed to any user
-$links->user->siteIsOpen();
+$linker->user->siteIsOpen();
 
 // If the file is cached, we show it and exit
 $cache = sh_cache::getCachedFile();
@@ -33,26 +33,26 @@ if($cache){
 }
 
 // Gets some variables
-$element = $links->path->page['element'];
-$action = $links->path->page['action'];
+$element = $linker->path->page['element'];
+$action = $linker->path->page['action'];
 
-if(!$links->$element->isMinimal($action)){
+if(!$linker->$element->isMinimal($action)){
     sh_html::$willRender = true;
 }
 
 
 // Redirect to the 404 error page if the required method doesn't exist.
-if(!method_exists($links->$element,$action)){
-    $links->path->error('404');
+if(!method_exists($linker->$element,$action)){
+    $linker->path->error('404');
 }
 
 // Calls the method
-$links->$element->$action();
+$linker->$element->$action();
 
 // If the action is not minimal, we render the html
-if(!$links->$element->isMinimal($action)){
+if(!$linker->$element->isMinimal($action)){
     // Renders the document
-    $cache = $links->html->render();
+    $cache = $linker->html->render();
 }
 
 // Ends the debug if it is on

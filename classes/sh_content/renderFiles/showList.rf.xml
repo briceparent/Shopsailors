@@ -2,50 +2,50 @@
     <div class="form_box_container">
         <div class="form_box_top">
             <h3 class="box_title">
-                <RENDER_VALUE what="i18n>list_description"/>
+                <RENDER_VALUE what="i18n:list_description"/>
             </h3>
         </div>
         <div class="form_box_middle">
             <div class="form_box_content">
                 <div class="formContent">
                     <div class="showList_activeList">
-                        <RENDER_VALUE what="i18n>activeList"/>
+                        <RENDER_VALUE what="i18n:activeList"/>
                     </div>
                     <ul class="showList_articles">
                     <RENDER_LOOP what="active">
                         <li>
-                            <RENDER_VALUE what="active>title"/>&#160;(<RENDER_VALUE what="active>date"/>)<br />
-                            <a href="{active>show_link}">
-                                <RENDER_VALUE what="i18n>show"/>
+                            <RENDER_VALUE what="active:title"/>&#160;(<RENDER_VALUE what="active:date"/>)<br />
+                            <a href="{active:show_link}">
+                                <RENDER_VALUE what="i18n:show"/>
                             </a>
-                            <RENDER_IFSET what="session>admin">
-                                &#160;<a href="{active>edit_link}">
-                                    <RENDER_VALUE what="i18n>edit"/>
+                            <RENDER_IFSET what="session:admin">
+                                &#160;<a href="{active:edit_link}">
+                                    <RENDER_VALUE what="i18n:edit"/>
                                 </a>
                             </RENDER_IFSET>
-                            <RENDER_IFSET what="session>admin">
-                                &#160;<a href="{active>delete_link}">
-                                    <RENDER_VALUE what="i18n>delete"/>
+                            <RENDER_IFSET what="session:admin">
+                                &#160;<a href="{active:delete_link}">
+                                    <RENDER_VALUE what="i18n:delete"/>
                                 </a>
                             </RENDER_IFSET>
                         </li>
                     </RENDER_LOOP>
                     </ul>
-                    <RENDER_IFSET what="inactive>0">
+                    <RENDER_IFSET what="inactive:0">
                         <div class="showList_inactiveList">
-                            <RENDER_VALUE what="i18n>inactiveList"/>
+                            <RENDER_VALUE what="i18n:inactiveList"/>
                         </div>
                         <ul class="showList_articles">
                         <RENDER_LOOP what="inactive">
                             <li>
-                                <RENDER_VALUE what="inactive>title"/>&#160;(<RENDER_VALUE what="inactive>date"/>)<br />
-                                <RENDER_IFSET what="session>admin">
-                                    <a href="{inactive>edit_link}">
-                                        <RENDER_VALUE what="i18n>edit"/>
+                                <RENDER_VALUE what="inactive:title"/>&#160;(<RENDER_VALUE what="inactive:date"/>)<br />
+                                <RENDER_IFSET what="session:admin">
+                                    <a href="{inactive:edit_link}">
+                                        <RENDER_VALUE what="i18n:edit"/>
                                     </a>
-                                    <RENDER_IFSET what="session>admin">
-                                        &#160;<a href="{inactive>delete_link}">
-                                            <RENDER_VALUE what="i18n>delete"/>
+                                    <RENDER_IFSET what="session:admin">
+                                        &#160;<a href="{inactive:delete_link}">
+                                            <RENDER_VALUE what="i18n:delete"/>
                                         </a>
                                     </RENDER_IFSET>
                                 </RENDER_IFSET>
@@ -53,7 +53,7 @@
                         </RENDER_LOOP>
                         </ul>
                         <div class="showList_inactiveList_description">
-                            <RENDER_VALUE what="i18n>inactiveList_description"/>
+                            <RENDER_VALUE what="i18n:inactiveList_description"/>
                         </div>
                     </RENDER_IFSET>
                 </div>

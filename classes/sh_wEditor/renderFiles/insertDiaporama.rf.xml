@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+    <head>
+        <title>Websailors</title>
+        <base href="/"/>
+        <meta name="description" content="Websailors"/>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" media="screen" type="text/css" href="/templates/global/admin.css"></link>
+        <link rel="stylesheet" media="screen" type="text/css" href="/CSS/default/main.css"></link>
+        <RENDER_SCRIPT file="PROTOTYPE" direct="direct"/>
+        <script type="text/javascript">
+            var selectedDiapo = '';
+            function preSelectDiaporama(diapo){
+                selectedDiapo = diapo;
+            }
+
+            function selectDiaporama(){
+                if(selectedDiapo == ''){
+                    alert('Vous devez choisir un diaporama pour continuer, ou fermer cette fenêtre pour annuler.');
+                }else{
+                    var width = $(selectedDiapo+'_width').value;
+                    var height = $(selectedDiapo+'_height').value;
+                    window.opener.tinymce_insertDiaporama(selectedDiapo,width,height);
+                    window.close();
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Insertion d'un Diaporama</h1>
+        Pour créer un nouveau diaporama, il suffit de cliquer sur "Diaporamas" dans la
+        catégorie "Medias" du panneau d'administration, et de suivre les instructions.<br /><br />
+        Choisissez le diaporama désiré, et validez :
+        <form id="diaporamaChooser">
+            <RENDER_LOOP what="diaporamas">
+                <div>
+                    <RENDER_RADIOBOX name="diaporama" value="{diaporamas:name}" text="{diaporamas:name} ({diaporamas>width}x{diaporamas>height})" onclick="preSelectDiaporama(this.value);"/>
+                    <input type="hidden" id="{diaporamas:name}_width" value="{diaporamas:width}"/>
+                    <input type="hidden" id="{diaporamas:name}_height" value="{diaporamas:height}"/>
+                </div>
+            </RENDER_LOOP>
+            <input type="button" onclick="selectDiaporama();" value="OK"/>
+        </form>
+    </body>
+</html>

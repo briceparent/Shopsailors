@@ -17,20 +17,20 @@ class sh_error extends sh_core {
      * public function show
      */
     public function show(){
-        $id = (int) $this->links->path->page['id'];
+        $id = (int) $this->linker->path->page['id'];
         if($_SESSION[__CLASS__]['prepared']){
-            $this->links->cache->disable();
+            $this->linker->cache->disable();
             $_SESSION[__CLASS__]['prepared'] = false;
             header("HTTP/1.0 ".$this->getI18n('header_'.$id));
-            $id = (int) $this->links->path->page['id'];
+            $id = (int) $this->linker->path->page['id'];
             $replacements['global'] = array(
                     'number' => $id,
-                    'page' => $this->links->path->getHistory(1),
+                    'page' => $this->linker->path->getHistory(1),
                     'description' => $this->getI18n('error_'.$id),
                     'prepared' => true
             );
             // We remove the 2 last entries from the history (this page, and the one with the error
-            $this->links->path->removeFromHistory(2,true);
+            $this->linker->path->removeFromHistory(2,true);
         }else{
             $replacements['global'] = array(
                     'number' => '200',
@@ -38,11 +38,11 @@ class sh_error extends sh_core {
                     'description' => 'You called directly this page'
             );
             // We only remove 1 entry, because the page has been called directly
-            $this->links->path->removeFromHistory(1,true);
+            $this->linker->path->removeFromHistory(1,true);
         }
         for($a=0;$a<10;$a++){
-            $history = $this->links->path->getHistory($a);
-            if($history != $this->links->path->uri){
+            $history = $this->linker->path->getHistory($a);
+            if($history != $this->linker->path->uri){
                 $replacements['history'][] = array(
                     'link' => $history,
                     'shownLink' => str_replace(
@@ -57,7 +57,7 @@ class sh_error extends sh_core {
                 break;
             }
         }
-        $this->links->html->setTitle($this->getI18n('errorTitle').$id);
+        $this->linker->html->setTitle($this->getI18n('errorTitle').$id);
         $this->render('error',$replacements);
     }
 

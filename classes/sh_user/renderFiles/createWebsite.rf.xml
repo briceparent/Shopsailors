@@ -4,12 +4,12 @@
         </div>
         <div class="bg_identification_middle">
             <div  class="createAccount_title">
-                <RENDER_VALUE what="i18n>createAccount"/>
+                <RENDER_VALUE what="i18n:createAccount"/>
             </div>
             <div class="createAccount_contents">
-            <RENDER_IFSET what="message>error">
+            <RENDER_IFSET what="message:error">
                 <div class="alertError">
-                    <RENDER_VALUE what="message>error"/>
+                    <RENDER_VALUE what="message:error"/>
                 </div>
             </RENDER_IFSET>
                 <table>
@@ -19,15 +19,15 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="formAccount_{siteName>error}">
+                        <td class="formAccount_{siteName:error}">
                             Nom du site (utilisé par exemple dans les dossiers images/ et sites/): <br />
-                            <input name="siteName" value="{old>siteName}"/>
+                            <input name="siteName" value="{old:siteName}"/>
                         </td>
                     </tr>
                     <tr>
-                        <td class="formAccount_{domain>error}">
+                        <td class="formAccount_{domain:error}">
                             Nom de domaine du site: <br />
-                            <input name="domain" value="{old>domain}"/>
+                            <input name="domain" value="{old:domain}"/>
                         </td>
                     </tr>
                     <tr>
@@ -36,22 +36,22 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="formAccount_{login>error}">
+                        <td class="formAccount_{login:error}">
                             Identifiant de l'administrateur<br />
-                            <input name="login" value="{old>login}"/>
+                            <input name="login" value="{old:login}"/>
                             <div class="noteText">
-                                <RENDER_VALUE what="i18n>notification"/>
+                                <RENDER_VALUE what="i18n:notification"/>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td class="formAccount_{password>error}">
+                        <td class="formAccount_{password:error}">
                             Un mot de passe sera généré automatiquement.
                         </td>
                     </tr>
                 </table>
                 <div class="submitAccount">
-                    <input type="submit" value="{i18n>send}"/>
+                    <input type="submit" value="{i18n:send}"/>
                 </div>
             </div>
         </div>

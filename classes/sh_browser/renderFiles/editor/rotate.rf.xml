@@ -14,29 +14,29 @@
                         <table class="editImage_image">
                             <tr class="">
                                 <td class="rotate">
-                                    <RENDER_VALUE what="i18n>rotate_none"/><br />
-                                    <img onclick="$('rotate_none').checked=true;" src="{images>path}.png"/><br />
+                                    <RENDER_VALUE what="i18n:rotate_none"/><br />
+                                    <img onclick="$('rotate_none').checked=true;" src="{images:path}.png"/><br />
                                     <input type="radio" name="rotation" value="0" checked="checked" id="rotate_none"/>
                                 </td>
                                 <td class="rotate">
-                                    <RENDER_VALUE what="i18n>rotate_90"/><br />
-                                    <img onclick="$('rotate_90').checked=true;" src="{images>path}.90.png"/><br />
+                                    <RENDER_VALUE what="i18n:rotate_90"/><br />
+                                    <img onclick="$('rotate_90').checked=true;" src="{images:path}.90.png"/><br />
                                     <input type="radio" name="rotation" value="90" id="rotate_90"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="rotate">
                                     <div>
-                                        <RENDER_VALUE what="i18n>rotate_180"/>
+                                        <RENDER_VALUE what="i18n:rotate_180"/>
                                     </div>
-                                    <img onclick="$('rotate_180').checked=true;" src="{images>path}.180.png"/><br />
+                                    <img onclick="$('rotate_180').checked=true;" src="{images:path}.180.png"/><br />
                                     <input type="radio" name="rotation" value="180" id="rotate_180"/>
                                 </td>
                                 <td class="rotate">
                                     <div>
-                                        <RENDER_VALUE what="i18n>rotate_270"/>
+                                        <RENDER_VALUE what="i18n:rotate_270"/>
                                     </div>
-                                    <img onclick="$('rotate_270').checked=true;" src="{images>path}.270.png"/><br />
+                                    <img onclick="$('rotate_270').checked=true;" src="{images:path}.270.png"/><br />
                                     <input type="radio" name="rotation" value="270" id="rotate_270"/>
                                 </td>
                             </tr>
@@ -44,11 +44,11 @@
                     </td>
                     <td class="editImage_actionsTop">
                         <div class="actionsTitle paddingTop_10px">
-                            <RENDER_VALUE what="i18n>editor_rotate"/>
+                            <RENDER_VALUE what="i18n:editor_rotate"/>
                         </div>
                         <div class="editImage_input">
-                        <input type="submit" name="cancel" value="{i18n>cancel}"/>
-                        <input type="submit" value="{i18n>rotate_apply}"/>
+                        <input type="submit" name="cancel" value="{i18n:cancel}"/>
+                        <input type="submit" value="{i18n:rotate_apply}"/>
                         </div>
                     </td>
                 </tr>

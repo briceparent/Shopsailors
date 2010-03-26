@@ -68,11 +68,11 @@ class sh_shop extends sh_core {
         define('SH_SHOPIMAGES_PATH',SH_IMAGES_PATH.'shop/');
         define('SH_SHOPIMAGES_FOLDER',SH_IMAGES_FOLDER.'shop/');
 
-        if(is_dir($this->links->site->templateFolder.$this->shortClassName)){
-            $this->links->html->addCSS(__CLASS__.'.css',__CLASS__);
+        if(is_dir($this->linker->site->templateFolder.$this->shortClassName)){
+            $this->linker->html->addCSS(__CLASS__.'.css',__CLASS__);
             $this->templateIsCustomized = true;
         }else{
-            $this->links->html->addCSS(
+            $this->linker->html->addCSS(
                 SH_TEMPLATE_FOLDER.'global/'.__CLASS__.'.css',
                 __CLASS__
             );
@@ -133,35 +133,35 @@ class sh_shop extends sh_core {
 
         // We check and build the images folders structure, if necessary
         if(!is_dir(SH_IMAGES_FOLDER.'shop/')){
-            $this->links->browser->createFolder(
+            $this->linker->browser->createFolder(
                 SH_IMAGES_FOLDER.'shop/',
                 sh_browser::READ
             );
         }
         if(!is_dir(SH_IMAGES_FOLDER.'shop/products/')){
-            $this->links->browser->createFolder(
+            $this->linker->browser->createFolder(
                 SH_IMAGES_FOLDER.'shop/products/',
                 sh_browser::ALL
             );
-            $this->links->browser->addDimension(
+            $this->linker->browser->addDimension(
                 SH_IMAGES_FOLDER.'shop/products/',250,250
             );
         }
         if(!is_dir(SH_IMAGES_FOLDER.'shop/categories/')){
-            $this->links->browser->createFolder(
+            $this->linker->browser->createFolder(
                 SH_IMAGES_FOLDER.'shop/categories/',
                 sh_browser::ALL
             );
-            $this->links->browser->addDimension(
+            $this->linker->browser->addDimension(
                 SH_IMAGES_FOLDER.'shop/categories/',250,250
             );
         }
         if(!is_dir(SH_IMAGES_FOLDER.'shop/high_quality/')){
-            $this->links->browser->createFolder(
+            $this->linker->browser->createFolder(
                 SH_IMAGES_FOLDER.'shop/high_quality/',
                 sh_browser::ALL
             );
-            $this->links->browser->addDimension(
+            $this->linker->browser->addDimension(
                 SH_IMAGES_FOLDER.'shop/high_quality/',1000,1000
             );
         }
@@ -197,7 +197,7 @@ class sh_shop extends sh_core {
      *
      */
     protected function notFound() {
-        $this->links->html->setTitle($this->getI18n('error_product_not_found_title'));
+        $this->linker->html->setTitle($this->getI18n('error_product_not_found_title'));
         $this->render('product_not_found');
         return true;
     }
@@ -225,13 +225,13 @@ class sh_shop extends sh_core {
                             $this->getI18n($product['shortDescription']);
                         $values['category_elements'][$cpt]['description'] =
                             $this->getI18n($product['description']);
-                        $link = $this->links->path->getLink('shop/showProduct/'.$element);
+                        $link = $this->linker->path->getLink('shop/showProduct/'.$element);
                         $values['category_elements'][$cpt]['link'] = $link;
                         $values['category_elements'][$cpt]['reference'] = $product['reference'];
                         $values['category_elements'][$cpt]['price'] = $this->monney_format($product['price']);
                         if($product['stock'] > 0){
                             $values['category_elements'][$cpt]['stock'] = $product['stock'];
-                            $addToCartLink = $this->links->path->getLink('shop/addToCart/');
+                            $addToCartLink = $this->linker->path->getLink('shop/addToCart/');
                             $addToCartLink .= '?product='.$element;
                             $values['category_elements'][$cpt]['picto_addToCart_link'] = $addToCartLink;
                         }else{
@@ -262,7 +262,7 @@ class sh_shop extends sh_core {
                         $this->getI18n($category['shortDescription']);
                     $values['category_elements'][$cpt]['description'] =
                         $this->getI18n($category['description']);
-                    $link = $this->links->path->getLink('shop/showCategory/'.$element);
+                    $link = $this->linker->path->getLink('shop/showCategory/'.$element);
                     $values['category_elements'][$cpt]['link'] = $link;
                     $values['category_elements'][$cpt]['picto_show_link'] = $link;
                     $cpt++;
@@ -300,7 +300,7 @@ class sh_shop extends sh_core {
     protected function increment_counter($file){
         $counter = file_get_contents($file);
         $counter += 1;
-        $this->links->helper->writeInFile($file,$counter);
+        $this->linker->helper->writeInFile($file,$counter);
         return $counter;
     }
 
@@ -626,7 +626,7 @@ class sh_shop extends sh_core {
 
     public function showPaymentModes(){
         $paymentModes = $this->getParam('payment>supplyers');
-        $this->links->html->setTitle($this->getI18n('paymentModes_title'));
+        $this->linker->html->setTitle($this->getI18n('paymentModes_title'));
 
         $cpt = 0;
         if(is_array($paymentModes)){
@@ -772,7 +772,7 @@ class sh_shop extends sh_core {
         );
 
         if(!is_dir(SH_IMAGES_FOLDER.'shop/shippers/')){
-            $this->links->browser->addFolder(
+            $this->linker->browser->addFolder(
                 SH_IMAGES_FOLDER.'shop',
                 'shippers',
                 sh_browser::ADDFILE
@@ -857,7 +857,7 @@ class sh_shop extends sh_core {
         }
 
         if(!is_dir(SH_IMAGES_FOLDER.'shop/payment/')){
-            $this->links->browser->addFolder(
+            $this->linker->browser->addFolder(
                 SH_IMAGES_FOLDER.'shop',
                 'payment',
                 sh_browser::ADDFILE
@@ -880,7 +880,7 @@ class sh_shop extends sh_core {
     public function editCustomProperty(){
         $this->onlyAdmin();
 
-        $id = $this->links->path->page['id'];
+        $id = $this->linker->path->page['id'];
         if($this->formSubmitted('shopCustomPropertiesEditor')){
             if($id==0){
                 $id = count($this->getParam('customProperties',array())) + 1;
@@ -992,7 +992,7 @@ class sh_shop extends sh_core {
                 stripslashes($_POST['command_mail'])
             );
             $command_mail = explode("\n",$command_mail);
-            $mailer = $this->links->mailer->get();
+            $mailer = $this->linker->mailer->get();
             if(is_array($command_mail)){
                 foreach($command_mail as $oneMail){
                     if($mailer->checkAddress($oneMail)){
@@ -1002,7 +1002,7 @@ class sh_shop extends sh_core {
                 }
             }
             if($checkedMails == ''){
-                $datas = $this->links->user->getData();
+                $datas = $this->linker->user->getData();
                 $checkedMails = $datas['mail'];
             }
 
@@ -1045,7 +1045,7 @@ class sh_shop extends sh_core {
             $this->writeParams();
 
             if($renewSitemap){
-                $this->links->sitemap->renew();
+                $this->linker->sitemap->renew();
             }
         }
 
@@ -1130,7 +1130,7 @@ class sh_shop extends sh_core {
         if(
             empty($logo)
             || !file_exists(
-                SH_ROOT_FOLDER.$this->links->path->changeToRealFolder(
+                SH_ROOT_FOLDER.$this->linker->path->changeToRealFolder(
                     dirname($logo)
                 )
                 .'/'.basename($logo)
@@ -1183,7 +1183,7 @@ class sh_shop extends sh_core {
         }else{
             $categories = array($daughter);
         }
-        $this->links->helper->writeArrayInFile($file, 'categories', $categories);
+        $this->linker->helper->writeArrayInFile($file, 'categories', $categories);
         return true;
     }
 
@@ -1200,7 +1200,7 @@ class sh_shop extends sh_core {
             }
             if(!in_array($product,$products)){
                 $products[] = $product;
-                $this->links->helper->writeArrayInFile(
+                $this->linker->helper->writeArrayInFile(
                     $file, 'products', $products
                 );
             }
@@ -1223,7 +1223,7 @@ class sh_shop extends sh_core {
                     }
                 }
             }
-            $this->links->helper->writeArrayInFile(
+            $this->linker->helper->writeArrayInFile(
                 $file, 'categories', $newCategoryList
             );
         }
@@ -1245,7 +1245,7 @@ class sh_shop extends sh_core {
                     }
                 }
             }
-            $this->links->helper->writeArrayInFile(
+            $this->linker->helper->writeArrayInFile(
                 $file, 'products', $newProductList
             );
         }
@@ -1262,7 +1262,7 @@ class sh_shop extends sh_core {
         $this->onlyAdmin();
 
         // We get the id
-        $id = $this->links->path->page['id'];
+        $id = $this->linker->path->page['id'];
         // We verify if we have to save the results of a submitted form
         if($this->formSubmitted('categoryEditor')){
             if($id == 0){
@@ -1273,13 +1273,13 @@ class sh_shop extends sh_core {
                 $newFolder = $this->categoriesFolder.$id;
                 mkdir($newFolder);
                 // creates an empty list of subcategories
-                $this->links->helper->writeArrayInFile(
+                $this->linker->helper->writeArrayInFile(
                     $this->categoriesFolder.$id.'/categories.php',
                     'categories',
                     array()
                 );
                 // creates an empty list of products
-                $this->links->helper->writeArrayInFile(
+                $this->linker->helper->writeArrayInFile(
                     $this->categoriesFolder.$id.'/products.php',
                     'products',
                     array()
@@ -1290,7 +1290,7 @@ class sh_shop extends sh_core {
                 $values['message']['content'] = $this->getI18n(
                     'category_added_successfully'
                 );
-                $values['message']['link'] = $this->links->path->getLink(
+                $values['message']['link'] = $this->linker->path->getLink(
                     'shop/showCategory/'.$id
                 );
             }else{
@@ -1320,7 +1320,7 @@ class sh_shop extends sh_core {
            );
 
             // We save the category to the disk
-            $this->links->helper->writeArrayInFile(
+            $this->linker->helper->writeArrayInFile(
                 $this->categoriesFolder.$id.'/category.php',
                 'category',
                 array(
@@ -1350,7 +1350,7 @@ class sh_shop extends sh_core {
                 $parents = array_keys($_POST['category_category']);
 
                 // And we write them to the parents.php file
-                $this->links->helper->writeArrayInFile(
+                $this->linker->helper->writeArrayInFile(
                     $this->categoriesFolder.$id.'/parents.php',
                     'parents',
                     $parents
@@ -1366,7 +1366,7 @@ class sh_shop extends sh_core {
             $this->addToSitemap('shop/showCategory/'.$id,0.8);
 
             if($redirect == true){
-                $this->links->path->redirect($this->links->path->getLink($redirectPage));
+                $this->linker->path->redirect($this->linker->path->getLink($redirectPage));
                 return true;
             }
             // End of the treatments of the submitted form
@@ -1376,7 +1376,7 @@ class sh_shop extends sh_core {
             // We are creating a new category, so we give the default values
             $values['category'] = array(
                 'image'=>'/images/shared/default/defaultShopImage.png',
-                'onClickReplaceImage'=>$this->links->browser->getOnClickReplaceImage(
+                'onClickReplaceImage'=>$this->linker->browser->getOnClickReplaceImage(
                     'image',
                     SH_IMAGES_FOLDER.'shop/categories/'
                 )
@@ -1393,7 +1393,7 @@ class sh_shop extends sh_core {
                 'description'=>$category['description'],
                 'shortDescription'=>$category['shortDescription'],
                 'image'=>$category['image'],
-                'onClickReplaceImage'=>$this->links->browser->getOnClickReplaceImage(
+                'onClickReplaceImage'=>$this->linker->browser->getOnClickReplaceImage(
                     'image',
                     SH_IMAGES_FOLDER.'shop/categories/'
                 )
@@ -1482,15 +1482,15 @@ class sh_shop extends sh_core {
         $this->debug('Entering the '.__FUNCTION__.' function',2,__LINE__);
 
         // We get the category's datas
-        $id = $this->links->path->page['id'];
+        $id = $this->linker->path->page['id'];
 
         // We send an error if the product doesn't exist (or isn't activated)
         if(! file_exists($this->categoriesFolder.$id.'/category.php')){
             return $this->notFound();
         }
         // And add an entry in the command panel
-        $this->links->admin->insert(
-            '<a href="'.$this->links->path->getLink(
+        $this->linker->admin->insert(
+            '<a href="'.$this->linker->path->getLink(
                 'shop/editCategory/'.$id
             ).'">Modifier cette catégorie</a>',
             'Boutique',
@@ -1515,14 +1515,14 @@ class sh_shop extends sh_core {
         $bar = $this->get_category_bar($id);
 
         // And set the title
-        $this->links->html->setTitle($category['category']['name']);
+        $this->linker->html->setTitle($category['category']['name']);
 
         // We render the file using the desired renderer
         if($elements['contains_products']){
             // We manage with different types of list
             $listType = $elements['listType'];
             if($this->templateIsCustomized){
-                $rf = $this->links->site->templateFolder.'shop/products_'.$listType.'.rf.xml';
+                $rf = $this->linker->site->templateFolder.'shop/products_'.$listType.'.rf.xml';
             }else{
                 $rf = 'default_products_'.$listType;
             }
@@ -1532,7 +1532,7 @@ class sh_shop extends sh_core {
             $values = array_merge($elements, $listTypes, $bar, $category);
         }else{
             if($this->templateIsCustomized){
-                $rf = $this->links->site->templateFolder.'shop/categories.rf.xml';
+                $rf = $this->linker->site->templateFolder.'shop/categories.rf.xml';
             }else{
                 $rf = 'default_categories';
             }
@@ -1544,13 +1544,13 @@ class sh_shop extends sh_core {
 
         // Some templates need an image from out of the content part.
         //This is it...
-        $this->links->html->setGeneralImage($values['category']['image']);
+        $this->linker->html->setGeneralImage($values['category']['image']);
         return true;
     }
 
     protected function getCategoriesListingParams(){
         if($this->templateIsCustomized){
-            $params = $this->links->template->get(__CLASS__.'>categoriesListing');
+            $params = $this->linker->template->get(__CLASS__.'>categoriesListing');
         }else{
             $params = $this->getParam('categoriesListing');
         }
@@ -1563,10 +1563,10 @@ class sh_shop extends sh_core {
 
 
     protected function getProductsListingParams(){
-        if($this->links->path->page['action'] == 'showProduct'){
+        if($this->linker->path->page['action'] == 'showProduct'){
             if($this->templateIsCustomized){
                 return array(
-                    'product' => $this->links->template->get(__CLASS__.'>product')
+                    'product' => $this->linker->template->get(__CLASS__.'>product')
                 );
             }else{
                 return array(
@@ -1575,7 +1575,7 @@ class sh_shop extends sh_core {
             }
         }
         if($this->templateIsCustomized){
-            $params = $this->links->template->get(__CLASS__.'>productsListing');
+            $params = $this->linker->template->get(__CLASS__.'>productsListing');
         }else{
             $params = $this->getParam('productsListing');
         }
@@ -1587,7 +1587,7 @@ class sh_shop extends sh_core {
     }
 
     protected function getProductListType(){
-        if($this->links->path->page['action'] == 'showProduct'){
+        if($this->linker->path->page['action'] == 'showProduct'){
             return 'product';
         }
         $arg_prodLType = self::ARG_PRODUCTLISTTYPE;
@@ -1678,7 +1678,7 @@ class sh_shop extends sh_core {
         );
         if($product['stock'] > 0){
             $productDatas['product']['stock'] = $product['stock'];
-            $addToCartLink = $this->links->path->getLink('shop/addToCart/');
+            $addToCartLink = $this->linker->path->getLink('shop/addToCart/');
             $addToCartLink .= '?product='.$id;
             $productDatas['product']['picto_addToCart_link'] = $addToCartLink;
         }else{
@@ -1706,18 +1706,18 @@ class sh_shop extends sh_core {
      * @return bool The status of the function
      */
     public function showProduct(){
-        $this->links->javascript->get(sh_javascript::LIGHTWINDOW);
+        $this->linker->javascript->get(sh_javascript::LIGHTWINDOW);
 
         $this->debug('Entering the '.__FUNCTION__.' function',2,__LINE__);
-        $id = $this->links->path->page['id'];
+        $id = $this->linker->path->page['id'];
 
         // We send an error if the product doesn't exist (or isn't activated)
         if(!$this->isProductAvailable($id,0)){
             return $this->notFound();
         }
         // And add an entry in the command panel
-        $this->links->admin->insert(
-            '<a href="'.$this->links->path->getLink('shop/editProduct/'.$id).'">Modifier ce produit</a>',
+        $this->linker->admin->insert(
+            '<a href="'.$this->linker->path->getLink('shop/editProduct/'.$id).'">Modifier ce produit</a>',
             'Boutique',
             'bank1/picto_modify.png'
         );
@@ -1738,7 +1738,7 @@ class sh_shop extends sh_core {
         if(is_array($images)){
             foreach($images as $image){
                 if(trim($image) != ''){
-                    if($this->links->images->imageExists($image)){
+                    if($this->linker->images->imageExists($image)){
                         $product['productImages'][]['src'] = $image;
                     }
                 }
@@ -1749,8 +1749,8 @@ class sh_shop extends sh_core {
         $bar = $this->get_category_bar($parent);
 
         // And add an entry in the command panel
-        $this->links->admin->insert(
-            '<a href="'.$this->links->path->getLink(
+        $this->linker->admin->insert(
+            '<a href="'.$this->linker->path->getLink(
                 'shop/editCategory/'.$parent
             ).'">Modifier cette catégorie</a>',
             'Boutique',
@@ -1765,17 +1765,17 @@ class sh_shop extends sh_core {
 
         // We render the product file using the desired renderer
         if($this->templateIsCustomized){
-            $rf = $this->links->site->templateFolder.'shop/product.rf.xml';
+            $rf = $this->linker->site->templateFolder.'shop/product.rf.xml';
         }else{
             $rf = 'default_product';
         }
         $this->render($rf,$values);
 
-        $this->links->html->setTitle($values['product']['name']);
+        $this->linker->html->setTitle($values['product']['name']);
 
         // Some templates need an image from out of the content part.
         //This is it...
-        $this->links->html->setGeneralImage($values['product']['image']);
+        $this->linker->html->setGeneralImage($values['product']['image']);
         return true;
     }
 
@@ -1792,7 +1792,7 @@ class sh_shop extends sh_core {
         $this->onlyAdmin();
 
         // We get the id
-        $id = $this->links->path->page['id'];
+        $id = $this->linker->path->page['id'];
         // We verify if we have to save the results of a submitted form
         if($this->formSubmitted('productEditor')){
             if(isset($_POST['active'])){
@@ -1815,7 +1815,7 @@ class sh_shop extends sh_core {
                     $values['message']['content'] = $this->getI18n(
                         'product_added_successfully'
                     );
-                    $values['message']['link'] = $this->links->path->getLink(
+                    $values['message']['link'] = $this->linker->path->getLink(
                         'shop/showProduct/'.$id
                     );
                 }else{
@@ -1848,7 +1848,7 @@ class sh_shop extends sh_core {
                     }
                 }
                 // We save the product to the disk
-                $this->links->helper->writeArrayInFile(
+                $this->linker->helper->writeArrayInFile(
                     $this->productsFolder.$id.'/product.php',
                     'product',
                     array(
@@ -1877,7 +1877,7 @@ class sh_shop extends sh_core {
                 // We get the checked categories
                 $parents = array_keys($_POST['product_category']);
                 // And we write them to the parents.php file
-                $this->links->helper->writeArrayInFile(
+                $this->linker->helper->writeArrayInFile(
                     $this->productsFolder.$id.'/parents.php',
                     'parents',
                     $parents
@@ -1892,8 +1892,8 @@ class sh_shop extends sh_core {
 
                 $this->addToSitemap('shop/showProduct/'.$id,0.7);
                 if($redirect == true){
-                    $this->links->path->redirect(
-                        $this->links->path->getLink($redirectPage)
+                    $this->linker->path->redirect(
+                        $this->linker->path->getLink($redirectPage)
                     );
                     return true;
                 }
@@ -1915,7 +1915,7 @@ class sh_shop extends sh_core {
                     'images'=>explode('|',$_POST['images']),
                     'stock'=>$_POST['stock'],
                     'active'=>$active,
-                    'onClickReplaceImage'=>$this->links->browser->getOnClickReplaceImage(
+                    'onClickReplaceImage'=>$this->linker->browser->getOnClickReplaceImage(
                         'image',
                         SH_SHOPIMAGES_FOLDER.'products/'
                     )
@@ -1932,7 +1932,7 @@ class sh_shop extends sh_core {
                     'image'=>'/images/shared/default/defaultShopImage.png',
                     'stock'=>0,
                     'active'=>'checked',
-                    'onClickReplaceImage'=>$this->links->browser->getOnClickReplaceImage(
+                    'onClickReplaceImage'=>$this->linker->browser->getOnClickReplaceImage(
                         'image',
                         SH_SHOPIMAGES_FOLDER.'products/'
                     )
@@ -1963,7 +1963,7 @@ class sh_shop extends sh_core {
                     'imagesFolder'=>'SH_SHOPIMAGES_FOLDER',
                     'stock'=>$product['stock'],
                     'active'=>$active,
-                    'onClickReplaceImage'=>$this->links->browser->getOnClickReplaceImage(
+                    'onClickReplaceImage'=>$this->linker->browser->getOnClickReplaceImage(
                         'image',SH_SHOPIMAGES_FOLDER.'products/'
                     )
                 );
@@ -2096,7 +2096,7 @@ class sh_shop extends sh_core {
         }elseif($operand == '-'){
             $product['stock'] -= $num;
         }
-        return $this->links->helper->writeArrayInFile(
+        return $this->linker->helper->writeArrayInFile(
             $this->productsFolder.$id.'/product.php',
             'product',
             $product
@@ -2122,7 +2122,7 @@ class sh_shop extends sh_core {
             $product['active'] = false;
             $ret = 'false';
         }
-        $this->links->helper->writeArrayInFile(
+        $this->linker->helper->writeArrayInFile(
             $this->productsFolder.$id.'/product.php',
             'product',
             $product
@@ -2153,7 +2153,7 @@ class sh_shop extends sh_core {
                         include($this->categoriesFolder.$firstParent.'/parents.php');
                         $firstParent = array_shift($parents);
                     }
-                    $link = $this->links->path->getLink(
+                    $link = $this->linker->path->getLink(
                         $this->shortClassName.'/'.__FUNCTION__.'/'
                     ).'?listedCategory='.$categoryId;
                     $values['categories'][] = array(
@@ -2221,8 +2221,8 @@ class sh_shop extends sh_core {
      *
      */
     protected function getNavigator($id){
-        $this->links->admin->insert(
-            '<a href="'.$this->links->path->getLink('shop/editCategory/'.$id)
+        $this->linker->admin->insert(
+            '<a href="'.$this->linker->path->getLink('shop/editCategory/'.$id)
             .'">Modifier cette catégorie</a>',
             'Boutique',
             '001_45.png'
@@ -2285,14 +2285,14 @@ class sh_shop extends sh_core {
                 }
                 if($oneType != $navigator_type && $oneType != 'default'){
                     // We update the args list to create the url
-                    $this->links->path->parsed_url['parsed_query'][self::ARG_PRODUCTLISTTYPE] = $oneType;
+                    $this->linker->path->parsed_url['parsed_query'][self::ARG_PRODUCTLISTTYPE] = $oneType;
                     $args = '';
                     $separator = '';
-                    foreach($this->links->path->parsed_url['parsed_query'] as $argName=>$argValue){
+                    foreach($this->linker->path->parsed_url['parsed_query'] as $argName=>$argValue){
                         $args .= $separator.$argName.'='.$argValue;
                         $separator = '&';
                     }
-                    $destPage = $this->links->path->uri.'?'.$args;
+                    $destPage = $this->linker->path->uri.'?'.$args;
                     $selector['selectors']['link_'.$oneType] = $destPage;
                 }
             }
@@ -2318,7 +2318,7 @@ class sh_shop extends sh_core {
             include($this->categoriesFolder.$firstParent.'/category.php');
             $genealogy['nav_levels'][$cpt] = array(
                 'id'=>$firstParent,
-                'categoryLink'=>$this->links->path->getLink(
+                'categoryLink'=>$this->linker->path->getLink(
                     'shop/showCategory/'.$firstParent
                 ),
                 'name'=>$this->getI18n($category['name']),
@@ -2332,7 +2332,7 @@ class sh_shop extends sh_core {
                 if(is_array($categories)){
                     foreach($categories as $categoryId){
                         include($this->categoriesFolder.$categoryId.'/category.php');
-                        $link = $this->links->path->getLink(
+                        $link = $this->linker->path->getLink(
                             'shop/showCategory/'.$categoryId
                         );
                         $link .= '?'.self::ARG_PRODUCTLISTTYPE.'='.$this->getProductListType();
@@ -2374,7 +2374,7 @@ class sh_shop extends sh_core {
             include($this->categoriesFolder.$parent.'/category.php');
             $genealogy['nav_levels'][$cpt] = array(
                 'id'=>$parent,
-                'link'=>$this->links->path->getLink(
+                'link'=>$this->linker->path->getLink(
                     'shop/showCategory/'.$parent
                 ),
                 'name'=>$this->getI18n($category['name'])
@@ -2386,7 +2386,7 @@ class sh_shop extends sh_core {
                     foreach($categories as $categoryId){
                         include($this->categoriesFolder.$categoryId.'/category.php');
 
-                        $link = $this->links->path->getLink(
+                        $link = $this->linker->path->getLink(
                             'shop/showCategory/'.$categoryId
                         );
                         $link .= '?'.self::ARG_PRODUCTLISTTYPE.'='.$this->getProductListType();
@@ -2448,7 +2448,7 @@ class sh_shop extends sh_core {
             }
             // Prepares the Next & Previous buttons
             $pageActuelle = preg_replace(
-                '`(\?page=[0-9]+)`','',$this->links->path->uri
+                '`(\?page=[0-9]+)`','',$this->linker->path->uri
             );
             if($page > 0){
                 $ret['products']['previous'] = true;
@@ -2483,11 +2483,11 @@ class sh_shop extends sh_core {
                     $values['category_elements'][$cpt]['navigator_image'] = $element['image'];
                     $values['category_elements'][$cpt]['class'] = 'list_image';
                     $values['category_elements'][$cpt]['navigator_desc'] = $this->getI18n($element['shortDescription']);
-                    $link = $this->links->path->getLink('shop/showProduct/'.$element['id']);
+                    $link = $this->linker->path->getLink('shop/showProduct/'.$element['id']);
                     $values['category_elements'][$cpt]['navigator_link'] = $link;
                     $values['category_elements'][$cpt]['navigator_ref'] = $element['ref'];
                     $values['category_elements'][$cpt]['navigator_price'] = $element['price'];
-                    $addToCartLink = $this->links->path->getLink('shop/addToCart/');
+                    $addToCartLink = $this->linker->path->getLink('shop/addToCart/');
                     $addToCartLink .= '?product='.$element['id'];
                     $values['category_elements'][$cpt]['pictos'][0]['image'] = '/images/shared/icons/picto_cart.png';
                     $values['category_elements'][$cpt]['pictos'][0]['image_alt'] = 'picto_cart';
@@ -2507,7 +2507,7 @@ class sh_shop extends sh_core {
 
     protected function get_category_elements($id, $page = 0){
         if(!file_exists($this->categoriesFolder.$id.'/category.php')){
-            $this->links->path->error(404);
+            $this->linker->path->error(404);
         }
         include($this->categoriesFolder.$id.'/category.php');
 
@@ -2591,7 +2591,7 @@ class sh_shop extends sh_core {
                             $this->getI18n($product['shortDescription']);
                         $values['category_elements'][$cpt]['description'] =
                             $this->getI18n($product['description']);
-                        $link = $this->links->path->getLink('shop/showProduct/'.$element);
+                        $link = $this->linker->path->getLink('shop/showProduct/'.$element);
                         $values['category_elements'][$cpt]['link'] = $link;
                         $values['category_elements'][$cpt]['reference'] = $product['reference'];
                         $values['category_elements'][$cpt]['price'] = $this->monney_format(
@@ -2599,7 +2599,7 @@ class sh_shop extends sh_core {
                         );
                         if($product['stock'] > 0){
                             $values['category_elements'][$cpt]['stock'] = $product['stock'];
-                            $addToCartLink = $this->links->path->getLink('shop/addToCart/');
+                            $addToCartLink = $this->linker->path->getLink('shop/addToCart/');
                             $addToCartLink .= '?product='.$element;
                             $values['category_elements'][$cpt]['picto_addToCart_link'] = $addToCartLink;
                         }else{
@@ -2621,7 +2621,7 @@ class sh_shop extends sh_core {
                         $this->getI18n($category['description']);
                     $values['category_elements'][$cpt]['shortDescription'] =
                         $this->getI18n($category['shortDescription']);
-                    $link = $this->links->path->getLink('shop/showCategory/'.$element);
+                    $link = $this->linker->path->getLink('shop/showCategory/'.$element);
                     $link .= '?'.self::ARG_PRODUCTLISTTYPE.'='.$this->getProductListType();
                     $values['category_elements'][$cpt]['link'] = $link;
                     $values['category_elements'][$cpt]['pictos'][1]['link'] = $link;
@@ -2651,14 +2651,14 @@ class sh_shop extends sh_core {
         // We prepare the previous, next and direct links to other pages
         if($pagesNb > 1){ // There is more than one page
             // We remove the page argument in the url
-            unset($this->links->path->parsed_url['parsed_query']['page']);
+            unset($this->linker->path->parsed_url['parsed_query']['page']);
             $args = '';
             $separator = '';
-            foreach($this->links->path->parsed_url['parsed_query'] as $argName=>$argValue){
+            foreach($this->linker->path->parsed_url['parsed_query'] as $argName=>$argValue){
                 $args .= $separator.$argName.'='.$argValue;
                 $separator = '&';
             }
-            $destPage = $this->links->path->uri.'?'.$args;
+            $destPage = $this->linker->path->uri.'?'.$args;
 
             // Previous link
             if($page > 0){
@@ -2706,7 +2706,7 @@ class sh_shop extends sh_core {
             $next = true;
         }
         $pageActuelle = preg_replace(
-            '`(\?page=[0-9]+)`','',$this->links->path->uri
+            '`(\?page=[0-9]+)`','',$this->linker->path->uri
         );
         if($page>0){
             $values['nav_previous']['image'] = '/images/builder/nav/model1_previous.png';
@@ -2740,11 +2740,11 @@ class sh_shop extends sh_core {
                 $values['list'][$cpt]['class'] = 'list_image';
                 $values['list'][$cpt]['navigator_desc'] = $this->getI18n($element['shortDescription']);
                 if($element['type'] == 'product'){
-                    $link = $this->links->path->getLink('shop/showProduct/'.$element['id']);
+                    $link = $this->linker->path->getLink('shop/showProduct/'.$element['id']);
                     $values['list'][$cpt]['navigator_link'] = $link;
                     $values['list'][$cpt]['navigator_ref'] = $element['ref'];
                     $values['list'][$cpt]['navigator_price'] = $element['price'];
-                    $addToCartLink = $this->links->path->getLink('shop/addToCart/');
+                    $addToCartLink = $this->linker->path->getLink('shop/addToCart/');
                     $addToCartLink .= '?product='.$element['id'];
                     $values['list'][$cpt]['pictos'][0]['image'] = '/images/shared/icons/picto_cart.png';
                     $values['list'][$cpt]['pictos'][0]['image_alt'] = 'picto_cart';
@@ -2753,7 +2753,7 @@ class sh_shop extends sh_core {
                     $values['list'][$cpt]['pictos'][1]['image_alt'] = 'picto_details';
                     $values['list'][$cpt]['pictos'][1]['link'] = $link;
                 }else{
-                    $link = $this->links->path->getLink('shop/showCategory/'.$element['id']);
+                    $link = $this->linker->path->getLink('shop/showCategory/'.$element['id']);
                     $values['list'][$cpt]['navigator_link'] = $link;
                     $values['list'][$cpt]['navigator_noprice'] = $link;
                     $values['list'][$cpt]['pictos'][0]['image'] = '/images/shared/icons/picto_details.png';
@@ -2785,7 +2785,7 @@ class sh_shop extends sh_core {
         if($page>0){
             $values['nav_previous']['image'] = '/images/builder/nav/model1_previous.png';
             $pageActuelle = preg_replace(
-                '`(\?page=[0-9]+)`','',$this->links->path->uri
+                '`(\?page=[0-9]+)`','',$this->linker->path->uri
             );
             $values['nav_previous']['link'] = $pageActuelle.'?page='.($page - 1);
         }else{
@@ -2793,7 +2793,7 @@ class sh_shop extends sh_core {
         }
         if(count($elements)>=($page * ($elementsByPage + 1))){
             $values['nav_next']['image'] = '/images/builder/nav/model1_next.png';
-            $pageActuelle = preg_replace('`(\?page=[0-9]+)`','',$this->links->path->uri);
+            $pageActuelle = preg_replace('`(\?page=[0-9]+)`','',$this->linker->path->uri);
             $values['nav_next']['link'] = $pageActuelle.'?page='.($page + 2);
         }else{
             $values['nav_next']['image'] = '/images/builder/nav/model1_nonext.png';
@@ -2808,11 +2808,11 @@ class sh_shop extends sh_core {
                 $values['list'][$cpt]['class'] = 'list_image';
                 $values['list'][$cpt]['navigator_desc'] = $this->getI18n($element['shortDescription']);
                 if($element['type'] == 'product'){
-                    $link = $this->links->path->getLink('shop/showProduct/'.$element['id']);
+                    $link = $this->linker->path->getLink('shop/showProduct/'.$element['id']);
                     $values['list'][$cpt]['navigator_link'] = $link;
                     $values['list'][$cpt]['navigator_ref'] = $element['ref'];
                     $values['list'][$cpt]['navigator_price'] = $element['price'];
-                    $addToCartLink = $this->links->path->getLink('shop/addToCart/');
+                    $addToCartLink = $this->linker->path->getLink('shop/addToCart/');
                     $addToCartLink .= '?product='.$element['id'];
                     $values['list'][$cpt]['pictos'][0]['image'] = '/images/shared/icons/picto_cart.png';
                     $values['list'][$cpt]['pictos'][0]['image_alt'] = 'picto_cart';
@@ -2821,7 +2821,7 @@ class sh_shop extends sh_core {
                     $values['list'][$cpt]['pictos'][1]['image_alt'] = 'picto_details';
                     $values['list'][$cpt]['pictos'][1]['link'] = $link;
                 }else{
-                    $link = $this->links->path->getLink('shop/showCategory/'.$element['id']);
+                    $link = $this->linker->path->getLink('shop/showCategory/'.$element['id']);
                     $values['list'][$cpt]['navigator_link'] = $link;
                     $values['list'][$cpt]['navigator_noprice'] = $link;
                     $values['list'][$cpt]['pictos'][0]['image'] = '/images/shared/icons/picto_details.png';
@@ -2849,7 +2849,7 @@ class sh_shop extends sh_core {
         }else{
             $_SESSION[__CLASS__]['cart'][$product] = 1;
         }
-        $this->links->path->redirect($this->shortClassName,'cart_show');
+        $this->linker->path->redirect($this->shortClassName,'cart_show');
     }
 
     /**
@@ -2857,8 +2857,8 @@ class sh_shop extends sh_core {
      *
      */
     public function cart_show(){
-        $this->links->cache->disable();
-        $this->links->html->setTitle($this->getI18n('cart_title'));
+        $this->linker->cache->disable();
+        $this->linker->html->setTitle($this->getI18n('cart_title'));
         if(is_array($_SESSION[__CLASS__]['cart']) && count($_SESSION[__CLASS__]['cart']) > 0){
             $total = 0;
             foreach($_SESSION[__CLASS__]['cart'] as $id=>$quantity){
@@ -2887,13 +2887,13 @@ class sh_shop extends sh_core {
                             'price'=>$this->monney_format(
                                 $product['price'],true,false
                             ),
-                            'removeLink'=>$this->links->path->getLink(
+                            'removeLink'=>$this->linker->path->getLink(
                                 'shop/cart_removeProduct/'
                             ).'?product='.$id,
                             'totalPrice'=>$this->monney_format(
                                 $product['price'] * $quantity,true,false
                             ),
-                            'link'=>$this->links->path->getLink(
+                            'link'=>$this->linker->path->getLink(
                                 'shop/showProduct/'.$id
                             )
                         );
@@ -2923,7 +2923,7 @@ class sh_shop extends sh_core {
             unset($_SESSION[__CLASS__]['stocknotsufficient']);
 
             $values['message']['content'] = $_SESSION[__CLASS__]['cart_message'];
-            $values['general']['action'] = $this->links->path->getLink('shop/cart_doAction/');
+            $values['general']['action'] = $this->linker->path->getLink('shop/cart_doAction/');
             if($this->taxes == self::TAXES_EXCLUDED){
                 $values['total']['ht'] = $this->monney_format($total,true,false);
                 $values['total']['ttc'] = $this->monney_format(
@@ -2947,7 +2947,7 @@ class sh_shop extends sh_core {
             return true;
         }
 
-        if($this->links->user->isConnected()){
+        if($this->linker->user->isConnected()){
             $values['user']['connected'] = true;
         }
 
@@ -2961,7 +2961,7 @@ class sh_shop extends sh_core {
     public function cart_removeProduct(){
         $id = $_GET['product'];
         unset($_SESSION[__CLASS__]['cart'][$id]);
-        $this->links->path->redirect($this->shortClassName,'cart_show');
+        $this->linker->path->redirect($this->shortClassName,'cart_show');
     }
 
     /**
@@ -2969,7 +2969,7 @@ class sh_shop extends sh_core {
      *
      */
     public function cart_doAction(){
-        $this->links->cache->disable();
+        $this->linker->cache->disable();
 
         if(isset($_POST['update_quantities_x'])){
             return $this->cart_updateQuantities();
@@ -2988,7 +2988,7 @@ class sh_shop extends sh_core {
         if(!is_dir($this->cartsFolder)){
             mkdir($this->cartsFolder);
         }
-        $user = $this->links->user->getUserId();
+        $user = $this->linker->user->getUserId();
         $cartFile = $this->cartsFolder.$user.'.php';
         if(!file_exists($cartFile)){
             $save = true;
@@ -3004,7 +3004,7 @@ class sh_shop extends sh_core {
         }
         if($save){
             $values['form']['submitted'] = true;
-            $this->links->helper->writeArrayInFile(
+            $this->linker->helper->writeArrayInFile(
                 $cartFile,
                 'cart',
                 $_SESSION[__CLASS__]['cart']
@@ -3027,7 +3027,7 @@ class sh_shop extends sh_core {
             }
         }
         if($redirect){
-            $this->links->path->redirect($this->shortClassName,'cart_show');
+            $this->linker->path->redirect($this->shortClassName,'cart_show');
         }
         return true;
     }
@@ -3215,10 +3215,10 @@ class sh_shop extends sh_core {
     }
 
     protected function cart_chooseShiper(){
-        $this->links->cache->disable();
-        if(!$this->links->user->isConnected()){
-            $this->links->html->setTitle($this->getI18n('command_requires_connection'));
-            $ret = $this->links->user->connect(true,true);
+        $this->linker->cache->disable();
+        if(!$this->linker->user->isConnected()){
+            $this->linker->html->setTitle($this->getI18n('command_requires_connection'));
+            $ret = $this->linker->user->connect(true,true);
             if(!$ret){
                 return true;
             }
@@ -3249,7 +3249,7 @@ class sh_shop extends sh_core {
         }
 
         $this->cart_updateQuantities(false);
-        $this->links->html->setTitle($this->getI18n('ship_chooseShipper_title'));
+        $this->linker->html->setTitle($this->getI18n('ship_chooseShipper_title'));
 
         $values = $this->shippers_formatForRendering();
 
@@ -3270,8 +3270,8 @@ class sh_shop extends sh_core {
      *
      */
     protected function cart_submitCommand(){
-        $this->links->cache->disable();
-        $this->links->html->setTitle($this->getI18n('command_confirm_title'));
+        $this->linker->cache->disable();
+        $this->linker->html->setTitle($this->getI18n('command_confirm_title'));
         if($this->formSubmitted('command_confirm')){
             $sendOk = true;
             $name = trim($_POST['name']);
@@ -3409,7 +3409,7 @@ class sh_shop extends sh_core {
             unset($_SESSION[__CLASS__]['stocknotsufficient']);
 
             $values['message']['content'] = $_SESSION[__CLASS__]['cart_message'];
-            $values['general']['action'] = $this->links->path->getLink(
+            $values['general']['action'] = $this->linker->path->getLink(
                 'shop/cart_doAction/'
             );
             if($this->taxes == self::TAXES_EXCLUDED){
@@ -3437,7 +3437,7 @@ class sh_shop extends sh_core {
             return true;
         }
 
-        $values['billing']['name'] = $this->links->user->get('lastName').' '.$this->links->user->get('name');
+        $values['billing']['name'] = $this->linker->user->get('lastName').' '.$this->linker->user->get('name');
 
         // Payment modes
         $paymentModes = $this->getParam('payment>supplyers', array());
@@ -3508,7 +3508,7 @@ class sh_shop extends sh_core {
      *
      */
     public function sendCommand(){
-        if(!$this->links->user->isConnected()){
+        if(!$this->linker->user->isConnected()){
             $this->cart_submitCommand();
             return true;
         }
@@ -3669,7 +3669,7 @@ class sh_shop extends sh_core {
             $this->render('cart_empty');
             return true;
         }
-        $user = $this->links->user->getData();
+        $user = $this->linker->user->getData();
 
         $datas['client'] = array(
             'id'=>$user['id'],
@@ -3717,7 +3717,7 @@ class sh_shop extends sh_core {
             $fileNames
         );
 
-        $this->links->helper->writeArrayInFile(
+        $this->linker->helper->writeArrayInFile(
             $commandListFile,'commandList',$commandList
         );
 
@@ -3726,30 +3726,30 @@ class sh_shop extends sh_core {
         $datas['title'] = 'Facture n°'.$newId;
         $datas['subject'] = 'Facture du '.date('d/m/Y').' pour '.$datas['client']['name'];
 
-        $this->links->helper->createDir(dirname($fileNames));
-        $this->links->helper->writeArrayInFile(
+        $this->linker->helper->createDir(dirname($fileNames));
+        $this->linker->helper->writeArrayInFile(
             $fileNames.'.php','command',$datas,false
         );
 
-        $pdf = $this->links->pdf;
+        $pdf = $this->linker->pdf;
         $pdfFile = $pdf->createBill($datas, $fileNames.'.pdf');
 
         //Creating the content of the email
         $values['mail']['date'] = date('d/m/Y H:i:s');
-        $values['mail']['siteName'] = 'http://'.$this->links->path->getDomain();
+        $values['mail']['siteName'] = 'http://'.$this->linker->path->getDomain();
         $content = $this->render('command_mail',$values,false,false);
         $contentSender = $this->render('command_mailSender',$values,false,false);
         
 
         // Creating and sending the email itself
-        $mailer = $this->links->mailer->get();
+        $mailer = $this->linker->mailer->get();
         $mail = $mailer->em_create();
         $address = $user['mail'];
 
 
         $mailer->em_addSubject(
             $mail,
-            'http://'.$this->links->path->getDomain().' - Confirmation de commande'
+            'http://'.$this->linker->path->getDomain().' - Confirmation de commande'
         );
         $mailer->em_addContent($mail,$content);
         $mailer->em_attach(

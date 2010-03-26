@@ -262,6 +262,16 @@ div.slider div.handle {
 .browser_imageSelector{
   cursor: pointer;
 }
+  /*CSS EDIT NEWSLETTER*/
+.news_editorContainer{
+  width: 860px;
+  text-align: center;
+}
+.news_editor div.wEditor{
+  width:620px;
+  margin-left: auto; 
+  margin-right: auto; 
+}
   /*CSS EDIT MENU*/
 
   .section{

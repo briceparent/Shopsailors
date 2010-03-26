@@ -11,21 +11,21 @@
         <div class="form_box_container">
             <div class="form_box_top">
                 <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>titleFavicon"/>
+                    <RENDER_VALUE what="i18n:titleFavicon"/>
                 </h3>
             </div>
             <div class="form_box_middle">
                 <div class="formContent">
-                    <RENDER_VALUE what="i18n>actual"/><img src="{favicon>actual}"/><br />
-                    <RENDER_IFSET what="response>done">
-                        <RENDER_VALUE what="i18n>done"/>
+                    <RENDER_VALUE what="i18n:actual"/><img src="{favicon:actual}"/><br />
+                    <RENDER_IFSET what="response:done">
+                        <RENDER_VALUE what="i18n:done"/>
                     </RENDER_IFSET>
-                    <RENDER_IFSET what="response>wrongFileType">
-                        <RENDER_VALUE what="i18n>wrongFileType"/>
+                    <RENDER_IFSET what="response:wrongFileType">
+                        <RENDER_VALUE what="i18n:wrongFileType"/>
                     </RENDER_IFSET>
-                    <RENDER_IFNOTSET what="response>done">
-                        <RENDER_IFNOTSET what="response>wrongFileType">
-                            <RENDER_VALUE what="i18n>howToChangeIt"/>
+                    <RENDER_IFNOTSET what="response:done">
+                        <RENDER_IFNOTSET what="response:wrongFileType">
+                            <RENDER_VALUE what="i18n:howToChangeIt"/>
                         </RENDER_IFNOTSET>
                         <div class="favicon_input">
                             <RENDER_FORM id="faviconChanger" enctype="multipart/form-data">

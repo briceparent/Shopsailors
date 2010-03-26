@@ -22,7 +22,7 @@ class sh_legacy extends sh_core {
         );
         $separator = $this->getI18n('separatorInLegacyLine');
         $values['links'][] = array(
-            'link'=>$this->links->path->getLink($this->shortClassName.'/show/'),
+            'link'=>$this->linker->path->getLink($this->shortClassName.'/show/'),
             'text'=>$this->getI18n('title'),
             'separator'=>$separator
         );
@@ -31,10 +31,10 @@ class sh_legacy extends sh_core {
         foreach($classes as $class){
             if(substr($class,0,1) != '.' && strtolower(substr($class,-4)) == '.php'){
                 $class = substr($class,0,-4);
-                if($this->links->method_exists($class,'getLegacyEntry')){
+                if($this->linker->method_exists($class,'getLegacyEntry')){
                     $elements = file(SH_CLASS_SHARED_FOLDER.__CLASS__.'/'.$class.'.php');
                     foreach($elements as $element){
-                        $val = $this->links->$class->getLegacyEntry(trim($element));
+                        $val = $this->linker->$class->getLegacyEntry(trim($element));
                         if($val){
                             $values['links'][$cpt] = $val;
                             $values['links'][$cpt]['separator'] = $separator;
@@ -51,7 +51,7 @@ class sh_legacy extends sh_core {
      * public function show
      */
     public function show(){
-        $this->links->html->setTitle($this->getI18n('title'));
+        $this->linker->html->setTitle($this->getI18n('title'));
         $values['legacy']['content'] = $this->getParam('content', '');
         $this->render('show', $values);
         return true;
@@ -62,7 +62,7 @@ class sh_legacy extends sh_core {
      */
     public function edit(){
         $this->onlyAdmin();
-        $this->links->html->setTitle($this->getI18n('title'));
+        $this->linker->html->setTitle($this->getI18n('title'));
 
         if($this->formSubmitted('legacy_edit')){
             $this->setParam('content', stripslashes($_POST['legacy']));

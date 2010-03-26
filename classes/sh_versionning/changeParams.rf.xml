@@ -18,43 +18,43 @@
         </style>
         <div class="form_box_container">
             <div class="form_box_top">
-                <h3 class="box_title"><RENDER_VALUE what="i18n>titleParams"/></h3>
+                <h3 class="box_title"><RENDER_VALUE what="i18n:titleParams"/></h3>
             </div>
             <div class="form_box_middle">
                 <div class="form_box_content">
                     <div class="formContent">
-                        <RENDER_VALUE what="i18n>site_name"/><br />
-                        <input class="inputForm" name="{form_config>siteName}" value="{config>siteName}"/>
+                        <RENDER_VALUE what="i18n:site_name"/><br />
+                        <input class="inputForm" name="{form_config:siteName}" value="{config:siteName}"/>
                     </div>
                     <div class="formContent">
-                        <RENDER_VALUE what="i18n>default_headline"/><br />
-                        <input class="inputForm" name="{form_config>defaultHeadline}" value="{config>defaultHeadline}"/>
+                        <RENDER_VALUE what="i18n:default_headline"/><br />
+                        <input class="inputForm" name="{form_config:defaultHeadline}" value="{config:defaultHeadline}"/>
                     </div>
                     <div class="formContent">
-                        <RENDER_VALUE what="i18n>default_title"/><br />
-                        <input class="inputForm" name="{form_config>defaultTitle}" value="{config>defaultTitle}"/>
+                        <RENDER_VALUE what="i18n:default_title"/><br />
+                        <input class="inputForm" name="{form_config:defaultTitle}" value="{config:defaultTitle}"/>
                     </div>
                   <div class="formContent">
-                        <RENDER_VALUE what="i18n>metadescription"/>
-                        <RENDER_HELP  what="i18n>metadescription_explanation"/>
-                        <input class="inputForm" name="{form_config>metadescription}" value="{config>metadescription}"/>
+                        <RENDER_VALUE what="i18n:metadescription"/>
+                        <RENDER_HELP  what="i18n:metadescription_explanation"/>
+                        <input class="inputForm" name="{form_config:metadescription}" value="{config:metadescription}"/>
                     </div>
                     <div class="formContent">
-                        <RENDER_VALUE what="i18n>metadescription"/>
-                        <RENDER_HELP what="i18n>variation_explanation"/>
+                        <RENDER_VALUE what="i18n:metadescription"/>
+                        <RENDER_HELP what="i18n:variation_explanation"/>
                     </div>
                     <div class="formContent">
                         <div id="rgb_slider" class="slider">
                             <div class="handle"></div>
                         </div>
-                        <input type="hidden" id="variation_value" name="variation_value" value="{config>variation_value}"/>
+                        <input type="hidden" id="variation_value" name="variation_value" value="{config:variation_value}"/>
 <script type="text/javascript">
     sliderValues=[0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300,320,340,360];
   (function() {
     var rgb_slider = $('rgb_slider');
     new Control.Slider(rgb_slider.select('.handle'), rgb_slider, {
       range: $R(0, 360),
-      sliderValue: [<RENDER_VALUE what="config>variation_value"/>],
+      sliderValue: [<RENDER_VALUE what="config:variation_value"/>],
       values:sliderValues,
       onSlide: function(value) {
             $('variation_value').value = value;
@@ -71,11 +71,11 @@
             <div class="form_box_bottom">
             </div>
             <div class="form_box_top">
-                <h3 class="box_title"><RENDER_VALUE what="i18n>contactBox"/></h3>
+                <h3 class="box_title"><RENDER_VALUE what="i18n:contactBox"/></h3>
             </div>
             <div class="form_box_middle">
                 <div class="form_box_content">
-                    <RENDER_VALUE what="form>contact"/>
+                    <RENDER_VALUE what="form:contact"/>
                 </div>
             </div>
             <div class="form_box_bottom">

@@ -1,29 +1,29 @@
 <div class="showList_content">
-    <RENDER_IFSET what="showList>summary">
+    <RENDER_IFSET what="showList:summary">
         <div class="showList_intro">
-            <RENDER_VALUE what="showList>summary"/>
+            <RENDER_VALUE what="showList:summary"/>
         </div>
     </RENDER_IFSET>
     <RENDER_LOOP what="contents">
         <div class="oneArticle_contents">
             <table>
                 <tr>
-                    <RENDER_IFSET what="contents>image">
+                    <RENDER_IFSET what="contents:image">
                         <td class="oneArticle_image">
-                            <a href="{contents>link}">
-                                <img src="{contents>image}" alt="article_preview" title="{contents>title}"/>
+                            <a href="{contents:link}">
+                                <img src="{contents:image}" alt="article_preview" title="{contents:title}"/>
                             </a>
                         </td>
                     </RENDER_IFSET>
                     <td>
                         <div class="oneArticle_descContainer">
                             <div class="oneArticle_title">
-                                <a href="{contents>link}">
-                                    <RENDER_VALUE what="contents>title"/>
+                                <a href="{contents:link}">
+                                    <RENDER_VALUE what="contents:title"/>
                                 </a>
                             </div>
                             <div class="oneArticle_summary">
-                                <RENDER_VALUE what="contents>summary"/>
+                                <RENDER_VALUE what="contents:summary"/>
                             </div>
                         </div>
                     </td>

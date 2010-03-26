@@ -1,21 +1,21 @@
 <div>
-    <RENDER_IFSET what="unsubscription>done">
-        <RENDER_VALUE what="i18n>unsubscription_successfull"/>
+    <RENDER_IFSET what="unsubscription:done">
+        <RENDER_VALUE what="i18n:unsubscription_successfull"/>
     </RENDER_IFSET>
-    <RENDER_IFNOTSET what="unsubscription>done">
+    <RENDER_IFNOTSET what="unsubscription:done">
         <form id="unsubscribeNewsForm">
             <div class="createAccount_contents">
-                <RENDER_IFSET what="error>oneAtLeast">
+                <RENDER_IFSET what="error:oneAtLeast">
                     <div class="nl_alertError">
-                        <RENDER_IFSET what="error>noSubscription">
+                        <RENDER_IFSET what="error:noSubscription">
                             <div class="notifM_top">
                             </div>
                             <div class="notifM_middle">
                             <div class="notifM_errorContent">
-                                <RENDER_VALUE what="i18n>error_noSubscription"/>
+                                <RENDER_VALUE what="i18n:error_noSubscription"/>
                             </div>
                             <div class="notifM_content">
-                                <RENDER_VALUE what="i18n>error_noSubscription"/>
+                                <RENDER_VALUE what="i18n:error_noSubscription"/>
                             </div>
                             </div>
                             <div class="notifM_bottom">
@@ -25,15 +25,15 @@
                 </RENDER_IFSET>
             </div>
             <div class="nl_unsub_intro">
-                <RENDER_VALUE what="i18n>unsubscription_intro"/>
+                <RENDER_VALUE what="i18n:unsubscription_intro"/>
             </div>
             <div class="nl_unsub_mailAddress">
-                <RENDER_VALUE what="i18n>unsubscription_inputMail"/>
+                <RENDER_VALUE what="i18n:unsubscription_inputMail"/>
                 <br />
-                <input name="mail" value="{mail>value}"/>
+                <input name="mail" value="{mail:value}"/>
             </div>
             <div class="nl_unsub_submit">
-                <input type="submit" value="{i18n>send}"/>
+                <input type="submit" value="{i18n:send}"/>
             </div>
         </form>
     </RENDER_IFNOTSET>

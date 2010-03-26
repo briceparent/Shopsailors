@@ -1,19 +1,19 @@
 <span class="i18n_input">
-    <RENDER_IFSET what="langs>1">
-        <select id="{lang>id}_select" onchange="chooseLang('{lang>id}',this.value);">
+    <RENDER_IFSET what="langs:1">
+        <select id="{lang:id}_select" onchange="chooseLang('{lang:id}',this.value);">
             <RENDER_LOOP what="langs">
-                <option value="{langs>id}" style="background:#ffffff url(/images/shared/flags/{langs>langName}_small.png) no-repeat top right;">
-                    <RENDER_VALUE what="langs>langName"/>
+                <option value="{langs:id}" style="background:#ffffff url(/images/shared/flags/{langs:langName}_small.png) no-repeat top right;">
+                    <RENDER_VALUE what="langs:langName"/>
                 </option>
             </RENDER_LOOP>
         </select>
     </RENDER_IFSET>
     <RENDER_LOOP what="langs">
-        <div class="{lang>id}" id='{langs>id}'>
-            <RENDER_WEDITOR i18nClass="{langs>i18nClass}" style="width:100%;" class="{langs>class}" content="{langs>content}" name="{langs>name}" id="editor_{langs>id}" type="{lang>type}"/>
+        <div class="{lang:id}" id='{langs>id}'>
+            <RENDER_WEDITOR i18nClass="{langs:i18nClass}" style="width:100%;" class="{langs:class}" content="{langs:content}" name="{langs:name}" id="editor_{langs:id}" type="{lang>type}"/>
         </div>
     </RENDER_LOOP>
     <RENDER_ENDJS>
-        chooseLang('<RENDER_VALUE what="lang>id"/>','<RENDER_VALUE what="lang>firstDisplayed"/>');
+        chooseLang('<RENDER_VALUE what="lang:id"/>','<RENDER_VALUE what="lang:firstDisplayed"/>');
     </RENDER_ENDJS>
 </span>

@@ -45,31 +45,31 @@
         <RENDER_LOOP what="revisions">
             <tr>
                 <td class="borderLeft">
-                    <div><RENDER_VALUE what="revisions>number"/></div>
+                    <div><RENDER_VALUE what="revisions:number"/></div>
                 </td>
                 <td>
-                    <div><RENDER_VALUE what="revisions>description"/></div>
-                    <div onclick="$('details_{revisions>number}').toggle();" class="falseLink">Details</div>
-                    <div id="details_{revisions>number}" class="details" style="display:none">
+                    <div><RENDER_VALUE what="revisions:description"/></div>
+                    <div onclick="$('details_{revisions:number}').toggle();" class="falseLink">Details</div>
+                    <div id="details_{revisions:number}" class="details" style="display:none">
                         <RENDER_LOOP what="details">
                             <div>
-                                <RENDER_IFSET what="details>added">
+                                <RENDER_IFSET what="details:added">
                                     <img src="/images/shared/icons/picto_add.png" alt="New" title="New"/>
                                 </RENDER_IFSET>
-                                <RENDER_IFSET what="details>modified">
+                                <RENDER_IFSET what="details:modified">
                                     <img src="/images/shared/icons/picto_modify.png" alt="Modification" title="Modification"/>
                                 </RENDER_IFSET>
-                                <RENDER_IFSET what="details>deleted">
+                                <RENDER_IFSET what="details:deleted">
                                     <img src="/images/shared/icons/picto_delete.png" alt="Removed" title="Removed"/>
                                 </RENDER_IFSET>
-                                <RENDER_VALUE what="details>file"/>
-                                <a href="{project>showHistoryLink}?project={project>id}&#38;file={details>fileId}">
+                                <RENDER_VALUE what="details:file"/>
+                                <a href="{project:showHistoryLink}?project={project>id}&#38;file={details>fileId}">
                                     History
                                 </a>
-                                <RENDER_IFSET what="details>added">
+                                <RENDER_IFSET what="details:added">
                                     - Show
                                 </RENDER_IFSET>
-                                <RENDER_IFSET what="details>modified">
+                                <RENDER_IFSET what="details:modified">
                                      - Change
                                 </RENDER_IFSET>
                             </div>
@@ -77,13 +77,13 @@
                     </div>
                 </td>
                 <td>
-                    <div><RENDER_VALUE what="revisions>added"/></div>
+                    <div><RENDER_VALUE what="revisions:added"/></div>
                 </td>
                 <td>
-                    <div><RENDER_VALUE what="revisions>modified"/></div>
+                    <div><RENDER_VALUE what="revisions:modified"/></div>
                 </td>
                 <td>
-                    <div><RENDER_VALUE what="revisions>deleted"/></div>
+                    <div><RENDER_VALUE what="revisions:deleted"/></div>
                 </td>
             </tr>
         </RENDER_LOOP>

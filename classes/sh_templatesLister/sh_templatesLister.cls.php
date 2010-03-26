@@ -63,9 +63,9 @@ class sh_templatesLister extends sh_core {
      */
     public function showList(){
         if(!$this->getParam('active', false)){
-            $this->links->path->redirect(404);
+            $this->linker->path->redirect(404);
         }
-        $this->links->html->setTitle($this->getI18n('list_title'));
+        $this->linker->html->setTitle($this->getI18n('list_title'));
 
         $templates = $this->getList();
 
@@ -95,7 +95,7 @@ class sh_templatesLister extends sh_core {
         if(file_exists(SH_TEMPLATE_FOLDER.$templateName.'/template.description.php')){
             list($id, $name) = explode('-',$templateName);
             include(SH_TEMPLATE_FOLDER.$templateName.'/template.description.php');
-            $lang = $this->links->i18n->getLang();
+            $lang = $this->linker->i18n->getLang();
             if(isset($template['description'][$lang])){
                 $template['description'] = $template['description'][$lang];
             }else{
@@ -141,10 +141,10 @@ class sh_templatesLister extends sh_core {
                 if($baseVariation != 'default'){
                     // If needed, we empty the "default" variation folder
                     if(is_dir(SH_TEMPLATE_FOLDER.$templateName.'/images/variations/default/')){
-                        $this->links->helper->emptyDir(SH_TEMPLATE_FOLDER.$templateName.'/images/variations/default/');
+                        $this->linker->helper->emptyDir(SH_TEMPLATE_FOLDER.$templateName.'/images/variations/default/');
                     }
                     // And copy the base images to that folder
-                    $this->links->helper->moveDirContent(
+                    $this->linker->helper->moveDirContent(
                         SH_TEMPLATE_FOLDER.$templateName.'/images/variations/'.$baseVariation.'/',
                         SH_TEMPLATE_FOLDER.$templateName.'/images/variations/default/'
                     );
@@ -156,7 +156,7 @@ class sh_templatesLister extends sh_core {
             }
         }
 
-        $this->links->html->setTitle($this->getI18n('variationsCreatorTitle'));
+        $this->linker->html->setTitle($this->getI18n('variationsCreatorTitle'));
         $values['form']['id'] = $formId;
         $scan =  scandir(SH_TEMPLATE_FOLDER);
         $areNotTemplates = array('builder','fonts','global','preview','variations');
@@ -202,8 +202,7 @@ class sh_templatesLister extends sh_core {
 
         echo '<html><head>
 <title>Shopsailors - Variations builder</title>
-<link rel="shortcut icon" href="'.$this->links->favicon->getPath().'"></link>';
-        echo $this->links->javascript->get(sh_javascript::PROTOTYPE,false);
+<link rel="shortcut icon" href="'.$this->linker->favicon->getPath().'"></link>';
         echo '</head><body>';
         echo '<div style="font-weight:bold">Building the variations for the template '.$templateName.'</div>';
         echo 'Base variation : '.$baseVariation;
@@ -219,7 +218,7 @@ class sh_templatesLister extends sh_core {
         if(is_array($filesList)){
             $total = 0;
             for($degree = 0; $degree<=360; $degree+=20){
-                $this->links->helper->emptyDir($variationFolder.$degree);
+                $this->linker->helper->emptyDir($variationFolder.$degree);
 
                 if(!is_dir($variationFolder.$degree)){
                     mkdir($variationFolder.$degree);
@@ -307,7 +306,7 @@ class sh_templatesLister extends sh_core {
      */
     public function show(){
         if(!$this->getParam('active', false)){
-            $this->links->path->redirect(404);
+            $this->linker->path->redirect(404);
         }
         
         $id = $_GET['template'];
@@ -317,7 +316,7 @@ class sh_templatesLister extends sh_core {
         $template = $this->getTemplateDescription($realName);
 
         if($errorRestricted || !$template){
-            $this->links->path->error(404);
+            $this->linker->path->error(404);
         }
 
         $this->render('show', $template);

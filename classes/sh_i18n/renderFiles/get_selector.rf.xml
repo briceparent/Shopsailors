@@ -13,21 +13,21 @@
                 values = '';
                 separator = '';
                 checked.each(function(s){
-                    html += '<img src="{flags>root}' + s.name + '.png" alt="'+s.name+'" title="'+s.name+'"/>';
+                    html += '<img src="{flags:root}' + s.name + '.png" alt="'+s.name+'" title="'+s.name+'"/>';
                     values += separator + s.name ;
                     separator = ',';
                 });
-                html += '<input type="hidden" name="{selector>id}_values" value="'+ values + '"/>';
-                window.opener.submitI18n('<RENDER_VALUE what="selector>id"/>',html);
+                html += '<input type="hidden" name="{selector:id}_values" value="'+ values + '"/>';
+                window.opener.submitI18n('<RENDER_VALUE what="selector:id"/>',html);
                 window.close();
             }
             function submit_radio(){
                 checkedList=$$('input:checked');
                 checked = checkedList[0].value;
-                html = '<img src="{flags>root}' + checked + '.png" alt="'+checked+'" title="'+checked+'"/>';
-                html += '<input type="hidden" name="{selector>id}_value" value="'+ checked + '"/>';
+                html = '<img src="{flags:root}' + checked + '.png" alt="'+checked+'" title="'+checked+'"/>';
+                html += '<input type="hidden" name="{selector:id}_value" value="'+ checked + '"/>';
 
-                window.opener.submitI18n('<RENDER_VALUE what="selector>id"/>',html);
+                window.opener.submitI18n('<RENDER_VALUE what="selector:id"/>',html);
                 window.close();
             }
         </script>
@@ -37,11 +37,11 @@
             <div class="form_box_container">
                 <div class="form_box_top">
                     <h3 class="box_title">
-                        <RENDER_IFSET what="params>checkbox">
-                            <RENDER_VALUE what="i18n>titleCheckbox"/>
+                        <RENDER_IFSET what="params:checkbox">
+                            <RENDER_VALUE what="i18n:titleCheckbox"/>
                         </RENDER_IFSET>
-                        <RENDER_IFSET what="params>radio">
-                        <RENDER_VALUE what="i18n>titleRadio"/>
+                        <RENDER_IFSET what="params:radio">
+                        <RENDER_VALUE what="i18n:titleRadio"/>
                         </RENDER_IFSET>
                     </h3>
                 </div>
@@ -53,19 +53,19 @@
                                     <RENDER_LOOP what="langs">
                                         <tr>
                                             <td class="tdInput">
-                                                <input type="{params>type}" name="{langs>inputName}" value="{langs>language}" state="{langs>state}"/>
+                                                <input type="{params:type}" name="{langs:inputName}" value="{langs:language}" state="{langs:state}"/>
                                             </td>
                                             <td class="tdImage">
-                                                <img src="{langs>flag}" alt="{lang>description}"/>
+                                                <img src="{langs:flag}" alt="{lang:description}"/>
                                             </td>
                                             <td class="tdText">
-                                                <RENDER_VALUE what="langs>languageName"/>
+                                                <RENDER_VALUE what="langs:languageName"/>
                                             </td>
                                         </tr>
                                     </RENDER_LOOP>
                                 </table>
                                 <div class="getSelector_submit">
-                                    <input type="submit" value="{i18n>validate}"/>
+                                    <input type="submit" value="{i18n:validate}"/>
                                 </div>
                             </RENDER_FORM>
                         </div>

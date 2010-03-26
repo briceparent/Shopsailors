@@ -1,4 +1,4 @@
-<div id="{captcha>name}" class="captchaText" >
+<div id="{captcha:name}" class="captchaText" >
     <style>
         .input_error{
             background-color:Salmon;
@@ -6,13 +6,13 @@
     </style>
     <div style="position:relative;width:240px;height:40px;margin-top:5px;">
         <div style="position:absolute;left:0;top:0;width:130px;cursor:pointer;">
-            <img style="width:130px;height:30px;" src="{captcha>image}" id="image_{captcha>form}" alt="{i18n>title}" title="{i18n>title}: {i18n>instructions}"/>
+            <img style="width:130px;height:30px;" src="{captcha:image}" id="image_{captcha:form}" alt="{i18n:title}" title="{i18n:title}: {i18n>instructions}"/>
         </div>
         <div style="position:absolute;left:140px;top:0;width:60px;">
-            <input class="{captcha>error}" name="captcha" maxlength="5" style="width:60px;height:28px;"/>
+            <input class="{captcha:error}" name="captcha" maxlength="5" style="width:60px;height:28px;"/>
         </div>
         <div style="position:absolute;left:210px;top:0;width:30px;cursor:pointer;">
-            <img  onclick="changeCaptchaImage('{captcha>form}','image_{captcha>form}');" style="width:30px;height:30px;border:inherit;" src="/templates/global/admin/icons/picto_update.png" alt="{i18n>changePicture}" title="{i18n>changePicture}"/>
+            <img  onclick="changeCaptchaImage('{captcha:form}','image_{captcha>form}');" style="width:30px;height:30px;border:inherit;" src="/templates/global/admin/icons/picto_update.png" alt="{i18n:changePicture}" title="{i18n:changePicture}"/>
         </div>
     </div>
 </div>

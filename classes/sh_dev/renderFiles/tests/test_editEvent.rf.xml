@@ -2,32 +2,32 @@
     <RENDER_FORM id="editEvent" >
 		<div class="form_box_container">
 			<div class="form_box_top">
-				<h3 class="box_title"><RENDER_VALUE what="i18n2>editEvent_title"/></h3>
+				<h3 class="box_title"><RENDER_VALUE what="i18n2:editEvent_title"/></h3>
 			</div>
 			<div class="form_box_middle">
 				<div class="formContent">
-					<RENDER_VALUE what="i18n2>editEvent_eventTitle"/><br />
-					<RENDER_I18NINPUT class="sh_content" i18n="{schedule>eventTitle}" name="eventTitle"/>
+					<RENDER_VALUE what="i18n2:editEvent_eventTitle"/><br />
+					<RENDER_I18NINPUT class="sh_content" i18n="{schedule:eventTitle}" name="eventTitle"/>
 				</div>
 				<div class="formContent">
-					<RENDER_VALUE what="i18n2>editEvent_date"/><br />
-					<RENDER_DATEPICKER name="schedule_date" id="schedule" value="{schedule>date}"/><br />
+					<RENDER_VALUE what="i18n2:editEvent_date"/><br />
+					<RENDER_DATEPICKER name="schedule_date" id="schedule" value="{schedule:date}"/><br />
 				</div>
 				<div class="formContent">
-					<RENDER_VALUE what="i18n2>editEvent_mail"/><br />
-					<input  class="inputForm" name="{schedule>mail}" value="{schedule>mail}"/>
-                        <RENDER_CHECKBOX text="{i18n2>editEvent_showMail}" name="showMail" state="{schedule>showMail}"/>
+					<RENDER_VALUE what="i18n2:editEvent_mail"/><br />
+					<input  class="inputForm" name="{schedule:mail}" value="{schedule:mail}"/>
+                        <RENDER_CHECKBOX text="{i18n2:editEvent_showMail}" name="showMail" state="{schedule:showMail}"/>
 				</div>
 			</div>
 			<div class="form_box_bottom">
 			</div>
 			<h3 class="contentTitle">
-				<RENDER_VALUE what="i18n2>editEvent_menu"/>
+				<RENDER_VALUE what="i18n2:editEvent_menu"/>
 			</h3>
 			<div class="content_edit">
-				<RENDER_I18NWEDITOR class="content_editor" i18nClass="cm_lvdc" i18n="{schedule>content}" name="schedule"/>
+				<RENDER_I18NWEDITOR class="content_editor" i18nClass="cm_lvdc" i18n="{schedule:content}" name="schedule"/>
 			</div><br /><br />
-			<input type="submit" value="{i18n>validate}"/>
+			<input type="submit" value="{i18n:validate}"/>
 		</div>
 	</RENDER_FORM>
 </div>

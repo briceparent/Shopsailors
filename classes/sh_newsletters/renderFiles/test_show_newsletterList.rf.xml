@@ -1,20 +1,20 @@
 <div class="marginTop_20px">
 	<div class="news_subscribe">
-		<RENDER_VALUE what="i18n2>news_suscribe"/>&#160;
-		<a href="subscribe>link"><RENDER_VALUE what="i18n2>click_here"/></a>
+		<RENDER_VALUE what="i18n2:news_suscribe"/>&#160;
+		<a href="subscribe>link"><RENDER_VALUE what="i18n2:click_here"/></a>
 	</div>
 	<div class="newsList">
 		<div class="newsList_title">
-			<h3><RENDER_VALUE what="i18n2>newsList"/></h3>
+			<h3><RENDER_VALUE what="i18n2:newsList"/></h3>
 		</div>
 		<div class="newsList_chrono">
-			<RENDER_VALUE what="introTextarea>newsList_intro"/>
+			<RENDER_VALUE what="introTextarea:newsList_intro"/>
 		</div>
 		<div class="newsList_list">
 			<RENDER_LOOP what="newsletters">
 				<ul>
 					<li>
-						<a href="{newsletter>link}"><RENDER_VALUE what="newsletters>title"/></a>
+						<a href="{newsletter:link}"><RENDER_VALUE what="newsletters:title"/></a>
 					</li>
 				</ul>
 			</RENDER_LOOP>

@@ -1,12 +1,12 @@
 <div>
-    <RENDER_IFSET what="files>noChanges">
-        <RENDER_VALUE what="i18n>noChanges"/>
+    <RENDER_IFSET what="files:noChanges">
+        <RENDER_VALUE what="i18n:noChanges"/>
         <div>
             Create a global patch from revision 0 to revision actual revision
-            (<RENDER_VALUE what="revisionNumber>actual"/>)
+            (<RENDER_VALUE what="revisionNumber:actual"/>)
         </div>
     </RENDER_IFSET>
-    <RENDER_IFNOTSET what="files>noChanges">
+    <RENDER_IFNOTSET what="files:noChanges">
         <style type="text/css">
             table.diff{
                 width:600px;
@@ -16,32 +16,32 @@
             }
         </style>
         <RENDER_FORM id="commitForm">
-            <input type="hidden" name="project" value="{project>id}"/>
+            <input type="hidden" name="project" value="{project:id}"/>
             <h3>
-                <RENDER_VALUE what="i18n>futureRevisionNumber"/>
-                <RENDER_VALUE what="revisionNumber>next"/>
+                <RENDER_VALUE what="i18n:futureRevisionNumber"/>
+                <RENDER_VALUE what="revisionNumber:next"/>
             </h3>
-            <textarea name="text[global]" style="width:600px;height:120px;" id="globalDescription"><RENDER_VALUE what="i18n>globalChangeDescription"/></textarea>
+            <textarea name="text[global]" style="width:600px;height:120px;" id="globalDescription"><RENDER_VALUE what="i18n:globalChangeDescription"/></textarea>
             <table class="diff">
                 <RENDER_LOOP what="files">
                     <tr>
                         <td>
-                            <RENDER_IFSET what="files>changed">
-                                <img class="pointer" onclick="showChanges('{files>md5}')" src="/images/shared/icons/picto_modify.png" alt="Modification" title="Modification"/>
+                            <RENDER_IFSET what="files:changed">
+                                <img class="pointer" onclick="showChanges('{files:md5}')" src="/images/shared/icons/picto_modify.png" alt="Modification" title="Modification"/>
                             </RENDER_IFSET>
-                            <RENDER_IFSET what="files>new">
+                            <RENDER_IFSET what="files:new">
                                 <img src="/images/shared/icons/picto_add.png" alt="New" title="New"/>
-                                <input type="hidden" name="newFiles[{files>md5}]" value="{files>name}"/>
+                                <input type="hidden" name="newFiles[{files:md5}]" value="{files:name}"/>
                             </RENDER_IFSET>
-                            <RENDER_IFSET what="files>removed">
+                            <RENDER_IFSET what="files:removed">
                                 <img src="/images/shared/icons/picto_delete.png" alt="Removed" title="Removed"/>
                             </RENDER_IFSET>
                         </td>
                         <td>
-                            <RENDER_CHECKBOX text="{files>name}" class="files" name="files[{files>md5}]" id="{files>md5}"/>
+                            <RENDER_CHECKBOX text="{files:name}" class="files" name="files[{files:md5}]" id="{files:md5}"/>
                         </td>
                         <td>
-                            <input name="text[{files>md5}]" id="text_{files>md5}" value="{i18n>fileChangeDescription}"/>
+                            <input name="text[{files:md5}]" id="text_{files:md5}" value="{i18n:fileChangeDescription}"/>
                         </td>
                     </tr>
                 </RENDER_LOOP>
@@ -54,7 +54,7 @@
             <RENDER_JS>
                 function showChanges(file){
                     window.open(
-                    '<RENDER_VALUE what="showChangesLink>base"/>?file=<RENDER_VALUE what="project>id"/>/' + file,
+                    '<RENDER_VALUE what="showChangesLink:base"/>?file=<RENDER_VALUE what="project:id"/>/' + file,
                     'Websailors',
                     config = 'height=600,width=900,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,status=no'
                     )
@@ -62,15 +62,15 @@
 
                 function submitChange(){
                     var globalDescription = $('globalDescription').value;
-                    var globalChangeDescription = '<RENDER_VALUE what="i18n>globalChangeDescription"/>';
+                    var globalChangeDescription = '<RENDER_VALUE what="i18n:globalChangeDescription"/>';
 
                     if(globalDescription == '' || globalDescription == globalChangeDescription){
-                        alert('<RENDER_VALUE what="i18n>noGlobalChangeDescription"/>');
+                        alert('<RENDER_VALUE what="i18n:noGlobalChangeDescription"/>');
                         return false;
                     }
                     var oneIsChecked = false;
                     var needsConfirmation = false;
-                    var fileChangeDescription = '<RENDER_VALUE what="i18n>fileChangeDescription"/>';
+                    var fileChangeDescription = '<RENDER_VALUE what="i18n:fileChangeDescription"/>';
                     $$('.files').each(
                         function(file){
                             if(file.checked){
@@ -83,10 +83,10 @@
                         }
                     );
                     if(!oneIsChecked){
-                        alert('<RENDER_VALUE what="i18n>noFileSelected"/>');
+                        alert('<RENDER_VALUE what="i18n:noFileSelected"/>');
                     }else{
                         if(needsConfirmation){
-                            if(confirm("<RENDER_VALUE what="i18n>noFileDescription"/>")){
+                            if(confirm("<RENDER_VALUE what="i18n:noFileDescription"/>")){
                                 $('commitForm').submit();
                             }
                         }else{
