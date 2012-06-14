@@ -1,6 +1,10 @@
 <div>
-    <b><RENDER_VALUE what="i18n>command_mail_date"/></b><RENDER_VALUE what="mail>date"/><br />
-    <RENDER_VALUE what="i18n>command_mail_headlineSender"/>&#160;
-    <a href="{mail>siteName}"><RENDER_VALUE what="mail>siteName"/></a>.<br />
-    <b><RENDER_VALUE what="i18n>command_mail_billSender"/></b>
+    <RENDER_VALUE what="i18n:command_mail_date"/><RENDER_VALUE what="mail:date"/><br />
+    <RENDER_VALUE what="i18n:command_mail_headlineSender"/>&#160;
+    <a href="{mail:siteName}"><RENDER_VALUE what="mail:siteName"/></a>.<br />
+    <p><RENDER_VALUE what="i18n:command_mail_billSender"/></p>
+    <RENDER_IFSET what="mail:extra_texts_mail">
+        <p><RENDER_VALUE what="mail:extra_texts_mail"/></p>
+    </RENDER_IFSET>
+    <p><RENDER_VALUE what="i18n:command_mail_signature"/></p>
 </div>

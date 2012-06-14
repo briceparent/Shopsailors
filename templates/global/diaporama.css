@@ -61,6 +61,11 @@ ul.crossfade li{
     height:550px;
 }
 
+.diapo_900_600, .diapo_900_600 div, .diapo_900_600 img {
+	width:900px;
+    height:600px;
+}
+
 .diapo_controls{
 	padding-top: 2px;
 	margin-left: 10px;

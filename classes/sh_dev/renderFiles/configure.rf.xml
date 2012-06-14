@@ -2,46 +2,53 @@
     <RENDER_FORM id="dev_configurer" >
         <div class="form_box_container">
             <div class="form_box_top">
-                <h3 class="box_title"><RENDER_VALUE what="i18n>debug_title"/></h3>
+                <h3 class="box_title"><RENDER_VALUE what="i18n:debug_title"/></h3>
             </div>
             <div class="form_box_middle">
                 <div class="form_box_content">
                     <div class="formContent">
-                        <input type="checkbox" name="debug_activated" state="{default>debug_activated}"/>
-                        <RENDER_VALUE what="i18n>debug_activated"/>
+                        <input type="checkbox" name="debug_activated" state="{default:debug_activated}"/>
+                        <RENDER_VALUE what="i18n:debug_activated"/>
                     </div>
                     <div class="formContent">
-                        <RENDER_VALUE what="i18n>debug_path"/>
-                        <RENDER_HELP what="{i18n>debug_path_explanation}"/><br />
-                        <input name="debug_path" value="{default>debug_path}"/>
+                        <RENDER_VALUE what="i18n:debug_path"/>
+                        <RENDER_HELP what="{i18n:debug_path_explanation}"/><br />
+                        <input name="debug_path" value="{default:debug_path}"/>
                     </div>
                     <div class="formContent">
-                        <input type="checkbox" name="codeCoverage_activated" state="{default>codeCoverage_activated}"/>
-                        <RENDER_VALUE what="i18n>codeCoverage_activated"/>
-                        <RENDER_HELP what="{i18n>codeCoverage_activated_explanation}"/><br />
+                        <input type="checkbox" name="codeCoverage_activated" state="{default:codeCoverage_activated}"/>
+                        <RENDER_VALUE what="i18n:codeCoverage_activated"/>
+                        <RENDER_HELP what="{i18n:codeCoverage_activated_explanation}"/>
+                        <select name="code_coverage_class">
+                        <RENDER_LOOP what="code_coverage">
+                            <option value="{code_coverage:class}" state="{code_coverage:state}"><RENDER_VALUE what="code_coverage:class"/></option>
+                        </RENDER_LOOP>
+                        </select>
                     </div>
                     <div class="formContent">
-                        <input type="checkbox" name="trace_activated" state="{default>trace_activated}"/>
-                        <RENDER_VALUE what="i18n>trace_activated"/>
-                        <RENDER_HELP what="{i18n>trace_activated_explanation}"/><br />
+                        <input type="checkbox" name="trace_activated" state="{default:trace_activated}"/>
+                        <RENDER_VALUE what="i18n:trace_activated"/>
+                        <RENDER_HELP what="{i18n:trace_activated_explanation}"/><br />
                     </div>
                     <div class="formContent">
-                        <RENDER_VALUE what="i18n>errors_activated"/><br />
-                        <input type="checkbox" name="E_ALL_activated" state="{default>E_ALL_activated}"/>
-                        <RENDER_VALUE what="i18n>E_ALL_activated"/><br />
-                        <input type="checkbox" name="E_STRICT_activated" state="{default>E_STRICT_activated}"/>
-                        <RENDER_VALUE what="i18n>E_STRICT_activated"/><br />
-                        <input type="checkbox" name="E_WARNING_activated" state="{default>E_WARNING_activated}"/>
-                        <RENDER_VALUE what="i18n>E_WARNING_activated"/><br />
-                        <input type="checkbox" name="E_NOTICE_activated" state="{default>E_NOTICE_activated}"/>
-                        <RENDER_VALUE what="i18n>E_NOTICE_activated"/>
+                        <RENDER_VALUE what="i18n:errors_activated"/><br />
+                        <input type="checkbox" name="E_ALL_activated" state="{default:E_ALL_activated}"/>
+                        <RENDER_VALUE what="i18n:E_ALL_activated"/><br />
+                        <input type="checkbox" name="E_STRICT_activated" state="{default:E_STRICT_activated}"/>
+                        <RENDER_VALUE what="i18n:E_STRICT_activated"/><br />
+                        <input type="checkbox" name="E_WARNING_activated" state="{default:E_WARNING_activated}"/>
+                        <RENDER_VALUE what="i18n:E_WARNING_activated"/><br />
+                        <input type="checkbox" name="E_DEPRECATED_activated" state="{default:E_DEPRECATED_activated}"/>
+                        <RENDER_VALUE what="i18n:E_DEPRECATED_activated"/><br />
+                        <input type="checkbox" name="E_NOTICE_activated" state="{default:E_NOTICE_activated}"/>
+                        <RENDER_VALUE what="i18n:E_NOTICE_activated"/>
                     </div>
                 </div>
             </div>
             <div class="form_box_bottom">
             </div>
             <div class="formSubmitContainer">
-                <input type="submit" value="{i18n>save}"/>
+                <input type="submit" value="{i18n:save}"/>
             </div>
         </div>
     </RENDER_FORM>

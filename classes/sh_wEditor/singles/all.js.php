@@ -6,10 +6,21 @@ tinymce.PluginManager.load(
 'advimagescale',
 '/sh_wEditor/singles/plugins/advimagescale/editor_plugin.js'
 );
-/*tinymce.PluginManager.load(
-'jmform',
-'/sh_wEditor/singles/plugins/jmform/editor_plugin.js'
-);*/
+<?php
+// Gets the site name (using the server name)
+/*$classFolder = dirname(dirname(__FILE__));
+$class = basename($classFolder);
+$classesFolder = dirname($classFolder);
+$pluginsSharedFolder = $classesFolder.'/shared/'.$class.'/plugins/';
+if(is_dir($pluginsSharedFolder)){
+    $classes = scandir($pluginsSharedFolder);
+    foreach($classes as $oneClass){
+        if(substr($oneClass,-4) == '.php'){
+            include($pluginsSharedFolder.$oneClass);
+        }
+    }
+}*/
+?>
 
 /* tinyMCE_advanced */
 tinyMCE.init({
@@ -21,28 +32,65 @@ editor_selector : "tinyMCE_advanced",
 theme_advanced_layout_manager : "SimpleLayout",
 theme_advanced_toolbar_location : "top",
 inline_styles : true,
-plugins : "style,paste,insertdatetime,media,diaporama,example,-shopsailors,"
-+"table,noneditable,-advimagescale",
+plugins : "paste,shopsailors,"
+    +"table,noneditable,contextmenu,xhtmlxtras,tabfocus,-advimagescale",
+advimagescale_append_to_url:true,
+advimagescale_url_width_key:'width',
+advimagescale_url_height_key:'height',
 paste_auto_cleanup_on_paste : true,
-plugin_insertdate_dateFormat : "%d/%m/%Y",
-theme_advanced_buttons1 : "bgcChanger,styleprops,|,formatselect,styleselect,|,"
-+"bold,italic,diaporamaInserter,|,imageInserter,image,|,insertdate,|,hr,|,"
-+"removeformat,undo,redo",
-theme_advanced_buttons2 : "tablecontrols,|,linkInserter,link,unlink,anchor,|,"
-+"charmap,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,"
-+"numlist,|,sub,sup,outdent,indent,media,diaporama",
+theme_advanced_buttons1 : "myListBox,removeformat,|,"
+    +"bold,italic,|,imageInserter,image,|,calendarInserter,diaporamaInserter,soundInserter,videoInserter,|,hr,|,"
+    +"undo,redo,|,justifyleft,justifycenter,justifyright,justifyfull",
+theme_advanced_buttons2 : "tablecontrols,|,linkInserter,link,unlink,|,"
+    +"charmap,|,bullist,"
+    +"numlist,|,sub,sup,outdent,indent,|,code",
 theme_advanced_buttons3 : "",
-extended_valid_elements : "render_diaporama[name|id|nodisplay],"
-+"object[width|height|classid|codebase],param[name|value],"
-+"embed[src|type|width|height|flashvars|wmode]",
-content_css : "/CSS/" + (Math.floor(Math.random() * 1000)+1) + "/wEditor.css",
+extended_valid_elements : "img[mce_noresize|longdesc|usemap|src|border|alt=|title|hspace|vspace|width|height|align|style],"
+    +"object[width|height|classid|codebase],"
+    +"param[name|value],"
+    +"embed[src|type|width|height|flashvars|wmode|allowscriptaccess|allowfullscreen|],"
+    +"style[type],"
+    +"render_diaporama[name|width|height|class|float],"
+    +"render_sound[file],"
+    +"render_calendarbox[id,date],"
+    +"render_video[file|width|height]",
+content_css : "/sh_wEditor/singles/defaultStyles.css",
 relative_urls : false,
+force_br_newlines : false,
 theme_advanced_blockformats : "p,div,h3,h4,h5,h6,blockquote",
 noneditable_leave_contenteditable : true,
 language : "<?php echo $_GET['lang'];?>",
-extended_valid_elements : 'render_diaporama_suffix[class|name|path|id|style]',
-custom_elements : '~diaporama',
-advimage_noresize_class: "noresize"
+theme_advanced_resizing : true,
+theme_advanced_resize_horizontal : false,
+theme_advanced_statusbar_location : "bottom",
+advimagescale_fix_border_glitch: false,
+advimage_noresize_class: "mce_noresize"
+});
+
+/* tinyMCE_minimal */
+tinyMCE.init({
+mode : "textareas",
+theme : "advanced",
+theme_advanced_layout_manager : "SimpleLayout",
+inline_styles : true,
+browsers : "gecko",
+entity_encoding : "raw",
+plugins : "paste,noneditable,xhtmlxtras,tabfocus",
+paste_auto_cleanup_on_paste : true,
+theme_advanced_buttons1 : "bold,italic,underline,|,linkInserter,link,unlink,"
++"justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,code",
+theme_advanced_buttons2 : "",
+theme_advanced_buttons3 : "",
+theme_advanced_resizing : true,
+theme_advanced_resize_horizontal : false,
+theme_advanced_toolbar_location : "top",
+theme_advanced_statusbar_location : "bottom",
+relative_urls : false,
+content_css : "/sh_wEditor/singles/defaultStyles.css",
+editor_selector : "tinyMCE_minimal",
+force_br_newlines : false,
+force_p_newlines : true,
+language : "<?php echo $_GET['lang'];?>"
 });
 
 /* tinyMCE_newsletter */
@@ -56,9 +104,9 @@ theme_advanced_layout_manager : "SimpleLayout",
 theme_advanced_toolbar_location : "top",
 plugins : "paste,-shopsailors,-advimagescale",
 paste_auto_cleanup_on_paste : true,
-theme_advanced_buttons1 : "fontsizeselect,forecolor,|,bold,italic,underline,|,"
-+"removeformat,|,imageInserter,image,|,hr,|,undo,redo,|,linkInserter,link,"
-+"unlink,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,blocksInserter",
+theme_advanced_buttons1 : "fontselect,fontsizeselect,styleprops,forecolorpicker,|,bold,italic,underline,|,"
++"removeformat,|,imageInserter,image,|,hr,|,linkInserter,link,"
++"unlink,|,justifyleft,justifycenter,justifyright,justifyfull,hyphenInserter,|,bullist,numlist,|,undo,redo,code",
 theme_advanced_buttons2 : "",
 theme_advanced_buttons3 : "",
 imageInserter_specialFolder : 'newsletters',
@@ -127,31 +175,19 @@ relative_urls : false,
 plugin_insertdate_dateFormat : "%d/%m/%Y",
 plugin_preview_width : "600",
 plugin_preview_height : "600",
-theme_advanced_buttons1 : "backcolor,forecolor,fontsizeselect,|,linkInserter,"
+theme_advanced_buttons1 : "backcolor,forecolor,fontsizeselect,forecolorpicker,backcolorpicker,|,linkInserter,"
 +"link,unlink,|,image,|,insertdate,|,hr,|,removeformat,|,sub,sup,|,charmap",
 theme_advanced_buttons2 : "justifyleft,justifycenter,justifyright,justifyfull,|,"
 +"bullist,numlist,|,outdent,indent,|,undo,redo,|,visualaid,cleanup",
 theme_advanced_buttons3 : "",
 editor_selector : "tinyMCE_simple",
-language : "<?php echo $_GET['lang'];?>"
-});
-
-/* tinyMCE_minimal */
-tinyMCE.init({
-mode : "textareas",
-theme : "advanced",
-theme_advanced_layout_manager : "SimpleLayout",
-inline_styles : true,
-entity_encoding : "raw",
-plugins : "paste",
-paste_auto_cleanup_on_paste : true,
-theme_advanced_buttons1 : "bold,italic,underline,|,linkInserter,link,unlink,"
-+"justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist",
-theme_advanced_buttons2 : "",
-theme_advanced_buttons3 : "",
-relative_urls : false,
-editor_selector : "tinyMCE_minimal",
-language : "<?php echo $_GET['lang'];?>"
+language : "<?php echo $_GET['lang'];?>",
+valid_elements : "@[title|dir<ltr?rtl|style],"
+    + "a[rel|rev|charset|hreflang|tabindex|accesskey|type|name|href|target|title],"
+    + "strong/b,em/i,strike,u,big,"
+    + "-ol[type|compact],-ul[type|compact],-li,"
+    + "#p,-span,#div[align|leftmargin|rightmargin|topmargin|bottommargin],"
+    + "br"
 });
 
 /* tinyMCE_forum */
@@ -160,7 +196,6 @@ mode : "textareas",
 theme : "advanced",
 theme_advanced_layout_manager : "SimpleLayout",
 inline_styles : true,
-content_css : "/CSS/<?php echo $_GET['variation'];?>/forum.css,/sh_wEditor/singles/forum.css",
 entity_encoding : "raw",
 plugins : "emotions",
 paste_auto_cleanup_on_paste : true,

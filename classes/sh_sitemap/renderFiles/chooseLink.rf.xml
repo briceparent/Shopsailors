@@ -1,0 +1,40 @@
+<div id="link_chooser_container">
+    <div class="marginLeft_5px italic"><RENDER_VALUE what="i18n:indexChooser_explanation"/></div>
+    <RENDER_LOOP what="classes">
+        <div class="chooserContainer">
+            <div onclick="toggleCategory('class_{classes:name}');" style="cursor:pointer;font-weight:bold;">
+                <RENDER_VALUE what="classes:description"/>
+            </div>
+            <div class="index_class" id="class_{classes:name}" style="display:{classes:display};max-height:200px;overflow:auto;">
+                <RENDER_LOOP what="elements">
+                    <div>
+                        <input type="radio" class="page pointer" name="page" id="{elements:uid}" state="{elements:state}" value="{elements:name}" onchange="sh_popup.setPromptValue(this.value);"/>
+                        <label class="pointer" for="{elements:uid}">
+                            <RENDER_VALUE what="elements:value"/>
+                        </label>
+                    </div>
+                </RENDER_LOOP>
+            </div>
+        </div>
+    </RENDER_LOOP>
+    <style type="text/css">
+        input#sh_popup_promptInput{border:1px solid #999;width:80%;}
+        .linkChooser_explanation{
+            border-top: 1px dashed #ccc;
+            color:#666;
+            padding-top: 10px;
+            text-align:center;
+            font-style:italic;
+            margin-top:10px;
+        }
+        body .popup_buttons{
+            border:none;
+        }
+        body .chooserContainer{
+            margin-top:5px;
+            background-color: #e7e7e7;
+            padding:2px;
+        }
+    </style>
+    <div class="linkChooser_explanation"><RENDER_VALUE what="i18n:linkChooser_explanation"/></div>
+</div>

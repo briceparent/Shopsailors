@@ -1,0 +1,137 @@
+
+<div id="admin_manageGroup">
+    <RENDER_FORM id="manageGroup">
+        <RENDER_TABGROUP size="L" validate="{i18n:save}" admin="admin">
+            <RENDER_TAB title="Paramètres du groupe">
+                Nom du groupe : <input name="name" value="{group:name}"/><br />
+                <NORENDER>
+                Image par défaut 
+                <RENDER_HELP>
+                    <div>
+                        Si l'utilisateur ne renseigne pas d'image dans son profile, et si ce groupe est le groupe 
+                        principal de l'utilisateur, alors c'est cette image qui sera utilisée dans le forum chaque fois
+                        que l'utilisateur interviendra.
+                    </div>
+                </RENDER_HELP>
+                    <RENDER_IMAGESELECTOR name="image" value="{group:image}" folder="forum/groups"/>
+                </NORENDER>
+            </RENDER_TAB>
+            <RENDER_TAB title="Utilisateurs">
+            <div class="admin_blueText">Utilisateurs présents dans ce groupe : </div>
+                <ul id="users_list">
+                    <RENDER_LOOP what="users">
+                        <li id="user_{users:id}" onclick="removeUser('{users:id}');">
+                            <RENDER_VALUE what="users:alias"/>
+                        </li>
+                    </RENDER_LOOP>
+                </ul>
+<div class="addUser_inputText">
+                <input type="text" id="name_autocompleter" name="autocomplete_parameter" style="width:500px;"/>
+                <span id="indicator" style="display: none">
+                    <img src="/images/spinner.gif" alt="Working..." />
+                </span>
+                <div id="autocomplete_choices" class="name_autocompleter"></div>
+                </div>
+                <div class="addUser_inputAdd"><img src="/images/shared/icons/picto_add.png" onclick="addUser();"/></div>
+
+                <RENDER_ENDJS>
+new Ajax.Autocompleter(
+    "name_autocompleter", 
+    "autocomplete_choices", 
+    "<RENDER_VALUE what="autocompleter:url"/>", {
+        paramName: "user_entry", 
+        minChars: 1, 
+        indicator: 'indicator'
+    }
+); 
+function addUser(){
+    var group = '<RENDER_VALUE what="group:id"/>';
+    var uri = "<RENDER_VALUE what="links:addUserToGroup"/>";
+    var user = $('name_autocompleter').value;
+    new Ajax.Request(uri,{
+        method : "post",
+        parameters: {user:user},
+        onSuccess: function(transport) {
+            rep = transport.responseText;
+            if(rep != 'NOT_FOUND'){
+                $('users_list').innerHTML += '<li id="user_'+rep+'" onclick="removeUser(\''+rep+'\');">'+$('name_autocompleter').value+'</li>';
+                $('name_autocompleter').value = '';
+            }else{
+                sh_popup.alert(
+                '<RENDER_VALUE what="i18n:user_not_found"/>',
+                {title:'<RENDER_VALUE what="i18n:user_not_found_title"/>'}
+                );
+            }
+            return true
+        },
+        onFailure: function(){
+            alert('Erreur lors de la transmission des données de style');
+        }
+    });
+}
+function removeUser(user){
+    sh_popup.confirm(
+        'Etes vous sûr de vouloir enlever cet utilisateur de ce groupe?',
+        {
+            title:'Demande de confirmation',
+            onconfirmok:function(){
+                var group = '<RENDER_VALUE what="group:id"/>';
+                var uri = "<RENDER_VALUE what="links:removeUserFromGroup"/>";
+                new Ajax.Request(uri,{
+                    method : "post",
+                    parameters: {user:user},
+                    onSuccess: function(transport){
+                        if(transport.responseText == 'OK'){
+                            $('user_'+user).remove();
+                        }else{
+                            alert('Erreur lors de l\'execution de l\'action demandée.');
+                        
+                        }
+                    },
+                    onFailure: function(){
+                        alert('Erreur lors de la transmission des données');
+                    }
+                });
+            }
+        }
+    );
+}
+                </RENDER_ENDJS>
+
+            </RENDER_TAB>
+    
+        </RENDER_TABGROUP>
+    </RENDER_FORM>
+    <style type="text/css">
+div.name_autocompleter {
+  position:absolute;
+  width:250px;
+  background-color:white;
+  border:1px solid #888;
+  margin:0;
+  padding:0;
+}
+div.name_autocompleter ul {
+  list-style-type:none;
+  margin:0;
+  padding:0;
+}
+div.name_autocompleter ul li.selected { background-color: #ffb;}
+div.name_autocompleter ul li {
+  list-style-type:none;
+  display:block;
+  margin:0;
+  padding:2px;
+  height:32px;
+  cursor:pointer;
+}
+.oneGroup{
+width:500px;
+height:150px;
+}
+#users_list li:hover{
+    cursor:url(/templates/global/admin/icons/trash_cursor.png),auto;
+    font-weight:bold;
+}
+    </style>
+</div>

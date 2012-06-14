@@ -1,0 +1,37 @@
+<div>
+    <RENDER_JS>
+        mapImages_<RENDER_VALUE what="mapImage:map"/>[mapImages_<RENDER_VALUE what="mapImage:map"/>_count] = 'mapImages_<RENDER_VALUE what="mapImage:id"/>_func'
+        var myImage_<RENDER_VALUE what="mapImage:id"/>;
+        function mapImages_<RENDER_VALUE what="mapImage:id"/>_func(){
+            var imageBounds = new google.maps.LatLngBounds(
+                new google.maps.LatLng(<RENDER_VALUE what="mapImage:south"/>,<RENDER_VALUE what="mapImage:west"/>),
+                new google.maps.LatLng(<RENDER_VALUE what="mapImage:north"/>,<RENDER_VALUE what="mapImage:east"/>)
+            );
+            myImage_<RENDER_VALUE what="mapImage:id"/> = new google.maps.GroundOverlay(
+                "<RENDER_VALUE what="mapImage:image"/>",
+                imageBounds
+            );
+            <RENDER_IFSET what="mapImage:display">
+                myImage_<RENDER_VALUE what="mapImage:id"/>.setMap(<RENDER_VALUE what="mapImage:map"/>);
+            </RENDER_IFSET>
+        }
+        function mapImages_toggle_<RENDER_VALUE what="mapImage:id"/>(state){
+            if(state){
+                myImage_<RENDER_VALUE what="mapImage:id"/>.setMap(<RENDER_VALUE what="mapImage:map"/>);
+            }else{
+                myImage_<RENDER_VALUE what="mapImage:id"/>.setMap(null);
+            }
+        }
+        mapImages_<RENDER_VALUE what="mapImage:map"/>_count++;
+    </RENDER_JS>
+    <RENDER_IFSET what="mapImage:toggler">
+        <RENDER_IFSET what="mapImage:display">
+            <input type="checkbox" onclick="mapImages_toggle_{mapImage:id}(this.checked);" checked="checked"/>
+        </RENDER_IFSET>
+        <RENDER_IFNOTSET what="mapImage:display">
+            <input type="checkbox" onclick="mapImages_toggle_{mapImage:id}(this.checked);"/>
+        </RENDER_IFNOTSET>
+        
+        <RENDER_VALUE what="mapImage:toggler"/>
+    </RENDER_IFSET>
+</div>

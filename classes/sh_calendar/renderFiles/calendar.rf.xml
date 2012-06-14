@@ -1,0 +1,23 @@
+
+<div id="calendar">
+    <RENDER_LOOP what="dates">
+    
+        <div class="calendar_title" style="background-color:#{dates:type_color};">
+            <RENDER_VALUE what="dates:type_name"/>
+        </div>
+        <h2>
+            <RENDER_VALUE what="dates:title"/>
+        </h2>
+        <div>
+            <RENDER_VALUE what="dates:content"/>
+        </div>
+        <RENDER_IFSET what="dates:edit">
+            <div>
+                <a href="{dates:edit}">Modifier l'événement</a>
+            </div>
+        </RENDER_IFSET>
+        <hr />
+    </RENDER_LOOP>
+    <a class="cal_prev" href="{links:previousDayLink}"><RENDER_VALUE what="i18n:dayPrev"/></a>
+    <a class="cal_next" href="{links:nextDayLink}"><RENDER_VALUE what="i18n:dayNext"/></a>
+</div>

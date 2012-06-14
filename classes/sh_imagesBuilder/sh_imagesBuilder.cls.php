@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Brice PARENT for Shopsailors
+ * @author Brice PARENT (Websailors) for Shopsailors
  * @copyright Shopsailors 2009
  * @license http://www.cecill.info
  * @version See version in the params/global.params.php file.
@@ -12,6 +12,11 @@ if(!defined('SH_MARKER')){header('location: directCallForbidden.php');}
  * Class that builds the images variations.
  */
 class sh_imagesBuilder extends sh_core{
+    const CLASS_VERSION = '1.1.11.03.29';
+
+    public $shopsailors_dependencies = array(
+        'sh_linker','sh_params','sh_db'
+    );
     protected $imagesPath = '';
     protected $images = array();
     protected $type = null;
@@ -22,7 +27,8 @@ class sh_imagesBuilder extends sh_core{
     protected $textMasks = array();
     protected $stretchMasks = array();
     protected $colors = array('passive'=>'#000','active'=>'#111','selected'=>'#222');
-    protected $builderFolder = '';
+    
+    public  $builderFolder = '';
 
 
     // Images' names are built with [POSITION]_[STATE]
@@ -43,9 +49,14 @@ class sh_imagesBuilder extends sh_core{
 
 
     public function construct(){
-        $this->builderFolder = $this->links->site->templateFolder.'builder/';
-        if(!is_dir($this->builderFolder)){
-            mkdir($this->builderFolder);
+        $this->builderFolder = $this->linker->site->templateFolder.'builder/';
+        $installedVersion = $this->getClassInstalledVersion();
+        if($installedVersion != self::CLASS_VERSION){
+            if(!is_dir($this->builderFolder)){
+                mkdir($this->builderFolder);
+            }
+            // The class datas are not in the same version as this file, or don't exist (installation)
+            $this->setClassInstalledVersion(self::CLASS_VERSION);
         }
     }
 
@@ -84,7 +95,7 @@ class sh_imagesBuilder extends sh_core{
                 }
             }
             imagedestroy($maskImage);
-            $this->links->helper->writeArrayInFile(
+            $this->helper->writeArrayInFile(
                 $phpMaskFile,
                 'mask',
                 $mask
@@ -163,15 +174,118 @@ class sh_imagesBuilder extends sh_core{
         }
     }
 
+    public function createButton($type,$position,$state,&$destImageName,$destWidth,$destHeight,$text,$font,$fontSize,$startX,$startY){
+        $this->debug('function : '.__FUNCTION__, 2, __LINE__);
+
+        $site = $this->linker->site;
+        $templatePath = $site->templateFolder;
+        $template = $site->templateName;
+        $variation = $site->variation;
+
+        exit;
+        $transposition = array(
+            sh_variation::SATURATION_REALLY_DARK => -50,
+            sh_variation::SATURATION_DARK => -25,
+            sh_variation::SATURATION_NORMAL => 0,
+            sh_variation::SATURATION_SHINY => 25,
+            sh_variation::SATURATION_REALLY_SHINY => 50
+        );
+        $saturation = $transposition[$site->saturation];
+
+        if(!is_dir(dirname($destImageName))){
+            mkdir(dirname($destImageName),0777,true);
+        }
+
+        // We check the type of image
+        include($templatePath.'builder/'.$type.'/params.php');
+        if($position == 'first'){
+           $position = 'left';
+        }elseif($position == 'last'){
+           $position = 'right';
+        }else{
+            $position = 'middle';
+        }
+        $palettes = count($params['palettes']);
+        $srcImageRootName = $templatePath.'builder/'.$type.'/'.$position.'/'.$state;
+        include($templatePath.'builder/'.$type.'/params.php');
+        include($templatePath.'builder/'.$type.'/'.$position.'/masks/stretchMask.php');
+        $mask = $image;
+
+        $imagesToMerge = array();
+        for($palette = 0;$palette <= $palettes;$palette++){
+            $srcImageName = $srcImageRootName.'/palette_'.$palette.'/'.$variation.'_'.($saturation + 50).'.png';
+            if($palette == 0){
+                $dest = $destImageName;
+            }else{
+                $dest = SH_TEMP_FOLDER.md5(microtime()).'.png';
+            }
+            $this->stretchHorizontally($dest,$destWidth,$srcImageName,$mask);
+            $this->stretchVertically($dest,$destHeight,$dest,$mask);
+            if($palette == 0){
+                // ...
+            }elseif($params['palettes'][$palette]['position'] == 'background'){
+                $this->mergeImages($destImageName,$dest);
+            }else{
+                // We save it to merge it later
+                $imagesToMerge[] = $dest;
+            }
+        }
+
+        // We should get the text color
+        $model = imagecreatefrompng($templatePath.'builder/'.$type.'/palette_1.png');
+        $rgb = imagecolorat($model, $variation, 5);
+        //$colors = imagecolorsforindex($model, $rgb);
+
+
+        if(strpos($font,SH_FONTS_FOLDER) === false){
+            $font = str_replace(SH_FONTS_PATH,SH_FONTS_FOLDER, $font);
+        }
+        
+        // writes the text
+        $newImage = imageCreateFromPNG($destImageName);
+        imagesavealpha($newImage, true);
+        imagettftext(
+            $newImage,
+            $fontSize,
+            0,
+            $startX,
+            $startY,
+            $rgb,
+            $font,
+            $text
+        );
+
+        imagepng($newImage, $dest);
+
+        foreach($imagesToMerge as $image){
+            $this->mergeImages($destImageName,$image);
+        }
+
+        return $destImageName;
+    }
+    
+    public function mergeImages($background, $foreground){
+        $srcImage = imagecreatefrompng($background);
+        imagesavealpha($srcImage, true);
+        $width = imagesx($srcImage);
+        $height = imagesy($srcImage);
+        $added = imagecreatefrompng($foreground);
+        imagesavealpha($added, true);
+        imagecopy($srcImage, $added, 0, 0, 0, 0, $width, $height);
+        imagepng($srcImage, $background);
+    }
+
     /**
      * public function stretchImage
      * USED
      */
     public function stretchImage($type,$position,$state,&$destImageName,$destWidth,$destHeight){
         $this->debug('function : '.__FUNCTION__, 2, __LINE__);
-        $site = $this->links->site;
+        $site = $this->linker->site;
+        $templatePath = $site->templateFolder;
+        $template = $site->templateName;
         $variation = $site->variation;
-
+        
         if(!is_dir(dirname($destImageName))){
             mkdir(dirname($destImageName),0777,true);
         }
@@ -210,6 +324,7 @@ class sh_imagesBuilder extends sh_core{
      */
     protected function stretchHorizontally($destImageName,$width,$srcImageName,$mask){
         $this->debug('function : '.__FUNCTION__, 2, __LINE__);
+        
         // Gets the un-stretched image, and prepares it
         $srcImage = imagecreatefrompng($srcImageName);
 
@@ -459,34 +574,37 @@ class sh_imagesBuilder extends sh_core{
     }
 
     public function buildTextImage($file,$text,$font,$textHeight){
-        $type='font';
+        $type='';
         $position='normal';
 
         $texts = array($text);
 
         $box = $this->getMultipleImagesBox($texts,$font,$textHeight,$type);
 
-        $this->stretchImage(
-            $type,
-            $position,
-            '',
-            $file,
-            $box['width'],
-            $box['height']
-        );
+        // We create an empty image with the appropriate dimensions
+        $newImage = imagecreatetruecolor($box['width'], $box['height']);
+        imagesavealpha($newImage, true);
 
-        return $this->tagImage(
-            $type,
-            $position,
-            '',
-            $file,
-            $text,
-            $font,
+        $textColor = imagecolorallocate($newImage, 0, 0, 0);
+
+        $transparentColor = imagecolorallocatealpha($newImage, 0, 0, 0,127);
+        imagefill($newImage,0,0,$transparentColor);
+
+        // Writing the text
+        imagettftext(   
+            $newImage,
             $box['fontSize'],
+            0,
             $box['images'][0]['startX'],
             $box['images'][0]['startY'],
-            '000000'
+            $textColor,
+            $font,
+            $text
         );
+        
+        imagepng($newImage, $file);
+        imagedestroy($newImage);
+        return $file;
     }
 
     /**
@@ -495,8 +613,8 @@ class sh_imagesBuilder extends sh_core{
      */
     public function tagImage($type,$position,$state,$file,$text,$font,$fontSize,$startX=null,$startY=null,$textColorRGB = 'variation'){
         $this->debug('function : '.__FUNCTION__, 2, __LINE__);
-        $addReflect = true;
-        $site = $this->links->site;
+        $addReflect = false;
+        $site = $this->linker->site;
         $templateFolder = $site->templateFolder;
 
         // Gets the font and its params
@@ -517,17 +635,17 @@ class sh_imagesBuilder extends sh_core{
         if($textColorRGB == 'variation'){
             $variation = $site->variation;
             if($state == 'active'){
-                $textColorRGB = str_replace('#','',$this->links->variation->get(
+                $textColorRGB = str_replace('#','',$this->linker->variation->get(
                     'buttonTextActive|buttonText',
                     '999999'
                 ));
             }elseif($state == 'selected'){
-                $textColorRGB = str_replace('#','',$this->links->variation->get(
+                $textColorRGB = str_replace('#','',$this->linker->variation->get(
                     'buttonTextSelected|buttonText',
                     '999999'
                 ));
             }else{
-               $textColorRGB = str_replace('#','',$this->links->variation->get(
+               $textColorRGB = str_replace('#','',$this->linker->variation->get(
                 'buttonText',
                  '999999'
                 ));
@@ -570,6 +688,7 @@ class sh_imagesBuilder extends sh_core{
         }
 
 
+/*
         if($addReflect == true){
             $reflect = imagecreatetruecolor($width,$textHeight / 2);
             $textColor2 = imagecolorallocate(
@@ -597,46 +716,51 @@ class sh_imagesBuilder extends sh_core{
                 $image['startTop'],
                 $textColor2,
                 $font,
-                $text);
-                $cpt = 0;
-                $open = false;
-                // Gets the pixels that are colored in the first line
-                for($a = 1; $a<$width + 1;$a++){
-                    for($b = 1; $b<($textHeight / 2) - 1;$b++){
-                        $color = imagecolorat($reflect, $a, $b);
-                        $colorrgb = imagecolorsforindex($reflect,$color);
+                $text
+            );
+            $cpt = 0;
+            $open = false;
+            // Gets the pixels that are colored in the first line
+            for($a = 1; $a<$width + 1;$a++){
+                for($b = 1; $b<($textHeight / 2) - 1;$b++){
+                    $color = imagecolorat($reflect, $a, $b);
+                    $colorrgb = imagecolorsforindex($reflect,$color);
 
-                        if($colorrgb['alpha'] < 67){
-                            $trans = $colorrgb['alpha'] + 127 - ($b / ($textHeight / 2)) * 67;
-                            if($trans<127){
-                                $tempColor = imagecolorallocatealpha($newImage,
-                                    $colorrgb['red'],
-                                    $colorrgb['green'],
-                                    $colorrgb['blue'],
-                                    $trans
-                                );
-                                imagesetpixel(
-                                    $newImage,
-                                    $a,
-                                    $startY + ($textHeight / 2) - $b,
-                                    $tempColor
-                                );
-                            }
+                    if($colorrgb['alpha'] < 67){
+                        $trans = $colorrgb['alpha'] + 127 - ($b / ($textHeight / 2)) * 67;
+                        if($trans<127){
+                            $tempColor = imagecolorallocatealpha($newImage,
+                                $colorrgb['red'],
+                                $colorrgb['green'],
+                                $colorrgb['blue'],
+                                $trans
+                            );
+                            imagesetpixel(
+                                $newImage,
+                                $a,
+                                $startY + ($textHeight / 2) - $b,
+                                $tempColor
+                            );
                         }
                     }
                 }
+            }
             imageDestroy($reflect);
         }
+ *
+ */
 
         // writes the text
-        imagettftext(   $newImage,
+        imagettftext(
+            $newImage,
             $fontSize,
             0,
             $startX,
             $startY,
             $textColor,
             $font,
-            $text);
+            $text
+        );
 
 
         imagepng($newImage,$file);
@@ -650,11 +774,12 @@ class sh_imagesBuilder extends sh_core{
         $box = $this->getDimensions($text, $fontSize, $font);
         $textHeight = $box['height'];
         imagesavealpha($srcImage, true);
+        imagealphablending($srcImage, false);
         
         $color = sh_colors::RGBStringToRGBArray($fontColor);
-        $r = $color['R'];
-        $g = $color['G'];
-        $b = $color['B'];
+        $r = 120;$color['R'];
+        $g = rand(0,255);$color['G'];
+        $b = rand(0,255);$color['B'];
         
         $newColor = imagecolorallocatealpha($srcImage,$r,$g,$b,$transparency);
 
@@ -939,7 +1064,7 @@ class sh_imagesBuilder extends sh_core{
         $ret['fixHeight'] = $ret['height'] - $ret['stopTop'] + $ret['startTop'];
 
         // Writes the params file for the image
-        $this->links->helper->writeArrayInFile($textFile,'image',$ret);
+        $this->helper->writeArrayInFile($textFile,'image',$ret);
 
         $newImage = imagecreatetruecolor($ret['width'], $ret['height']);
         $transparent = imagecolorallocate($newImage, $transparentColor['R'], $transparentColor['G'], $transparentColor['B']);
@@ -962,52 +1087,135 @@ class sh_imagesBuilder extends sh_core{
      * Creates the box that will contain the image
      * USED
      */
-    public function getMultipleImagesBox($texts,$font,$textHeight,$type){
+    public function getMultipleImagesBox($texts,$font,$textHeight,$type = ''){
         $this->debug('function : '.__FUNCTION__, 2, __LINE__);
         $allText = implode('',$texts);
-        $folder = $this->builderFolder.$type.'/';
-        // Creating or getting text masks
-        if(file_exists($folder.'model/'.self::NORMAL.'.php')){
-            include($folder.'model/'.self::NORMAL.'.php');
-            $this->textMasks[self::NORMAL] = $image;
-        }else{
-            echo __CLASS__.':'.__LINE__.' - File '.$folder.'model/'.self::NORMAL.'.php not found!<br />';
-            return false;
-        }
-        if(file_exists($folder.'model/'.self::FIRST.'.png') && file_exists($folder.'model/'.self::FIRST.'.php')){
-            include($folder.'model/'.self::FIRST.'.php');
-            $this->textMasks[self::FIRST] = $image;
-            $thereIsFirst = true;
-        }
-        if(file_exists($folder.'model/'.self::LAST.'.png') && file_exists($folder.'model/'.self::LAST.'.php')){
-            include($folder.'model/'.self::LAST.'.php');
-            $this->textMasks[self::LAST] = $image;
-            $thereIsLast = true;
-        }
 
         list($fontSize,$deltaY) = $this->getFontSizeByTextHeight($allText,$font,$textHeight);
-
         $allTextDim = $this->getDimensions($allText,$fontSize,$font);
         $lettersBottom = $allTextDim['box'][1];
+        
+        if(empty($type)){
+            // There is no type, so we create an image on a transparent background
+            $cpt=0;
+            foreach($texts as $key=>$text){
+                $newWidth = $this->getDimensions($text, $fontSize, $font);
 
-        $height = $textHeight + $this->textMasks[self::NORMAL]['fixHeight'];
+                $position = self::NORMAL;
+                
+                $height = $textHeight;
+                $startX = 0;
+                $startY = $textHeight - $lettersBottom;
+
+                $thisWidth = $newWidth['width'];
+
+                $images[$key] = array(
+                    'startX'=>$startX,
+                    'startY'=>$startY,
+                    'text'=>$text,
+                    'width'=>$thisWidth,
+                    'height'=>$height,
+                    'position'=>$position
+                );
+
+                $width += $thisWidth;
+                $cpt++;
+            }
+
+            return array(
+                'width'=>$width,'height'=>$height,
+                'textWidth'=>$thisWidth,'textHeight'=>$textHeight,
+                'font'=>$font,'fontSize'=>$fontSize,'deltaY'=>$deltaY,
+                'images'=>$images
+            );
+        }
+        
+        $folder = $this->builderFolder.$type.'/';
+
+        if(file_exists($folder.'params.php')){
+            include($folder.'params.php');
+            $version = $params['creator_version'];
+        }else{
+            $version = 1;
+        }
+        
+        if($version == 1){
+            // Creating or getting text masks
+            if(file_exists($folder.'model/'.self::NORMAL.'.php')){
+                include($folder.'model/'.self::NORMAL.'.php');
+                $this->textMasks[self::NORMAL] = $image;
+            }else{
+                echo __CLASS__.':'.__LINE__.' - File '.$folder.'model/'.self::NORMAL.'.php not found!<br />';
+                return false;
+            }
+            if(file_exists($folder.'model/'.self::FIRST.'.png') && file_exists($folder.'model/'.self::FIRST.'.php')){
+                include($folder.'model/'.self::FIRST.'.php');
+                $this->textMasks[self::FIRST] = $image;
+                $thereIsFirst = true;
+            }
+            if(file_exists($folder.'model/'.self::LAST.'.png') && file_exists($folder.'model/'.self::LAST.'.php')){
+                include($folder.'model/'.self::LAST.'.php');
+                $this->textMasks[self::LAST] = $image;
+                $thereIsLast = true;
+            }
+
+            $height = $textHeight + $this->textMasks[self::NORMAL]['fixHeight'];
+            $cpt=0;
+            foreach($texts as $key=>$text){
+                $newWidth = $this->getDimensions($text, $fontSize, $font);
+
+                if($cpt==0 && $thereIsFirst){
+                    $position = self::FIRST;
+                }elseif($cpt==(count($texts)-1) && $thereIsLast){
+                    $position = self::LAST;
+                }else{
+                    $position = self::NORMAL;
+                }
+                $startX = $this->textMasks[$position]['startLeft'];
+                $startY = $height - $this->textMasks[$position]['startBottom'];
+                $startY = $textHeight + $this->textMasks[$position]['startTop'] - $lettersBottom;
+                $thisWidth = $this->textMasks[$position]['fixWidth'] + $newWidth['width'];
+
+                $images[$key] = array(
+                    'startX'=>$startX,
+                    'startY'=>$startY,
+                    'text'=>$text,
+                    'width'=>$thisWidth,
+                    'height'=>$height,
+                    'position'=>$position
+                );
+
+                $width += $thisWidth;
+                $cpt++;
+            }
+
+            return array(
+                'width'=>$width,'height'=>$height,
+                'textWidth'=>$thisWidth,'textHeight'=>$textHeight,
+                'font'=>$font,'fontSize'=>$fontSize,'deltaY'=>$deltaY,
+                'images'=>$images
+            );
+        }
 
         $cpt=0;
         foreach($texts as $key=>$text){
             $newWidth = $this->getDimensions($text, $fontSize, $font);
 
-            if($cpt==0 && $thereIsFirst){
+            if($cpt == 0){
                 $position = self::FIRST;
-            }elseif($cpt==(count($texts)-1) && $thereIsLast){
+                include($folder.'left/masks/textMask.php');
+            }elseif($cpt == count($texts) - 1){
                 $position = self::LAST;
+                include($folder.'right/masks/textMask.php');
             }else{
                 $position = self::NORMAL;
+                include($folder.'middle/masks/textMask.php');
             }
-            $startX = $this->textMasks[$position]['startLeft'];
-            $startY = $height - $this->textMasks[$position]['startBottom'];
-            //var_dump($this->textMasks[$position]);
-            $startY = $textHeight + $this->textMasks[$position]['startTop'] - $lettersBottom;
-            $thisWidth = $this->textMasks[$position]['fixWidth'] + $newWidth['width'];
+            $height = $textHeight + $image['fixHeight'];
+            $startX = $image['startLeft'];
+            $startY = $textHeight + $image['startTop'] - $lettersBottom;
+
+            $thisWidth = $image['fixWidth'] + $newWidth['width'];
 
             $images[$key] = array(
                 'startX'=>$startX,
@@ -1022,10 +1230,13 @@ class sh_imagesBuilder extends sh_core{
             $cpt++;
         }
 
-        return array(   'width'=>$width,'height'=>$height,
-                        'textWidth'=>$thisWidth,'textHeight'=>$textHeight,
-                        'font'=>$font,'fontSize'=>$fontSize,'deltaY'=>$deltaY,
-                        'images'=>$images);
+        return array(
+            'width'=>$width,'height'=>$height,
+            'textWidth'=>$thisWidth,'textHeight'=>$textHeight,
+            'font'=>$font,'fontSize'=>$fontSize,'deltaY'=>$deltaY,
+            'images'=>$images
+        );
+        
     }
 
     /**
@@ -1074,6 +1285,7 @@ class sh_imagesBuilder extends sh_core{
         if($height == 0){
             $height = $this->textHeight;
         }
+        
         $size = $height;
         $done = array();
         while(true){
@@ -1103,6 +1315,34 @@ class sh_imagesBuilder extends sh_core{
             if($cpt>50){
                 return false;
             }
+        }
+    }
+    
+    /**
+     * Returns the font size that makes any string rendered at the height of $height using the font $font.<br />
+     * Return array 0=>the font size<br />
+     * 1=>the vertical delta if any
+     * 2=>the bounding box
+     */
+    public function getFontSizeByHeight($font='',$height=0){
+        $this->debug('function : '.__FUNCTION__, 2, __LINE__);
+        if($font == ''){
+            $font = $this->font;
+        }
+        if($height == 0){
+            $height = $this->textHeight;
+        }
+        
+        // We open the font's php file which will give use the font size and the delta, if any
+        if(file_exists(substr($font,0,-4).'.php')){
+            include(substr($font,0,-4).'.php');
+            $triedValue = $height;
+            for($delta = 0;$delta < 10;$delta++){
+                if(isset($boxes[$triedValue])){
+                    $fontSize = $boxes[$height]['fontSize'];
+                    return array($fontSize,$delta,$boxes[$height]['box']);
+                }
+            }            
         }
     }
 

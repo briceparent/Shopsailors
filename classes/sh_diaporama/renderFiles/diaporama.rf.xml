@@ -1,36 +1,36 @@
-<div class="diapo {diapo>class}">
-    <RENDER_IFNOTSET what="js>added">
-        <script type="text/javascript" src="{js>dir}fastinit.js"></script>
-        <script type="text/javascript" src="{js>dir}crossfade.js"></script>
-        <script type="text/javascript" src="{js>dir}actions.js"></script>
+<div class="diapo {diapo:class}" style="{diapo:style}">
+    <RENDER_IFNOTSET what="js:added">
+        <script type="text/javascript" src="{js:dir}fastinit.js"></script>
+        <script type="text/javascript" src="{js:dir}crossfade.js"></script>
+        <script type="text/javascript" src="{js:dir}actions.js"></script>
     </RENDER_IFNOTSET>
-    <div id="diapo_{diapo>id}">
-        <div id="diapo_{diapo>id}_JS_hide">
-            <img src="{defaultimage>src}" alt=""/>
+    <div id="diapo_{diapo:id}">
+        <div id="diapo_{diapo:id}_JS_hide">
+            <img src="{defaultimage:src}" alt=""/>
         </div>
-        <div id="diapo_{diapo>id}_JS_show" style="display:none;">
-            <RENDER_IFSET what="diapo>background">
+        <div id="diapo_{diapo:id}_JS_show" style="display:none;">
+            <RENDER_IFSET what="diapo:background">
                 <div class="diapo_background">
-                    <img src="{diapo>background}" alt=""/>
+                    <img src="{diapo:background}" alt=""/>
                 </div>
             </RENDER_IFSET>
-            <ul id="content_{diapo>id}" class="crossfade transition-fadeoutfadein">
+            <ul id="content_{diapo:id}" class="crossfade transition-fadeoutfadein">
                 <RENDER_LOOP what="images">
-                    <li id='content_{diapo>id}_im'>
-                        <img src="{images>src}" alt=""/>
+                    <li id='content_{diapo:id}_im'>
+                        <img src="{images:src}" alt=""/>
                     </li>
                 </RENDER_LOOP>
             </ul>
-            <RENDER_IFSET what="diapo>commands">
-                <div class="diapo_controls" onmouseover="diapoButtonsAppear('content_{diapo>id}');" onmouseout="diapoButtonsFade('content_{diapo>id}');">
-                <span id="content_{diapo>id}-background" class="bg_diapo_control control" style="display:none;"><img src="/images/shared/icons/diapo_bgcontrol.png"/></span>
-                <span id="content_{diapo>id}-previous" class="control-previous control" style="display:none;">
+            <RENDER_IFSET what="diapo:commands">
+                <div class="diapo_controls" onmouseover="diapoButtonsAppear('content_{diapo:id}');" onmouseout="diapoButtonsFade('content_{diapo:id}');">
+                <span id="content_{diapo:id}-background" class="bg_diapo_control control" style="display:none;"><img src="/images/shared/icons/diapo_bgcontrol.png"/></span>
+                <span id="content_{diapo:id}-previous" class="control-previous control" style="display:none;">
                     <img src="/images/shared/icons/diapo_previous.png"/>
                 </span>
-                <span id="content_{diapo>id}-play" class="control control-play" style="display:none;" onclick="diapoStartStop('{diapo>id}');">
+                <span id="content_{diapo:id}-play" class="control control-play" style="display:none;" onclick="diapoStartStop('{diapo:id}');">
                     <img src="/images/shared/icons/diapo_play.png"/>
                 </span>
-                <span id="content_{diapo>id}-next" class="control-next control" style="display:none;">
+                <span id="content_{diapo:id}-next" class="control-next control" style="display:none;">
                     <img src="/images/shared/icons/diapo_next.png"/>
                 </span>
                 </div>
@@ -38,12 +38,12 @@
         </div>
     </div>
     <script type="text/javascript">
-        diapo_id = '<RENDER_VALUE what="diapo>id"/>';
+        diapo_id = '<RENDER_VALUE what="diapo:id"/>';
         Crossfade.setup({autoLoad:false});
-        <RENDER_IFSET what="diapo>manual">
+        <RENDER_IFSET what="diapo:manual">
             cf[diapo_id] = new Crossfade('content_' + diapo_id, {autoStart:false});
         </RENDER_IFSET>
-        <RENDER_IFNOTSET what="diapo>manual">
+        <RENDER_IFNOTSET what="diapo:manual">
             cf[diapo_id] = new Crossfade('content_' + diapo_id);
             cf[diapo_id].start();
             startedDiapos[diapo_id] = true;

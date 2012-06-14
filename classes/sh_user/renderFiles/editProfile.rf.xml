@@ -1,0 +1,89 @@
+<div id="profile_mainContainer">
+    <RENDER_NOTIF size="M" title="Modifier vos coordonnées">
+        <RENDER_FORM id="editProfile">
+            <table style="width:100%;">
+                <tr>
+                    <td class="right" style="width:50%;">
+                        <RENDER_VALUE what="i18n:yourLogin"/>
+                    </td>
+                    <td class="left">
+                        <input name="login" value="{user:login}" readonly="readonly" style="background-color:#CCCCCC"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right">
+                        <RENDER_VALUE what="i18n:accountName"/>
+                    </td>
+                    <td class="left">
+                        <input name="name" value="{user:name}" style="border:1px solid red;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right">
+                        <RENDER_VALUE what="i18n:accountLastname"/>
+                    </td>
+                    <td class="left">
+                        <input name="lastName" value="{user:lastName}" style="border:1px solid red;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right">
+                        <RENDER_VALUE what="i18n:accountEmail"/>
+                    </td>
+                    <td class="left">
+                        <input name="mail" value="{user:mail}" style="border:1px solid red;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right">
+                        <RENDER_VALUE what="i18n:accountPhone"/>
+                    </td>
+                    <td class="left">
+                        <input name="phone" value="{user:phone}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right">
+                        <RENDER_VALUE what="i18n:accountAddress"/>
+                    </td>
+                    <td class="left">
+                        <input name="address" value="{user:address}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right">
+                        <RENDER_VALUE what="i18n:accountZipCode"/>
+                    </td>
+                    <td class="left">
+                        <input name="zip" style="width:50px;" value="{user:zip}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right">
+                        <RENDER_VALUE what="i18n:accountCity"/>
+                    </td>
+                    <td class="left">
+                        <input name="city" value="{user:city}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="center">
+                        <div style="margin-top:15px;margin-bottom:15px;" class="italic">
+                            Les champs entourés en rouge sont requis.<br /><br />
+                            Si vous modifiez votre adresse email, un nouveau mail contenant un lien 
+                            de confirmation vous sera envoyé.<br />
+                            Cela permet de s'assurer qu'il n'y a pas d'erreur dans l'adresse.
+                        </div>
+                        <input type="submit" value="Enregistrer"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="center italic" style="padding-top:15px;">
+                        <RENDER_VALUE what="i18:datas_allSitesModif"/>
+                        <RENDER_HELP what="{i18n:editProfile_rights}"/>
+                    </td>
+                </tr>
+            </table>
+        </RENDER_FORM>
+    </RENDER_NOTIF>
+</div>

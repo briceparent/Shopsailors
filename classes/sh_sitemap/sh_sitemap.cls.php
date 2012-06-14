@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Brice PARENT for Shopsailors
+ * @author Brice PARENT (Websailors) for Shopsailors
  * @copyright Shopsailors 2009
  * @license http://www.cecill.info
  * @version See version in the params/global.params.php file.
@@ -13,7 +13,12 @@ if(!defined('SH_MARKER')) {header('location: directCallForbidden.php');}
  *
  */
 class sh_sitemap extends sh_core {
-    protected $minimal = array('show' => true);
+    const CLASS_VERSION = '1.1.11.04.01';
+
+    public $shopsailors_dependencies = array(
+        'sh_linker','sh_params','sh_db'
+    );
+    protected $minimal = array('show' => true,'chooseLink'=>true,'renew' => true);
     protected $addresses = array();
     protected $file = '';
 
@@ -26,23 +31,62 @@ class sh_sitemap extends sh_core {
     const FREQUENCY_NEVER = 6;
 
     public function construct(){
+        $installedVersion = $this->getClassInstalledVersion();
+        if($installedVersion != self::CLASS_VERSION){
+            // The class datas are not in the same version as this file, or don't exist (installation)
+            
+            if(version_compare($installedVersion,'1.1.11.04.01','<=')){
+                if(!is_dir(SH_SITE_FOLDER.__CLASS__.'/')){
+                    mkdir(SH_SITE_FOLDER.__CLASS__.'/');
+                }
+                $this->linker->renderer->add_render_tag('render_chooseLink',__CLASS__,'render_chooseLink');
+            }
+            $this->setClassInstalledVersion(self::CLASS_VERSION);
+        }
         $this->file = SH_SITE_FOLDER. __CLASS__.'/sitemap.php';
         return true;
     }
 
     public function renew(){
         $this->removeFromSitemap('*');
-        $directory = SH_CLASS_SHARED_FOLDER.__CLASS__.'/';
-        if(is_dir($directory)){
-            $classes = scandir($directory);
-            foreach($classes as $class){
-                if(substr($class,0,1) != '.'){
-                    $class = substr($class,0,-4);
-                    // We have found a class on which to call sitemap_renew();
-                    $this->links->$class->sitemap_renew();
-                }
-            }
+        $classes = $this->helper->getClassesSharedMethods(__CLASS__);
+        foreach($classes as $class){
+            // We have found a class on which to call sitemap_renew();
+            $this->linker->$class->sitemap_renew();
         }
+        return true;
+    }
+
+    public function render_chooseLink($attributes = array()){
+        if(empty($attributes['name'])){
+            return false;
+        }
+        $this->linker->html->addScript($this->getSinglePath().'chooseLink.js');
+
+        $values['link']['name'] = $attributes['name'];
+        $values['link']['value'] = $attributes['value'];
+        $values['input']['class'] = $attributes['class'];
+        if(!empty($attributes['id'])){
+            $values['input']['id'] = $attributes['id'];
+        }else{
+            $values['input']['id'] = 'link_'.substr(md5(microtime()),0,8);
+        }
+
+        return $this->render('render_chooseLink',$values,false,false);
+    }
+
+    /**
+     * public function chooseLink
+     *
+     */
+    public function chooseLink() {
+        $datas['classes'] = $this->helper->listLinks(
+            $_GET['value']
+        );
+        
+        $datas['category']['id'] = $_GET['id'];
+
+        echo $this->render('chooseLink',$datas,false,false);
         return true;
     }
 
@@ -58,9 +102,6 @@ class sh_sitemap extends sh_core {
      * public function create
      */
     public function create(){
-        if(!is_dir(SH_SITE_FOLDER.__CLASS__.'/')){
-            mkdir(SH_SITE_FOLDER.__CLASS__.'/');
-        }
         if(file_exists($this->file)){
             include($this->file);
         }
@@ -74,7 +115,7 @@ class sh_sitemap extends sh_core {
      *
      */
     public function show(){
-        $this->links->cache->disable();
+        $this->linker->cache->disable();
         $xml = $this->create();
         header('content-type: text/xml');
         echo $xml;
@@ -89,7 +130,7 @@ class sh_sitemap extends sh_core {
         if(file_exists($this->file)){
             include($this->file);
         }
-        $uri = $this->links->path->getLink($page);
+        $uri = $this->linker->path->getLink($page);
         $address = 'http://'.$_SERVER['HTTP_HOST'].$uri;
         $this->addresses['PAGES'][$page] = array(
             'address'=>$address,
@@ -105,7 +146,7 @@ class sh_sitemap extends sh_core {
      *
      */
     protected function buildFile(){
-        $this->links->helper->writeArrayInFile(
+        $this->helper->writeArrayInFile(
             $this->file,
             'this->addresses',
             $this->addresses,
@@ -164,7 +205,7 @@ class sh_sitemap extends sh_core {
         }else{
             $date = date('Y-m-d');
         }
-        $page = MD5($this->links->path->getPage());
+        $page = MD5($this->linker->path->getPage());
         $file = SH_SITE_FOLDER.__CLASS__.'/'.$page;
 
         echo $page;
@@ -209,6 +250,9 @@ class sh_sitemap extends sh_core {
         if($page == $this->shortClassName.'/renew/'){
             return '/'.$this->shortClassName.'renew.php';
         }
+        if($page == $this->shortClassName.'/chooseLink/'){
+            return '/'.$this->shortClassName.'chooseLink.php';
+        }
         return false;
     }
 
@@ -226,6 +270,9 @@ class sh_sitemap extends sh_core {
         }
         if($uri == '/'.$this->shortClassName.'/renew.php'){
             return $this->shortClassName.'/renew/';
+        }
+        if($uri == '/'.$this->shortClassName.'/chooseLink.php'){
+            return $this->shortClassName.'/chooseLink/';
         }
         return false;
     }

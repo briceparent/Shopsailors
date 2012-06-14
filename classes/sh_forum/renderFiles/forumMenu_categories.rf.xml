@@ -1,0 +1,26 @@
+
+<div id="forumCat_menu">
+    <div class="middle">
+        <RENDER_TABLE what="sections" cols="3">
+            <RENDER_IFSET what="sections:image">
+                <a class="image" href="{sections:link}" title="{sections:name}">
+                    <img src="{sections:image}.resized.30.30.png" alt="{sections:name}" title="{sections:name}"/>
+                </a>
+            </RENDER_IFSET>
+            <a href="{sections:link}" title="{sections:name}">
+                <RENDER_MODIFYVALUE what="sections:name" method="cut|50|word|ellipsis" new="temp:value"/>
+                <RENDER_VALUE what="temp:value"/>
+            </a>
+            <RENDER_IFNOTSET what="sections:haschildren">
+                <div>Sujets&#160;:&#160;
+                    <RENDER_VALUE what="sections:topics"/>
+                </div>
+            </RENDER_IFNOTSET>
+            <RENDER_IFSET what="sections:haschildren">
+                <div>Sous catégories&#160;:&#160;
+                    <RENDER_VALUE what="sections:subsections"/>
+                </div>
+            </RENDER_IFSET>
+        </RENDER_TABLE>
+    </div>
+</div>

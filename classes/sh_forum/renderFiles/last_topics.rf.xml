@@ -1,0 +1,7 @@
+
+<div>
+    <RENDER_CSS>
+        #forum_menu{display:block}
+    </RENDER_CSS>
+    <RENDER_FORUM_LASTTOPICS count="{topics:count}" rf="render_lastTopics_page"/>
+</div>

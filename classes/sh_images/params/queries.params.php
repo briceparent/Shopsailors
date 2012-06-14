@@ -52,4 +52,55 @@ $this->queries = array(
                 `path` = "{path}"
                 LIMIT 1;',
             'type' => 'get'),
+
+        'add' => array(
+            'query' => 'INSERT INTO ###imagesGeneration
+                (`folder`,`image`,`class`)
+                VALUES
+                ("{folder}","{image}","{class}");',
+            'type' => 'insert'),
+        'getClass' => array(
+            'query' => 'SELECT
+                `folder`,
+                `image`,
+                `class`
+                FROM ###imagesGeneration
+                WHERE
+                `folder` = "{folder}"
+                AND `image` = "{image}"
+                LIMIT 1;',
+            'type' => 'get'),
+        'deleteByFolder' => array(
+            'query' => 'DELETE FROM ###imagesGeneration
+                WHERE `folder` = "{folder}";',
+            'type' => 'set'),
+        'deleteByName' => array(
+            'query' => 'DELETE FROM ###imagesGeneration
+                WHERE `folder` = "{folder}" AND `image` = "{image}" LIMIT 1;',
+            'type' => 'set'),
+
+        'create_table_1' => array(
+            'query' => 'CREATE TABLE IF NOT EXISTS `###images` (
+  `path` varchar(150) COLLATE utf8_bin NOT NULL,
+  `type` varchar(30) COLLATE utf8_bin NOT NULL,
+  `text` varchar(100) COLLATE utf8_bin NOT NULL,
+  `state` enum(\'passive\',\'active\',\'selected\') COLLATE utf8_bin NOT NULL DEFAULT \'passive\',
+  `width` int(11) NOT NULL,
+  `height` int(11) NOT NULL,
+  `fontsize` smallint(6) NOT NULL,
+  `font` varchar(150) COLLATE utf8_bin NOT NULL,
+  `position` enum(\'normal\',\'first\',\'last\') COLLATE utf8_bin NOT NULL DEFAULT \'normal\',
+  `startX` smallint(6) DEFAULT NULL,
+  `startY` smallint(6) DEFAULT NULL,
+  PRIMARY KEY (`path`,`state`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;',
+            'type' => 'insert'),
+        'create_table_2' => array(
+            'query' => 'CREATE TABLE IF NOT EXISTS `###imagesGeneration` (
+  `folder` varchar(128) NOT NULL,
+  `image` varchar(128) NOT NULL,
+  `class` varchar(32) NOT NULL,
+  UNIQUE KEY `folder` (`folder`,`image`,`class`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;',
+            'type' => 'insert'),
 );

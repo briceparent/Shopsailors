@@ -1,0 +1,117 @@
+<div>
+    <RENDER_FORM id="sites_manage">
+        <RENDER_TABGROUP size="XL" validate="{i18n:save}" admin="admin">
+            <NORENDER>FIRST TAB</NORENDER>
+            <RENDER_TAB title="{i18n:sites}">
+                Default site :
+                <select name="default">
+                    <RENDER_LOOP what="existing">
+                        <option value="{existing:id}" state="{existing:state}"><RENDER_VALUE what="existing:name"/></option>
+                    </RENDER_LOOP>
+                </select><br /><br />
+                <div style="margin:3px auto;border:1px dashed grey;padding:3px;height:30px;width:240px;">
+                    <input type="image" name="addSite" src="/images/shared/icons/picto_add.png" value="0" style="float:right;border:none;"/>
+                    <div class="bold">Nouveau site</div>
+                </div>
+                <RENDER_VALUE what="i18n:existing_topText"/>
+                <RENDER_TABLE cols="3" what="existing">
+                    <div style="margin:3px;border:1px dashed {existing:borderColor};padding:3px;min-height:30px;width:240px;">
+                        <input type="image" name="editSite" src="/images/shared/icons/picto_modify.png" value="{existing:id}" style="float:right;border:none;"/>
+                        <div class="bold left"><RENDER_VALUE what="existing:name"/></div>
+                        <div class="left"><RENDER_VALUE what="existing:domain"/></div>
+                    </div>
+                </RENDER_TABLE>
+                <RENDER_LOOP what="existing">
+                </RENDER_LOOP>
+            </RENDER_TAB>
+            <RENDER_TAB title="{i18n:redirections}">
+                Redirections existantes : <br />
+                <table>
+                    <tr>
+                        <td>Domaine à rediriger</td>
+                        <td>Destination</td>
+                        <td>Type</td>
+                        <td>Supprimer</td>
+                    </tr>
+                    <RENDER_LOOP what="redirections">
+                        <tr>
+                            <td>
+                                <RENDER_VALUE what="redirections:domain"/>
+                            </td>
+                            <td>
+                                <RENDER_VALUE what="redirections:destination"/>
+                            </td>
+                            <td>
+                                <RENDER_VALUE what="redirections:type"/>
+                            </td>
+                            <td><input type="checkbox" name="deleteRedirection[{redirections:regexp}]"/></td>
+                        </tr>
+                    </RENDER_LOOP>
+                </table>
+                <hr />
+                Ajouter une redirection :<br />
+                Domaine à rediriger : <input name="addRedirectionDomain"/><br />
+                Destination : <input name="addRedirectionDestination"/><br />
+                Gestion des sous-domaines : <br />
+                <input type="radio" name="addRedirectionType" id="addRedirectionType" value="simple" checked="checked"/>
+                <label for="addRedirectionType">Simple</label>
+                <RENDER_HELP>
+                    <div>
+                        Seul le domaine et le sous-domaine entrés seront réécrits.
+                    </div>
+                </RENDER_HELP><br />
+                <input type="radio" name="addRedirectionType" id="addRedirectionType" value="copy"/>
+                <label for="addRedirectionType">Copie</label>
+                <RENDER_HELP>
+                    <div>
+                        Les sous-domaines seront copiés comme dans l'exemple qui suit :<br />
+                        <div class="bold">domain2.com -> domain1.com </div>
+                        donnera :<br />
+                        http://sub.domain2.com/index.php -> http://sub.domain1.com/index.php<br />
+                        http://test.domain2.com/index.php -> http://test.domain1.com/index.php<br />
+                    </div>
+                </RENDER_HELP><br />
+                <input type="radio" name="addRedirectionType" id="addRedirectionType" value="direct"/>
+                <label for="addRedirectionType">Redirection</label>
+                <RENDER_HELP>
+                    <div>
+                        Les sous-domaines seront remplacés comme dans les exemples qui suivent :<br />
+                        <div>domain2.com -> domain1.com </div>
+                        donnera :<br />
+                        http://sub.domain2.com/index.php -> http://domain1.com/index.php<br />
+                        http://test.domain2.com/index.php -> http://domain1.com/index.php<br />
+                        <br />
+                        ou
+                        <br />
+                        <div>domain2.com -> www.domain1.com </div>
+                        donnera :<br />
+                        http://sub.domain2.com/index.php -> http://www.domain1.com/index.php<br />
+                        http://test.domain2.com/index.php -> http://www.domain1.com/index.php<br />
+                    </div>
+                </RENDER_HELP><br />
+                <hr />
+                Les redirections ne sont lues que si le nom de domaine demandé dans la requête ne correspond à aucun site.<br />
+                L'ordre de recherche de redirections est :
+                <ol>
+                    <li>Les redirections simples</li>
+                    <li>Les redirections avec copie de sous domaines</li>
+                    <li>Les redirections avec redirection de sous domaines</li>
+                </ol>
+                Ainsi, si les trois règles suivantes existent :
+                <ul>
+                    <li>www.domain1.com -> www.domain2.com (simple)</li>
+                    <li>domain1.com -> domain3.com (copie)</li>
+                    <li>domain1.com -> fr.domain4.com (redirection)</li>
+                </ul>
+                on obtiendra :<br />
+                http://www.domain1.com/index.php -> http://www.domain2.com/index.php.<br /><br />
+                Sans la première règle, on obtiendra :<br />
+                http://www.domain1.com/index.php -> http://www.domain3.com/index.php.<br /><br />
+
+                Sans la première et la seconde règle, on obtiendra :<br />
+                http://www.domain1.com/index.php -> http://fr.domain4.com/index.php.<br /><br />
+                <RENDER_DEBUGALL/>
+            </RENDER_TAB>
+        </RENDER_TABGROUP>
+    </RENDER_FORM>
+</div>

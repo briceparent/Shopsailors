@@ -1,0 +1,65 @@
+<div class="carts">
+    <RENDER_LOOP what="carts">
+        <RENDER_IFSET what="carts:separator">
+            <hr />
+        </RENDER_IFSET>
+        <div class="shop_tableCart">
+            <div class="oneCart_name"><RENDER_VALUE what="carts:name"/></div>
+
+            <table cellspacing="0" class="{productsTable:class}">
+                <NORENDER>Table header</NORENDER>
+                <tr>
+                    <th></th>
+                    <th class="shop_headerText bg_table">
+                        <RENDER_VALUE what="i18n:cart_name"/>
+                    </th>
+                    <th class="shop_headerText bg_table">
+                        <RENDER_VALUE what="i18n:cart_shortDescription"/>
+                    </th>
+                    <th class="shop_headerText bg_table">
+                        <RENDER_VALUE what="i18n:cart_quantity"/>
+                    </th>
+                </tr>
+                <RENDER_LOOP what="contents">
+                    <NORENDER>Table content</NORENDER>
+                    <tr>
+                        <td class="shop_table_preview bg_table">
+                            <a href="{contents:link}">
+                                <img src="{contents:image}.resized.40.40.png" alt="product_preview"/>
+                            </a>
+                        </td>
+                        <td class="shop_cartProduct_nameRef bg_table">
+                            <div class="shop_cartProduct_name">
+                                <a href="{contents:link}">
+                                    <RENDER_VALUE what="contents:name"/>
+                                </a>
+                            </div>
+                            <div class="shop_cartProduct_ref">
+                                <a href="{contents:link}">
+                                    <RENDER_VALUE what="contents:reference"/>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="shop_cartProduct_shortDesc bg_table">
+                            <RENDER_VALUE what="contents:shortDescription"/>
+                        </td>
+                        <td class="bg_table shop_cartQuantity">
+                            <RENDER_VALUE what="contents:quantity"/>
+                        </td>
+                    </tr>
+                </RENDER_LOOP>
+            </table>
+            <div class="carts_list_actions">
+                <a href="{carts:addLink}" title="Ajouter le contenu de ce panier au panier actuel">
+                    <img src="/images/shared/icons/picto_add.png"/>
+                </a>
+                <a href="{carts:loadLink}" title="Charger ce panier à la place du panier actuel">
+                    <img src="/images/shared/icons/picto_update.png"/>
+                </a>
+                <a href="{carts:deleteLink}" title="Supprimer ce panier">
+                    <img src="/images/shared/icons/picto_delete.png"/>
+                </a>
+            </div>
+        </div>
+    </RENDER_LOOP>
+</div>

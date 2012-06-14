@@ -1,59 +1,42 @@
+
 <div>
     <RENDER_FORM id="shopPaymentModesEditor" >
-        <div class="form_box_container">
-            <div class="form_box_top">
-                <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>editPaymentModesTitle"/>
-                </h3>
-            </div>
-            <div class="form_box_middle">
-                <div class="formContent">
-                    <div class="payment_showPaymentInLegacy">
-                        <RENDER_CHECKBOX text="{i18n>payment_showPaymentInLegacy}" name="showPaymentInLegacy" state="{showPaymentInLegacy>checked}" help="{i18n>payment_showPaymentInLegacy_explanation}"/>
-                    </div>
-                </div>
-                <div class="formContent">
-                    <div id="paymentModes">
-                        <RENDER_LOOP what="modes">
-                            <div class="paymentMode">
-                                <div class="payment_mode_top"></div>
-                                <div class="payment_mode_middle">
-                                    <div class="payment_providerName">
-                                        <RENDER_VALUE what="i18n>payment_providerName"/><br /><input name="supplyers[{modes>id}][name]" value="{modes>name}"/>
-                                    </div>
-                                    <div class="payment_logoSelector payment_global">
-                                        <RENDER_VALUE what="i18n>paymentLogo"/>&#160;
-                                        <RENDER_HELP what="{i18n>paymentLogo_explanation}"/>
-                                        <div class="payment_logoImage">
-                                            <RENDER_IMAGESELECTOR name="supplyers[{modes>id}][logo]" value="{modes>logo}" folder="{payment>imagesFolder}" style="width:100px;height:80px;vertical-align:top;"/>
-                                        </div>
-                                    </div>
-                                    <div class="payment_description payment_global">
-                                        <RENDER_VALUE what="i18n>paymentDescription"/>&#160;
-                                        <RENDER_HELP what="{i18n>paymentDescription_explanation}"/><br />
-                                        <textarea name="supplyers[{modes>id}][description]">
-                                            <RENDER_VALUE what="modes>description"/>
-                                        </textarea>
-                                    </div>
-                                    <div class="payment_activateMode payment_global">
-                                        <RENDER_CHECKBOX text="{i18n>payment_activateMode}" name="supplyers[{modes>id}][activated]" state="{modes>activated}"/>
-                                    </div>
-                                    <div class="payment_delete payment_global">
-                                        <input type="image" name="removePaymentMode[{modes>id}]" value="{i18n>paymentMode_remove}"/>
-                                    </div>
-                                </div>
-                                <div class="payment_mode_bottom"></div>
-                            </div>
-                        </RENDER_LOOP>
-                        <div class="payment_addMode">
-                            <input type="submit" name="addPaymentMode" value="{i18n>paymentMode_add}"/>
+        <RENDER_ADMINBOX title="{i18n:editPaymentModesTitle}">
+            <RENDER_ADMINBOXCONTENT>
+                <RENDER_CHECKBOX text="{i18n:payment_showPaymentInLegacy}" name="showPaymentInLegacy" state="{showPaymentInLegacy:checked}" help="{i18n:payment_showPaymentInLegacy_explanation}"/>
+                <RENDER_LOOP what="paymentModes">
+                    <div class="paymentMode">
+                        <div class="payment_providerName">
+                            <RENDER_VALUE what="i18n:payment_providerName"/>
+                            <br />
+                            <span class="bold">
+                                <RENDER_VALUE what="paymentModes:name"/>
+                            </span>
                         </div>
+                        <div class="marginTop_5px">
+                            <img src="{paymentModes:logo}" alt="Logo" title="Logo" style="max-width:100px;max-height:100px;"/>
+                        </div>
+                        <div>
+                            <RENDER_VALUE what="paymentModes:description"/>
+                        </div>
+                        <RENDER_IFSET what="paymentModes:is_ready">
+                            <div class="payment_activateMode payment_global">
+                                <RENDER_CHECKBOX text="{i18n:payment_activateMode}" name="paymentModes[{paymentModes:id}]" state="{paymentModes:state}"/>
+                            </div>
+    
+                        </RENDER_IFSET>
+                        <RENDER_IFNOTSET what="paymentModes:is_ready">
+                            <RENDER_VALUE what="i18n:payment_not_ready"/>
+                        </RENDER_IFNOTSET>
+                        <a href="{paymentModes:edit}">
+                            <RENDER_VALUE what="i18n:payment_manage"/>
+                        </a>
                     </div>
-                </div>
-            </div>
-            <div class="form_box_bottom">
-            </div>
-            <input type="submit" value="envoyer"/>
+                </RENDER_LOOP>
+            </RENDER_ADMINBOXCONTENT>
+        </RENDER_ADMINBOX>
+        <div class="tab_buttons">
+            <input type="submit" value="{i18n:save}" class="tab_button btn_validate"/>
         </div>
     </RENDER_FORM>
 </div>

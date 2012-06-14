@@ -1,0 +1,35 @@
+
+<div>
+    Un ou plusieurs mots pouvant avoir un sens préjudiciable aux contenus du site a été détécté.
+    <br />
+    <br />
+    Les mots en question sont :
+    <ul>
+        <RENDER_LOOP what="dangerousWords">
+            <li>
+                <RENDER_VALUE what="dangerousWords:word"/>
+            </li>
+        </RENDER_LOOP>
+    </ul>
+    Voici les données signalées automatiquement :
+    <br />
+    <br />
+    <div>
+        <span style="font-weight:bold;">Titre : </span>
+        <RENDER_VALUE what="datas:title"/>
+    </div>
+    <div>
+        <div style="font-weight:bold;">Contenu : </div>
+        <div style="border:1px solid black">
+            <RENDER_VALUE what="datas:content"/>
+        </div>
+    </div>
+    <div style="margin-top:15px;margin-bottom:15px;">
+        Vous pouvez accéder à la page contentant ce texte en cliquant sur le lien suivant :
+        <br />
+        <a href="{datas:link}">
+            <RENDER_VALUE what="datas:link"/>
+        </a>
+    </div>
+    Si vous ne trouvez pas que ce texte doit être modéré, ne vous préoccupez de rien, il restera publié.
+</div>

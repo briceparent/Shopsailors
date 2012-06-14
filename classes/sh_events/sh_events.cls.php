@@ -1,68 +1,63 @@
 <?php
+
 /**
- * @author Brice PARENT for Shopsailors
+ * @author Brice PARENT (Websailors) for Shopsailors
  * @copyright Shopsailors 2009
  * @license http://www.cecill.info
  * @version See version in the params/global.params.php file.
  * @package Shopsailors Core Classes
  */
-if(!defined('SH_MARKER')){header('location: directCallForbidden.php');}
+if( !defined( 'SH_MARKER' ) ) {
+    header( 'location: directCallForbidden.php' );
+}
 
 /*
- * Calls events on every object in $this->links->helper->objects
+ * Calls events on every object in $this->helper->objects
  * if they exist
  */
-class sh_events extends sh_core{
-    protected $events = array();
 
-    public function construct(){
-        $this->events = array(
-            'afterBaseConstruction',
-            'beforeOutput',
-            'afterOutput',
-            'onAdminConnection',
-            'onMasterConnection'
-        );
-    }
+class sh_events extends sh_core {
 
-    /**
-     *  __call
-     * When we raise an event [event1], we first call the method [event1] on all loaded classes
-     * Then, we loop and include all files in SH_CLASS_SHARED_FOLDER/sh_events/[event1]/
-     */
-    public function __call($event,$args){
-        if(in_array($event, $this->events)){
-            if(!$onUnloadedClasses){
-                if(is_array($args) && isset($args[0])){
-                    $isObject = is_object($this->links->helper->objects[$args[0]]);
-                    $methodExists = method_exists($this->links->helper->objects[$args[0]],$event);
-                    if($isObject && $methodExists){
-                        return $this->links->helper->objects[$args[0]]->$event();
-                    }else{
-                        return false;
-                    }
-                }
-                if(is_array($this->links->helper->objects)){
-                    foreach($this->links->helper->objects as $object){
-                        if(method_exists($object, $event)){
-                            $ret[] = $object->$event();
-                        }
-                    }
-                }
-            }
-            if(is_dir(SH_CLASS_SHARED_FOLDER.$this->className.'/'.$event)){
-                $elements = scandir(SH_CLASS_SHARED_FOLDER.$this->className.'/'.$event);
-                foreach($elements as $element){
-                    if(substr($element,0,1) != '.'){
-                        include(SH_CLASS_SHARED_FOLDER.$this->className.'/'.$event.'/'.$element);
-                    }
-                }
-            }
-            return $ret;
+    const CLASS_VERSION = '1.1.11.03.28';
+
+    protected static $needs_db = false;
+    protected static $needs_form_verifier = false;
+    public $shopsailors_dependencies = array(
+        'sh_linker', 'sh_params', 'sh_db'
+    );
+    protected $events = array( );
+
+    public function construct() {
+        $installedVersion = $this->getClassInstalledVersion();
+        if( $installedVersion != self::CLASS_VERSION ) {
+            // The class datas are not in the same version as this file, or don't exist (installation)
+            $this->setClassInstalledVersion( self::CLASS_VERSION );
         }
     }
 
-    public function __tostring(){
+    /**
+     * This method calls the $event event method on every class that need it (should be declared using
+     * linker->addClassesSharedMethod('sh_events','[event name]','[class that requires a call]').
+     * @var string $event The name of the event. Should always start with the string "on".
+     * @var string $args The args to give to the called method.
+     * @return bool True if every called class return true, false if any of them return false, and null , or if no class 
+     * has to answer to this event.
+     */
+    public function __call( $event, $args ) {
+        $this->debug( 'Event ' . $event . ' is fired.', 3, __LINE__, true );
+        if( substr( $event, 0, 2 ) == 'on' ) {
+            $ret = true;
+            $classes = $this->get_shared_methods( $event );
+            foreach( $classes as $class ) {
+                $ret = $this->linker->$class->$event( $args ) && $ret;
+            }
+            return $ret;
+        }
+        return null;
+    }
+
+    public function __tostring() {
         return get_class();
     }
+
 }

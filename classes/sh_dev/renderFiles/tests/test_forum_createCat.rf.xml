@@ -2,75 +2,75 @@
 	<div class="form_box_container">
 		<div class="form_box_top">
 			<h3 class="box_title">
-				<RENDER_VALUE what="i18n2>Forum_createCategory"/>
+				<RENDER_VALUE what="i18n2:Forum_createCategory"/>
 			</h3>
 		</div>
 		<div class="form_box_middle">
 			<div class="formContent">
-				<RENDER_VALUE what="i18n2>category_title"/><br />
-				<input class="inputForm" name="forum_categoryTitle" value="{previous>forum_categoryTitle}"/>
+				<RENDER_VALUE what="i18n2:category_title"/><br />
+				<input class="inputForm" name="forum_categoryTitle" value="{previous:forum_categoryTitle}"/>
 			</div>
 			<div class="formContent">
 				<div class="bold marginBottom_5px">
-					<RENDER_VALUE what="i18n2>category_rights"/>
+					<RENDER_VALUE what="i18n2:category_rights"/>
 				</div>
 				<table>
 					<tr>
 						<td>
 						</td>
 						<td>
-							<img src="/images/shared/icons/bank1/picto_command_small.png" alt="{i18n2>category_rights_read}" title="{i18n2>category_rights_read}"/>
+							<img src="/images/shared/icons/bank1/picto_command_small.png" alt="{i18n2:category_rights_read}" title="{i18n2:category_rights_read}"/>
 						</td>
 						<td>
-							<img src="/images/shared/icons/bank1/picto_com_small.png" alt="{i18n2>category_rights_post}" title="{i18n2>category_rights_post}"/>
+							<img src="/images/shared/icons/bank1/picto_com_small.png" alt="{i18n2:category_rights_post}" title="{i18n2:category_rights_post}"/>
 						</td>
 						<td>
-							<img src="/images/shared/icons/bank1/picto_addsubject_small.png" alt="{i18n2>category_rights_create}" title="{i18n2>category_rights_create}"/>
+							<img src="/images/shared/icons/bank1/picto_addsubject_small.png" alt="{i18n2:category_rights_create}" title="{i18n2:category_rights_create}"/>
 						</td>
 						<td>
-							<img src="/images/shared/icons/bank1/picto_master_small.png" alt="{i18n2>category_rights_moderate}" title="{i18n2>category_rights_moderate}"/>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<RENDER_VALUE what="i18n2>forum_category_all"/>
-						</td>
-						<td>
-							<input type="checkbox" name="forum_category_read" state="{rights>forum_category_read}"/>
-						</td>
-						<td>
-							<input type="checkbox" name="forum_category_post" state="{rights>forum_category_post}"/>
-						</td>
-						<td>
-							<input type="checkbox" name="forum_category_create" state="{rights>forum_category_create}"/>
-						</td>
-						<td>
-							<input type="checkbox" name="forum_category_moderate" state="{rights>forum_category_moderate}"/>
+							<img src="/images/shared/icons/bank1/picto_master_small.png" alt="{i18n2:category_rights_moderate}" title="{i18n2:category_rights_moderate}"/>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<RENDER_VALUE what="i18n2>forum_category_connected"/>
+							<RENDER_VALUE what="i18n2:forum_category_all"/>
 						</td>
 						<td>
-							<input type="checkbox" name="forum_category_read" state="{rights>forum_category_read}"/>
+							<input type="checkbox" name="forum_category_read" state="{rights:forum_category_read}"/>
 						</td>
 						<td>
-							<input type="checkbox" name="forum_category_post" state="{rights>forum_category_post}"/>
+							<input type="checkbox" name="forum_category_post" state="{rights:forum_category_post}"/>
 						</td>
 						<td>
-							<input type="checkbox" name="forum_category_create" state="{rights>forum_category_create}"/>
+							<input type="checkbox" name="forum_category_create" state="{rights:forum_category_create}"/>
 						</td>
 						<td>
-							<input type="checkbox" name="forum_category_moderate" state="{rights>forum_category_moderate}"/>
+							<input type="checkbox" name="forum_category_moderate" state="{rights:forum_category_moderate}"/>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<RENDER_VALUE what="i18n2>forum_category_banned"/>
+							<RENDER_VALUE what="i18n2:forum_category_connected"/>
 						</td>
 						<td>
-							<input type="checkbox" name="forum_category_read" state="{rights>forum_category_read}"/>
+							<input type="checkbox" name="forum_category_read" state="{rights:forum_category_read}"/>
+						</td>
+						<td>
+							<input type="checkbox" name="forum_category_post" state="{rights:forum_category_post}"/>
+						</td>
+						<td>
+							<input type="checkbox" name="forum_category_create" state="{rights:forum_category_create}"/>
+						</td>
+						<td>
+							<input type="checkbox" name="forum_category_moderate" state="{rights:forum_category_moderate}"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<RENDER_VALUE what="i18n2:forum_category_banned"/>
+						</td>
+						<td>
+							<input type="checkbox" name="forum_category_read" state="{rights:forum_category_read}"/>
 						</td>
 						<td>
 							<input type="checkbox" name="forum_category_post" state="disabled"/>
@@ -85,19 +85,19 @@
 					<RENDER_LOOP what="forum_groups">
 						<tr>
 							<td>
-								<RENDER_VALUE what="forum_groups>name"/>
+								<RENDER_VALUE what="forum_groups:name"/>
 							</td>
 							<td>
-								<input type="checkbox" name="forum_category_read" state="{rights>forum_category_read}"/>
+								<input type="checkbox" name="forum_category_read" state="{rights:forum_category_read}"/>
 							</td>
 							<td>
-								<input type="checkbox" name="forum_category_post" state="{rights>forum_category_post}"/>
+								<input type="checkbox" name="forum_category_post" state="{rights:forum_category_post}"/>
 							</td>
 							<td>
-								<input type="checkbox" name="forum_category_create" state="{rights>forum_category_create}"/>
+								<input type="checkbox" name="forum_category_create" state="{rights:forum_category_create}"/>
 							</td>
 							<td>
-								<input type="checkbox" name="forum_category_moderate" state="{rights>forum_category_moderate}"/>
+								<input type="checkbox" name="forum_category_moderate" state="{rights:forum_category_moderate}"/>
 							</td>
 						</tr>
 					</RENDER_LOOP>
@@ -106,26 +106,26 @@
 			<div class="formContent">
 				<div class="forum_createCat_legend">
 					<div>
-						<img src="/images/shared/icons/bank1/picto_command_small.png" alt="{i18n2>category_rights_read}" title="{i18n2>category_rights_read}"/>&#160;
-						<RENDER_VALUE what="i18n2>category_rights_read"/>
+						<img src="/images/shared/icons/bank1/picto_command_small.png" alt="{i18n2:category_rights_read}" title="{i18n2:category_rights_read}"/>&#160;
+						<RENDER_VALUE what="i18n2:category_rights_read"/>
 					</div>
 					<div>
-						<img src="/images/shared/icons/bank1/picto_com_small.png" alt="{i18n2>category_rights_post}" title="{i18n2>category_rights_post}"/>&#160;
-						<RENDER_VALUE what="i18n2>category_rights_post"/>
+						<img src="/images/shared/icons/bank1/picto_com_small.png" alt="{i18n2:category_rights_post}" title="{i18n2:category_rights_post}"/>&#160;
+						<RENDER_VALUE what="i18n2:category_rights_post"/>
 					</div>
 					<div>
-						<img src="/images/shared/icons/bank1/picto_addsubject_small.png" alt="{i18n2>category_rights_create}" title="{i18n2>category_rights_create}"/>&#160;
-						<RENDER_VALUE what="i18n2>category_rights_create"/>
+						<img src="/images/shared/icons/bank1/picto_addsubject_small.png" alt="{i18n2:category_rights_create}" title="{i18n2:category_rights_create}"/>&#160;
+						<RENDER_VALUE what="i18n2:category_rights_create"/>
 					</div>
 					<div>
-						<img src="/images/shared/icons/bank1/picto_master_small.png" alt="{i18n2>category_rights_moderate}" title="{i18n2>category_rights_moderate}"/>&#160;
-						<RENDER_VALUE what="i18n2>category_rights_moderate"/>
+						<img src="/images/shared/icons/bank1/picto_master_small.png" alt="{i18n2:category_rights_moderate}" title="{i18n2:category_rights_moderate}"/>&#160;
+						<RENDER_VALUE what="i18n2:category_rights_moderate"/>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="form_box_bottom">
 		</div>
-		<input type="submit" value="{i18n>validate}"/>
+		<input type="submit" value="{i18n:validate}"/>
 	</div>
 </div>

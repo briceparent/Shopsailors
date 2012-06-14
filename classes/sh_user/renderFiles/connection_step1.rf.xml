@@ -1,43 +1,29 @@
 <div id="connection_mainContainer">
-    <NORENDER>
-        <RENDER_VALUE what="aes>phptest"/>
-        <script type="text/javascript">
-        alert("<RENDER_VALUE what="aes>original"/>");
-        alert(AesCtr.encrypt("<RENDER_VALUE what="aes>original"/>", "<RENDER_VALUE what="aes>pass"/>", 256));
-        alert(AesCtr.decrypt("<RENDER_VALUE what="aes>crypted"/>", "<RENDER_VALUE what="aes>pass"/>", 256));
-        </script>
-    </NORENDER>
-    <div class="bg_identification_top">
-    </div>
-    <div class="bg_identification_middle">
-        <div id="identificationContainer">
-            <div class="errorLogin">
-            <RENDER_IFSET what="error>message">
-                <RENDER_VALUE what="error>message"/>
+    <RENDER_NOTIF size="M" title="{i18n:client_identification_title_step1}">
+        <div class="errorLogin">
+            <RENDER_IFSET what="error:message">
+                <RENDER_VALUE what="error:message"/>
             </RENDER_IFSET>
+        </div>
+        <RENDER_FORM id="user_connection_step1">
+            <div class="connectionStep1_username">
+                <RENDER_VALUE what="i18n:client_username"/><br />
+                <input name="userName" value="{old:userName}"/>
             </div>
-            <RENDER_FORM id="user_connection_step1">
-                <div  id="clientConnection">
-                    <div class="clientConnection_title">
-                        <RENDER_VALUE what="i18n>client_identification_title_step1"/><br />
-                    </div>
-                    <div>
-                        <RENDER_VALUE what="i18n>client_username"/>
-                        <input name="userName" value="{old>userName}"/>
-                    </div>
-                    <div class="captchaAdmin">
-                        <RENDER_CAPTCHA what="user_connection_step1" error="{captcha>error}"/>
-                    </div>
-                </div>
-                <div><input type="submit"/></div>
-            </RENDER_FORM>
+            <hr/>
+            <div class="captchaAdmin">
+                <RENDER_CAPTCHA what="user_connection_step1" error="{captcha:error}"/>
+            </div>
+            <div><input type="submit"/></div>
+        </RENDER_FORM>
+        <hr />
+        <div class="noAccount">
+            <RENDER_VALUE what="i18n:noAccount"/>
         </div>
         <div id="createAccountLink">
-            <a href="{createAccount>link}" class="grey_link">
-                <RENDER_VALUE what="i18n>create_account"/>
+            <a href="{createAccount:link}" class="grey_link">
+                <RENDER_VALUE what="i18n:create_account"/>
             </a>
         </div>
-    </div>
-    <div class="bg_identification_bottom">
-    </div>
+    </RENDER_NOTIF>
 </div>

@@ -1,0 +1,8 @@
+<div class="productsPicker">
+    <RENDER_LOOP what="category_elements">
+        <div class="oneProduct_picker">
+            <RENDER_VALUE what="category_elements:name"/>
+            <img src="/images/shared/icons/picto_validate_small.png" alt="Choisir" title="Choisir" onclick="chooseProductOrCategory_done('p{category_elements:id} - {category_elements:name}')"/>
+        </div>
+    </RENDER_LOOP>
+</div>

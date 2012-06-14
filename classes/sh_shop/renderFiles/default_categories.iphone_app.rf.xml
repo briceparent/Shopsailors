@@ -1,0 +1,56 @@
+<div>
+    <RENDER_IFNOTSET what="category_elements:empty">
+
+        <NORENDER>list of the subcategories</NORENDER>
+        <table class="subCatContainer" style="width:100%;" >
+            <RENDER_LOOP what="category_elements">
+                <tr style="border:1px solid grey;min-height:200px;width:100%;float:none;margin-bottom;5px;" >
+                    <td class="" style="width:200px;float:none;">
+                        <a href="{category_elements:link}"><img src="{category_elements:image}.resized.200.200.png" style="width:200px;height:200px;" alt="category_image"/></a>
+                    </td>
+                    <td style="min-height:200px;margin:0;padding:0;">
+                        <div class="subcategory_name" style="padding:20px;">
+                            <a href="{category_elements:link}" style="font-size:250%;"><RENDER_VALUE what="category_elements:name"/></a>
+                        </div>
+                        <div class="subcategory_describe" style="font-size:250%;padding:20px;">
+                            <RENDER_VALUE what="category_elements:shortDescription"/>
+                        </div>
+                    </td>
+                </tr>
+            </RENDER_LOOP>
+        </table>
+
+        <NORENDER>Page navigator</NORENDER>
+        <RENDER_IFSET what="pages:0">
+            <div class="pageNavigator">
+                <table>
+                    <tr>
+                        <td>
+                            <a href="{pagenavigation:previous_link}"><img src="images/shared/variations/{constants:variation}/navigation/model1_previous.png" alt="{i18n:nav_previous}"/></a>
+                        </td>
+                        <RENDER_LOOP what="pages">
+                            <td class="pagesNumbers">
+                                <a href="{pages:link}"><RENDER_VALUE what="pages:number"/></a>
+                            </td>
+                        </RENDER_LOOP>
+                        <td>
+                            <a href="{pagenavigation:next_link}"><img src="images/shared/variations/{constants:variation}/navigation/model1_next.png" alt="{i18n:nav_next}"/></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </RENDER_IFSET>
+
+    </RENDER_IFNOTSET>
+
+    <NORENDER>navigator_emptyCategory</NORENDER>
+    <RENDER_IFSET what="category_elements:empty">
+        <RENDER_NOTIF size="M">
+            <div class="bold">
+                <RENDER_VALUE what="i18n:emptyCategory"/>
+            </div>
+        </RENDER_NOTIF>
+    </RENDER_IFSET>
+    <div class="clearBoth"></div>
+
+</div>

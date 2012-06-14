@@ -1,0 +1,37 @@
+
+<div id="newsPage">
+    <h2 class="newsPage_intro"><RENDER_VALUE what="new:intro"/></h2>
+    <RENDER_IFSET what="thereAreNews:set">
+        <ul>
+            <RENDER_LOOP what="news">
+                <li>
+                    <table cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td class="newsImage">
+                                <a href="{news:link}" title="{news:title}">
+                                    <img src="{news:image}.resized.100.100.png" title="{news:title}" alt="{news:title}"/>
+                                </a>
+                            </td>
+                            <td>
+                                <div class="newsTitle">
+                                    <a href="{news:link}" title="{news:title}">
+                                        <RENDER_VALUE what="news:title"/>
+                                    </a>
+                                </div>
+                                <div class="newsDate">
+                                    <RENDER_VALUE what="i18n:publicationDate"/>&#160;<RENDER_VALUE what="news:date"/>
+                                </div>
+                                <div class="newsSummary">
+                                    <RENDER_VALUE what="news:summary"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+            </RENDER_LOOP>
+        </ul>
+    
+    </RENDER_IFSET>
+    <RENDER_IFNOTSET what="thereAreNews:set">
+    </RENDER_IFNOTSET>
+</div>

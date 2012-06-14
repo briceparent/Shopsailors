@@ -1,9 +1,0 @@
-<div id="searcher">
-    <form id="searcher_form" method="get" action="{search>action}">
-        <div>
-            <input name="value" class="searcher_input" value='{search>active}'/>
-            <input type="image" class="searcher_image" name="submit" src="/images/shared/icons/picto_search.png" title="{i18n>search_image}"/>
-            <input type="hidden" name="submitImage" value="submit"/>
-        </div>
-    </form>
-</div>

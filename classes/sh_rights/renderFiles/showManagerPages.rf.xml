@@ -1,0 +1,100 @@
+<RENDER_NOTIF size="L" title="Gestion des droits d'accès">
+    <div class="left">
+        <ul>
+            <RENDER_LOOP what="classes">
+                <li>
+                    <span class="bold"><RENDER_VALUE what="classes:name"/></span>
+                    <ul>
+                        <RENDER_LOOP what="methods">
+                            <RENDER_IFSET what="methods:name">
+                                <li>
+                                    <RENDER_VALUE what="methods:name"/>
+                                    (
+                                    <span onclick="Effect.toggle('{methods:uid}_groups','blind');" class="falseLink">
+                                        Groupes : <RENDER_VALUE what="methods:groupsCount"/>
+                                    </span>
+                                    -
+                                    <span onclick="Effect.toggle('{methods:uid}_users','blind');" class="falseLink">
+                                        Utilisateurs : <RENDER_VALUE what="methods:usersCount"/>
+                                    </span>
+                                    )
+                                    <br />
+                                    <div id="{methods:uid}_groups" style="display:none">Groupes :
+                                        <ul>
+                                            <RENDER_IFSET what="methods:groups">
+                                                <RENDER_LOOP what="groups">
+                                                    <li>
+                                                        <span class="italic">
+                                                            <RENDER_VALUE what="i18n:{groups:name}"/>
+                                                        </span>
+                                                    </li>
+                                                </RENDER_LOOP>
+                                            </RENDER_IFSET>
+                                        </ul>
+                                        <a href="/rights/manageGroupsForPage.php?class={methods:class}&#38;method={methods:method}">Modifier</a>
+                                    </div>
+                                    <div id="{methods:uid}_users" style="display:none">Utilisateurs :
+                                        <ul>
+                                            <RENDER_IFSET what="methods:users">
+                                                <RENDER_LOOP what="users">
+                                                    <li>
+                                                        <span class="italic">
+                                                            <RENDER_VALUE what="users:name"/>
+                                                        </span>
+                                                    </li>
+                                                </RENDER_LOOP>
+                                            </RENDER_IFSET>
+                                        </ul>
+                                        <a href="/rights/manageUsersForPage.php?class={methods:class}&#38;method={methods:method}">Modifier</a>
+                                    </div>
+                                </li>
+                            </RENDER_IFSET>
+                            <RENDER_LOOP what="pages">
+                                <li>
+                                    <RENDER_VALUE what="pages:name"/> (
+                                    <span onclick="Effect.toggle('{pages:uid}_groups','blind');" class="falseLink">
+                                        Groupes : <RENDER_VALUE what="pages:groupsCount"/>
+                                    </span>
+                                    -
+                                    <span onclick="Effect.toggle('{pages:uid}_users','blind');" class="falseLink">
+                                        Utilisateurs : <RENDER_VALUE what="pages:usersCount"/>
+                                    </span>
+                                    )
+                                    <br />
+                                    <div id="{pages:uid}_groups" style="display:none">Groupes :
+                                        <ul>
+                                            <RENDER_LOOP what="groups">
+                                                <li>
+                                                    <span class="italic">
+                                                        <RENDER_VALUE what="i18n:{groups:name}"/>
+                                                    </span>
+                                                </li>
+                                            </RENDER_LOOP>
+                                        </ul>
+                                        <a href="/rights/manageGroupsForPage.php?class={pages:class}&#38;method={pages:method}&#38;id={pages:id}">Modifier</a>
+                                    </div>
+                                    <div id="{pages:uid}_users" style="display:none">Utilisateurs :
+                                        <ul>
+                                            <RENDER_LOOP what="users">
+                                                <li>
+                                                    <span class="italic">
+                                                        <RENDER_VALUE what="users:name"/>
+                                                    </span>
+                                                </li>
+                                            </RENDER_LOOP>
+                                        </ul>
+                                        <a href="/rights/manageUsersForPage.php?class={pages:class}&#38;method={pages:method}&#38;id={pages:id}">Modifier</a>
+                                    </div>
+                                </li>
+                            </RENDER_LOOP>
+                        </RENDER_LOOP>
+                    </ul>
+                </li>
+            </RENDER_LOOP>
+        </ul>
+    </div>
+    <hr />
+    <div>
+        Ajouter une page à la liste
+    </div>
+</RENDER_NOTIF>

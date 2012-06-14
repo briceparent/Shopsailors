@@ -1,0 +1,5 @@
+<div id="shop_externalDatas">
+    <RENDER_VALUE what="steps:content"/>
+
+    <input type="hidden" name="step" value="set_external_datas"/>
+</div>

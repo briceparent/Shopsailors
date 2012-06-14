@@ -1,0 +1,52 @@
+
+<div>
+    <RENDER_FORM id="packs_list">
+        <RENDER_TABGROUP size="M" admin="admin">
+            <RENDER_TAB title="{i18n:packsList_active_tab}">
+                <RENDER_IFSET what="present:active">
+                    <ul>
+                        <RENDER_LOOP what="active">
+                            <li>
+                                <RENDER_VALUE what="active:name"/><br />
+                                <a href="{active:editLink}">
+                                    <RENDER_VALUE what="i18n:packsList_editPack"/>
+                                </a> -
+                                <a href="{active:showLink}">
+                                    <RENDER_VALUE what="i18n:packsList_showPack"/>
+                                </a>
+                            </li>
+                        </RENDER_LOOP>
+                    </ul>
+                </RENDER_IFSET>
+                <RENDER_IFNOTSET what="present:active">
+                    <RENDER_VALUE what="i18n:packsList_empty"/>
+                </RENDER_IFNOTSET>
+            </RENDER_TAB>
+
+            <RENDER_TAB title="{i18n:packsList_inactive_tab}">
+                <RENDER_IFSET what="present:inactive">
+                    <ul>
+                        <RENDER_LOOP what="inactive">
+                            <li>
+                                <RENDER_VALUE what="inactive:name"/><br />
+                                <a href="{inactive:editLink}">
+                                    <RENDER_VALUE what="i18n:packsList_editPack"/>
+                                </a> -
+                                <a href="{inactive:showLink}">
+                                    <RENDER_VALUE what="i18n:packsList_showPack"/>
+                                </a>
+                            </li>
+                        </RENDER_LOOP>
+                    </ul>
+                </RENDER_IFSET>
+                <RENDER_IFNOTSET what="present:inactive">
+                    <RENDER_VALUE what="i18n:packsList_empty"/>
+                </RENDER_IFNOTSET>
+
+            </RENDER_TAB>
+
+            <RENDER_TAB type="image" name="addPack" value="new" title="{i18n:packsList_addPack}" src="/templates/global/admin/icons/picto_add2.png"/>
+        </RENDER_TABGROUP>
+    </RENDER_FORM>
+
+</div>

@@ -1,0 +1,24 @@
+
+body{
+    width:700px;
+    margin:0 auto;
+}
+legend{     
+    font-weight: bold;
+}
+.step{
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+.notification{
+    margin-left: 15px;
+    font-style: italic;
+}
+.subtitle{
+    font-weight: bold;
+}
+.notification_error{  
+    margin-left: 15px;
+    font-style: italic;
+	color:red;
+}

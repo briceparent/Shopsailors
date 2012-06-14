@@ -8,11 +8,14 @@ $i18n = array(
     'newsletters_sent' => 'Newsletters déjà envoyées : ',
     'newsletters_planned' => 'Newsletters dont l\'envoi est planifié : ',
     'newsletters_notPlanned' => 'Newsletters dont l\'envoi n\'est pas encore planifié : ',
+
+    'manageTitle' => 'Gestion des newsletters',
+    'createTitle' => 'Création d\'une newsletter',
     
     'nl_dateTitle' => 'Newsletter du&#160;',
 
-    'monthAndYear' => '<RENDER_VALUE what="i18n>month_{monthes>month}"/>&#160;
-<RENDER_VALUE what="monthes>year"/>',
+    'monthAndYear' => '<RENDER_VALUE what="i18n>month_{monthes:month}"/>&#160;
+<RENDER_VALUE what="monthes:year"/>',
     'month_01' => 'Janvier',
     'month_02' => 'Février',
     'month_03' => 'Mars',
@@ -45,6 +48,7 @@ Un lien "Si cette newsletter ne s\'affiche pas correctement, cliquez ici." appar
 Les mentions légales, ainsi que celles de la société se chargeant de l\'envoi,
 apparaîtront ici.
 </div>',
+    'mark_as_sent' => 'Marquer comme envoyée',
 
     'editNewsletter_title' => 'Modifier une newsletter',
     'createNewsletter_title' => 'Créer une newsletter',
@@ -130,7 +134,7 @@ que vous proposez sur votre site).
     'unsubscription_inputMail'=>'Entrez ici l\'adresse email que vous souhaitez
 désinscrire : ',
     'unsubscription_selectML_intro'=>'Choisissez la ou les newsletters desquelles
-vous souhaitez désabonner l\'adresse <span style="font-weight:bold"><RENDER_VALUE what="mail>value"/></span> :',
+vous souhaitez désabonner l\'adresse <span style="font-weight:bold"><RENDER_VALUE what="mail:value"/></span> :',
     'unsubscription_intro'=>'Cette page vous permet de vous désabonner des
 newsletters de notre site.<br />
 Sachez qu\'une fois votre désinscription effectuée, nos services ne vous enverront
@@ -169,9 +173,9 @@ envoyer une dernière newsletter pour signaler aux utilisateurs que ce service
 s\'arrête.<br /><br />
 Toutes les adresses email de cette liste seront effacées.<br />
 Si vous êtes sûr de vouloir supprimer cette liste de diffusion, il suffit de
-cliquer sur le bouton "<RENDER_VALUE what="i18n>confirmDeletion"/>" ci-dessous.',
+cliquer sur le bouton "<RENDER_VALUE what="i18n:confirmDeletion"/>" ci-dessous.',
     
-    'nl_newDiffusionList' => 'Nouvelle liste de diffusion',
+    'nl_newDiffusionList' => 'Gérer les listes de diffusion',
     'newDiffusionListLink' => 'Nouvelle liste de diffusion',
     'nl_editDiffusionList' => 'Modifier la liste de diffusion',
     'nl_diffusionList_name' => 'Nom de la liste :',
@@ -197,32 +201,26 @@ anglophone, francophone, etc</div>.',
     'confirmSubscriptionMail_title' => 'Validation de votre inscription à la newsletter',
     'confirm_subscription_validated' => '
 Votre inscription à la newsletter a bien été prise en compte.<br />
-Nous vous remercions pour l\'intérêt que vous nous témoignez.<br /><br />
-Cordialement,<br />
-L\'équipe de <RENDER_VALUE what="site>base"/>',
+Nous vous remercions pour l\'intérêt que vous nous témoignez.',
     'confirm_subscription_alreadyValidated' => '
 Votre inscription à la newsletter a déjà été validée.<br />
-Nous vous remercions pour l\'intérêt que vous nous témoignez.<br /><br />
-Cordialement,<br />
-L\'équipe de <RENDER_VALUE what="site>base"/>',
+Nous vous remercions pour l\'intérêt que vous nous témoignez.',
     'confirm_subscription_dateOver' => '
 La date limite pour valider votre inscription à notre newsletter est passée.<br />
 Pour vous inscrire, vous devez remplir à nouveau le formulaire d\'inscription
-disponible sur <a href="{links>subscribe}">cette page</a>.<br /><br />
-Cordialement,<br />
-L\'équipe de <RENDER_VALUE what="site>base"/>',
+disponible sur <a href="{links>subscribe}">cette page</a>.',
     'confirm_subscription_error' => '
 Nous n\'avons pas pu trouver votre demande d\'inscription à la newsletter.<br />
 Cela peut être dû à plusieurs choses :
 <ul>
 <li>Votre inscription a déjà été validée, vous recevrez donc notre newsletter
 sans problème.<br />
-Dans le doute, n\'hésitez pas à vous réinscrire sur <a href="{links>subscribe}">
+Dans le doute, n\'hésitez pas à vous réinscrire sur <a href="{links:subscribe}">
 cette page</a>. Vous ne recevrez en aucun cas la même newsletter 2 fois à la
 même adresse.</li>
 <li>Votre demande a expiré car elle a été effectuée il y a plus d\'un mois.<br />
 Vous devez dans ce cas remplir à nouveau le formulaire d\'inscription
-disponible sur <a href="{links>subscribe}">cette page</a>.</li>
+disponible sur <a href="{links:subscribe}">cette page</a>.</li>
 <li>Le lien qui vous a mené sur cette page n\'est pas complet.<br />
 Si vous avez cliqué sur le lien, c\'est qu\'il y a vraissemblablement une erreur
 dans celui-ci, auquel cas, copiez l\'adresse présente en bas du mail, et collez
@@ -231,7 +229,6 @@ Si cela ne résoud pas le problème, n\'hésitez pas à vous réinscrire pour
 recevoir un lien propre.</li>
 </ul>
 
-Cordialement,<br />
-L\'équipe de <RENDER_VALUE what="site>base"/>',
+Cordialement',
     'newsletter_saved_successfully'=>'La newsletter a été enregistrée avec succès.'
 );

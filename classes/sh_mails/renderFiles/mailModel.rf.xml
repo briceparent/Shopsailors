@@ -1,9 +1,0 @@
-<div>Vous avez recu un mail depuis le site.<br />
-<b>Date : </b><RENDER_VALUE what="mail>date"/><br />
-<b>Société : </b><RENDER_VALUE what="mail>company"/><br />
-<b>Nom : </b><RENDER_VALUE what="mail>name"/><br />
-<b>Téléphone : </b><RENDER_VALUE what="mail>phone"/><br />
-<b>E-Mail : </b><a href="MAILTO:{mail>mail}"><RENDER_VALUE what="mail>mail"/></a><br /><br />
-<b>Contenu : </b><br />
-<RENDER_VALUE what="mail>content"/>
-</div>

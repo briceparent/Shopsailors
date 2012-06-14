@@ -5,9 +5,13 @@ $i18n = array(
     'website' => 'Ce site a été créé par Websailors.',
     'contact_us' => 'Vous pouvez nous contacter par l\'un des moyens suivants',
     'contact_intro' => 'Texte d\'introduction de la page de contact&#160;: ',
-    'mail' => 'E-mail(s)&#160;:',
-    'phone' => 'Téléphone(s)&#160;:',
+    'mail' => 'E-mail&#160;:',
+    'phone' => 'Téléphone&#160;:',
+    'contactForm' => 'Formulaire de contact',
     'send_a_mail' => 'Envoyer un e-mail&#160;:',
+    'infos' => 'Informations',
+    'map' => 'Localisation',
+    'see_map' => 'Voir la carte',
     'company' => 'Société&#160;:',
     'contact_title' => 'Titre de la page de contact :',
     'leave_empty_if_needed' => '(Laissez vide si vous êtes un particulier)',
@@ -36,8 +40,8 @@ $i18n = array(
     Pour séparer les différentes entrées, il suffit de passer à la ligne.<br />
     nom: valeur<br />
     Ex: <br />
-    <textarea style="width:380px;">M Durand - Responsable commercial: 01 02 03 04 05
-    M Dupond - Responsable vente à distance: 01 02 03 04 06</textarea>
+    <textarea style="width:380px;">M Durand : 01 02 03 04 05
+M Dupond : 01 02 03 04 06</textarea>
     </div>',
     'address_explanation'=>
     '<div>Ce champs peut contenir plusieurs adresses:<br />
@@ -55,8 +59,8 @@ $i18n = array(
     Pour séparer les différentes entrées, il suffit de passer à la ligne.<br />
     nom: valeur<br />
     Ex: <br />
-    <textarea style="width:450px;">M Durand - Responsable commercial: r.durand@gmail.com
-    M Dupond - Responsable vente à distance: t.dupond@yahoo.com</textarea>
+    <textarea style="width:450px;">M Durand : r.durand@gmail.com
+M Dupond : t.dupond@yahoo.com</textarea>
     </div>',
     'contactBox' => 'Contact',
     'activated' => 'Activer le module',
@@ -67,4 +71,5 @@ Cela peut être utile si vous souhaitez afficher une page de contact <br />
 personnalisée, contenant par exemple des images ou du texte mis en forme, auquel<br />
 cas, vous pouvez la créer à partir d\'un simple article.',
     'mail_subject'=>'Demande d\'informations sur le site',
+    'requiredField' => 'Champs obligatoire',
 );

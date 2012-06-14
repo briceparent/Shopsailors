@@ -1,0 +1,16 @@
+
+body{
+    width:700px;
+    margin:0 auto;
+}
+.step{
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+.notification{
+    margin-left: 15px;
+    font-style: italic;
+}
+.subtitle{
+    font-weight: bold;
+}

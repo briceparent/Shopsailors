@@ -1,0 +1,17 @@
+<div class="results_forum_topics">
+    <RENDER_LOOP what="topics">
+        <div>
+            <a class="results_topicTitle" href="{topics:link}"><RENDER_VALUE what="topics:title"/></a>
+            <div class="results_topicInfo">
+            Sujet ouvert par 
+            <RENDER_VALUE what="topics:alias"/>&#160;
+            (<RENDER_VALUE what="topics:date"/>) - 
+            <RENDER_VALUE what="topics:posts_count"/> réponses
+            </div>
+<div class="results_topicContent">
+            <RENDER_VALUE what="topics:content"/><br />
+</div>
+        </div>
+    </RENDER_LOOP>
+
+</div>

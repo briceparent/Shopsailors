@@ -1,7 +1,4 @@
-<?xml version="1.0"?>
-<content>
-/* Shopsailors' CSS File | Template : <RENDER_VALUE what="template>name"/> | Variation : <RENDER_VALUE what="variation>name"/> 
-CSS for shop contents only*/
+/* Shopsailors' CSS File | Template : name@template | Variation : name@variation | Value : name@value */
 /* UTF-8 Check : à  ç  é  è  */
 
 /*SHOP: PRODUCTS CATEGORIES NAVIGATOR*/
@@ -9,7 +6,7 @@ CSS for shop contents only*/
 /*breadcrumbs*/
 
 #shop_navigator{
-	background: transparent url(/images/template/bg_arbo.png) no-repeat center top;
+	background: transparent url(/images/template/bg_arbo.png?suffix@images) no-repeat center top;
 	width: 350px;
 }
 
@@ -58,7 +55,7 @@ CSS for shop contents only*/
 /*active category */
 
 .bg_active_category{
-	background: transparent url(/images/template/variation/box.png) no-repeat right top;
+	background: transparent url(/images/template/variation/box.png?suffix@images) no-repeat right top;
 	height: 286px;
 	width: 435px;
 	color: #ffffff;
@@ -129,12 +126,12 @@ cursor: pointer;
 	width: 286px;
 }
 .list_image{
-	background: transparent url(/images/template/list.png) no-repeat center top;
+	background: transparent url(/images/template/list.png?suffix@images) no-repeat center top;
 	height: 70px;
 	width: 70px;
 }
 .list_image img{
-	background: transparent url(/images/template/list.png) no-repeat center top;
+	background: transparent url(/images/template/list.png?suffix@images) no-repeat center top;
 	margin: 5px;
 	height: 60px;
 	width: 60px;
@@ -256,17 +253,6 @@ padding-top: 8px;
 
 /*CART COMMAND SHIPPING DELIVERY*/
 
-/*Shop Notifications*/
-.command_confirm .notifL_content{
-	padding-top: 10px;
-}
-.command_confirm .notifM_content{
-	padding-top: 10px;
-}
-.payment_showModes .notifL_content{
-	padding-top: 10px;
-}
-
 /*cart_empty*/
 
 /*cart_show and cart of command_confirm*/
@@ -309,7 +295,14 @@ padding-top: 8px;
 	padding: 4px;
 	text-align: right;
 }
+body.Internet_Explorer_7_0 .bg_table,
+body.Internet_Explorer_8_0 .bg_table{
+	background: transparent url(/images/template/white_alpha60.png) repeat top center;
+}
 .bg_table{
+	background-color: rgba(255,255,255,0.6);
+    border: 1px solid #666;
+    padding: 5px;
 }
 .shop_tableCart th{
 	vertical-align: top;
@@ -393,49 +386,24 @@ padding-top: 8px;
 }
 
 /*command_confirm*/
-.command_billingL_container{
-	margin-top: 20px;
+.command_billingM_enterAdress{
+	font-weight: bold;
 }
-.command_billingM_container{
-	margin-top: 20px;
-}
-.billing_table{
-	text-align: left;
-	margin-left: 10px;
-	margin-top: 10px;
-}
-.billing_table td{
-	vertical-align: top;
-}
-.billing_bgM_enterAdress{
+.command_billingM_elements div{
 	padding-top: 5px;
-	text-align: center;
-	font-weight: bold;
-}
-.billing_enterAdress{
-	font-weight: bold;
-}
-.command_billing_name input{
-	border: 1px solid #333333;
-}
-.command_billing_address{
+	text-align: left;
 }
 .command_billing_address textarea{
-	border: 1px solid #333333;
 	height: 62px;
 }
 .command_billing_zipCode{
 	margin-top: 10px;
-}
-.command_billing_zipCode input{
-	border: 1px solid #333333;
 }
 .command_billing_city{
 	margin-top: 10px;
 }
 .command_billing_city input{
 	width: 180px;
-	border: 1px solid #333333;
 }
 .command_billing_middleTD{
 	width: 100px;
@@ -478,15 +446,6 @@ padding-top: 8px;
 /*SHIP MODE: command and legacy*/
 
 /*Choose shipper*/
-.shipMode_container .notifL_content table{
-	margin-left: auto; 
-	margin-right: auto;
-}
-.shipMode_container .notifM_content table{
-	margin-left: auto; 
-	margin-right: auto;
-}
-
 .shipMode_chooseMode{
 	font-style: italic;
 }
@@ -602,4 +561,3 @@ padding-top: 8px;
 	margin-left: auto; 
 	margin-right: auto;
 }
-</content>

@@ -1,0 +1,64 @@
+<div>
+    <RENDER_VALUE what="command:readOnly"/>
+    <RENDER_FORM id="command_step" action="{form:action}">
+        <RENDER_TABGROUP size="XL" previous="{navigation:previous}" next="{navigation:next}" type="false">
+            <NORENDER>First tab, shipment</NORENDER>
+            <RENDER_IFSET what="command:needShipment">
+                <RENDER_IFSET what="step:set_shipper">
+                    <RENDER_TAB title="{i18n:command_shipment}">
+                        <RENDER_VALUE what="step:set_shipper"/>
+                    </RENDER_TAB>
+                </RENDER_IFSET>
+                <RENDER_IFNOTSET what="step:set_shipper">
+                    <RENDER_TAB title="{i18n:command_shipment}" inactive="inactive" icon="{done:set_shipper}"/>
+                </RENDER_IFNOTSET>
+            </RENDER_IFSET>
+            <NORENDER>Second tab, billing adress</NORENDER>
+            <RENDER_IFSET what="step:set_billing_address">
+                <RENDER_TAB title="{i18n:command_billing_address}">
+                    <RENDER_VALUE what="step:set_billing_address"/>
+                </RENDER_TAB>
+            </RENDER_IFSET>
+            <RENDER_IFNOTSET what="step:set_billing_address">
+                <RENDER_TAB title="{i18n:command_billing_address}" inactive="inactive" icon="{done:set_billing_address}"/>
+            </RENDER_IFNOTSET>
+
+            <NORENDER>Third tab, shipping adress</NORENDER>
+            <RENDER_IFSET what="shipping:shown">
+                <RENDER_IFSET what="step:set_shipping_address">
+                    <RENDER_TAB title="{i18n:command_shipping_address}">
+                        <RENDER_VALUE what="step:set_shipping_address"/>
+                    </RENDER_TAB>
+                </RENDER_IFSET>
+                <RENDER_IFNOTSET what="step:set_shipping_address">
+                    <RENDER_TAB title="{i18n:command_shipping_address}" inactive="inactive" icon="{done:set_shipping_address}"/>
+                </RENDER_IFNOTSET>
+            </RENDER_IFSET>
+            
+            <NORENDER>Fourth tab, external classes</NORENDER>
+            <RENDER_IFSET what="external_classes:shown">
+                <RENDER_IFSET what="step:set_external_datas">
+                    <RENDER_TAB title="{i18n:command_extrenal_classes}">
+                        <RENDER_VALUE what="step:set_external_datas"/>
+                    </RENDER_TAB>
+                </RENDER_IFSET>
+                <RENDER_IFNOTSET what="step:set_external_datas">
+                    <RENDER_TAB title="{i18n:command_extrenal_classes}" inactive="inactive" icon="{done:set_external_datas}"/>
+                </RENDER_IFNOTSET>
+            </RENDER_IFSET>
+
+            <NORENDER>Fifth tab, summary</NORENDER>
+            <RENDER_IFSET what="step:choose_payment">
+                <RENDER_TAB title="{i18n:command_summary}">
+                    <RENDER_VALUE what="step:choose_payment"/>
+                </RENDER_TAB>
+            </RENDER_IFSET>
+            <RENDER_IFNOTSET what="step:choose_payment">
+                <RENDER_TAB title="{i18n:command_payment}" inactive="inactive"/>
+            </RENDER_IFNOTSET>
+        </RENDER_TABGROUP>
+    </RENDER_FORM>
+    <RENDER_IFSET what="afterTab:content">
+        <RENDER_VALUE what="afterTab:content"/>
+    </RENDER_IFSET>
+</div>

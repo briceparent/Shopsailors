@@ -7,7 +7,8 @@ if(!defined('SH_MARKER'))
 	header('location: directCallForbidden.php');
 
 $this->default = array(
-        'enabled' => true,
-        'index' => 'Accueil',
-        'sitemap'=>array('priority' => '0.5')
+  'active' => false,
+    'sitemap' => array(
+        'priority' => 0.5
+    )
 );

@@ -29,4 +29,5 @@ le menu, ou une hauteur de texte trop grande pour la langue suivante : ',
     'waiting'=>'&#160;Patientez s\'il vous plait...',
     'textHeight'=>'Hauteur du texte : ',
     'textHeight_preview'=>'Aperçu',
+    'linkChooser_explanation'=>'Vous pouvez sélectionner une page du site ci dessus,<br/>ou entrer manuellement un lien du type "http://www.google.com" dans le champs ci-dessous.',
 );

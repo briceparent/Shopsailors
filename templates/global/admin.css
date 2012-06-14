@@ -10,32 +10,34 @@
     top:0px;
     left:0px;
     margin:0;
-	z-index: 100;
-	color: black;
+    z-index: 100;
+    color: black;
+    font-family: arial;
+    font-size: 12px;
 }
 #admin_panelTop{
-  background: transparent url(admin/panel_title.png) no-repeat center top;
-  height: 57px;
-  width: 240px;
+    background: transparent url(admin/panel_title.png) no-repeat center top;
+    height: 57px;
+    width: 240px;
 }
 .adminPanel_titleText{
-  text-align: center;
-  font-weight: bold;
-  font-size: 110%;
-  padding-top: 19px;
-  color: #666666;
+    text-align: center;
+    font-weight: bold;
+    font-size: 110%;
+    padding-top: 19px;
+    color: #666666;
 }
 .adminPanel_closeText{
-  text-align: center;
-  font-weight: bold;
-  font-size: 110%;
-  padding-top: 19px;
-  color: #666666;
+    text-align: center;
+    font-weight: bold;
+    font-size: 110%;
+    padding-top: 19px;
+    color: #666666;
 }
 #adminPanel_bottom{
-  background: transparent url(admin/panel_close.png) no-repeat center top;
-  height: 72px;
-  width: 240px;
+    background: transparent url(admin/panel_close.png) no-repeat center top;
+    height: 21px;
+    width: 240px;
 }
 #admin_box a, #admin_box .falseLink {
     text-decoration: none;
@@ -47,47 +49,51 @@
 #admin_box_hideable{
 }
 .admin_titles{
-  text-align: center;
-  font-variant: small-caps;
-  font-size:120%;
-  font-weight: bold;
+    text-align: center;
+    font-variant: small-caps;
+    font-size:120%;
+    font-weight: bold;
 }
 .admin_small_vspace{
-  height:8px;
+    height:8px;
 }
 
 .admin_close{
-  margin:0;
+    margin:0;
 }
 
 .admin_title_master{
-	background: transparent url(admin/title_master.png) no-repeat center 0;
-	height: 28px; 
+    background: transparent url(admin/title_master.png) no-repeat center 0;
+    height: 28px;
 } 
 .admin_title_1{
-	background: transparent url(admin/title_1.png) no-repeat center 0;
-	height: 28px; 
+    background: transparent url(admin/title_1.png) no-repeat center 0;
+    height: 28px;
 }  
 .admin_title_2{
-	background: transparent url(admin/title_2.png) no-repeat center 0;
-	height: 28px; 
+    background: transparent url(admin/title_2.png) no-repeat center 0;
+    height: 28px;
 }  
 .admin_title_3{
-	background: transparent url(admin/title_3.png) no-repeat center 0;
-	height: 28px; 
+    background: transparent url(admin/title_3.png) no-repeat center 0;
+    height: 28px;
 }  
 .admin_title_4{
-	background: transparent url(admin/title_4.png) no-repeat center 0;
-	height: 28px; 
+    background: transparent url(admin/title_4.png) no-repeat center 0;
+    height: 28px;
 }  
 .admin_title_5{
-	background: transparent url(admin/title_5.png) no-repeat center 0;
-	height: 28px; 
+    background: transparent url(admin/title_5.png) no-repeat center 0;
+    height: 28px;
+}
+.admin_title_10{
+    background: transparent url(admin/title_10.png) no-repeat center 0;
+    height: 28px;
 }
 
 .admin_contents{
-        width: inherit;        
-        display: inline-block;
+    width: inherit;
+    display: inline-block;
 }
 
 .admin_contents span{       
@@ -103,181 +109,311 @@
     display: inline-block; 
 }
 .admin_content_master{
-	background: transparent url(/templates/global/admin/content_master.png) repeat-y center 0;
+    background: transparent url(/templates/global/admin/content_master.png) repeat-y center 0;
 }
 .admin_content_1{
-	background: transparent url(/templates/global/admin/content_1.png) repeat-y center 0;  
+    background: transparent url(/templates/global/admin/content_1.png) repeat-y center 0;
 }
 .admin_content_2{
-	background: transparent url(admin/content_2.png) repeat-y center 0;
+    background: transparent url(admin/content_2.png) repeat-y center 0;
 }
 .admin_content_3{
-	background: transparent url(admin/content_3.png) repeat-y center 0;
+    background: transparent url(admin/content_3.png) repeat-y center 0;
 }
 .admin_content_4{
-	background: transparent url(admin/content_4.png) repeat-y center 0;  
+    background: transparent url(admin/content_4.png) repeat-y center 0;
 }
-
 .admin_content_5{
-	background: transparent url(admin/content_5.png) repeat-y center 0;  
+    background: transparent url(admin/content_5.png) repeat-y center 0;
+}
+.admin_content_10{
+    background: transparent url(admin/content_10.png) repeat-y center 0;
 }
 
 /*changeParams : sh_site*/
 
+.sliderContainer{
+    width:395px;
+    background-color: #f4f4f4;
+    margin-top: 10px;
+    margin-left: 5px;
+    padding: 8px 8px 8px 8px;
+    border: 1px dashed #ccc;
+    -moz-border-radius:  6px;
+}
+.sliderContainer input{float: left;}
+
 div.slider {
-  width:360px;
-  margin:10px 0;
-  background:transparent url(/templates/global/admin/icons/rainbow.png) no-repeat top center;
-  height:10px;
-  position: relative;
+    width:360px;
+    height:13px;
+    position: relative;
+    margin-left: 25px;
+    margin-top: 3px;
+}
+div#rgb_slider_reallyDark{
+    background:transparent url(/templates/global/admin/rainbow_reallyDark.png) no-repeat top center;
+}
+div#rgb_slider_dark{
+    background:transparent url(/templates/global/admin/rainbow_dark.png) no-repeat top center;
+}
+div#rgb_slider{
+    background:transparent url(/templates/global/admin/rainbow_normal.png) no-repeat top center;
+}
+div#rgb_slider_shiny{
+    background:transparent url(/templates/global/admin/rainbow_shiny.png) no-repeat top center;
+}
+div#rgb_slider_reallyShiny{
+    background:transparent url(/templates/global/admin/rainbow_reallyShiny.png) no-repeat top center;
 }
 div.slider div.handle {
-  width:8px;
-  height:15px;
-  background-color:#000;
-  cursor:move;
-  position: absolute;
+    width:20px;
+    height:20px;
+    background:transparent url(/templates/global/admin/icons/handle.png) no-repeat top center;
+    cursor:move;
+    position: absolute;
+    margin-top: -3px;
 }
+/*
+div.slider div.handle {
+    width:8px;
+    height:15px;
+    background-color:#000;
+    cursor:move;
+    position: absolute;
+}*/
 /*ALL ADMIN BOXES*/
-  
+
 
 /*Admin Pop Up : sh_menu, sh_favicon...*/
 .adminPopup_body{
-	background: transparent url(admin/bg_admin.png) repeat center top;
-	font-size: 80%;
+    background: transparent url(admin/bg_admin.png) repeat center top;
+    font-size: 80%;
+    overflow: auto;
 }
 .adminPopup_content{
-	width:100%;
-	height:100%;
-	overflow:auto;
+    width:100%;
+    height:100%;
+    overflow:auto;
 }
 /* Popup selection langues */
- .langSelector_contents{
-     padding-left: 10px;
-     margin: inherit;
-     text-align: center;
-     overflow: auto;
- }
- .langSelector_contents img{
-     width: 20px;
- }
+.langSelector_contents{
+    padding-left: 10px;
+    margin: inherit;
+    text-align: center;
+    overflow: auto;
+}
+.langSelector_contents img{
+    width: 20px;
+}
 .getSelector_submit{
-	text-align: left;
-	margin-top: 15px;
-	margin-left: 6px;
+    text-align: left;
+    margin-top: 15px;
+    margin-left: 6px;
 }
 .getSelector_submit input{
-	cursor: pointer;
+    cursor: pointer;
 }
+/*Tab groups admin*/
 
-  /* Conteneurs et boîtes*/
-  #form_box_container, .form_box_container{
+.tabGroup_admin{color:#333}
+.tabGroup_admin .tabGroup_containerTitle{background-color:rgba(255,255,255,1);color:#333}
+.tabGroup_admin .tabGroup_containerTitle.selected, .tabGroup_admin .tabGroup_containerTitle:hover{background-color:rgba(200,200,200,1);color:#333}
+.tabGroup_admin .tabGroup_adminTitle{background-color:rgba(255,255,255,1);}
+.tabGroup_admin .tabGroup_adminTitle input{border:none;width:18px;padding-bottom: 0px;}
+.tabGroup_admin .tabGroup_adminTitle input:hover{padding-top: 0x;padding-bottom: 0px;}
+.tabGroup_admin .tabGroup_container{background-color:rgba(255,255,255,1);}
+.tabGroup_admin .tabGroup_container input{border: 1px solid #666}
+.tabGroup_admin .tabGroup_container textarea{border: 1px solid #666}
+
+
+/* Conteneurs et boîtes*/
+#form_box_container, .form_box_container{
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
     width:100%;
     color: #333333;
-	font-family: arial;
-  }
-  #form_box_container input, .form_box_container input{
-    border: 1px solid #666666;
-  }
-  #form_box_container textarea, .form_box_container textarea{
-    border: 1px solid #666666;
-  }
-  #form_box_container a{
-    color: #333333;
-  }
-  #form_box_container>div, .form_box_container>div, #form_box_container>.adminPlugin>div, .form_box_container>.adminPlugin>div{
+    font-family: arial;
+}
+.form_box_container input{border: 1px solid #666666;}
+.form_box_container textarea{border: 1px solid #666666;}
+.form_box_container a{color: #333333;}
+.form_box_container table{margin-left: auto;margin-right: auto;}
+.form_box_container table td{border-color: #666;}
+.form_box_container>div, .form_box_container>.adminPlugin>div{
     width: 100%;
-  }
-  #form_box_top, .form_box_top{
-    background: transparent url(admin/form_box_top.png) no-repeat center top;
-    height: 46px;
-    width: 400px;
-  }
-  #form_box_middle, .form_box_middle{
-    background: transparent url(admin/form_box_middle.png) repeat-y center top;
-    width: 400px;
-  }
-  #form_box_middle hr, .form_box_middle hr{
-    background-color: #999999;
-	border: none;
-	margin-top: 8px;
-	margin-bottom: 8px;
-	width: 375px;
-  }
-  #form_box_bottom, .form_box_bottom{
-    background: transparent url(admin/form_box_bottom.png) no-repeat center top;
-    height: 23px;
-    width: 400px;
-    padding-top: 15px;
-  }
+}
 
-  /*all boxes content: text, titles, link...*/
-  .form_box_content{
-    padding: 3px 10px 3px 10px;
-    color: #333333;
-  } .form_box_content{
-    padding: 3px 10px 3px 10px;
-    color: #333333;
-  }
-  .formContent{
+/*Global*/
+.form_box_container .form_box_middle hr{
+    background-color: #999999;
+    border: none;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.form_box_container>div{
     margin-left: auto;
     margin-right: auto;
-    width: 375px;
+}
+.form_box_container .form_box_bottom{
+    padding-top: 15px;
+}
+.form_box_container .formContent{
+    margin-left: auto;
+    margin-right: auto;
     text-align: left;
     padding-top: 10px;
-  }
-  .formContent a:link, .formContent a:visited, .formContent a:hover, .formContent a:active{
+}
+
+/*Small*/
+.form_box_container_s .form_box_top{
+    background: transparent url(admin/form_box_top_200.png) no-repeat center top;
+    width: 400px;
+    height: 25px;
+}
+.form_box_container_s .form_box_middle{
+    background: transparent url(admin/form_box_middle_200.png) repeat-y center top;
+    width: 200px;
+}
+.form_box_container_s .form_box_middle hr{width: 175px;}
+.form_box_container_s .form_box_bottom{
+    background: transparent url(admin/form_box_bottom_200.png) no-repeat center top;
+    width: 200px;
+    height: 8px;
+}
+.form_box_container_s .formContent{width: 175px;}
+.form_box_container_s .box_title{padding: 5px 5px 10px 5px;}
+
+/*Medium*/
+.form_box_container_m .form_box_top{
+    background: transparent url(admin/form_box_top_400.png) no-repeat center top;
+    width: 400px;
+    height: 39px;
+}
+.form_box_container_m .form_box_middle{
+    background: transparent url(admin/form_box_middle_400.png) repeat-y center top;
+    width: 400px;
+}
+.form_box_container_m .form_box_middle hr{width: 375px;}
+.form_box_container_m .form_box_bottom{
+    background: transparent url(admin/form_box_bottom_400.png) no-repeat center top;
+    width: 400px;
+    height: 12px;
+}
+.form_box_container_m .formContent{ width: 375px;}
+.form_box_container_m .adminSeparator{margin-left: auto;margin-right: auto; width: 375px;}
+
+.form_box_container_m .box_title{padding: 15px 10px 15px 10px;}
+
+/*Large*/
+.form_box_container_l .form_box_top{
+    background: transparent url(admin/form_box_top_600.png) no-repeat center top;
+    width: 600px;
+    height: 44px;
+}
+.form_box_container_l .form_box_middle{
+    background: transparent url(admin/form_box_middle_600.png) repeat-y center top;
+    width: 600px;
+}
+.form_box_container_l .form_box_middle hr{width: 575px;}
+.form_box_container_l .form_box_bottom{
+    background: transparent url(admin/form_box_bottom_600.png) no-repeat center top;
+    width: 600px;
+    height: 14px;
+}
+.form_box_container_l .formContent{ width: 575px;}
+
+.form_box_container_l .box_title{padding: 20px 10px 15px 10px;}
+
+/*XLarge*/
+.form_box_container_xl .form_box_top{
+    background: transparent url(admin/form_box_top_800.png) no-repeat center top;
+    width: 800px;
+    height: 52px;
+}
+.form_box_container_xl .form_box_middle{
+    background: transparent url(admin/form_box_middle_800.png) repeat-y center top;
+    width: 800px;
+}
+.form_box_container_xl .form_box_middle hr{width: 775px;}
+.form_box_container_xl .form_box_bottom{
+    background: transparent url(admin/form_box_bottom_800.png) no-repeat center top;
+    width: 800px;
+    height: 20px;
+}
+.form_box_container_xl .formContent{ width: 775px;}
+
+.form_box_container_xl .box_title{padding: 25px 10px 15px 10px;}
+
+/*all boxes content: text, titles, link...*/
+.form_box_content{
+    padding: 3px 10px 3px 10px;
     color: #333333;
-  }
-  .formContent ul{
-    margin: 0;
-  }
-  #formContent input, #formContent textarea, .formContent input, .formContent textarea{
+} .form_box_content{
+    padding: 3px 10px 3px 10px;
+    color: #333333;
+}
+.formContent a:link, .formContent a:visited, .formContent a:hover, .formContent a:active{
+    color: #333333;
+}
+.formContent ul{margin: 0;}
+.formContent input, .formContent textarea{
     border: 1px solid #666666;
-  }
-  .box_title{
+}
+.box_title{
     font-size: 120%;
-    padding: 23px 10px 15px 10px;
     margin: 0;
     color: #333333;
     width: 400px;
     margin-left: auto; 
     margin-right: auto;
-  }
-  .contentTitle{
+}
+.contentTitle{
     font-size: 120%;
     text-align: center;
     margin: 0;
     padding: 0;
     color: #333333;
-  }
-  .content_edit{
-    text-align: left;
-    margin-left: auto;
-    margin-right: auto;
-  }
-.browser_imageSelector{
-  cursor: pointer;
 }
-  /*CSS EDIT MENU*/
+.content_edit{
+    text-align: left;
+}
+.browser_imageSelector{
+    cursor: pointer;
+}
+/*CSS EDIT NEWSLETTER*/
+.news_editorContainer{
+    width: 860px;
+    text-align: center;
+}
+.news_editor div.wEditor{
+    width:620px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-  .section{
-    background: transparent url(admin/admin_box_grip.png) no-repeat center top;
-    height: 120px;
+.newDiffusionList{font-weight: bold;padding: 5px 0;border-bottom: 1px dashed #666;margin-bottom: 5px}
+.newDiffusionList span{color: #0066cc}
+.newDiffusionList span:hover{color:#003399 }
+.oneDiffusionList{padding: 3px 0;border-bottom: 1px dashed #ccc;margin-bottom: 3px}
+
+
+/*CSS EDIT MENU*/
+
+.section{
+    background: transparent url(admin/form_box_grip.png) no-repeat center top;
+    height: 140px;
     width: 400px;
+    margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
     text-align: left;
-  }
-  .section input{
+}
+.section input{
     border: 1px solid #666666;
     margin-left: 8px;
     margin-top: 5px;
-  }
-  #absent, .absent {
+    width: 265px;
+}
+#absent, .absent {
     background: transparent url(admin/admin_box_action.png) no-repeat center top;
     height: 180px;
     width: 400px;
@@ -285,122 +421,126 @@ div.slider div.handle {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-  }
-  #absent input{
+}
+#absent input{
     border: 1px solid #666666;
-  }
-  .removeSection img{
-  }
-  .removeSection{
-    margin-top: 85px;
-    margin-left: 360px; 
+}
+.removeSection img:hover{
+    margin-top: 2px
+}
+.removeSection{
+    margin-top: 115px;
+    margin-left: 370px;
     position: absolute;
     cursor: pointer;
-  }
+}
 
-  #absent h3,.absent h3{
+#absent h3,.absent h3{
     font-size: 120%;
     padding: 23px 10px 10px 10px;
     margin: 0;
-  }
+}
 .editMenu_activate table.form_checkbox{
-  margin-left: auto; 
-  margin-right: auto;
-  font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold;
 }
 .editMenu_buttonTitle{
     font-size: 110%;
     font-weight: bold;
     color: #333333;
     text-align: left;
-    padding-top: 15px;
+    padding-top: 45px;
     margin-left: 8px;
     cursor: move;
-  }
-  .editMenu_linkContainer{
+}
+.editMenu_linkContainer{color:#333}
+.editMenu_linkContainer span.blue{color:#0066cc}
+.editMenu_linkContainer span.blue:hover{color:#003399}
+.editMenu_linkContainer{
     margin-top: 10px;
     margin-left: 8px;
-  }
-  .editMenu_linkTitle{
+}
+.editMenu_linkTitle{
     font-weight: bold;
-  }
+}
 h3 span{
-  cursor: pointer;
+    cursor: pointer;
 }
 .params{
-  margin: 3px 10px 3px 10px;
+    margin: 3px 10px 3px 10px;
 }
 .params img{
-  vertical-align:middle;
-  cursor:pointer;
+    vertical-align:middle;
+    cursor:pointer;
 }
 h3 img{
 }
 
 .inputParams{
-  width:300px;
+    width:300px;
 }
 
 div.lineitem {
-  text-align:left;
-  margin:3px 5px 3px 5px;
-  background-color: #FFF;
-  cursor: move;
-  width:480px;
+    text-align:left;
+    margin:3px 5px 3px 5px;
+    background-color: #FFF;
+    cursor: move;
+    width:480px;
 }
 
 .inplaceeditor-form{
-  display: inline;
+    display: inline;
 }
 
 /*CSS du formulaire d'administration des templates*/
 
 .no-margin{
-	margin: 0;
+    margin: 0;
 }
 .params2{
-  padding: 3px 10px 3px 10px;
-  font-weight: bold;
-  color: #333333;
+    padding: 3px 10px 3px 10px;
+    font-weight: bold;
+    color: #333333;
 }
 .params3{
-  padding: 3px 10px 3px 10px;
-  font-weight: bold;
-  color: #333333;
-  display: block;
+    padding: 3px 10px 3px 10px;
+    font-weight: bold;
+    color: #333333;
+    display: block;
 }
 .params3 img{
-  height: 5%; 
+    height: 5%;
 }
 .formContentGrey{
-  background-color: #cccccc;
-  width: 315px;
-  height: 30px;
-  margin-left: 5px;
+    background-color: #cccccc;
+    width: 315px;
+    height: 30px;
+    margin-left: 5px;
 }
 .formContentGrey div{
-  padding-left: 7px;
-  padding-top: 2px;
+    padding-left: 7px;
+    padding-top: 2px;
 }
 .devise{
-  margin-left: 5px;
-  font-size: 150%;
+    margin-left: 5px;
+    font-size: 150%;
 }
 
 .textAreaForm{
-  width: 370px;
-  height: 75px;
+    width: 370px;
+    height: 75px;
 }
 .textAreaForm_3lines{
-  width: 370px;
-  height: 55px;
+    width: 370px;
+    height: 55px;
 }
 .textAreaShort{
-  width: 375px;
-  height: 45px;
+    width: 375px;
+    height: 45px;
 }
 .inputForm{
-  width: 370px;
+    width: 370px;
 }
 .form_i18n_input{
     width:275px;
@@ -410,29 +550,29 @@ div.lineitem {
     height:80px;
 }
 .threeLines{
-  height: 55px;
+    height: 55px;
 }
 .inputImageSrc{
-  width: 150px;
+    width: 150px;
 }
 .inline{
-  display: inline;
+    display: inline;
 }
 #diapo_submit{
-  margin-left: 163px;
+    margin-left: 163px;
 }
 .preview_image{
-  margin-top: 10px;
+    margin-top: 10px;
 }
 .preview_image img{
-  cursor: pointer;
-  width: 250px;
-  height: 250px;
+    cursor: pointer;
+    max-width: 250px;
+    max-height: 250px;
 }
 .formSubmitContainer{
-  width: 400px;
-  text-align: center;
-  margin-left: 10px;
+    width: 400px;
+    text-align: center;
+    margin-left: 10px;
 }
 
 /*CSS du formulaire de traduction*/
@@ -441,78 +581,78 @@ div.lineitem {
     font-style: italic;
 }
 .inputTranslation{
-  width: 300px;
+    width: 300px;
 }
 .inputTextarea{
-  width: 300px;
-  height: 100px;
+    width: 300px;
+    height: 100px;
 }
 .pictoForm img{
-  width: 20px;
-  vertical-align: top;
+    width: 20px;
+    vertical-align: top;
 }
 .pictoForm{
-  vertical-align: top;
+    vertical-align: top;
 }
 .originalText{
- color: #666666;
+    color: #666666;
 }
 .paddingTop_10px{
-  padding-top: 10px;
+    padding-top: 10px;
 }
 
 /* Formulaire de gestion des stocks */
 
 .categoryName{
-  color: #333333;
-  font-weight: bold;
-  font-size: 120%;
+    color: #333333;
+    font-weight: bold;
+    font-size: 120%;
 }
 .inputQuantity{
-  width: 80px;
+    width: 80px;
 }
 .textAlign_center{
-  text-align: center;
+    text-align: center;
 }
 .tableForm{
-  width: 375px;
-  margin-top: 15px;
-  margin-bottom: 20px;
+    width: 375px;
+    margin-top: 15px;
+    margin-bottom: 20px;
 }
 
 .form_messageContainer{
-  width: 100%;
-  margin-bottom: 15px;
-  text-align: center;
+    width: 100%;
+    margin-bottom: 15px;
+    text-align: center;
 }
 .form_messageContainer div{
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 .form_message_top{
-  background: transparent url(admin/form_message_top) no-repeat center top;
-  width: 400px;
-  height: 30px;
+    background: transparent url(admin/form_message_top) no-repeat center top;
+    width: 400px;
+    height: 30px;
 }
 .form_message_middle{
-  background: transparent url(admin/form_message_middle) repeat-y center top;
-  width: 400px;
+    background: transparent url(admin/form_message_middle) repeat-y center top;
+    width: 400px;
 }
 .form_message_bottom{
-  background: transparent url(admin/form_message_bottom) no-repeat center top;
-  width: 400px;
-  height: 30px;
+    background: transparent url(admin/form_message_bottom) no-repeat center top;
+    width: 400px;
+    height: 30px;
 }
 .messageContainer{
-  width: 360px;
-  text-align: center;
+    width: 360px;
+    text-align: center;
 }
 
 /* EDIT SHOP PARAMS*/
 
-  /* edit bill */
-  .bill_defaultArea img{
+/* edit bill */
+.bill_defaultArea img{
     width: 370px;
     border: 1px solid #666666;
 }
@@ -520,66 +660,127 @@ div.lineitem {
 /* Formulaire selection langues */
 
 .i18n_viewer img{
-  width: 30px;
-  margin-left: 5px; 
+    width: 30px;
+    margin-left: 5px;
 }
-
+.admin_selectLang img{width: 25px;height: 25px;margin: -4px 5px 0 2px;}
 .unroller{
-  background: transparent url(admin/button_updown.png) no-repeat left top;
-  padding-left: 16px;
+    background: transparent url(admin/button_updown.png) no-repeat left top;
+    padding-left: 16px;
 }
 
 .listProduct_detailLink img{
-  width: 25px;
+    width: 25px;
+}
+
+/*editPack*/
+#editPack #main_table,
+#editPack #main_table th,
+#editPack #main_table td{border: 1px solid #ccc;padding: 2px}
+#editPack .giftColumn{text-align: center;}
+
+/*Choix de la page d'accueil*/
+
+.chooserContainer{
+    text-align: left;
+    margin: 10px 5px 0 5px;
+    background-color: #ececec;
+    padding: 5px 5px;
+    -moz-border-radius:  6px;
+
+}
+.index_class{
+    border-top: 1px dashed #ccc;
+    border-bottom: 1px dashed #ccc;
+    padding: 5px 0;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 /* Choix du template*/
 
 .templateSelector_elements{
-  margin-top: 15px;
-  margin-right: 25px;
-  float: left;
-  text-align: justify;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 5px;
+    float: left;
+    text-align: justify;
 }
 
 .template_mini{
-  width: 155px;
+    width: 155px;
 }
 .template_mini img{
-  width: 155px;
-  height: 106px;
+    width: 155px;
+    height: 106px;
 }
 
 .logoSelector img{
-  cursor: pointer;
+    cursor: pointer;
 }
+
 /*Article Directory*/
 .showList_activeList{
-  font-weight: bold;
+    font-weight: bold;
+    text-align: center;
 }
 .showList_inactiveList{
-  font-weight: bold;
-  margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+    border-top: 1px dashed #666;
 }
 .showList_inactiveList_description{
-  margin-top: 5px;
+    margin-top: 5px;
+    border-top: 1px dashed #666;
+    text-align: center;
+    font-style: italic;
+    margin-top: 10px;
+    padding-top: 5px;
 }
+ul.showList_articles{
+    list-style: none;
+    text-align: center;
+    width: 100%;
+    padding:0;
+    margin-top:0;
+}
+ul.showList_articles li:first-child{border:none;margin-top: 0;padding-top: 0;}
 .showList_articles li{
-  margin-top: 4px;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed #ccc;
 }
+
+.deleteConfirm_explanation{
+    margin-top: 10px;
+    background-color: #e7e7e7;
+    -moz-border-radius: 5px;
+    padding: 4px;
+    font-style: italic;
+}
+
 /* EDIT/CREATE list of article */
+#shortList_active img{width: 22px;height: 22px}
+#shortList_active img:hover{margin-top: 1px;}
 #shortList_active{
-  margin-top: 10px;
-  text-align: center;
-  font-weight: bold;
-    width:360px;
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
     border:1px solid #333333;
     background-color: #cccccc;
     padding: 3px;
 }
 .shortList_listName{
-  font-weight: bold;
-  margin-top: 4px;
+    font-weight: bold;
+    margin-top: 10px;
+    border: 1px solid #cccccc;
+}
+.shortList_listName.falseLink{color: #333;}
+.shortList_title{
+    text-align: center;
+    border-bottom: 1px dashed #999;
+    padding-bottom:2px;
+    margin: 15px 5px 5px 5px;
 }
 ul#shortList_activeElements{
     margin: 0px;
@@ -591,163 +792,188 @@ ul#shortList_activeElements{
     border:1px solid grey;
     margin: 5px;
     padding: 3px;
-    width:330px;
-    height: 21px;
-    background-color:#FFF;
+    height: 15px;
+    background-color:#ede9df;
+    text-align: center;
+    padding-top: 5px;
 }
+.shortList_element:hover{background-color:#e6e3db;}
 .shortList_element img{
     width:24px;
     position:absolute;
     right:0px;
     top:0;
 }
+#delete_shortList .input_container{height: 32px}
+#delete_shortList input:hover{margin-top: 2px}
 
-/* EDIT SHIP MODES*/
+/* EDIT Payment MODES*/
 .paymentMode{
-  margin-bottom: 20px;
+    padding: 5px 5px 5px 5px;
+    margin-top: 10px;
+    background-color:rgba(180,180,180,0.3);
+    -moz-border-radius:  6px;
 }
 .payment_mode_top{
-  background: transparent url(admin/ship_mode_top.png) no-repeat center top;
-  width: 380px;
-  height: 16px;
+    background: transparent url(admin/ship_mode_top.png) no-repeat center top;
+    width: 380px;
+    height: 16px;
 }
 .payment_mode_middle{
-  background: transparent url(admin/ship_mode_middle.png) repeat-y center top;
-  width: 380px;
+    background: transparent url(admin/ship_mode_middle.png) repeat-y center top;
+    width: 380px;
 }
 .payment_mode_bottom{
-  background: transparent url(admin/ship_mode_bottom.png) no-repeat center top;
-  width: 380px;
-  height: 16px;
+    background: transparent url(admin/ship_mode_bottom.png) no-repeat center top;
+    width: 380px;
+    height: 16px;
 }
 .payment_global{
-  margin-left: 5px;
-  margin-top: 5px;
+    margin-left: 5px;
+    margin-top: 5px;
 }
 .payment_logoSelector{
 }
 .payment_logoImage{
-  cursor: pointer;
-  margin-top: 5px;
+    cursor: pointer;
+    margin-top: 5px;
 }
 .payment_logoImage img{
-  width: 100px;
+    width: 100px;
 }
 .payment_description textarea{
-  width: 350px;
-  height: 40px;
+    width: 350px;
+    height: 40px;
 }
 .payment_delete{
-  margin-top: 15px;
+    margin-top: 15px;
 }
 
 .payment_delete input{
-  font-weight: bold;
-  color: #990000;
-  font-size: 90%;
-  border: none;
+    font-weight: bold;
+    color: #990000;
+    font-size: 90%;
+    border: none;
 }
+.payment_activateMode{
+    height: 20px;
+    padding: 4px 2px 0 2px;
+    color:#0066cc;
+    background-color:rgba(255,255,255,0.8);
+    -moz-border-radius:  6px;
+}
+
 
 /* EDIT SHIP MODES*/
 .shipMode{
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 .ship_mode_top{
-  background: transparent url(admin/ship_mode_top.png) no-repeat center top;
-  width: 380px;
-  height: 16px;
+    background: transparent url(admin/ship_mode_top.png) no-repeat center top;
+    width: 380px;
+    height: 16px;
 }
 .ship_mode_middle{
-  background: transparent url(admin/ship_mode_middle.png) repeat-y center top;
-  width: 380px;
+    background: transparent url(admin/ship_mode_middle.png) repeat-y center top;
+    width: 380px;
 }
 .ship_mode_bottom{
-  background: transparent url(admin/ship_mode_bottom.png) no-repeat center top;
-  width: 380px;
-  height: 16px;
+    background: transparent url(admin/ship_mode_bottom.png) no-repeat center top;
+    width: 380px;
+    height: 16px;
 }
 .ship_providerName{
-  margin-left: 5px;
+    margin-left: 5px;
 }
 .ship_global{
-  margin-left: 5px;
-  margin-top: 5px;
+    margin-left: 5px;
+    margin-top: 5px;
 }
 .ship_logoSelector{
 }
 .ship_logoImage{
-  cursor: pointer;
-  width: 50%;
-  margin-top: 5px;
+    cursor: pointer;
+    width: 50%;
+    margin-top: 5px;
 }
 .ship_price input{
-  width: 50px;
+    width: 50px;
 }
 .ship_description textarea{
-  width: 350px;
-  height: 40px;
+    width: 350px;
+    height: 40px;
 }
 .ship_delete{
-  margin-top: 15px;
+    margin-top: 15px;
 }
 
 .ship_delete input{
-  font-weight: bold;
-  color: #990000;
-  font-size: 90%;
-  border: none;
+    font-weight: bold;
+    color: #990000;
+    font-size: 90%;
+    border: none;
 }
 
 .ship_come_top{
-  background: transparent url(admin/ship_come_top.png) no-repeat center top;
-  width: 380px;
-  height: 16px;
+    background: transparent url(admin/ship_come_top.png) no-repeat center top;
+    width: 380px;
+    height: 16px;
 }
 .ship_come_middle{
-  background: transparent url(admin/ship_come_middle.png) repeat-y center top;
-  width: 380px;
+    background: transparent url(admin/ship_come_middle.png) repeat-y center top;
+    width: 380px;
 }
 .ship_come_bottom{
-  background: transparent url(admin/ship_come_bottom.png) no-repeat center top;
-  width: 380px;
-  height: 16px;
+    background: transparent url(admin/ship_come_bottom.png) no-repeat center top;
+    width: 380px;
+    height: 16px;
 }
 .ship_address{
-  margin-left: 5px;
+    margin-left: 5px;
 }
 .ship_address textarea{
-  width: 350px;
-  height: 80px;
+    width: 350px;
+    height: 80px;
 }
 .ship_addressPrice input{
-  width: 50px;
+    width: 50px;
 }
 .ship_addMode{
-  text-align: center;
-  margin-bottom: 15px;
+    text-align: center;
+    margin-bottom: 15px;
 }
 .shipMode_rules{
-  margin-top: 15px;
+    margin-top: 15px;
 }
 
-/* Edit Legacy */
-.edit_legacyContainer{
-  padding-top: 20px;
-}
+.ship_activateMode{color:#0066cc}
+.ship_activateMode label:hover{color:#003399}
+.ship_activeExpedition{color:#0066cc;margin-bottom: 10px;}
+.ship_activeExpedition label:hover{color:#003399}
+
+label:hover{color: #333}
+
+.ship_priceRules div{margin-top: 10px}
+
+/*inactive Products*/
+.inactiveProducts{margin-top: 10px;}
+.inactiveProducts img.onePicto{margin-right: 4px;width: 20px;height: 20px;}
+.inactiveProducts td{vertical-align: middle;}
+
 /* Forum Parameters */
 .forum_createRights{
-  height: 70px;
+    height: 70px;
 }
 .forum_createCat_legend{
-  border: 1px dashed #333333;
-  font-style: italic;
+    border: 1px dashed #333333;
+    font-style: italic;
 }
 .forum_createCat_legend div{
-  padding: 2px 2px 2px 2px;
+    padding: 2px 2px 2px 2px;
 }
 .forum_createCat_legend img{
-  width: 20px;
-  height: 20px;
+    width: 20px;
+    height: 20px;
 }
 
 /*Mulitiple image selector*/
@@ -772,34 +998,183 @@ ul#shortList_activeElements{
     width: 25px;
     cursor: pointer;
 }
+.mis_pictoAdd img:hover{margin-top: 11px;}
 
 /*Favicon selector*/
 .favicon_input{
-	margin-top: 5px;
-	height: 55px;
-	overflow: hidden;
+    margin-top: 5px;
+    height: 55px;
+    overflow: hidden;
 }
 .favicon_input input{
-	margin-top: 5px;
-	margin-bottom: 0;
+    margin-top: 5px;
+    margin-bottom: 0;
 }
 /*COMON*/
 .greyBorder{
-  border: 1px solid #666666;
+    border: 1px solid #666666;
 }
 .borderLeft{
-  border-left: 1px solid #666666;
+    border-left: 1px solid #666666;
 }
 .borderRight{
-  border-right: 1px solid #666666;
+    border-right: 1px solid #666666;
 }
 .borderTop{
-  border-top: 1px solid #666666;
+    border-top: 1px solid #666666;
 }
 .borderBottom{
-  border-bottom: 1px solid #666666;
+    border-bottom: 1px solid #666666;
 }
 
 .tinyMCE_advanced{
     height:450px;
 }
+
+/*BILLING*/
+/*Billing_list*/
+
+/* DEBUG */
+.debugTable{
+    background-color: black;
+    border:1px solid red;
+}
+.debugTable th{
+    text-align: center;
+    color:red;
+}
+.debugTable td:first-child{
+    text-align: right;
+    color:green;
+    padding-left:5px;
+    padding-right:0;
+}
+.debugTable td{
+    color:blue;
+    padding-right:5px;
+}
+
+
+.admin_blueText{color:#0066cc}
+.admin_blueLink{color:#0066cc;/*cursor: pointer;*/}
+.admin_blueLink:hover{color:#003399}
+
+a.admin_blueLink,
+#admin a.admin_blueLink
+{color:#0066cc}
+a.admin_blueLink:hover,
+#admin a.admin_blueLink:hover
+{color:#003399}
+
+.admin_blueLink .falseLink{color:#0066cc}
+.admin_blueLink .falseLink:hover{color:#003399}
+
+.adminSeparator{
+    width: 100%;
+    border-top: 1px dashed #666;
+    margin-top: 15px;
+    padding-top: 15px;
+}
+.adminSeparator.short{
+    margin-top: 5px;
+    padding-top: 5px;
+}
+
+/*Submit popup classes*/
+.popup_buttons{text-align: center;border-top: 1px dashed #ccc;padding-top: 10px}
+
+div.popup_buttons .popup_button{
+    background-color: transparent;
+    background-position: top left;
+    background-repeat: no-repeat;
+    width: 165px;
+    height: 29px;
+    padding-left: 30px;
+    padding-bottom: 5px;
+    text-align: center;
+    border:0;
+    vertical-align: bottom;
+    font-size: 11px;
+}
+div.popup_buttons .popup_button_ok{background-image: url(/images/shared/icons/input_validate.png);}
+div.popup_buttons .popup_button_cancel{background-image: url(/images/shared/icons/input_cancel.png);}
+
+div.popup_buttons .popup_button:hover{
+    background-position: bottom left;
+    padding-top: 2px;
+}
+
+
+/*Style editor*/
+#styleForm label,
+#styleForm input[type=radio]
+#styleForm select option
+{cursor: pointer}
+#styleForm table{width: 576px;border-collapse: collapse;}
+#styleForm table td{border: 1px solid #999;padding: 2px}
+
+.styleName{text-align: left;color: #0066cc;padding: 8px}
+.styleName input{margin-top: 5px;border-color: #999;width: 250px}
+
+/*Edit Pack*/
+
+#picker .categoryPicker{
+    width: 80%;
+    -moz-border-radius: 8px;
+    background-color: #cfcfcf;
+    color: #333;
+    font-weight: bold;
+    margin: 5px 0;
+    padding: 2px;
+    float: left;
+}
+#picker .selectCat{padding-top: 4px}
+#picker .categoryPicker img{margin: -2px 5px 0 5px;}
+#picker .categoryPicker span{cursor: pointer}
+#picker img{
+    cursor:pointer;
+    vertical-align: middle
+}
+#picker .oneProduct_picker{
+    padding: 4px 0;
+}
+#picker .productsPicker{margin-top: 4px}
+
+.legacy_editText{padding: 5px; margin-bottom:10px}
+
+
+
+
+#forum_searchUsersSettings{margin-top: 15px;}
+#forum_searchUsersSettings td{padding: 5px}
+
+#admin_userlist ul li,
+#admin_manageGroup ul li{margin: 10px 0;}
+#admin_manageGroup .addUser_inputText{padding-top: 5px;float: left;margin-right: 5px}
+#admin_manageGroup .addUser_inputAdd{cursor: pointer}
+
+/*Edit layout*/
+#defaultLayout_explanations{
+    color: #333;
+    background-color: #fff;
+    border: 1px dashed #ccc;
+    padding: 5px;
+    width: 490px;
+    margin: 10px auto
+}
+#layout_adminPage_container{
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px 5px;
+}
+#layout_adminPage_container .texts{
+    font-weight: bold;
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+.layoutExplanations{margin: 10px 5px 0 5px;font-style: italic;text-align: justify;}
+
+/*Edit Gallery*/
+.editGalleries_oneGal{margin-bottom: 5px;border-bottom: 1px dashed #ccc;padding-bottom: 5px}
+.editGalleries_explanations{margin-bottom: 10px;border-bottom: 1px dashed #ccc;padding-bottom:8px}

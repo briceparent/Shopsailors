@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Brice PARENT for Shopsailors
+ * @author Brice PARENT (Websailors) for Shopsailors
  * @copyright Shopsailors 2009
  * @license http://www.cecill.info
  * @version See version in the params/global.params.php file.
@@ -23,7 +23,12 @@ class sh_fpdf extends FPDF{
     public function __construct($orientation='P', $unit='mm', $format='A4'){
         parent::__construct($orientation,$unit,$format);
         $this->SetCreator(utf8_decode('Websailors'));
-        $this->links = sh_links::getInstance();
+        $this->linker = sh_linker::getInstance();
+        $this->i18nClassName = 'sh_pdf';
+    }
+
+    protected function getI18n($text){
+        return $this->linker->i18n->get($this->i18nClassName,$text);
     }
 
     function RoundedRect($x, $y, $w, $h, $r, $style = ''){
@@ -110,10 +115,10 @@ class sh_fpdf extends FPDF{
      * @param str $image The path to the image
      */
     public function setLogo($image){
-        if(file_exists(SH_ROOT_FOLDER.$image)){
-            $image = SH_ROOT_FOLDER.$image;
+        if(file_exists($this->linker->path->changeToRealFolder($image))){
+            $image = $this->linker->path->changeToRealFolder($image);
         }
-        if(file_exists($image)){
+        if(file_exists($image) && !is_dir($image)){
             $imageNameParts = explode('.',$image);
             $type = strtolower(array_pop($imageNameParts));
             if($type == 'png'){
@@ -133,6 +138,8 @@ class sh_fpdf extends FPDF{
                 $image = $filename;
             }
             $this->logo = $image;
+        }else{
+            echo 'The logo was not found ('.$image.')<br />';
         }
     }
 
@@ -158,10 +165,10 @@ class sh_fpdf extends FPDF{
 
         $this->RoundedRect(135, 5, 70, 30, 5, 'DF');
 
-        $this->SetFont('vera','',10);
+        $this->SetFont('freefont','',10);
         $this->addCell(0,2,'','',0,'');
         $this->Ln();
-        $this->addCell($cols[0],5,'Commande n° '.$this->billId,'',0,'L');
+        $this->addCell($cols[0],5,'Facture n° '.$this->billId,'',0,'L');
         $this->addCell($cols[1],5);
         $this->addCell($cols[2],5,$this->clientName,'',0,'R');
         $this->Ln();
@@ -178,9 +185,9 @@ class sh_fpdf extends FPDF{
         $this->addCell($cols[2],5,$this->clientAddress[2],'',0,'R');
         $this->Ln();
         $this->addCell($cols[0],5,$this->customerService[2],'',0,'L');
-        $this->SetFont('verabold','',12);
+        $this->SetFont('freefontbold','',12);
         $this->addCell($cols[1],5,'Facture','',0,'C');
-        $this->SetFont('vera','',10);
+        $this->SetFont('freefont','',10);
         $this->addCell($cols[2],5,$this->clientAddress[3],'',0,'R');
         $this->Ln();
         $this->addCell(0,10);
@@ -220,7 +227,7 @@ class sh_fpdf extends FPDF{
     /**
      * Creates the footer of the pages, which will be repeated on every single page
      */
-    function Footer(){
+    public function Footer(){
         $lines = $this->wordWrap($this->textFooter, 200);
         if(count($lines) > 4){
             list($lines) = array_chunk($lines,5);
@@ -229,14 +236,20 @@ class sh_fpdf extends FPDF{
         //Positionnement du bas
         $this->SetY(-$footerHeight);
         //Police Arial italique 8
-        $this->SetFont('veraOblique','',8);
-        $generatedText = 'Document généré automatiquement par Shopsailors';
+        $this->SetFont('freefontOblique','',8);
+        $billNumber = $this->getI18n('bill_number_prefix');
+        $billNumber .= $this->billId;
+        $billNumber .= $this->getI18n('bill_number_suffix');
+        $pageNumber = $this->getI18n('page_number_prefix');
+        $pageNumber .= $this->PageNo();
+        $pageNumber .= $this->getI18n('page_number_suffix');
         //Numéro de page
         $this->addCell(
             200,4,
-            'Facture n°'.$this->billId.' - Page '.$this->PageNo().'/{nb}',
+            $billNumber.' - '.$pageNumber,
             0,0,'C'
         );
+        $generatedText = $this->getI18n('generated_by_shopsailors');
         $this->Ln();
         $this->addCell(
             200,4,
@@ -258,6 +271,8 @@ class sh_fpdf extends FPDF{
             )
         );
         $this->Link( $left, $top,$this->GetStringWidth('Websailors'), 4, 'http://www.websailors.fr');
+        
+        // Other lines
         if(is_array($lines)){
             foreach($lines as $oneLine){
                 $this->Ln();
@@ -295,7 +310,7 @@ class sh_fpdf extends FPDF{
         );
         $this->SetDrawColor(80,80,80);
         $this->SetLineWidth(.3);
-        $this->SetFont('verabold','');
+        $this->SetFont('freefontbold','');
 
         //Headers
         for($i=0;$i<count($header);$i++){
@@ -313,8 +328,33 @@ class sh_fpdf extends FPDF{
 
         //Datas
         $fill=false;
+        $prepared_lines = 0;
         foreach($data as $row){
             $nbLines = count($row);
+            $max = 1;$explodedRow = array();
+            foreach($row as $cellNum=>$cell){
+                $max = max($max,count(explode("\n",$cell)));
+            }
+            if($max == 1){
+                $data_prepared[$prepared_lines] = $row;
+               $data_prepared[$prepared_lines]['isAStarter'] = true;
+            }else{
+                foreach($row as $cellNum=>$cell){
+                    $data_prepared[$prepared_lines]['isAStarter'] = true; 
+                    $subLines = explode("\n",$cell);
+                    foreach($subLines as $thisCellNum=>$thisCell){
+                        if(!empty($thisCell)){
+                            $data_prepared[$prepared_lines+$thisCellNum][$cellNum] = $thisCell;
+                        }
+                    }
+                }
+            }
+            $prepared_lines += $max;
+        }
+        foreach($data_prepared as $row){
+            if($row['isAStarter']){
+                $fill=!$fill;
+            }
             for($i=0;$i<=$nbLines;$i+=1){
                 $lines = 'L';
                 if($i == ($nbLines - 3) || $i == ($nbLines - 1)){
@@ -325,10 +365,10 @@ class sh_fpdf extends FPDF{
                 $this->addCell($w[$i],6,$row[$i],'LR',0,$lines,$fill);
             }
             $this->Ln();
-            $fill=!$fill;
         }
         $this->addCell(array_sum($w),0,'','T');
         $this->Ln();
+        //exit;
     }
 
     /**
@@ -397,7 +437,7 @@ class sh_fpdf extends FPDF{
 
                 // We get the new word and its written width
                 $newWord = array_shift($words);
-                $newWordWidth = $this->GetStringWidth($newWord);
+                $newWordWidth = $this->GetStringWidth(utf8_decode($newWord));
 
                 // We verify if it can enter in the max width
                 if($lineWidth + $spacerWidth + $newWordWidth < $maxwidth){
@@ -431,13 +471,45 @@ class sh_fpdf extends FPDF{
  * Class that creates pdf files using FPDF.
  */
 class sh_pdf extends sh_core {
+    const CLASS_VERSION = '1.1.11.03.29';
+
+    public $shopsailors_dependencies = array(
+        'sh_linker','sh_params','sh_db'
+    );
     /**
      * @var FPDF The fpdf instance
      */
     protected $pdf = null;
 
-    protected function changeEuroTo128(&$value,$key){
-        $value = str_replace('€',chr(128),$value);
+    public function construct() {
+        $installedVersion = $this->getClassInstalledVersion();
+        if($installedVersion != self::CLASS_VERSION){
+            // The class datas are not in the same version as this file, or don't exist (installation)
+            $this->setClassInstalledVersion(self::CLASS_VERSION);
+        }
+    }
+
+    protected function clean_datas(&$value,$key){
+        $value = str_replace('€', 'E',$value);
+        $value = str_replace(
+            array(
+                '<br />',
+                '<hr />',
+                '<ul>',
+                '</ul>',
+                '<li>',
+                '</li>'
+            ),
+            array(
+                "\n",
+                "\n\n",
+                "\n",
+                '',
+                '- ',
+                "\n"
+            ),
+            $value
+        );
     }
 
     /**
@@ -445,19 +517,28 @@ class sh_pdf extends sh_core {
      *
      */
     public function createBill($datas, $outputName){
-        array_walk_recursive($datas, array($this, 'changeEuroTo128'));
-
+        array_walk_recursive($datas, array($this, 'clean_datas'));
+        
         $titles = $datas['titles'];
 
         define('FPDF_FONTPATH',dirname(__FILE__).'/fonts/');
 
         $pdf = new sh_fpdf('P','mm','A4');
-
+        
         if(!is_array($datas['fillColor'])){
             $pdf->fillColor = array(220,220,220);
         }else{
             $pdf->fillColor = $datas['fillColor'];
         }
+
+        $classes = $this->get_shared_methods('bill_colors');
+        foreach($classes as $class){
+            $color = $this->linker->$class->get_bill_colors($pdf->fillColor);
+            if($color){
+                $pdf->fillColor = $color;
+            }
+        }
+        
         $pdf->setTextFooter( $datas['footer']);
 
         $pdf->setSeller($datas['seller']['name'], $datas['seller']['address']);
@@ -471,14 +552,14 @@ class sh_pdf extends sh_core {
 
 
         $pdf->SetMargins('5','5');
-        $pdf->AddFont('vera');
-        $pdf->AddFont('verabold');
-        $pdf->AddFont('veraoblique');
-        $pdf->SetFont('vera','',12);
+        $pdf->AddFont('freefont');
+        $pdf->AddFont('freefontbold');
+        $pdf->AddFont('freefontoblique');
+        $pdf->SetFont('freefont','',12);
         $pdf->AddPage();
 
         if(isset($datas['headLine']) && trim($datas['headLine']) != ''){
-            $pdf->SetFont('vera','',10);
+            $pdf->SetFont('freefont','',10);
             $headLine = $pdf->wordWrap($datas['headLine'], 200);
             foreach($headLine as $oneHeadLine){
                 $pdf->addCell(200,4,$oneHeadLine);
@@ -486,7 +567,7 @@ class sh_pdf extends sh_core {
             }
             $pdf->addCell(200,2);
             $pdf->Ln();
-            $pdf->SetFont('vera','',10);
+            $pdf->SetFont('freefont','',10);
         }
 
         $pdf->createTable($titles,$datas['elements']);
@@ -496,11 +577,13 @@ class sh_pdf extends sh_core {
 
         $totalWidth = max(
             $pdf->GetStringWidth($datas['totalHT'])+5,
-            $pdf->GetStringWidth($datas['totalHT'])+5
+            $pdf->GetStringWidth($datas['totalTVA'])+5,
+            $pdf->GetStringWidth($datas['totalTTC'])+5
         );
 
         $totalTitleWidth = max(
             $pdf->GetStringWidth($datas['totalHTName'])+5,
+            $pdf->GetStringWidth($datas['totalTVAName'])+5,
             $pdf->GetStringWidth($datas['totalTTCName'])+5
         );
 
@@ -509,10 +592,14 @@ class sh_pdf extends sh_core {
         $pdf->addCell($totalWidth,5,$datas['totalHT'],'TBR','','R');
         $pdf->Ln();
         $pdf->addCell(200 - $totalWidth - $totalTitleWidth,5,'','');
+        $pdf->addCell($totalTitleWidth,5,$datas['totalHTName'],'TLB');
+        $pdf->addCell($totalWidth,5,$datas['totalHT'],'TBR','','R');
+        $pdf->Ln();
+        $pdf->addCell(200 - $totalWidth - $totalTitleWidth,5,'','');
         $pdf->addCell($totalTitleWidth,5,$datas['totalTTCName'],'LB');
         $pdf->addCell($totalWidth,5,$datas['totalTTC'],'BR','','R');
 
-        $pdf->SetFont('vera','',10);
+        $pdf->SetFont('freefont','',10);
 
         // Billing address
         $lines = array();
@@ -558,6 +645,25 @@ class sh_pdf extends sh_core {
             $pdf->addCell(5,4,'','');
             $pdf->Ln();
             $pdf->addCell(0,4,'Moyen de paiement : '.$datas['paymentMode']['name'],'');
+        }
+        if(isset($datas['paymentMode']['extraTextForBill'])){
+            $lines = $pdf->wordWrap($datas['paymentMode']['extraTextForBill'], 200);
+            foreach($lines as $line){
+                $pdf->Ln();
+                $pdf->addCell(0,4,$line,'');
+            }
+        }
+
+        // Extra contents
+        if(isset($datas['extra_texts'])){
+            foreach($datas['extra_texts'] as $extra_text){
+                $pdf->Ln();
+                $lines = $pdf->wordWrap($extra_text, 200);
+                foreach($lines as $line){
+                    $pdf->Ln();
+                    $pdf->addCell(0,4,$line,'');
+                }
+            }
         }
 
         $pdf->AliasNbPages();

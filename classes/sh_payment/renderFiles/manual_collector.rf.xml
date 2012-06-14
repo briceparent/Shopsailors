@@ -1,0 +1,29 @@
+
+<div>
+    <RENDER_LOOP what="collectors">
+        <fieldset>
+            <legend>
+                <RENDER_VALUE what="collectors:classname"/>
+            </legend>
+            <RENDER_FORM id="manually_collected">
+                <ul>
+                    <RENDER_LOOP what="payments">
+                        <li style="margin-top:15px;">
+                            <b>N°<RENDER_VALUE what="payments:code"/></b> : 
+                            Paiement du <RENDER_VALUE what="payments:date"/> à <RENDER_VALUE what="payments:time"/>
+                            d'un montant de <RENDER_VALUE what="payments:price"/><br />
+                            <RENDER_IFSET what="payments:more">
+                                <div class="toggle_next_element falseLink">Plus d'infos</div>
+                                <div>
+                                    <RENDER_VALUE what="payments:more"/>
+                                </div>
+                            </RENDER_IFSET>
+                            <input type="submit" name="collector_validated[{collectors:class}][{payments:id}]" value="Marquer le paiement comme réglé"/> - 
+                            <input type="submit" name="collector_unAuthorized[{collectors:class}][{payments:id}]" value="Annuler ce paiement"/>
+                        </li>
+                    </RENDER_LOOP>
+                </ul>
+            </RENDER_FORM>
+        </fieldset>
+    </RENDER_LOOP>
+</div>

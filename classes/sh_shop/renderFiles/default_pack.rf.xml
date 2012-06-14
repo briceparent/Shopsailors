@@ -1,0 +1,105 @@
+<div id="showPack">
+    <RENDER_IFSET what="pack:layout_top">
+        <div id="shop_layout_top">
+            <RENDER_VALUE what="pack:layout_top"/>
+        </div>
+    </RENDER_IFSET>
+    
+    <RENDER_FORM id="choosePack">
+        <RENDER_IFSET what="price:single">
+            <div class="prices">
+                Prix unique :
+                <RENDER_VALUE what="price:minimum"/>
+            </div>
+        </RENDER_IFSET>
+        <RENDER_IFNOTSET what="price:single">
+            <div class="prices">
+                Prix de base :
+                <RENDER_VALUE what="price:minimum"/>
+            </div>
+        </RENDER_IFNOTSET>
+
+        <table class="packElements">
+            <RENDER_LOOP what="elements">
+                <tr>
+                    <RENDER_IFSET what="elements:products">
+                        <td>
+                            <RENDER_VALUE what="elements:element_name"/>&#160;:&#160;
+                        </td>
+                        <td>
+                            <RENDER_VALUE what="elements:quantity"/>&#160;x&#160;
+                        </td>
+                        <td>
+                            <input type="hidden" name="category[{elements:uid}]" value="{elements:element_id}" id="category_{elements:uid}"/>
+                            <select name="product[{elements:uid}]" onchange="loadVariants('{elements:uid}');" id="product_{elements:uid}">
+                                <RENDER_LOOP what="products">
+                                    <option value="{products:id}" title="{products:shortDescription}" state="{products:state}">
+                                        <RENDER_VALUE what="products:name"/>
+                                        <RENDER_IFSET what="products:showPrice">
+                                            &#160;(
+                                            <RENDER_VALUE what="products:price"/>)
+                                        </RENDER_IFSET>
+                                    </option>
+                                </RENDER_LOOP>
+                            </select>
+                            <div id="variants_c_{elements:uid}">
+                                <RENDER_LOOP what="products">
+                                    <RENDER_VALUE what="products:variants"/>
+                                </RENDER_LOOP>
+                            </div>
+                        </td>
+                    </RENDER_IFSET>
+                    <RENDER_IFNOTSET what="elements:products">
+                        <td></td>
+                        <td>
+                            <RENDER_VALUE what="elements:quantity"/>&#160;x&#160;
+                        </td>
+                        <td>
+                            <input type="hidden" name="product[{elements:uid}]" value="{elements:id}"/>
+                            <RENDER_VALUE what="elements:name"/>
+                            <RENDER_IFSET what="elements:showPrice">
+                                &#160;(
+                                <RENDER_VALUE what="elements:price"/>)
+                            </RENDER_IFSET>
+                            <div id="variants_p_{elements:id}">
+                                <RENDER_VALUE what="elements:variants"/>
+                            </div>
+                        </td>
+                    </RENDER_IFNOTSET>
+                </tr>
+            </RENDER_LOOP>
+        </table>
+        <div class="packQty">
+            Quantité :
+            <input name="quantity" value="{base:quantity}"/>
+            <div class="tab_buttons">
+                <input type="submit" class="tab_button btn_validate" name="buy" value="{i18n:buy}"/>
+            </div>
+        </div>
+    </RENDER_FORM>
+    <RENDER_ENDJS>
+        function loadVariants(element){
+            // We should load the variant for the selected product, if needed
+            var category = $('category_'+element).value;
+            var product = $('product_'+element).value;
+            
+            new Ajax.Updater(
+                'variants_c_'+element,
+                '<RENDER_VALUE what="getVariant:action"/>',
+                {
+                    parameters: {
+                        product: product,
+                        uid:element
+                    },
+                evalScripts: true
+                }
+            );
+        }
+    </RENDER_ENDJS>
+
+    <RENDER_IFSET what="pack:layout_bottom">
+        <div id="shop_layout_bottom">
+            <RENDER_VALUE what="pack:layout_bottom"/>
+        </div>
+    </RENDER_IFSET>
+</div>

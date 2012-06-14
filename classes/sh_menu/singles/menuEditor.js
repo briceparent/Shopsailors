@@ -5,19 +5,22 @@
 function createTextPreview(){
     var height = $('textHeight').value;
     var font = $('font').value;
-    uri = 'index.php?path_type=image&file=createPreview&font='+font+'&height='+height;
+    uri = 'index.php?path_type=image&file=createPreview&font='+font+'&height='+height+'&uid='+Math.random();
     $('textPreview').src=uri;
     $('textPreview_div').appear();
 }
 
 function removeSection(name) {
-    if(confirm('Voulez-vous vraiment supprimer la section?') == true){
-        $(name).fade();
-        window.setTimeout(function(){
-            $(name).innerHTML='';
-            menus_submit_now();
-        },1000);
-    }
+    sh_popup.confirm(
+        'Voulez-vous vraiment supprimer la section?',
+        {title:'Confirmation de la suppression',onconfirmok:function(){
+            $(name).fade();
+            window.setTimeout(function(){
+                $(name).innerHTML='';
+                menus_submit_now();
+            },1000);
+        }}
+    );
 }
 
 function createLineItemSortables() {
@@ -55,7 +58,7 @@ function menus_addEntry(){
             if(transport.responseText == 'OK'){
                 menus_submit();
             }else{
-                alert(transport.responseText);
+                sh_popup.alert(transport.responseText,{title:'Erreur'});
             }
         }
     });
@@ -102,12 +105,50 @@ function menus_submit_now(){
 }
 
 
-function inPlaceChangeLink(category,link){
-    window.open (
+function inPlaceChangeLink(category){
+    var link = $('link_'+category).value;
+    new Ajax.Request(
         '/menu/chooseLink.php?value=' + link + '&id=' + category,
-        'Websailors',
-        config = 'width=600, height=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, directories=no, status=no'
-    )
+        {
+            onSuccess: function (transport){
+                sh_popup.prompt(
+                    transport.responseText,
+                    link,
+                    {
+                        title:i18n_chooseLinkTitle,
+                        width: 620,
+                        onpromptok: function(value){
+                            changeLink(category,value);
+                        }
+                    }
+                );
+            }
+        }
+    );
+}
+
+function toggleCategory(category){
+    /* We first close all of them */
+    $$('.index_class').each(function(el){
+        el.style.display = 'none';
+    });
+    $(category).style.display = '';
+    sh_popup.resizeToContent();
+}
+
+
+function link_chosen(){
+    $$('input.page').each(function(s) {
+        if(s.checked){
+            chosenValue=s.value;
+        }
+    });
+    if(chosenValue == "hardLink"){
+        chosenValue = $('hardLink_value').value;
+    }
+    textValue = $('hardLink_value').innerHTML;
+    window.opener.changeLink('<RENDER_VALUE what="category:id"/>',chosenValue);
+    window.close ();
 }
 
 function changeLink(id,value){

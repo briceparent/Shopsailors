@@ -1,0 +1,270 @@
+
+<div id="editPack">
+    <RENDER_FORM id="packEditor" >
+        <NORENDER>FIRST TAB</NORENDER>
+        <RENDER_TABGROUP size="XL" validate="{i18n:save}" admin="admin">
+            <RENDER_TAB title="{i18n:editPack_firstTab}">
+                <RENDER_VALUE what="i18n:editPack_name"/>
+                <RENDER_HELP>
+                    <RENDER_VALUE what="i18n:editPack_name_explanations"/>
+                </RENDER_HELP>
+                <br />
+                <RENDER_I18NINPUT class="sh_shop" i18n="{pack:name}" name="name"/>
+                <br />
+                <RENDER_CHECKBOX name="active" state="{pack:active}" text="{i18n:editPack_state}" help="{i18n:editPack_state_explanations}"/>
+                <br />
+                <RENDER_VALUE what="i18n:productEditor_taxRate"/>
+                <br />
+                <input class="inputQuantity" name="taxRate" value="{pack:taxRate}"/>%
+                <div class="noteText">
+                    <RENDER_VALUE what="i18n:productEditor_taxRateNote"/>
+                </div>
+                <br />
+                <br />
+                <RENDER_RADIOBOX name="cost" value="add" text="{i18n:editPack_addCost}" onchange="pack_costTypeChanged();" id="cost_add" state="{pack:addState}"/>
+                <RENDER_VALUE what="constants:currencybefore"/>
+                <input name="add" value="{pack:add}" style="width:50px;" onclick="pack_setCostType('add');"/>
+                <RENDER_VALUE what="constants:currencyAfter"/>&#160;
+                <RENDER_VALUE what="constants:taxes"/>
+                <br />
+                <RENDER_RADIOBOX name="cost" value="total" text="{i18n:editPack_totalCost}" onchange="pack_costTypeChanged();" id="cost_total" state="{pack:totalState}"/>
+                <RENDER_VALUE what="constants:currencybefore"/>
+                <input name="total" value="{pack:total}" style="width:50px;" onclick="pack_setCostType('total');"/>
+                <RENDER_VALUE what="constants:currencyAfter"/>&#160;
+                <RENDER_VALUE what="constants:taxes"/>
+            </RENDER_TAB>
+            <RENDER_TAB title="{i18n:editPack_secondTab}">
+                <RENDER_VALUE what="i18n:editPack_secondTab_intro"/>
+                <hr />
+                <table id="main_table">
+                    <tr>
+                        <th>
+                            <RENDER_VALUE what="i18n:editPack_prod_cat"/>
+                        </th>
+                        <th>
+                            <RENDER_VALUE what="i18n:editPack_quantity"/>
+                        </th>
+                        <th class="giftColumn">
+                            <RENDER_VALUE what="i18n:editPack_gift"/>
+                            <RENDER_HELP>
+                                <RENDER_VALUE what="i18n:editPack_gift_explanations"/>
+                            </RENDER_HELP>
+                        </th>
+                        <th>
+                            <RENDER_VALUE what="i18n:editPack_text"/>
+                        </th>
+                    </tr>
+                    <RENDER_LOOP what="main">
+                        <tr>
+                            <td>
+                                <input type="hidden" name="products[type][1_{main:rlid}]" value="main"/>
+                                <input style="width:300px;" name="products[element][1_{main:rlid}]" onclick="chooseProductOrCategory(this);" class="pointer main" readonly="readonly" title="{i18n:editPack_chooseProdOrCat}" value="{main:element}"/>
+                            </td>
+                            <td>
+                                <input name="products[quantity][1_{main:rlid}]" style="width:30px;" value="{main:quantity}"/>
+                            </td>
+                            <td class="giftColumn">
+                                <input name="irrelevant[1_{main:rlid}]" type="checkbox" state="{main:free}" onchange="changeFreeState(this);"/>
+                                <input type="hidden" name="products[free][1_{main:rlid}]" value="{main:free}"/>
+                            </td>
+                            <td>
+                                <RENDER_I18NINPUT name="products[text][1_{main:rlid}]" class="sh_shop" i18n="{main:text}"/>
+                            </td>
+                        </tr>
+                    </RENDER_LOOP>
+                </table>
+
+                <input type="submit" name="add_main" value="{i18n:editPack_addLine}" style="display:none;" id="add_main"/>
+            </RENDER_TAB>
+            <RENDER_TAB title="{i18n:editPack_thirdTab}">
+                <RENDER_VALUE what="i18n:editPack_thirdTab_intro"/>
+                <hr />
+                <table id="secondary_table">
+                    <tr>
+                        <th>
+                            <RENDER_VALUE what="i18n:editPack_prod_cat"/>
+                        </th>
+                        <th>
+                            <RENDER_VALUE what="i18n:editPack_quantity"/>
+                        </th>
+                        <th class="giftColumn">
+                            <RENDER_VALUE what="i18n:editPack_gift"/>
+                            <RENDER_HELP>
+                                <RENDER_VALUE what="i18n:editPack_gift_explanations"/>
+                            </RENDER_HELP>
+                        </th>
+                    </tr>
+                    <RENDER_LOOP what="secondary">
+                        <tr>
+                            <td>
+                                <input type="hidden" name="products[type][2_{secondary:rlid}]" value="secondary"/>
+                                <input style="width:300px;" name="products[element][2_{secondary:rlid}]" onclick="chooseProductOrCategory(this);" class="pointer secondary" readonly="readonly" title="{i18n:editPack_chooseProdOrCat}" value="{secondary:element}"/>
+                            </td>
+                            <td class="giftColumn">
+                                <input name="products[quantity][2_{secondary:rlid}]" style="width:30px;" value="{secondary:quantity}"/>
+                            </td>
+                            <td>
+                                <input name="irrelevant[2_{secondary:rlid}]" type="checkbox" state="{secondary:free}" onchange="changeFreeState(this);"/>
+                                <input type="hidden" name="products[free][2_{secondary:rlid}]" value="{secondary:free}"/>
+                            </td>
+                        </tr>
+                    </RENDER_LOOP>
+                </table>
+                <input type="submit" name="add_secondary" value="{i18n:editPack_addLine}" style="display:none;" id="add_secondary"/>
+
+            </RENDER_TAB>
+            
+            <NORENDER>FOURTH TAB - LAYOUTS</NORENDER>
+            <RENDER_TAB title="{i18n:layout_title}">
+                Choix de l'habillage à utiliser dans cette catégorie :
+                <select name="layout">
+                    <RENDER_LOOP what="layouts">
+                        <option value="{layouts:id}" state="{layouts:state}">
+                            <RENDER_VALUE what="layouts:name"/>
+                        </option>
+                    </RENDER_LOOP>
+                </select>
+            </RENDER_TAB>
+        </RENDER_TABGROUP>
+    </RENDER_FORM>
+    <div id="ajaxReturn" style="display:none;"></div>
+    <table id="main_model" style="display:none;">
+        <tr>
+            <td>
+                <input type="hidden" name="products[type][NEW_MAIN]" value="main"/>
+                <input style="width:300px;" name="products[element][NEW_MAIN]" onclick="chooseProductOrCategory(this);" class="pointer main" readonly="readonly" title="{i18n:editPack_chooseProdOrCat}" value=""/>
+            </td>
+            <td>
+                <input name="products[quantity][NEW_MAIN]" style="width:30px;" value="1"/>
+            </td>
+            <td class="giftColumn">
+                <input name="irrelevant[NEW_MAIN]" type="checkbox" state="" onchange="changeFreeState(this);"/>
+                <input type="hidden" name="products[free][NEW_MAIN]" value=""/>
+            </td>
+            <td>
+                <RENDER_I18NINPUT name="products[text][NEW_MAIN]" class="sh_shop" i18n="0"/>
+            </td>
+        </tr>
+    </table>
+    <table id="secondary_model" style="display:none;">
+        <tr>
+            <td>
+                <input style="width:300px;" name="products[element][NEW_MODEL]" onclick="chooseProductOrCategory(this);" class="pointer secondary" readonly="readonly" title="{i18n:editPack_chooseProdOrCat}" value=""/>
+                <input type="hidden" name="products[type][NEW_MODEL]" value="secondary"/>
+            </td>
+            <td class="giftColumn">
+                <input name="products[quantity][NEW_MODEL]" style="width:30px;" value="1"/>
+            </td>
+            <td>
+                <input name="irrelevant[NEW_MODEL]" type="checkbox" state="" onchange="changeFreeState(this);"/>
+                <input type="hidden" name="products[free][NEW_MODEL]" value=""/>
+            </td>
+        </tr>
+    </table>
+    <RENDER_ENDJS>
+        var actualInput = '';
+        var actualEnd = '';
+        $('main_table').innerHTML += getMainModel();
+        $('secondary_table').innerHTML += getSecondaryModel();
+
+
+        function chooseProductOrCategory(input){
+            actualInput = input;
+            actualEnd = '';
+            
+            if(input.hasClassName('main')){
+                var last = $$('#main_table .main').pop();
+                if(input == last){
+                    actualEnd = 'main';
+                }
+            }else if(input.hasClassName('secondary')){
+                var last = $$('#secondary_table .secondary').pop();
+                if(input == last){
+                    actualEnd = 'secondary';
+                }
+            }
+
+            new Ajax.Updater(
+                'ajaxReturn',
+                '/shop/productOrCategoryPicker.php',
+                {
+                    onComplete: function (transport){
+                        sh_popup.message(
+                            'ajaxReturn',
+                            {
+                                title:'Choisissez un produit ou une catégorie',
+                                width: 620
+                            }
+                        );
+                    },
+                    evalScripts:true
+                }
+            );
+        }
+        
+        function getMainModel(){
+            return $('main_model').innerHTML.replace(
+                /NEW_MAIN/gi,
+                'new_main_'+Math.round(Math.random() * 1000)
+            );
+        }
+        
+        function getSecondaryModel(){
+            return $('secondary_model').innerHTML.replace(
+                /NEW_MODEL/gi,
+                'new_model_'+Math.round(Math.random() * 1000)
+            );
+        }
+        
+        function chooseProductOrCategory_done(value){
+            actualInput.readonly = false;
+            actualInput.value = value;
+            if(actualEnd == 'main'){
+                new Insertion.Bottom('main_table',getMainModel());
+            }else if(actualEnd == 'secondary'){
+                new Insertion.Bottom('secondary_table',getSecondaryModel());
+            }
+            sh_popup.hide();
+        }
+        function unfold(category){
+            new Ajax.Updater(
+                'category_'+category,
+                '/shop/productPicker/'+category+'.php',
+                {
+                    evalScripts:true
+                }
+            );
+        }
+        function pack_setCostType(type){
+            if(type == 'add'){
+                $('cost_add').checked = true;
+                $$('.giftColumn').each(function(el){
+                    el.style.display = 'inline';
+                });
+            }else{
+                $('cost_total').checked = true;
+                $$('.giftColumn').each(function(el){
+                    el.style.display = 'none';
+                });
+            }
+        }
+        function pack_costTypeChanged(){
+            if($('cost_add').checked){
+                $$('.giftColumn').each(function(el){
+                    el.style.display = 'inline';
+                });
+            }else{
+                $$('.giftColumn').each(function(el){
+                    el.style.display = 'none';
+                });
+            }
+        }
+        function changeFreeState(element){
+            var state = '';
+            if(element.checked){
+                state = 'checked';
+            }
+            element.next().value = state;
+        }
+    </RENDER_ENDJS>
+</div>

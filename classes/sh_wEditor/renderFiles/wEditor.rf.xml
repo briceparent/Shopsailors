@@ -1,5 +1,14 @@
 <div class="wEditor">
-    <RENDER_TAG type="textarea" what="textarea>args">
-        <RENDER_VALUE what="textarea>content"/>
+    <RENDER_IFSET what="styles:json">
+        <RENDER_JS>
+            var tinymce_styles_json = <RENDER_VALUE what="styles:json"/>;
+        </RENDER_JS>
+    </RENDER_IFSET>
+    <RENDER_TAG type="textarea" what="textarea:args">
+        <RENDER_IFSET what="styles:created">
+            <style type="text/css"><RENDER_VALUE what="styles:created"/></style>
+        </RENDER_IFSET>
+        <RENDER_VALUE what="textarea:content"/>
     </RENDER_TAG>
+    <input type="hidden" name="entries_verifier[sh_wEditor][]" value="{textarea:name}"/>
 </div>

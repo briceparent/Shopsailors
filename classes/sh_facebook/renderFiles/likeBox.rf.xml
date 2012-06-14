@@ -1,0 +1,7 @@
+<div>
+    <iframe
+        src="http://www.facebook.com/plugins/likebox.php?id={likebox:facebook_id}&amp;width={likebox:width}&amp;connections={likebox:connections}&amp;stream={likebox:stream}&amp;header={likebox:header}&amp;height={likebox:height}"
+        scrolling="{likebox:scrolling}" frameborder="{likebox:frameborder}" style="border:none; overflow:hidden; width:{likebox:width}px; height:{likebox:height}px;"
+        allowTransparency="true">
+    </iframe>
+</div>

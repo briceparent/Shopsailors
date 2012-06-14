@@ -1,5 +1,6 @@
 <?php
 $i18n = array(
+'lang_name'=>'English',
 'yes' => 'Yes',
 'no' => 'No',
 'send' => 'Send',

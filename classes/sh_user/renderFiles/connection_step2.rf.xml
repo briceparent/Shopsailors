@@ -1,50 +1,33 @@
 <div id="connection_mainContainer">
-    <NORENDER>
-        <RENDER_JS>
-            function user_md5izePassword(){
-                var challenge = '<RENDER_VALUE what="security>challenge"/>';
-                var pass = $('user_passwordField');
-                var md5Pass = MD5(pass.value.toLowerCase);
-                pass.value = MD5(challenge + '-' + md5Pass);
-                $('user_md5PasswordField').value = 'true';
-                $('user_connection_step2').submit();
-            }
-        </RENDER_JS>
-    </NORENDER>
-    <div class="bg_identification_top">
-    </div>
-    <div class="bg_identification_middle">
-        <div id="identificationContainer">
-            <RENDER_IFSET what="error>message">
-                <RENDER_VALUE what="error>message"/>
-            </RENDER_IFSET>
-            <RENDER_FORM id="user_connection_step2">
-                <div  id="clientConnection">
-                    <div class="clientConnection_title">
-                        <RENDER_VALUE what="i18n>client_identification_title_step2"/><br />
-                    </div>
-                    <RENDER_VALUE what="i18n>client_identification_passPhrase"/><br />
-                    <div style="margin:5px;font-style:italic;font-weight:bold;">
-                        <RENDER_VALUE what="verif>phrase"/>
-                    </div>
-                    <div>
-                        <RENDER_VALUE what="i18n>client_password"/><br />
-                        <input id="user_passwordField" type="password" name="password"/>
-                        <input id="user_md5PasswordField" type="hidden" name="md5Password" value="false"/>
-                    </div>
+    <RENDER_NOTIF size="M" title="{i18n:client_identification_title_step2}">
+        <RENDER_IFSET what="error:message">
+            <RENDER_VALUE what="error:message"/>
+        </RENDER_IFSET>
+        <RENDER_FORM id="user_connection_step2">
+            <div class="passPhrase_container">
+                <div class="passPhraseInfo">
+                    <RENDER_VALUE what="i18n:client_identification_passPhrase"/>
                 </div>
-                <div class="adminLink">
-                    <a href="{link>passPhrase_link}">
-                        <RENDER_VALUE what="i18n>password_forgotten"/>
-                    </a>
+                <div class="passPhrase">
+                    <RENDER_VALUE what="verif:phrase"/>
                 </div>
-                <div class="marginTop_10px">
-                    <input type="submit"/>
-                    <NORENDER><input type="submit" onclick="user_md5izePassword();return false;"/></NORENDER>
-                </div>
-            </RENDER_FORM>
-        </div>
-    </div>
-    <div class="bg_identification_bottom">
-    </div>
+            </div>
+            <div class="step2_passWord">
+                <RENDER_VALUE what="i18n:client_password"/><br />
+                <input type="hidden" name="user_id" value="{user:name}"/>
+                <input id="user_passwordField" type="password" name="password"/>
+                <input id="user_md5PasswordField" type="hidden" name="md5Password" value="false"/>
+                <RENDER_CHECKBOX name="cookie" text="{i18n:connect_cookie}" help="{i18n:connect_cookie_explanations}"/>
+            </div>
+            <div class="adminLink">
+                <a href="{link:passPhrase_link}">
+                    <RENDER_VALUE what="i18n:password_forgotten"/>
+                </a>
+            </div>
+            <div class="inputContainer">
+                <input type="submit"/>
+                <NORENDER><input type="submit" onclick="user_md5izePassword();return false;"/></NORENDER>
+            </div>
+        </RENDER_FORM>
+    </RENDER_NOTIF>
 </div>

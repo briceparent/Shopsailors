@@ -1,0 +1,20 @@
+<div>
+<style type="text/css">
+  td{vertical-align:top;}
+</style>
+  <RENDER_FORM method="post" action="" name="buttonModify" >
+    <table>
+        <tr>
+            <td>
+                Polices autorisées : 
+            </td>
+            <td>
+                <RENDER_LOOP what="fonts">
+                    <input type="checkbox" name="fonts[]" value="{fonts:name}" state="{fonts:active}"/><RENDER_VALUE what="fonts:name" /><br />
+                </RENDER_LOOP>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Enregistrer et créer les variations"/>
+</RENDER_FORM>
+</div>

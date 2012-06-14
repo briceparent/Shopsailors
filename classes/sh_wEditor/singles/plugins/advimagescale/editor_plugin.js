@@ -221,6 +221,7 @@
 			}
 		}
 
+
 		// allow filtering by classname
 		var class_filter = ed.getParam('advimagescale_filter_class');
 		if (class_filter) {
@@ -228,6 +229,11 @@
 				return; // skip this element, doesn't have the class we want
 			}
 		}
+
+		// filter by class so images in class noRatio are not getting contrained
+        if (dom.hasClass(el, 'noRatio')) {
+            return; // skip this element
+        }
 
 		// populate new dimensions object
 		var newDimensions = { width: dom.getAttrib(el, 'width', el.width), height: dom.getAttrib(el, 'height', el.height) };

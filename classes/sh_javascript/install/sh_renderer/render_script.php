@@ -1,2 +1,0 @@
-sh_javascript
-render_addScript

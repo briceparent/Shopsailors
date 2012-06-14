@@ -1,0 +1,8 @@
+<div>
+    <RENDER_FORM id="addPalettes" type="file" >
+        Zip des palettes à envoyer : 
+        <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+        <input type="file" id="zipFile" name="zipFile"/><br />
+        <input type="submit" value="Envoyer"/>
+    </RENDER_FORM>
+</div>

@@ -1,0 +1,32 @@
+<html xml:lang="fr">
+    <head>
+        <RENDER_VALUE what="head:content"/>
+    </head>
+    <body style="background-color:{variation:background};">
+        <NORENDER>HEADING OF THE PAGE</NORENDER>
+        <div style="float:left;">
+            <a href="{mode:classicLink}">
+                Site classique
+            </a>
+        </div>
+        <div style="float:right;">
+            <RENDER_VALUE what="language:selector"/>
+        </div>
+        <div style="clear:both;"> </div>
+        <div style="text-align:center;">
+            <img src="/images/site/logo/rectangular.png.resized.360.120.png" alt="Logo" title="Logo" style="width:90%;"/>
+        </div>
+        <div style="text-align:center;">
+            <RENDER_LOOP what="menu">
+                <a href="{menu:link}" style="white-space:nowrap;"><RENDER_VALUE what="menu:text"/></a>&#160;&#160;&#160;
+            </RENDER_LOOP>
+        </div>
+        <h1 style="text-align:center;font-size:120%;"><RENDER_VALUE what="body:title"/></h1>
+        <div>
+            <RENDER_VALUE what="body:content"/>
+        </div>
+        <div style="margin-top:15px;text-align:center;font-size:80%;">
+            <RENDER_VALUE what="body:copyrights"/>
+        </div>
+     </body>
+</html>

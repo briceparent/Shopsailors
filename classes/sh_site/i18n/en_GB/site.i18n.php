@@ -20,7 +20,7 @@ Clothing store offering Jeans, T-shirts for women and men. Promotions and sales 
 'italian' => 'Italian',
 'french' => 'French',
 'addlanguage' => 'Add a language.',
-'titleParams' => 'Titles settings',
+'titleParams' => 'General settings',
 'contactBox' => 'Contact',
 'variation' => 'Select the colour of your website:',
 'variation_explanation' => '
@@ -75,5 +75,5 @@ you just have to click on your logo to select it.
 If your logo appear too small or too big, you\'ll have to modify your picture using an image editor.
 </div>',
 
-'selectColorNote'=>'Once the form saved click in the same time on "(ctrl)+(F5)"<br/> to refresh the page and to see the choosen variation.',
+'selectColorNote'=>'Once the form saved click in the same time on "(ctrl)+(F5)" to refresh the page and to see the choosen variation.',
 );

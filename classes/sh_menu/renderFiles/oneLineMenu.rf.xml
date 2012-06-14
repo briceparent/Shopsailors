@@ -1,7 +1,0 @@
-<div class="oneMenu {menu>container}">
-    <RENDER_LOOP what="sections">
-    <a href="{sections>href}" class="menu_entry_{sections>id}">
-        <img src="{sections>image}{sections>state}.png" alt="{sections>title}" onmouseover="this.src='{sections>image}{sections>selected}.png'" onmouseout="this.src='{sections>image}{sections>state}.png'" />
-    </a>
-    </RENDER_LOOP>
-</div>

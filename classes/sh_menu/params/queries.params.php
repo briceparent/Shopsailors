@@ -113,6 +113,23 @@ $this->queries = array(
                 ###book_categories
                 WHERE
                 `id`>"0" ;',
-            'type' => 'get')
+            'type' => 'get'),
+
+        'create_table' => array(
+            'query' => 'CREATE TABLE IF NOT EXISTS `###menus` (
+  `menu` tinyint(3) unsigned NOT NULL DEFAULT \'0\',
+  `category` tinyint(3) unsigned NOT NULL DEFAULT \'0\',
+  `link` varchar(150) COLLATE utf8_bin NOT NULL,
+  `position` tinyint(3) unsigned NOT NULL DEFAULT \'100\',
+  `title` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT \'UNAFFECTED\',
+  `image` varchar(150) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`menu`,`category`,`position`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;',
+            'type' => 'get'),
+        'update_menus_table_1' => array(
+            'query' => 'ALTER TABLE `menus` ADD `class` VARCHAR( 32 ) NOT NULL AFTER `category` ,
+ADD `method` VARCHAR( 32 ) NOT NULL AFTER `class` ,
+ADD `id` INT UNSIGNED NULL DEFAULT NULL AFTER `method` ;',
+            'type' => 'get'),
 
         );

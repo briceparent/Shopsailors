@@ -2,7 +2,7 @@
 $i18n = array(
     'errorTitle' => 'Erreur n°',
     'error_intro' => 'Une erreur a été renvoyée lors de l\'accès à la page suivante:',
-    'error_alternative' => 'Vous pouvez suivre les liens dans les menus, ou retourner sur une des pages précédentes,
+    'error_alternative' => '&#160;Vous pouvez suivre les liens dans les menus, ou retourner sur une des pages précédentes,
 par exemple en suivant l\'un des liens ci-dessous: ',
     'error_description'=>'Description de l\'erreur: ',
     'error_301' => 'La page demandée a été transférée à une nouvelle adresse.',
@@ -53,9 +53,8 @@ par exemple en suivant l\'un des liens ci-dessous: ',
     'uri_504'=>'504-time_out_de_la_passerelle.php',
     'uri_505'=>'505-version_http_non_supportee.php',
 
-    'error_not_prepared' => 'Vous avez accédé directement à cette page, mais celle-ci
-    ne contient aucun contenu important.<br />
-    Peut-être a-t\'elle été enregistrée dans votre historique par inadvertance.<br />
-    Veuillez utiliser le(s) menu(s) ou les liens ci-dessous pour naviguer sur ce site.',
+    'error_not_prepared' => 'Vous avez accédé directement à cette page, mais celle-ci étant une page d\'erreur,
+        elle ne contient aucun contenu important.<br />',
+    'pleaseConnect' => 'Pour accéder à cette page, connectez vous en suivant le lien suivant :',
 
 );

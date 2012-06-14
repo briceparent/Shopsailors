@@ -1,0 +1,22 @@
+<div>
+    <RENDER_FORM id="facebook">
+
+        <RENDER_TABGROUP validate="{i18n:save}">
+            <RENDER_TAB title="{i18n:likeButton_title}">
+                Facebook ID
+                <RENDER_HELP><RENDER_VALUE what="i18n:facebookId_explanations"/></RENDER_HELP> :
+                <input name="facebook_id" value="{facebook:id}"/><br />
+                Nom du site 
+                <RENDER_HELP><RENDER_VALUE what="i18n:siteName_explanations"/></RENDER_HELP> :
+                <input name="siteName" value="{facebook:siteName}"/><br />
+                <div id="likeButton_modules">
+                    <hr />
+                    Des boutons "J'aime" seront ajoutés pour chacun des modules sélectionnés ci-dessous :
+                    <RENDER_LOOP what="modules">
+                        <RENDER_CHECKBOX text="{modules:description}" name="likeButtons[{modules:class}][{modules:name}]" state="{modules:state}"/>
+                    </RENDER_LOOP>
+                </div>
+            </RENDER_TAB>
+        </RENDER_TABGROUP>
+    </RENDER_FORM>
+</div>

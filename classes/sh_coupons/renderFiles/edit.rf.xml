@@ -1,0 +1,73 @@
+
+<div>
+    <RENDER_FORM id="coupon_editor">
+        <RENDER_TABGROUP size="L" validate="{i18n:save}" admin="admin">
+            <RENDER_TAB title="{i18n:edit_title}">
+                <style>
+                    #coupon_editor td{
+                    vertical-align:baseline;
+                    }
+                    #coupon_editor td:first-child{
+                    white-space:nowrap;
+                    text-align:right;
+                    }
+                </style>
+                <table id="coupon_editor">
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:edit_validity"/>
+                        </td>
+                        <td>
+                            <RENDER_VALUE what="i18n:edit_from"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:edit_minimum"/>
+                        </td>
+                        <td>
+                            <input type="number" name="minimum" value="{coupon:minimum}" style="width:40px;"/>
+                            <span class="italic">
+                                <RENDER_VALUE what="i18n:edit_minimum_more"/>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:edit_quantity"/>
+                        </td>
+                        <td>
+                            <input type="number" name="max_uses" value="{coupon:max_uses}" style="width:40px;"/>
+                            <span class="italic">
+                                <RENDER_VALUE what="i18n:edit_quantity_more"/>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:edit_amount"/>
+                        </td>
+                        <td>
+                            <input name="reduction" value="{coupon:reduction}" style="width:50px;"/>
+                            <select name="type">
+                                <option value="fixed" state="{coupon:type_fixed}" title="{i18n:edit_type_fixed_more}">€ / $ / £ ...</option>
+                                <option value="percents" state="{coupon:type_percents}" title="{i18n:edit_type_percents_more}">%</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:edit_text"/>
+                        </td>
+                        <td>
+                            <input name="text" value="{coupon:text}" style="width:80px;"/>
+                            <span class="italic">
+                                <RENDER_VALUE what="i18n:edit_text_more"/>
+                            </span>  
+                        </td>
+                    </tr>
+                </table>  
+            </RENDER_TAB>
+        </RENDER_TABGROUP>
+    </RENDER_FORM>
+</div>

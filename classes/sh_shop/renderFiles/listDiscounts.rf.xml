@@ -1,0 +1,18 @@
+<div id="admin">
+    <RENDER_ADMINBOX title="{i18n:listDiscounts_title}">
+        <RENDER_ADMINBOXCONTENT>
+            <div>
+                <a class="admin_blueLink" href="{newDiscount:link}">
+                    <RENDER_VALUE what="i18n:listDiscounts_new"/>
+                </a>
+            </div>
+            <RENDER_LOOP what="discounts">
+                <div>
+                    <a href="{discounts:link}">
+                        <RENDER_VALUE what="discounts:name"/>
+                    </a>
+                </div>
+            </RENDER_LOOP>
+        </RENDER_ADMINBOXCONTENT>
+    </RENDER_ADMINBOX>
+</div>

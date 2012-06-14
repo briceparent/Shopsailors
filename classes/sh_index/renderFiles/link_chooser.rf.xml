@@ -1,38 +1,42 @@
 <div id="menuEditor_container">
     <RENDER_FORM method="post" action="" id="chooseIndexPage" >
-        <div class="form_box_container">
-            <div class="form_box_top">
-                <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>selectIndexTitle"/>
-                </h3>
-            </div>
-            <div class="form_box_middle">
-                <div class="form_box_content">
-                    <div class="formContent">
-                        <RENDER_LOOP what="classes">
-                            <div onclick="$('class_{classes>name}').toggle();" style="cursor:pointer;font-weight:bold;">
-                                <RENDER_VALUE what="classes>description"/>
-                            </div>
-                            <div class="index_class" id="class_{classes>name}" style="display:none">
-                                <RENDER_LOOP what="elements">
-                                    <div>
-                                        <input type="radio" class="page" name="page" state="{elements>state}" value="{elements>name}"/>
-                                        <RENDER_VALUE what="elements>value"/>
-                                    </div>
-                                </RENDER_LOOP>
-                                <RENDER_IFSET what="classes>unfolded">
-                                    <script type="text/javascript">
-                                        $('class_<RENDER_VALUE what="classes>name"/>').toggle();
-                                    </script>
-                                </RENDER_IFSET>
-                            </div>
-                        </RENDER_LOOP>
+        <RENDER_TABGROUP size="L" validate="{i18n:save}" admin="admin">
+            <RENDER_TAB title="{i18n:selectIndexTitle}">
+                <div class="marginLeft_5px italic"><RENDER_VALUE what="i18n:indexChooser_explanation"/></div>
+                <RENDER_LOOP what="classes">
+                    <div class="chooserContainer">
+                        <div onclick="$('class_{classes:name}').toggle();" style="cursor:pointer;font-weight:bold;">
+                            <RENDER_VALUE what="classes:description"/>
+                        </div>
+                        <div class="index_class" id="class_{classes:name}" style="display:none">
+                            <RENDER_LOOP what="elements">
+                                <div>
+                                    <input type="radio" class="page pointer" name="page" id="{elements:uid}" state="{elements:state}" value="{elements:name}"/>
+                                    <label class="pointer" for="{elements:uid}">
+                                        <RENDER_VALUE what="elements:value"/>
+                                    </label>
+                                </div>
+                            </RENDER_LOOP>
+                            <RENDER_IFSET what="classes:unfolded">
+                                <script type="text/javascript">
+                                    $('class_<RENDER_VALUE what="classes:name"/>').toggle();
+                                </script>
+                            </RENDER_IFSET>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="form_box_bottom">
-            </div>
-        <input type="submit" value="{i18n>validate}"/>
-        </div>
+                </RENDER_LOOP>
+            </RENDER_TAB>
+            <RENDER_IFSET what="intro:available">
+                <RENDER_TAB title="{i18n:selectIntroTitle}">
+                    <RENDER_CHECKBOX name="activate_intro" state="{intro:activate}" text="{i18n:activateIntroPage}" help="{i18n:activateIntroPage_explanations}"/>
+                    <RENDER_LOOP what="introPages">
+                        <input type="radio" class="page pointer" name="intro" id="{introPages:uid}" state="{introPages:state}" value="{introPages:value}"/>
+                        <label class="pointer" for="{introPages:uid}">
+                            <RENDER_VALUE what="introPages:name"/>
+                        </label>
+                    </RENDER_LOOP>
+                </RENDER_TAB>
+            </RENDER_IFSET>
+        </RENDER_TABGROUP>
     </RENDER_FORM>
 </div>

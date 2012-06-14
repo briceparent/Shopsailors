@@ -1,65 +1,73 @@
-<div id="form_box_container">
+
+<div>
     <RENDER_FORM id="manage_newsletters">
-        <div class="form_box_container">
-            <div class="form_box_top">
-                <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>manage_title"/>
-                </h3>
-            </div>
-            <div class="form_box_middle">
-                <div class="formContent">
-                    <RENDER_CHECKBOX text="{i18n>manage_activate}" name="activated" state="{content>activated}"/>
-                </div>
-            </div>
-            <div class="form_box_bottom">
-            </div>
-            <div class="form_box_top">
-                <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>editSubscribePage_title"/>
-                </h3>
-            </div>
-            <div class="form_box_middle">
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>pageTitle"/>
-                    <RENDER_HELP what="{i18n>subscribPageTitle_explanations}"/>
+        <RENDER_TABGROUP validate="{i18n:save}">
+            <RENDER_TAB title="{i18n:manage_title}">
+                <RENDER_CHECKBOX text="{i18n:manage_activate}" name="activated" state="{content:activated}"/>
+                <hr />
+                Pour l'envoi de la newsletter, vous pouvez :
+                <br />
+                <input type="radio" name="mailSender" value="none" state="{mailsender:none}"/>
+                        Vous en charger vous même
+                <RENDER_HELP>
+                    <div>
+                    En choisissant cette option, vous recevrez la newsletter, et vous l'enverrez
+                    vous-même à tous ses destinataires.
+                        <br />
+                    La liste des destinataires est alors accessible à partir du menu Newsletter.
+                        <br />
+                        <br />
+                    Vous devez alors déterminer le moment où la newsletter doit apparaître
+                    dans la liste des newsletters déjà envoyées.
+                    </div>
+                </RENDER_HELP>
+                <NORENDER>
+    
                     <br />
-                    <RENDER_I18NINPUT class="sh_newsletters" i18n="{constants>subscription_title}" name="subscription_title"/>
-                    <br />
-                    <RENDER_CHECKBOX text="{i18n>showTitle}" name="subscription_showTitle" state="{content>subscription_showTitle}"/>
-                </div>
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>editSubscribePage_intro"/>
-                    <RENDER_HELP what="{i18n>editSubscribePage_intro_explanations}"/>
-                    <br />
-                    <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_newsletters" i18n="{constants>subscription_intro}" name="subscription_intro"/>
-                </div>
-            </div>
-            <div class="form_box_bottom">
-            </div>
-            <div class="form_box_top">
-                <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>editNewslettersList_title"/>
-                </h3>
-            </div>
-            <div class="form_box_middle">
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>pageTitle"/>
-                    <RENDER_HELP what="{i18n>NL_PageTitle_explanations}"/>
-                    <br />
-                    <RENDER_I18NINPUT class="sh_newsletters" i18n="{constants>list_title}" name="list_title"/>
-                    <br />
-                    <RENDER_CHECKBOX text="{i18n>showTitle}" name="list_showTitle" state="{content>list_showTitle}"/>
-                </div>
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>edit_newsList_intro"/>
-                    <RENDER_HELP what="{i18n>edit_newsList_intro_explanation}"/>
-                    <br />
-                    <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_newsletters" i18n="{constants>list_intro}" name="list_intro"/>
-                </div>
-            </div>
-            <div class="form_box_bottom">
-            </div>
-            <input type="submit" value="{i18n>validate}"/>
-        </div>
+                    <input type="radio" name="mailSender" value="graphicMail" state="{mailsender:graphicMail}"/>
+                    Utiliser les services de GraphicMail
+                    <RENDER_HELP>
+                        <div>
+                            En choisissant cette option, vous n'avez pas à vous soucier
+                            de l'envoi, vous n'avez qu'à rédiger votre newsletter, et déterminer
+                            la date de l'envoi effectif.
+                            <br />
+                            Une fois l'envoi effectué, la newsletter sera automatiquement
+                            ajoutée à la liste des newsletters envoyées.
+                        </div>
+                    </RENDER_HELP>
+                </NORENDER>
+            </RENDER_TAB>
+            <RENDER_TAB title="{i18n:editSubscribePage_title}">
+                <RENDER_VALUE what="i18n:pageTitle"/>
+                <RENDER_HELP what="{i18n:subscribPageTitle_explanations}"/>
+                <br />
+                <RENDER_I18NINPUT class="sh_newsletters" i18n="{constants:subscription_title}" name="subscription_title"/>
+                <br />
+                <RENDER_CHECKBOX text="{i18n:showTitle}" name="subscription_showTitle" state="{content:subscription_showTitle}"/>
+
+
+                <RENDER_VALUE what="i18n:editSubscribePage_intro"/>
+                <RENDER_HELP what="{i18n:editSubscribePage_intro_explanations}"/>
+                <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_newsletters" i18n="{constants:subscription_intro}" name="subscription_intro"/>
+                    
+            </RENDER_TAB>
+            <RENDER_TAB title="{i18n:editNewslettersList_title}">
+                    
+                <RENDER_VALUE what="i18n:pageTitle"/>
+                <RENDER_HELP what="{i18n:NL_PageTitle_explanations}"/>
+                <br />
+                <RENDER_I18NINPUT class="sh_newsletters" i18n="{constants:list_title}" name="list_title"/>
+                <br />
+                <RENDER_CHECKBOX text="{i18n:showTitle}" name="list_showTitle" state="{content:list_showTitle}"/>
+
+
+                <RENDER_VALUE what="i18n:edit_newsList_intro"/>
+                <RENDER_HELP what="{i18n:edit_newsList_intro_explanation}"/>
+                <br />
+                <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_newsletters" i18n="{constants:list_intro}" name="list_intro"/>
+                    
+            </RENDER_TAB>
+        </RENDER_TABGROUP>
     </RENDER_FORM>
 </div>

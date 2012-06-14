@@ -1,0 +1,339 @@
+
+<div id="forum_show">
+    <RENDER_FORUM_MENUBAR/>
+    <RENDER_BREADCRUMBS what="nav_levels"/>
+    <RENDER_IFSET what="section:hasChildren">
+        <RENDER_CACHE class="sh_forum" part="section_subsections_{section:id}" disabled="{cache:disable_subsections}">
+            <RENDER_LOOP what="sections">
+                <div class="forum_oneCat">
+                    <div class="oneCat_image">
+                        <a href="{sections:link}">
+                            <RENDER_IFSET what="sections:image">
+                                <img alt="{sections:name}" title="{sections:name}" src="{sections:image}.resized.95.95.png"/>
+                            </RENDER_IFSET>
+                        </a>
+                    </div>
+                    <div class="oneCat_contents">
+                        <a href="{sections:link}">
+                            <h2>
+                                <RENDER_VALUE what="sections:name"/>
+                            </h2>
+                        </a>
+                        <RENDER_IFSET what="sections:hasChildren">
+                            <div class="forum_catInfo">
+                                <RENDER_VALUE what="i18n:subCat"/>
+                                <RENDER_VALUE what="sections:subSections"/>
+                            </div>
+                        </RENDER_IFSET>
+                        <RENDER_IFNOTSET what="sections:hasChildren">
+                            <div class="forum_catInfo">
+                                <RENDER_VALUE what="i18n:topics"/>
+                                <RENDER_VALUE what="sections:topics"/>
+                            </div>
+                        </RENDER_IFNOTSET>
+                        <a href="{sections:link}">
+                            <div class="forum_oneCat_desc">
+                                <RENDER_VALUE what="sections:text"/>
+                            </div>
+                        </a>
+                    </div>
+                    <RENDER_IFSET what="rights:modify_section">
+                        <a href="{sections:modify_section_link}" class="forum_modifyCat"><RENDER_VALUE what="i18n:modifyThisCat"/></a>
+                    </RENDER_IFSET>
+                    <div class="clear"></div>
+                </div>
+                        
+            </RENDER_LOOP>
+        </RENDER_CACHE>
+
+        <RENDER_IFSET what="rights:create_section">
+            <fieldset class="forum_addCat">
+                <legend>
+                    <RENDER_VALUE what="i18n:newCat"/>
+                </legend>
+                <RENDER_IFSET what="user:noProfile">
+                    <RENDER_VALUE what="i18n:new_section_editProfile"/>
+                    <a href="{user:editProfileLink}">
+                        <RENDER_VALUE what="user:editProfileLink"/>
+                    </a>
+                </RENDER_IFSET>
+                <RENDER_IFNOTSET what="user:noProfile">
+                    <RENDER_FORM id="new_section" type="file">
+                        <table cellpadding="8" cellspacing="8">
+                            <tr>
+                                <td>
+                                    <RENDER_VALUE what="i18n:catName"/>
+                                </td>
+                                <td>
+                                    <input name="new[name]"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <RENDER_VALUE what="i18n:catText"/>
+                                </td>
+                                <td>
+                                    <textarea name="new[text]" style="width:400px;height:70px;"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <RENDER_VALUE what="i18n:catImage"/>
+                                </td>
+                                <td>
+                                    <input type="file" name="new[image]"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <RENDER_VALUE what="i18n:catType"/>
+                                </td>
+                                <td class="addCat_radio">
+                                    <input type="radio" name="new[type]" value="categories" id="addCat_cat"/>
+                                    <label for="addCat_cat">
+                                        <RENDER_VALUE what="i18n:catSubCats"/>
+                                    </label>
+                                    <input type="radio" name="new[type]" value="topics" id="addCat_topics"/>
+                                    <label for="addCat_topics">
+                                        <RENDER_VALUE what="i18n:catTopics"/>
+                                    </label>
+                                </td>
+                            </tr>
+                        </table>
+                        <RENDER_IFSET what="user:requiresCaptcha">
+                            <div class="addCat_captcha">
+                                <RENDER_VALUE what="i18n:noConnected_captcha"/>
+                                <br />
+                                <RENDER_CAPTCHA what="new_section"/>
+                            </div>
+                        </RENDER_IFSET>
+                        <div class="tab_buttons">
+                            <input class="tab_button btn_validate" type="submit" name="submit" value="{i18n:send}"/>
+                        </div>
+                    </RENDER_FORM>
+                </RENDER_IFNOTSET>
+            </fieldset>
+        </RENDER_IFSET>
+    </RENDER_IFSET>
+    <RENDER_IFNOTSET what="section:hasChildren">
+        <RENDER_CACHE class="sh_forum" part="section_topics_{section:id}">
+            <table id="forum_topicList">
+                <tr>
+                    <th class="topicTitle_th">Titre du sujet</th>
+                    <th class="topicPublishInfo_th">Infos de publication</th>
+                    <th class="topicAnswersNumber_th">Nombre de réponses</th>
+                </tr>
+                <RENDER_LOOP what="topics">
+                    <tr>
+                        <td class="topicList_oneTitle">
+                            <a href="{topics:link}">
+                                <RENDER_VALUE what="topics:title"/>
+                            </a>
+                        </td>    
+                        <td class="topicList_oneInfos">
+                            Par
+                            <a href="{topics:userProfile}">
+                                <RENDER_VALUE what="topics:alias"/>
+                            </a> - 
+                            <RENDER_VALUE what="topics:date"/>
+                            <RENDER_IFSET what="topics:last_post_date">
+                                <br />
+                            Dernière réponse : 
+                                <RENDER_VALUE what="topics:last_post_date"/>
+                            </RENDER_IFSET>
+                        </td>    
+                        <td class="topicList_oneAnswers">
+                            <RENDER_VALUE what="topics:posts"/>&#160;
+                            <RENDER_IFSET what="topics:posts_plural">
+                                <RENDER_VALUE what="i18n:answers"/>
+                            </RENDER_IFSET>
+                            <RENDER_IFNOTSET what="topics:posts_plural">
+                                <RENDER_VALUE what="i18n:answer"/>
+                            </RENDER_IFNOTSET>
+                            
+                        </td>    
+                    </tr>
+                </RENDER_LOOP>
+            </table>
+        </RENDER_CACHE>
+        <RENDER_IFSET what="rights:create_topic">
+            <fieldset class="forum_addTopic" id="createTopicForm">
+                <legend>
+                    <RENDER_VALUE what="i18n:newTopic"/>
+                </legend>
+                <RENDER_IFSET what="user:noProfile">
+                    <RENDER_VALUE what="i18n:new_topic_editProfile"/>
+                    <a href="{user:editProfileLink}">
+                        <RENDER_VALUE what="user:editProfileLink"/>
+                    </a>
+                </RENDER_IFSET>
+                <RENDER_IFNOTSET what="user:noProfile">
+                    <RENDER_FORM id="new_topic">
+                    
+                        <table cellpadding="8" cellspacing="8">
+                            <tr>
+                                <td>
+                                    <RENDER_VALUE what="i18n:title"/>
+                                </td>
+                                <td>
+                                    <input name="new[title]" class="inputAddTopic_title" value="{form:title}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <RENDER_VALUE what="i18n:text"/>
+                                </td>
+                                <td>
+                                    <RENDER_WEDITOR style="width:350px;" name="new[content]" type="forum">
+                                        <RENDER_VALUE what="form:content"/>
+                                    </RENDER_WEDITOR>
+                                </td>
+                            </tr>
+                        </table>
+                        <RENDER_IFSET what="conditions:file">
+                            <div class="forum_conditions">
+                                <input type="checkbox" name="accept_conditions" state="{form:accept_conditions}"/>
+                                <RENDER_VALUE what="i18n:accept_conditions"/>
+                            </div>
+                        </RENDER_IFSET>
+                        <RENDER_IFSET what="user:requiresCaptcha">
+                            <div class="addCat_captcha">
+                                <RENDER_VALUE what="i18n:noConnected_captcha"/>
+                                <br />
+                                <RENDER_CAPTCHA what="new_topic"/>
+                            </div>
+                        </RENDER_IFSET>
+                        <div class="tab_buttons">
+                            <input class="tab_button btn_validate" type="submit" name="submit" value="{i18n:send}"/>
+                        </div>
+                    </RENDER_FORM>
+                </RENDER_IFNOTSET>
+            </fieldset>
+        </RENDER_IFSET>
+        <RENDER_IFNOTSET what="rights:create_topic">
+            <div class="noForumRights">
+                <RENDER_IFSET what="user:connected">
+                    Vos droits sont insuffisants pour participer créer un sujet dans cette catégorie.
+                </RENDER_IFSET>
+                <RENDER_IFNOTSET what="user:connected">
+                    <RENDER_VALUE what="i18n:noForumRights"/>
+                    <a href="{links:connection}">
+                        <RENDER_VALUE what="i18n:connectionLink"/>
+                    </a>
+                </RENDER_IFNOTSET>
+            </div>
+        </RENDER_IFNOTSET>
+    </RENDER_IFNOTSET>
+    <RENDER_IFSET what="rights:administrate">
+        <fieldset class="forum_administrate_section">
+            <legend>
+                <RENDER_VALUE what="i18n:administrate_section"/>
+            </legend>
+            <div class="rights_manager_intro">
+                <RENDER_VALUE what="i18n:apply_those_rights"/>
+                <RENDER_HELP>
+                    <RENDER_VALUE what="i18n:apply_those_rights_help"/>
+                </RENDER_HELP>
+            </div>
+
+            <RENDER_FORM id="forum_administrate_section">
+                <table class="rights_manager">
+                    <tr>
+                        <th></th>
+                        <th>
+                            <RENDER_VALUE what="i18n:administrate"/>
+                        </th>
+                        <th>
+                            <RENDER_VALUE what="i18n:showForum"/>
+                        </th>
+                        <th>
+                            <RENDER_VALUE what="i18n:bannish"/>
+                        </th>
+                        <th>
+                            <RENDER_VALUE what="i18n:createCat"/>
+                        </th>
+                        <th>
+                            <RENDER_VALUE what="i18n:createTopics"/>
+                        </th>
+                        <th>
+                            <RENDER_VALUE what="i18n:post"/>
+                        </th>
+                        <th>
+                            <RENDER_VALUE what="i18n:moderate"/>
+                        </th>
+                    </tr>
+                    <tr class="right_managers_help">
+                        <td></td>
+                        <td>
+                            <RENDER_HELP>
+                                <RENDER_VALUE what="i18n:administrate_help"/>
+                            </RENDER_HELP>
+                        </td>
+                        <td>
+                            <RENDER_HELP>
+                                <RENDER_VALUE what="i18n:showForum_help"/>
+                            </RENDER_HELP>
+                        </td>
+                        <td>
+                            <RENDER_HELP>
+                                <RENDER_VALUE what="i18n:bannish_help"/>
+                            </RENDER_HELP>
+                        </td>
+                        <td>
+                            <RENDER_HELP>
+                                <RENDER_VALUE what="i18n:createCat_help"/>
+                            </RENDER_HELP>
+                        </td>
+                        <td>
+                            <RENDER_HELP>
+                                <RENDER_VALUE what="i18n:createTopics_help"/>
+                            </RENDER_HELP>
+                        </td>
+                        <td>
+                            <RENDER_HELP>
+                                <RENDER_VALUE what="i18n:post_help"/>
+                            </RENDER_HELP>
+                        </td>
+                        <td>
+                            <RENDER_HELP>
+                                <RENDER_VALUE what="i18n:moderate_help"/>
+                            </RENDER_HELP>
+                        </td> 
+                    
+                    </tr>
+                    <RENDER_LOOP what="groups">
+                        <tr>
+                            <td class="groupsName">
+                                <RENDER_VALUE what="groups:name"/>
+                            </td>
+                            <td>
+                                <input type="checkbox" state="{groups:administrate}" name="rights[{groups:id}][administrate]"/>
+                            </td>
+                            <td>
+                                <input type="checkbox" state="{groups:read}" name="rights[{groups:id}][read]"/>
+                            </td>
+                            <td>
+                                <input type="checkbox" state="{groups:bannish}" name="rights[{groups:id}][bannish]"/>
+                            </td>
+                            <td>
+                                <input type="checkbox" state="{groups:create_categories}" name="rights[{groups:id}][create_categories]"/>
+                            </td>
+                            <td>
+                                <input type="checkbox" state="{groups:create_topics}" name="rights[{groups:id}][create_topics]"/>
+                            </td>
+                            <td>
+                                <input type="checkbox" state="{groups:post}" name="rights[{groups:id}][post]"/>
+                            </td>
+                            <td>
+                                <input type="checkbox" state="{groups:moderate}" name="rights[{groups:id}][moderate]"/>
+                            </td>
+                        </tr>
+                    </RENDER_LOOP>
+                </table>
+                <div class="tab_buttons">
+                    <input class="tab_button btn_validate" type="submit" name="submit" value="{i18n:save}"/>
+                </div>
+            </RENDER_FORM>
+        </fieldset>
+    </RENDER_IFSET>
+</div>

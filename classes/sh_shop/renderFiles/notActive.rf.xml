@@ -1,11 +1,3 @@
-<div class="notif_container">
-    <div class="notifM_top">
-    </div>
-    <div class="notifM_middle">
-        <div class="notifM_content">
-            <RENDER_VALUE what="i18n>shopNotActive"/>
-        </div>
-    </div>
-    <div class="notifM_bottom">
-    </div>
-</div>
+<RENDER_NOTIF size="M">
+    <RENDER_VALUE what="i18n:shopNotActive"/>
+</RENDER_NOTIF>

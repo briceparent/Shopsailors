@@ -1,0 +1,14 @@
+<menubutton>
+    <layers>
+        <layer type="text" zindex="50">
+            <position src="text.png" align="center" valign="bottom"/>
+            <palette type="file" state="passive,hover" src="palette_text_passive.png"/>
+            <palette type="file" state="selected" src="palette_text_selected.png"/>
+        </layer>
+        <layer type="decoration" zindex="0">
+            <image src="background.png"/>
+            <stretch src="background-stretch.png"/>
+            <palette type="none"/>
+        </layer>
+    </layers>
+</menubutton>

@@ -7,14 +7,14 @@
                     <div>
                         <font size="2" face="arial" color="#ffffff">
                             <strong>
-                                <RENDER_VALUE what="i18n>nl_dateTitle"/>
-                                <RENDER_VALUE what="content>date"/>
+                                <RENDER_VALUE what="i18n:nl_dateTitle"/>
+                                <RENDER_VALUE what="content:date"/>
                             </strong>
                         </font>
                     </div>
                     <div align="right">
                         <a href="http://dev.client2.safetyrent-online.com/">
-                            <font face="arial" color="{variation>title}" size="4">
+                            <font face="arial" color="{variation:title}" size="4">
                                 <strong>
                                     <img src="http://dev.client2.safetyrent-online.com/images/site/logo/rectangular.png" border="0" alt="logo" title="logo" width="240" height="80"/>
                                 </strong>
@@ -28,9 +28,9 @@
                 <td width="20" background="http://dev.client2.safetyrent-online.com/images/template/nl_bg_middle_left.png"></td>
                 <td width="560" background="http://dev.client2.safetyrent-online.com/images/template/nl_bg_middle.png">
                     <div>
-                        <font face="arial" color="{variation>title}" size="4">
+                        <font face="arial" color="{variation:title}" size="4">
                             <strong>
-                                <RENDER_VALUE what="content>title"/>
+                                <RENDER_VALUE what="content:title"/>
                             </strong>
                         </font>
                     </div>
@@ -41,7 +41,7 @@
                 <td width="20" background="http://dev.client2.safetyrent-online.com/images/template/nl_bg_middle_left.png"></td>
                 <td width="560" background="http://dev.client2.safetyrent-online.com/images/template/nl_bg_middle.png">
                     <br/>
-                    <RENDER_VALUE what="content>plugins"/>
+                    <RENDER_VALUE what="content:plugins"/>
                     <br/>
                 </td>
                 <td width="20" background="http://dev.client2.safetyrent-online.com/images/template/nl_bg_middle_right.png"></td>

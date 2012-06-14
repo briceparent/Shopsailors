@@ -1,0 +1,10 @@
+AddDefaultCharset UTF-8
+
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !^/installer.php$
+RewriteCond %{REQUEST_URI} (/|\.php*)$  [NC]
+RewriteRule (.*) /installer.php
+
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]

@@ -1,7 +1,7 @@
 <div>
-    <RENDER_VALUE what="i18n>startPage_howToUse"/><br />
-    <RENDER_VALUE what="i18n>startPage_login"/>
-    <RENDER_VALUE what="startPage>login"/><br />
-    <RENDER_VALUE what="i18n>startPage_password"/>
-    <RENDER_VALUE what="startPage>password"/>
+    <RENDER_VALUE what="i18n:startPage_howToUse"/><br />
+    <RENDER_VALUE what="i18n:startPage_login"/>
+    <RENDER_VALUE what="startPage:login"/><br />
+    <RENDER_VALUE what="i18n:startPage_password"/>
+    <RENDER_VALUE what="startPage:password"/>
 </div>

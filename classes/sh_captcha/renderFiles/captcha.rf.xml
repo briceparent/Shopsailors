@@ -1,4 +1,4 @@
-<div id="{captcha>name}" class="captchaText" >
+<div id="{captcha:name}" class="captchaText" >
     <style>
         .input_error{
             background-color:Salmon;
@@ -6,13 +6,18 @@
     </style>
     <div class="captcha_container">
         <div class="captcha_code">
-            <img src="{captcha>image}" id="image_{captcha>form}" alt="{i18n>title}" title="{i18n>title}: {i18n>instructions}"/>
+            <img src="{captcha:image}" id="image_{captcha:form}" alt="{i18n:title}" title="{i18n:title}: {i18n:instructions}"/>
         </div>
         <div class="captcha_input">
-            <input class="{captcha>error}" name="captcha" maxlength="5" style="width:60px;height:28px;" autocomplete="off"/>
+            <RENDER_IFNOTSET what="captcha:tabindex">
+                <input class="{captcha:error}" name="captcha" maxlength="5" style="width:60px;height:28px;" autocomplete="off"/>
+            </RENDER_IFNOTSET>
+            <RENDER_IFSET what="captcha:tabindex">
+                <input tabindex="{captcha:tabindex}" class="{captcha:error}" name="captcha" maxlength="5" style="width:60px;height:28px;" autocomplete="off"/>
+            </RENDER_IFSET>
         </div>
         <div class="captcha_reload">
-            <img  onclick="changeCaptchaImage('{captcha>form}','image_{captcha>form}');" style="width:30px;height:30px;border:none;" src="/images/shared/icons/picto_update.png" alt="{i18n>changePicture}" title="{i18n>changePicture}"/>
+            <img  onclick="changeCaptchaImage('{captcha:form}','image_{captcha:form}');" style="width:30px;height:30px;border:none;" src="/images/shared/icons/picto_update.png" alt="{i18n:changePicture}" title="{i18n:changePicture}"/>
         </div>
     </div>
 </div>

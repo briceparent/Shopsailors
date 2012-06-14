@@ -1,0 +1,3 @@
+<div>
+    <iframe src="http://www.facebook.com/plugins/like.php?href={likeButton:url}&#38;layout={likeButton:layout}&#38;show_faces={likeButton:show_faces}&#38;width={likeButton:width}&#38;action={likeButton:action}&#38;font={likeButton:font}&#38;colorscheme={likeButton:colorscheme}&#38;height={likeButton:height}" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:{likeButton:width}px; height:{likeButton:height}px;" allowTransparency="true"></iframe>
+</div>

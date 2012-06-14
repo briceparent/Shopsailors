@@ -1,0 +1,19 @@
+<div>
+    <div class="center">
+        <RENDER_IFSET what="shipping:comeTakeIt">
+            Votre commande sera disponible à l'adresse suivante :<br />
+            <RENDER_VALUE what="shipping:address"/>
+        </RENDER_IFSET>
+        <RENDER_IFNOTSET what="shipping:comeTakeIt">
+            Expédition assurée par : <br />
+            <img src="{shipping:logo}" alt="{shipping:shipper}" style="float:left;max-width:80px;max-height:80px;"/>
+            <RENDER_VALUE what="shipping:shipper"/><br />
+            <RENDER_VALUE what="shipping:price"/>
+            <div class="noFloat"></div>
+        </RENDER_IFNOTSET>
+    </div>
+    <div class="shop_modifyInfo_link">
+        <a href="{modify:link}">Modifier le mode de livraison</a>
+    </div>
+    <hr />
+</div>

@@ -1,0 +1,33 @@
+<div class="one_menuH" style="width:{menu:width}px;height:{menu:oneLineHeight}px;">
+    <RENDER_LOOP what="sections">
+        <RENDER_IFNOTSET what="sections:submenus">
+            <div class="oneMenuEntry">
+                <div class="oneMenuEntry_img" style="width:{sections:width}px;height:{sections:height}px;left:{sections:leftposition}px;top:0;">
+                    <a href="{sections:href}" class="menu_entry_{sections:id} menu_entry">
+                        <img class="hover" src="{sections:unselectedImage}{sections:image}{sections>selected}{sections>ext}?uid={suffix:images}" alt="{sections:title}"/>
+                        <img class="nothover" src="{sections:selectedImage}{sections:image}{sections>state}{sections>ext}?uid={suffix:images}" alt="{sections:title}"/>
+                    </a>
+                </div>
+            </div>
+        </RENDER_IFNOTSET>
+        <RENDER_IFSET what="sections:submenus">
+            <div class="oneMenuEntry oneMenuEntry_withSubmenus" id="{sections:uid}">
+                <div class="oneMenuEntry_img" style="width:{sections:width}px;height:{sections:height}px;left:{sections:leftposition}px;top:0;">
+                    <a href="{sections:href}" class="menu_entry_{sections:id} menu_entry">
+                        <img class="hover" src="{sections:unselectedImage}{sections:image}{sections>selected}{sections>ext}?uid={suffix:images}" alt="{sections:title}"/>
+                        <img class="nothover" src="{sections:selectedImage}{sections:image}{sections>state}{sections>ext}?uid={suffix:images}" alt="{sections:title}"/>
+                    </a>
+                </div>
+                <div class="hover" style="left:{sections:leftposition}px;top:{sections:height}px;">
+                    <RENDER_LOOP what="submenus">
+                        <div class="submenus_entryContainer">
+                            <a href="{submenus:link}" class="{submenus:class}">
+                                <RENDER_VALUE what="submenus:title"/>
+                            </a>
+                        </div>
+                    </RENDER_LOOP>
+                </div>
+            </div>
+        </RENDER_IFSET>
+    </RENDER_LOOP>
+</div>

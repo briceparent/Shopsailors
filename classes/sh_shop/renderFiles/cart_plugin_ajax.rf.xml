@@ -1,0 +1,11 @@
+<span>
+    <RENDER_IFSET what="cart:total">
+        <a href="{cart:link}">
+            <RENDER_VALUE what="i18n:cartPlugin_content"/>
+            <RENDER_VALUE what="cart:total"/>
+        </a>
+    </RENDER_IFSET>
+    <RENDER_IFNOTSET what="cart:total">
+        <RENDER_VALUE what="i18n:cartPlugin_empty"/>
+    </RENDER_IFNOTSET>
+</span>

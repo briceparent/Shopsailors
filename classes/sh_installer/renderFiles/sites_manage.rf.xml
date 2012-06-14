@@ -1,0 +1,66 @@
+<div>
+    <RENDER_FORM id="sites_manage">
+        <RENDER_TABGROUP size="XL" validate="{i18n:save}" admin="admin">
+            <RENDER_IFSET what="selected:name">
+                <RENDER_TAB title="Site : {selected:name}">
+                    <input type="hidden" name="editingAWebsite" value="true"/>
+                    Nom du site : <input name="name" value="{selected:name}"/><br />
+                    Domaines : <RENDER_HELP><div>
+                        Veuillez entrer un nom de domaine par ligne.<br />
+                        Si vous souhaitez faire pointer un domaine et tous ses sous-domaines vers ce site, entrez
+                        <span class="bold">*.mon-domaine.com</span>.<br /><br />
+                        <span style="color:red;">Attention : </span>Vous ne devez entrer que des noms de domaines
+                        (ou sous-domaines) dont vous êtes propriétaire, ou pour lesquels le propriétaire vous a fourni les droits.<br />
+                        Sans cela, votre site sera considéré comme une tentative de phishing (ou hameçonnage) et sera 
+                        fermé.<br /><br />
+                        Une fois cette manipulation effectuée, il vous suffit de faire pointer les dns de ces domaines
+                        vers ce serveur.<br /><br />
+                        Ex :<br />
+                        <textarea name="ex" style="width:95%;height:100px;">
+*.domaine-principal.com
+www.domaine-secondaire.com
+user1.domaine-secondaire.com
+user2.domaine-secondaire.com
+user3.domaine-secondaire.com
+                        </textarea>
+                    </div></RENDER_HELP><br />
+                    <textarea name="domains" style="width:400px;height:50px;">
+                        <RENDER_VALUE what="selected:allRedirections"/>
+                    </textarea>
+
+                </RENDER_TAB>
+            </RENDER_IFSET>
+            <NORENDER>FIRST TAB</NORENDER>
+            <RENDER_TAB title="Sites existants">
+                Voici la liste des sites existants sur ce serveur :
+                <ul>
+                    <RENDER_LOOP what="existing">
+                        <li style="margin:3px;border:1px dashed grey;padding:3px;">
+                            <input type="image" name="editSite" src="/images/shared/icons/picto_modify.png" value="{existing:id}" style="float:right;border:none;"/>
+                            <div class="bold"><RENDER_VALUE what="existing:name"/></div>
+                            <ul>
+                                <RENDER_LOOP what="domains">
+                                    <li><RENDER_VALUE what="domains:url"/></li>
+                                </RENDER_LOOP>
+                            </ul>
+                        </li>
+                    </RENDER_LOOP>
+                    <RENDER_IFSET what="selected:name">
+                        <li style="margin:3px;border:1px dashed grey;padding:3px;">
+                            <div style="text-align:center;">
+                                <input type="image" name="addSite" src="/images/shared/icons/picto_add.png" value="{existing:id}" style="border:none;"/>
+                            </div>
+                        </li>
+                    </RENDER_IFSET>
+                </ul>
+            </RENDER_TAB>
+
+            <NORENDER>SECOND TAB - SEO</NORENDER>
+            <RENDER_IFNOTSET what="selected:name">
+                <RENDER_TAB title="Nouveau site">
+                    Création d'un nouveau site
+                </RENDER_TAB>
+            </RENDER_IFNOTSET>
+        </RENDER_TABGROUP>
+    </RENDER_FORM>
+</div>

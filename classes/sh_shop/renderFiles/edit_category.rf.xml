@@ -1,18 +1,19 @@
+
 <div>
     <RENDER_FORM method="post" action="" id="categoryEditor" >
-        <div class="form_box_container">
-            <RENDER_IFSET what="message>content">
+        <RENDER_IFSET what="message:content">
+            <div class="form_box_container">
                 <div class="form_messageContainer">
                     <div class="form_message_top">
                     </div>
                     <div class="form_message_middle">
                         <div class="messageContainer">
                             <div class="message">
-                                <RENDER_VALUE what="message>content"/>
+                                <RENDER_VALUE what="message:content"/>
                             </div>
                             <div class="link">
-                                <a href="{message>link}">
-                                    <RENDER_VALUE what="message>link"/>
+                                <a href="{message:link}">
+                                    <RENDER_VALUE what="message:link"/>
                                 </a>
                             </div>
                         </div>
@@ -20,63 +21,175 @@
                     <div class="form_message_bottom">
                     </div>
                 </div>
-            </RENDER_IFSET>
-            <div class="form_box_top">
-                <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>categoryEditor_title"/>
-                </h3>
             </div>
-            <div class="form_box_middle">
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>categoryEditor_name"/><br />
-                    <RENDER_I18NINPUT class="sh_shop" i18n="{category>name}" name="{inputs>name}"/>
-                </div>
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>categoryEditor_description"/>
-                    <RENDER_HELP what="{i18n>categoryEditor_descriptionExplanation}"/>
-                    <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_shop" i18n="{category>description}" name="{inputs>description}"/>
-                </div>
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>categoryEditor_shortDescription"/>
-                    <RENDER_HELP what="{i18n>categoryEditor_shortDescriptionExplanation}"/>
-                    <RENDER_I18NINPUT class="sh_shop" i18n="{category>shortDescription}" name="{inputs>shortDescription}"/>
-                </div>
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>categoryEditor_image"/>
-                    <RENDER_HELP what="{i18n>categoryEditor_imageExplanation}"/>
-                    <div class="preview_image">
-                        <img src="{category>image}" onclick="{category>onClickReplaceImage}" alt="{i18n>categoryEditor_clickHere}"/>
-                        <input type="hidden" name="{inputs>image}" value="{category>image}" id="{inputs>image}"/>
-                    </div>
-                </div>
-                <div class="formContent">
-                    <RENDER_CHECKBOX help="{i18n>categoryEditor_activateCategoryExplanation}" text="{i18n>categoryEditor_activateCategory}" name="{category>active}" state="{category>active}" checked="checked"/>
-                </div>
-            </div>
-            <div class="form_box_bottom">
-            </div>
-            <RENDER_IFSET what="category>isowned">
-                <div class="form_box_top">
-                    <h3 class="box_title">
-                        <RENDER_VALUE what="i18n>categoryEditor_categoriesTitle"/>
-                    </h3>
-                </div>
-                <div class="form_box_middle">
-                    <div class="formContent">
-                        <RENDER_VALUE what="i18n>categoryEditor_categoriesExplanantion"/>
-                        <RENDER_LOOP what="categories">
-                            <div>
-                                <RENDER_CHECKBOX text="{categories>name}" name="{categories>inputName}" state="{categories>checked}"/>
+        </RENDER_IFSET>
+
+        <RENDER_TABGROUP size="XL" validate="{i18n:save}" admin="admin">
+            <NORENDER>FIRST TAB</NORENDER>
+            <RENDER_TAB title="{i18n:categoryEditor_title}">
+                <table>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:categoryEditor_name"/>
+                        </td>
+                        <td>
+                            <RENDER_I18NINPUT class="sh_shop" i18n="{category:name}" name="{inputs:name}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:categoryEditor_description"/>
+                            <RENDER_HELP what="{i18n:categoryEditor_descriptionExplanation}"/>
+                        </td>
+                        <td>
+                            <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_shop" i18n="{category:description}" name="{inputs:description}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:categoryEditor_shortDescription"/>
+                            <RENDER_HELP what="{i18n:categoryEditor_shortDescriptionExplanation}"/>
+                        </td>
+                        <td>
+                            <RENDER_I18NINPUT class="sh_shop" i18n="{category:shortDescription}" name="{inputs:shortDescription}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:categoryEditor_image"/>
+                            <RENDER_HELP what="{i18n:categoryEditor_imageExplanation}"/>
+                        </td>
+                        <td>
+                            <div class="preview_image">
+                                <RENDER_IMAGESELECTOR folder="shop/categories" name="{inputs:image}" value="{category:image}" alt="{i18n:categoryEditor_clickHere}"/>
+                                <NORENDER>
+                                    <img src="{category:image}" onclick="{category:onClickReplaceImage}" alt="{i18n:categoryEditor_clickHere}"/>
+                                    <input type="hidden" name="{inputs:image}" value="{category:image}" id="{inputs:image}"/>
+                                </NORENDER>
                             </div>
-                        </RENDER_LOOP>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="admin_blueLink" colspan="2">
+                            <RENDER_IFSET what="category:isowned">
+                                <RENDER_CHECKBOX help="{i18n:categoryEditor_activateCategoryExplanation}" text="{i18n:categoryEditor_activateCategory}" name="{inputs:active}" state="{category:active}"/>
+                            </RENDER_IFSET>
+                            <RENDER_IFNOTSET what="category:isowned">
+                                <RENDER_VALUE what="i18n:categoryEditor_is_root_no_disabling"/>
+                                <input type="hidden" name="{inputs:active}" value="On"/>
+                            </RENDER_IFNOTSET>
+                        </td>
+                    </tr>
+                </table>
+            </RENDER_TAB>
+
+            <NORENDER>SECOND TAB - CATEGORIES</NORENDER>
+            <RENDER_IFSET what="category:isowned">
+                <RENDER_TAB title="{i18n:categoryEditor_categoriesTitle}">
+                    <div class="italic marginBottom_10px">
+                        <RENDER_VALUE what="i18n:categoryEditor_categoriesExplanantion"/>
                     </div>
-                </div>
-                <div class="form_box_bottom">
-                </div>
+                    <RENDER_LOOP what="categories">
+                        <div>
+                            <RENDER_IFNOTSET what="categories:message">
+                                <RENDER_CHECKBOX text="{categories:text}" name="category_category[{categories:id}]" state="{categories:state}"/>
+                            </RENDER_IFNOTSET>
+                            <RENDER_IFSET what="categories:message">
+                                <RENDER_CHECKBOX text="{categories:text}" name="category_category[{categories:id}]" state="{categories:state}" help="{i18n:categories_isDescendant}"/>
+                            </RENDER_IFSET>
+                        </div>
+                    </RENDER_LOOP>
+                </RENDER_TAB>
             </RENDER_IFSET>
-            <div class="formSubmitContainer">
-                <input type="submit" value="Enregistrer"/>
-            </div>
-        </div>
+            <RENDER_IFNOTSET what="category:isowned">
+                <RENDER_TAB title="{i18n:categoryEditor_categoriesTitle}">
+                    <RENDER_VALUE what="i18n:categoryEditor_noSubCategoryExplanation"/>
+                </RENDER_TAB>
+            </RENDER_IFNOTSET>
+
+            <NORENDER>THIRD TAB - DISCOUNTS</NORENDER>
+            <RENDER_TAB title="{i18n:categoryEditor_discountsTitle}">
+                <RENDER_VALUE what="i18n:categoryEditor_discountsIntro"/>
+
+                <RENDER_RADIOBOX name="discounts" text="{i18n:categoryEditor_listDiscounts_none}" value="none" state="{discounts_none:state}"/>
+                <RENDER_RADIOBOX name="discounts" id="discounts_selected" text="{i18n:categoryEditor_listDiscounts_those}" value="selected" state="{discounts_those:state}"/>
+                <div class="noteText">
+                    <RENDER_VALUE what="i18n:categoryEditor_listDiscounts_those_intro"/>
+                </div>
+                <table>
+                    <RENDER_LOOP from="1" to="10">
+                        <tr>
+                            <td>
+                                <RENDER_VALUE what="i18n:categoryEditor_discountNumber_before"/>
+                                <RENDER_VALUE what="loop:id"/>
+                                <RENDER_VALUE what="i18n:categoryEditor_discountNumber_after"/>
+                            </td>
+                            <td>
+                                <select name="discount[{loop:id}]" id="discount_{loop:id}" class="discountSelector">
+                                    <option value="none">
+                                        <RENDER_VALUE what="i18n:categoryEditor_listDiscounts_none"/>
+                                    </option>
+                                    <RENDER_LOOP what="discounts">
+                                        <option value="{discounts:id}">
+                                            <RENDER_VALUE what="discounts:name"/>
+                                        </option>
+                                    </RENDER_LOOP>
+                                </select>
+                            </td>
+                        </tr>
+                    </RENDER_LOOP>
+                </table>
+            </RENDER_TAB>
+            <RENDER_ENDJS>
+                $$('.discountSelector').each(function(el){
+                    Event.observe(el,'change',function(){
+                        if(el.value != 'none'){
+                            $('discounts_selected').checked = true;
+                        }
+                    });
+                });
+                <RENDER_IFSET what="discountValues:json">
+                    var discountValues = 
+                    <RENDER_VALUE what="discountValues:json"/>;
+                </RENDER_IFSET>
+                <RENDER_IFNOTSET what="discountValues:json">
+                    var discountValues = new Array();
+                </RENDER_IFNOTSET>
+                discountValues.each(function(el){
+                    $(el.input).value=el.value;
+                });
+
+            </RENDER_ENDJS>
+            
+            <NORENDER>FOURTH TAB - LAYOUTS</NORENDER>
+            <RENDER_TAB title="{i18n:layout_title}">
+                Choix de l'habillage à utiliser dans cette catégorie :
+                <select name="layout">
+                    <RENDER_LOOP what="layouts">
+                        <option value="{layouts:id}" state="{layouts:state}">
+                            <RENDER_VALUE what="layouts:name"/>
+                        </option>
+                    </RENDER_LOOP>
+                </select>
+            </RENDER_TAB>
+            
+            <NORENDER>FIFTH TAB - SEO</NORENDER>
+            <RENDER_TAB title="{i18n:seo_title}">
+                <div class="italic">
+                    <RENDER_VALUE what="i18n:seo_explanations"/>
+                </div>
+                <br />
+                <RENDER_VALUE what="i18n:seo_titleBar"/>
+                <RENDER_HELP what="{i18n:seo_category_titleBar_explanations}"/>
+                <br />
+                <RENDER_I18NINPUT name="seo_titleBar" class="sh_shop" i18n="{category:seo_titleBar}"/>
+                <br />
+                <br />
+                <RENDER_VALUE what="i18n:seo_metaDescription"/>
+                <RENDER_HELP what="{i18n:seo_category_metaDescription_explanations}"/>
+                <br />
+                <RENDER_I18NTEXTAREA name="seo_metaDescription" class="sh_shop" i18n="{category:seo_metaDescription}"/>
+            </RENDER_TAB>
+        </RENDER_TABGROUP>
     </RENDER_FORM>
 </div>

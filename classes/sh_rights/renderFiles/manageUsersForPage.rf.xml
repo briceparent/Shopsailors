@@ -1,0 +1,56 @@
+<RENDER_NOTIF size="M" title="Sélection des utilisateurs">
+    <RENDER_CSS>
+        #users_proposal{
+            background-color:white;
+            border:1px solid black;
+        }
+        #users_proposal ul{
+            list-style:none;
+            padding: 0 2px 5px 2px;
+        }
+        #users_proposal ul li{
+            cursor:pointer;
+        }
+        #users_proposal ul li.selected,
+        #users_proposal ul li:hover{
+            background-color: #CCCCCC;
+        }
+    </RENDER_CSS>
+    <div class="left">
+        <RENDER_FORM id="addUsersToPage">
+            Catégorie : <span class="bold"><RENDER_VALUE what="page:category"/></span><br />
+            Page : <span class="bold"><RENDER_VALUE what="page:name"/></span><br /><br />
+            Liste des utilisateurs ayant des droits d'accès : <br />
+            <ul>
+            <RENDER_LOOP what="users">
+                <li id="li_{users:user_id}">
+                    <input type="hidden" name="users[{users:user_id}]" value="ok"/>
+                    <RENDER_VALUE what="users:lastName"/>&#160;<RENDER_VALUE what="users:name"/>
+                    (<RENDER_VALUE what="users:user_id"/>)
+                    <img src="/images/shared/icons/picto_delete.png" style="width:16px;" class="middle" onclick="$('li_{users:user_id}').remove();"/>
+                </li>
+            </RENDER_LOOP>
+            </ul>
+            <br />
+            Ajouter l'utilisateur suivant : <br />
+            <input id="user_id" name="add_user" style="width:375px;"/><br /><br />
+            <div id="users_proposal" class="autocomplete"></div>
+            <input type="submit" value="{i18n:validate}"/>
+        </RENDER_FORM>
+    </div>
+
+
+    <script type="text/javascript">
+        new Ajax.Autocompleter(
+            "user_id",   // id du champ de formulaire
+            "users_proposal",  // id de l'�l�ment utilis� pour les propositions
+            "/rights/allUsersAutocompleter.php",  // URL du script c�t� serveur
+            {
+                paramName: 'search',  // Nom du param�tre re�u par le script serveur
+                minChars: 1   // Nombre de caract�res minimum avant que des appels serveur ne soient effectu�s
+            });
+
+
+    </script>
+
+</RENDER_NOTIF>

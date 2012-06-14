@@ -1,0 +1,140 @@
+
+<div>
+    <RENDER_FORM id="site_manage">
+        <input type="hidden" name="site" value="{site:id}"/>
+        <RENDER_ADMINBOX title="Général">
+            <RENDER_ADMINBOXCONTENT>
+                Nom du site :
+                <input name="siteName" value="{site:name}"/>
+                <br />
+                E-mail du responsable :
+                <RENDER_HELP>
+                    Le responsable est l'administrateur principal du site.
+                    <br />
+                    C'est lui qui a tous les droits sur le site.
+                    <br />
+                    <br />
+                    Il faut entrer ici l'adresse email utilisée pour la création de son compte.
+                </RENDER_HELP>
+                <input name="siteAdmin" value="{admin:id}"/>
+            </RENDER_ADMINBOXCONTENT>
+        </RENDER_ADMINBOX>
+        <RENDER_TABGROUP size="XL" validate="{i18n:save}" admin="admin">
+            <NORENDER>FIRST TAB</NORENDER>
+            <RENDER_TAB title="Domaines">
+                Domaine principal : 
+                <input name="mainDomain" value="{mainDomain:value}"/>
+                <br />
+                Domaines acceptés (1 par ligne) :
+                <br />
+                <textarea name="domains" style="width:400px;height:120px;">
+                    <RENDER_VALUE what="domains:list"/>
+                </textarea>
+                <br />
+                <br />
+                <div class="infoText">
+                    N'entrez ici que les domaines utilisables. Pour faire des redirections vers le domaine principal, 
+                    il suffit :
+                    <ul>
+                        <li>d'ajouter une entrée CNAME au serveur gérant vos dns (conseillé)</li>
+                        <li>ou d'ajouter une entrée dans les redirections sur la page "Gérer les sites et redirections"</li>
+                    </ul>
+                </div>
+            </RENDER_TAB>
+            <RENDER_TAB title="Base de données">
+                <table>
+                    <tr>
+                        <td>
+                            Serveur de base de données :
+                            <RENDER_HELP>
+                                <div>
+                                     Entrez l'adresse du serveur MySQL sur lequel sera installé ce site
+                                </div>
+                            </RENDER_HELP>
+                        </td>
+                        <td>
+                            <input name="db[host]" value="{db:host}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Nom de la base de données :
+                            <RENDER_HELP>
+                                <div>
+                                    Entrez le nom de la base de données qu'utilisera ce site
+                                </div>
+                            </RENDER_HELP>
+                        </td>
+                        <td>
+                            <input name="db[database]" value="{db:database}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Préfixe des tables :
+                            <RENDER_HELP>
+                                <div>
+                                    Entrez le préfix des tables utilisées par ce site.
+                                    <br />
+                                Vous pouvez ne rien mettre, auquel cas, il ne vous sera pas possible
+                                d'avoir plusieurs sites dans la même base de données. (ec qui reste plus sûr).
+                                </div>
+                            </RENDER_HELP>
+                        </td>
+                        <td>
+                            <input name="db[prefix]" value="{db:prefix}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Nom d'utilisateur :
+                            <RENDER_HELP>
+                                <div>
+                                    Entrez le nom d'un utilisateur ayant le droit de créer des tables dans la base
+                                de données sélectionnée, si elle existe, le droit de créer la base, si elle
+                                n'existe pas, et surtout, le droit de créer des utilisateurs sur cette base.
+                                </div>
+                            </RENDER_HELP>
+                        </td>
+                        <td>
+                            <input name="db[user]" value="{db:user}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Mot de passe :
+                            <RENDER_HELP>
+                                <div>
+                                    Entrez le mot de passe correspondant au nom d'utilisateur ci-dessus.
+                                </div>
+                            </RENDER_HELP>
+                        </td>
+                        <td>
+                            <input name="db[password]" value="{db:password}"/>
+                        </td>
+                    </tr>
+                </table>
+            </RENDER_TAB>
+            <RENDER_TAB title="Taches CRON">
+                Voici les taches cron à paramétrer :
+                <br />
+                <textarea style="width:790px;height:400px;padding:5px;" readonly="readonly">
+                    <RENDER_VALUE what="cron:content"/>
+                </textarea>
+                <div class="noteText">
+                    <span class="alert">Attention : </span>
+                    Le contenu de ce champs n'est pas enregistré.
+                    <br />
+                    Il vient d'être généré afin de vous permettre de paramétrer votre CRON.
+                </div>
+            </RENDER_TAB>
+            <RENDER_TAB title="Modèles spécifiques">
+                Autoriser l'utilisation des templates restreints suivants pour ce site :
+                <br />
+                <RENDER_LOOP what="templates">
+                    <RENDER_CHECKBOX text="{templates:name}" name="templates[{templates:longName}]" state="{templates:state}" help="{templates:description}"/>
+                </RENDER_LOOP>
+            </RENDER_TAB>
+        </RENDER_TABGROUP>
+    </RENDER_FORM>
+</div>

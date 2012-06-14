@@ -5,7 +5,7 @@
  */
 
 /**
- * @author Brice PARENT for Shopsailors
+ * @author Brice PARENT (Websailors) for Shopsailors
  * @copyright Shopsailors 2009
  * @license http://www.cecill.info
  * @version See version in the params/global.params.php file.
@@ -19,7 +19,20 @@ if(!defined('SH_MARKER')){header('location: directCallForbidden.php');}
 include('postrequest/postrequest.class.php');
 
 class sh_postRequest extends sh_core {
+    const CLASS_VERSION = '1.1.11.03.29';
+
+    public $shopsailors_dependencies = array(
+        'sh_linker','sh_params','sh_db'
+    );
     protected $posters = array();
+
+    public function construct() {
+        $installedVersion = $this->getClassInstalledVersion();
+        if($installedVersion != self::CLASS_VERSION){
+            // The class datas are not in the same version as this file, or don't exist (installation)
+            $this->setClassInstalledVersion(self::CLASS_VERSION);
+        }
+    }
 
     public function create($url){
         $this->debug(__CLASS__.'->'.__FUNCTION__.'('.$url.')', 2, __LINE__);
@@ -30,17 +43,17 @@ class sh_postRequest extends sh_core {
     }
     
     public function setCookies($poster,$cookies){
-        $this->debug(__CLASS__.'->'.__FUNCTION__.'('.$poster.')', 2, __LINE__);
+        $this->debug(__CLASS__.'->'.__FUNCTION__.'('.$poster.','.$cookies.')', 2, __LINE__);
         return $this->posters[$poster]->setCookies($cookies);
     }
     
     public function setData($poster,$name,$value){
-        $this->debug(__CLASS__.'->'.__FUNCTION__.'('.$poster.')', 2, __LINE__);
+        $this->debug(__CLASS__.'->'.__FUNCTION__.'('.$poster.','.$name.','.$value.')', 2, __LINE__);
         return $this->posters[$poster]->setData($name,$value);
     }
 
     public function setFile($poster,$name,$path,$mime){
-        $this->debug(__CLASS__.'->'.__FUNCTION__.'('.$poster.')', 2, __LINE__);
+        $this->debug(__CLASS__.'->'.__FUNCTION__.'('.$poster.','.$name.','.$path.','.$mime.')', 2, __LINE__);
         return $this->posters[$poster]->setFile($name,$path,$mime);
     }
 
@@ -50,7 +63,7 @@ class sh_postRequest extends sh_core {
     }
 
     public function setHeader($poster,$name,$value){
-        $this->debug(__CLASS__.'->'.__FUNCTION__.'('.$poster.')', 2, __LINE__);
+        $this->debug(__CLASS__.'->'.__FUNCTION__.'('.$poster.','.$name.','.$value.')', 2, __LINE__);
         return $this->posters[$poster]->setHeader($name,$value);
     }
 

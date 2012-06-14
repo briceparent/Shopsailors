@@ -1,0 +1,75 @@
+<div class="shop_mainContainer">
+    <RENDER_IFSET what="category:parentLink">
+        <div style="margin:3px;">
+            <a href="{category:parentLink}">
+                Aller à la catégorie mère
+            </a>
+        </div>
+    </RENDER_IFSET>
+    <NORENDER>active category</NORENDER>
+    <div style="border:1px solid grey;width:94%;background-color:white;padding:3%;">
+        <div>
+            <img src="{category:image}.resized.75.75.png" alt="navigator_preview" width="75" height="75" style="float:left;padding-right:5px;"/>
+        </div>
+        <div>
+            <RENDER_VALUE what="category:description"/>
+        </div>
+        <div style="clear:both;"> </div>
+    </div>
+    <div class="selectAcategory">
+        <RENDER_VALUE what="i18n:selectAproduct"/>
+    </div>
+    
+    <RENDER_IFNOTSET what="category:empty">
+        <NORENDER>navigator_list</NORENDER>
+        <RENDER_LOOP what="category_elements">
+            <div style="margin-bottom:10px;border:1px solid grey;width:94%;background-color:white;padding:3%;">
+                <div style="float:right;">
+                    <RENDER_VALUE what="category_elements:price"/>
+                </div>
+                <img src="{category_elements:image}.resized.50.50.png" alt="navigator_preview" width="50" height="50" style="float:left;padding-right:5px;"/>
+                <a href="{category_elements:link}">
+                    <RENDER_VALUE what="category_elements:name"/><br />
+                </a>
+                <RENDER_VALUE what="category_elements:shortDescription"/><br />
+                <div style="clear:both;"> </div>
+            </div>
+        </RENDER_LOOP>
+        
+        <NORENDER>Page navigator</NORENDER>
+        <RENDER_IFSET what="pages:0">
+            <div>
+                <RENDER_IFSET what="pagenavigation:previous_link">
+                    <a href="{pagenavigation:previous_link}">
+                        <img src="images/shared/variations/{constants:variation}/navigation/model1_previous.png" alt="{i18n:nav_previous}"/>
+                    </a>&#160;&#160;
+                </RENDER_IFSET>
+                <RENDER_IFNOTSET what="pagenavigation:previous_link">
+                    <img src="images/shared/variations/{constants:variation}/navigation/model1_noprevious.png" alt="{i18n:nav_previous}"/>&#160;&#160;
+                </RENDER_IFNOTSET>
+                <RENDER_LOOP what="pages">
+                    <a href="{pages:link}">
+                        <RENDER_VALUE what="pages:number"/>
+                    </a>&#160;&#160;
+                </RENDER_LOOP>
+                <RENDER_IFSET what="pagenavigation:next_link">
+                    <a href="{pagenavigation:next_link}">
+                        <img src="images/shared/variations/{constants:variation}/navigation/model1_next.png" alt="{i18n:nav_next}"/>
+                    </a>
+                </RENDER_IFSET>
+                <RENDER_IFNOTSET what="pagenavigation:next_link">
+                    <img src="images/shared/variations/{constants:variation}/navigation/model1_nonext.png" alt="{i18n:nav_nonext}"/>
+                </RENDER_IFNOTSET>
+            </div>
+        </RENDER_IFSET>
+        
+    </RENDER_IFNOTSET>
+    
+    <NORENDER>navigator_emptyCategory</NORENDER>
+    <RENDER_IFSET what="category:empty">
+        <div>
+            <RENDER_VALUE what="i18n:emptyCategory"/>
+        </div>
+    </RENDER_IFSET>
+    
+</div>

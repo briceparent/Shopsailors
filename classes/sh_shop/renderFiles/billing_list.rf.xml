@@ -1,0 +1,105 @@
+<RENDER_NOTIF size="L" title="{i18n:billings_list_title}">
+    
+    <div style="border:1px solid grey;margin:5px;">
+        <form method="post">
+            <div style="font-weight:bold;margin-bottom:5px;">Filtre appliqué</div>
+            Listage des factures du <RENDER_DATEPICKER name="from" value="{filter:from}"/>
+            au <RENDER_DATEPICKER name="to" value="{filter:to}"/><br />
+            <div class="tab_buttons">
+                <input class="tab_button btn_refresh" type="submit" name="submit" value="{i18n:validate}"/>
+                <input class="tab_button btn_download" type="submit" name="export" value="Exporter"/>
+            </div>
+        </form>
+    </div>
+    
+    <table cellspacing="0" class="notif_table">
+        <RENDER_LOOP what="years">
+            <tr>
+                <td colspan="5" class="notif_borderBottom"></td>
+            </tr>
+            <tr>
+                <td class="bold notif_borderLeft notif_borderRight notif_borderBottom center" colspan="5">
+                    <RENDER_VALUE what="i18n:billings_list_year"/><RENDER_VALUE what="years:name"/>
+                </td>
+            </tr>
+            <tr>
+                <th class="notif_borderTop notif_borderBottom notif_borderLeft notif_borderRight">
+                    <RENDER_VALUE what="i18n:billList_num"/>
+                </th>
+                <th class="notif_borderTop notif_borderBottom notif_borderRight">
+                    <RENDER_VALUE what="i18n:billList_date"/>
+                </th>
+                <th class="notif_borderTop notif_borderBottom notif_borderRight">
+                    <RENDER_VALUE what="i18n:billList_name"/>
+                </th>
+                <th class="notif_borderTop notif_borderBottom notif_borderRight">
+                    <RENDER_VALUE what="i18n:billList_ht"/>
+                </th>
+                <th class="notif_borderTop notif_borderBottom notif_borderRight">
+                    <RENDER_VALUE what="i18n:billList_ttc"/>
+                </th>
+            </tr>
+            <RENDER_LOOP what="commands">
+                <tr>
+                    <td class="bold notif_borderLeft notif_borderRight notif_borderBottom">
+                        <a href="{commands:link}" title="{i18n:bill_link}">
+                            <RENDER_VALUE what="commands:id"/>
+                        </a>
+                    </td>
+                    <td class="notif_borderRight notif_borderBottom">
+                        <RENDER_VALUE what="commands:date"/>
+                    </td>
+                    <td class="notif_borderRight notif_borderBottom">
+                        <RENDER_VALUE what="commands:customerName"/>
+                    </td>
+                    <td class="notif_borderRight notif_borderBottom">
+                        <span class="nobr"><RENDER_VALUE what="commands:totalht"/></span>
+                    </td>
+                    <td class="notif_borderRight notif_borderBottom">
+                        <span class="nobr"><RENDER_VALUE what="commands:totalttc"/></span>
+                    </td>
+                </tr>
+            </RENDER_LOOP>
+        </RENDER_LOOP>
+        <RENDER_LOOP what="tva">
+            <tr>
+                <td></td>
+                <td></td>
+                <th colspan="2">Dont TVA à 
+                    <RENDER_VALUE what="tva:rate"/>%
+                </th>
+                <th>
+                    <RENDER_MODIFYVALUE what="tva:amount" class="sh_shop" method="monney_format|true"/>
+                    <RENDER_VALUE what="tva:amount"/>
+                </th>
+            </tr>
+        </RENDER_LOOP>
+        <tr>
+            <td></td>
+            <td></td>
+            <th colspan="2">Total HT</th>
+            <th>
+                <RENDER_MODIFYVALUE what="total:ht" class="sh_shop" method="monney_format|true"/>
+                <RENDER_VALUE what="total:ht"/>
+            </th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <th colspan="2">Total TVA</th>
+            <th>
+                <RENDER_MODIFYVALUE what="total:tva" class="sh_shop" method="monney_format|true"/>
+                <RENDER_VALUE what="total:tva"/>
+            </th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <th colspan="2">Total TTC</th>
+            <th>
+                <RENDER_MODIFYVALUE what="total:ttc" class="sh_shop" method="monney_format|true"/>
+                <RENDER_VALUE what="total:ttc"/>
+            </th>
+        </tr>
+    </table>
+</RENDER_NOTIF>

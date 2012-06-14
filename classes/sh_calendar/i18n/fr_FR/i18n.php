@@ -1,0 +1,102 @@
+<?php
+$i18n = array(
+    'day_0_short'=>'D',
+    'day_1_short'=>'L',
+    'day_2_short'=>'M',
+    'day_3_short'=>'M',
+    'day_4_short'=>'J',
+    'day_5_short'=>'V',
+    'day_6_short'=>'S',
+    'day_7_short'=>'D',
+    'day_00_short'=>'D',
+    'day_01_short'=>'L',
+    'day_02_short'=>'M',
+    'day_03_short'=>'M',
+    'day_04_short'=>'J',
+    'day_05_short'=>'V',
+    'day_06_short'=>'S',
+    'day_07_short'=>'D',
+    
+    'day_0'=>'Dimanche',
+    'day_1'=>'Lundi',
+    'day_2'=>'Mardi',
+    'day_3'=>'Mercredi',
+    'day_4'=>'Jeudi',
+    'day_5'=>'Vendredi',
+    'day_6'=>'Samedi',
+    'day_7'=>'Dimanche',
+    'day_00'=>'Dimanche',
+    'day_01'=>'Lundi',
+    'day_02'=>'Mardi',
+    'day_03'=>'Mercredi',
+    'day_04'=>'Jeudi',
+    'day_05'=>'Vendredi',
+    'day_06'=>'Samedi',
+    'day_07'=>'Dimanche',
+    
+    'month_1' => 'Janvier',
+    'month_2' => 'Février',
+    'month_3' => 'Mars',
+    'month_4' => 'Avril',
+    'month_5' => 'Mai',
+    'month_6' => 'Juin',
+    'month_7' => 'Juillet',
+    'month_8' => 'Août',
+    'month_9' => 'Septembre',
+    'month_10' => 'Octobre',
+    'month_11' => 'Novembre',
+    'month_12' => 'Décembre',
+    'month_01' => 'Janvier',
+    'month_02' => 'Février',
+    'month_03' => 'Mars',
+    'month_04' => 'Avril',
+    'month_05' => 'Mai',
+    'month_06' => 'Juin',
+    'month_07' => 'Juillet',
+    'month_08' => 'Août',
+    'month_09' => 'Septembre',
+    'month_10' => 'Octobre',
+    'month_11' => 'Novembre',
+    'month_12' => 'Décembre',
+    
+    'date_format_ym' => 'MONTH YEAR',
+    'date_format_ymd' => 'DAY MONTH YEAR',
+    
+    'show_title' => 'Calendrier pour le DAYNAME DAY MONTH YEAR',
+    
+    'manager_title' => 'Gestion des calendriers',
+    'manager_tab_list_title' => 'Liste des calendriers',
+    'manager_tab_list_new' => 'Nouveau calendrier',
+    'manager_tab_list_modify' => 'Modifier',
+    'manager_tab_list_addDate' => 'Ajouter une date',
+    
+    'modify_title' => 'Modification d\'un calendrier',
+    'modify_title_new' => 'Création d\'un calendrier',
+    'modify_tab_title' => 'Paramètres',
+    'modify_name' => 'Nom du calendrier : ',
+    'modify_description' => 'Description du calendrier : ',
+    'modify_tab2_title' => 'Types de dates',
+    'modify_whatAreTypes' => 'Les types de dates sont des catégories auxquelles appartiennent chacune des date
+        du calendrier.<br />
+        Les dates sont affichées dans la couleur du type, et le nom du type est affiché sur chaque page où la date
+        est affichée.',
+    'modify_types_add' => 'Ajouter',
+    'modify_noTypes_message' => 'Attention!<br />
+        Afin de pouvoir utiliser ce calendrier, il faut définir au moins 1 type de dates, dans le second onglet du formulaire.',
+    
+    'edit_date_active' => 'Afficher cette date',
+    'edit_date_title' => 'Date du calendrier',
+    'edit_date_date' => 'Date de l\'événement : ',
+    'edit_date_eventTitle' => 'Titre de l\'événement : ',
+    'edit_date_type' => 'Type d\'événement : ',
+    'edit_date_type_explanations' => '<div>
+        Vous pouvez ajouter de nouveaux types d\'événements à partir de la page de paramétrages de ce calendrier.<br />
+        Cette page est accessible à partir de <br />
+        Panneau d\'administration > Contenu > Gérer les calendriers
+    </div>',
+    'edit_date_content' => 'Description de l\'événement : ',
+    
+    'showing_an_inactive_date' => 'L\'événement "[TITLE]" n\'est affiché que parce que vous êtes connecté en administrateur.',
+    'dayPrev' => 'Jour précédent',
+    'dayNext' => 'Jour suivant',
+);

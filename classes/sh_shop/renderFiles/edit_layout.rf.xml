@@ -1,0 +1,74 @@
+
+<div id="adminPage">
+    <RENDER_FORM id="shoplayoutEditor" action="{Layout:pageLink}" >
+        <RENDER_ADMINBOX title="{i18n:layoutEditor_title}">
+            <RENDER_ADMINBOXCONTENT>
+                <ul>
+                    <li>
+                        <a href="{newLayout:link}">
+                            <span style="font-weight:bold;">
+                                <RENDER_VALUE what="i18n:Layout_new_linkName"/>
+                            </span>
+                        </a>
+                    </li>
+                    <RENDER_LOOP what="layouts">
+                        <li>
+                            <span style="font-weight:bold;">
+                                <RENDER_VALUE what="layouts:name"/>
+                            </span>&#160;:&#160;
+                            <a href="{layouts:editLink}">
+                                <RENDER_VALUE what="i18n:layout_edit"/>
+                            </a>
+                            <RENDER_IFNOTSET what="layouts:undeletable">&#160;-&#160;
+                                <span class="falseLink" onclick="deleteLayout('{layouts:deleteLink}')">
+                                    <RENDER_VALUE what="i18n:layout_delete"/>
+                                </span>
+                            </RENDER_IFNOTSET>
+                        </li>
+                    </RENDER_LOOP>
+                </ul>
+                <div class="layoutExplanations"><RENDER_VALUE what="i18n:layoutExplanations"/></div>
+                <script type="text/javascript">
+                    function deleteLayout(link){
+                        sh_popup.confirm(
+                    <RENDER_VALUE what="i18n:layout_confirmDelete"/>,
+                            {
+                                title:
+                    <RENDER_VALUE what="i18n:layout_confirmDelete_title"/>,
+                                onconfirmok:function(){
+                                    location.href = link;
+                                }
+                            }
+                        );
+                    }
+                </script>
+            </RENDER_ADMINBOXCONTENT>
+        </RENDER_ADMINBOX>
+        <style>
+            .layout_editor{
+            width:100%;
+            height:150px;
+            }
+        </style>
+        <RENDER_IFSET what="layout:is_default_layout">
+            <div id="defaultLayout_explanations">
+            <RENDER_VALUE  what="i18n:defaultLayout"/>
+            </div>
+        </RENDER_IFSET>
+        <div id="layout_adminPage_container">
+            <div class="texts">Nom de l'habillage : 
+                <input name="name" value="{layout:name}"/>
+            </div>
+            <div class="texts">Haut de page : 
+                <RENDER_I18NWEDITOR class="layout_editor" i18nClass="sh_shop" i18n="{layout:top}" name="top"/>
+            </div>
+            <div class="texts">Bas de page : 
+                <RENDER_I18NWEDITOR class="layout_editor" i18nClass="sh_shop" i18n="{layout:bottom}" name="bottom"/>
+            </div>
+        </div>
+
+        <div class="tab_buttons">
+            <input type="submit" value="{i18n:save}" class="tab_button btn_validate"/>
+        </div>
+    </RENDER_FORM>
+</div>

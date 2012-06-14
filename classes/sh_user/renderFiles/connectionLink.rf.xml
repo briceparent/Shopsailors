@@ -1,0 +1,3 @@
+<a href="{link:connection}">
+    <RENDER_VALUE what="i18n:connectionLinkText"/>
+</a>

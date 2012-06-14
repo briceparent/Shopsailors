@@ -1,15 +1,10 @@
-<div class="cart_empty">
-    <div class="notif_container">
-        <div class="notifM_top">
+<RENDER_NOTIF size="M" title="{i18n:cart_title}">
+    <RENDER_IFSET what="message:content">
+        <div class="alertCart">
+            <RENDER_VALUE what="message:content"/>
         </div>
-        <div class="notifM_middle">
-            <div class="notifM_content">
-                <div class="bold">
-                    <RENDER_VALUE what="i18n>emptyCart"/>
-                </div>
-            </div>
-        </div>
-        <div class="notifM_bottom">
-        </div>
+    </RENDER_IFSET>
+    <div class="emptyCart">
+        <RENDER_VALUE what="i18n:emptyCart"/>
     </div>
-</div>
+</RENDER_NOTIF>

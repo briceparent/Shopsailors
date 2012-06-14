@@ -1,0 +1,92 @@
+<div>
+    <RENDER_JS>
+        markers_<RENDER_VALUE what="marker:map"/>[markers_<RENDER_VALUE what="marker:map"/>_count] = 'markers_<RENDER_VALUE what="marker:id"/>_func'
+        function markers_<RENDER_VALUE what="marker:id"/>_func(){
+            var latlng = new google.maps.LatLng(<RENDER_VALUE what="marker:lat"/>,<RENDER_VALUE what="marker:lng"/>);
+            var marker = new google.maps.Marker({
+                position: latlng,
+                shadow: <RENDER_VALUE what="marker:shadow"/>,
+                icon: <RENDER_VALUE what="marker:image"/>,
+                shape: <RENDER_VALUE what="marker:shape"/>,
+                map: <RENDER_VALUE what="marker:map"/>,
+                title:"<RENDER_VALUE what="marker:title"/>",
+                draggable:<RENDER_VALUE what="marker:draggable"/>,
+                position_changed: function(){
+                    var position = marker.getPosition();
+                    <RENDER_IFSET what="marker:name">
+                        $('<RENDER_VALUE what="marker:name"/>_lat').value = position.lat();
+                        $('<RENDER_VALUE what="marker:name"/>_lng').value = position.lng();
+                    </RENDER_IFSET>
+                    <RENDER_IFSET what="marker:name_lat">
+                        $('<RENDER_VALUE what="marker:name_lat"/>').value = position.lat();
+                        $('<RENDER_VALUE what="marker:name_lng"/>').value = position.lng();
+                    </RENDER_IFSET>
+                }
+            });
+
+            <RENDER_IFSET what="marker:name">
+                Event.observe('<RENDER_VALUE what="marker:name"/>_lat', 'change', function(event) {
+                    changeMarkerPosition(
+                        marker,
+                        $('<RENDER_VALUE what="marker:name"/>_lat').value,
+                        $('<RENDER_VALUE what="marker:name"/>_lng').value
+                    );
+                });
+                Event.observe('<RENDER_VALUE what="marker:name"/>_lng', 'change', function(event) {
+                    changeMarkerPosition(
+                        marker,
+                        $('<RENDER_VALUE what="marker:name"/>_lat').value,
+                        $('<RENDER_VALUE what="marker:name"/>_lng').value
+                    );
+                });
+            </RENDER_IFSET>
+            <RENDER_IFSET what="marker:name_lat">
+                Event.observe('<RENDER_VALUE what="marker:name_lat"/>', 'change', function(event) {
+                    changeMarkerPosition(
+                        marker,
+                        $('<RENDER_VALUE what="marker:name_lat"/>').value,
+                        $('<RENDER_VALUE what="marker:name_lng"/>').value
+                    );
+                });
+                Event.observe('<RENDER_VALUE what="marker:name_lng"/>', 'change', function(event) {
+                    changeMarkerPosition(
+                        marker,
+                        $('<RENDER_VALUE what="marker:name_lat"/>').value,
+                        $('<RENDER_VALUE what="marker:name_lng"/>').value
+                    );
+                });
+            </RENDER_IFSET>
+
+            var infowindow = new google.maps.InfoWindow({
+                content: $('<RENDER_VALUE what="marker:id"/>').innerHTML
+            });
+
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(<RENDER_VALUE what="marker:map"/>,marker);
+            });
+            
+            <RENDER_LOOP what="marker_classes">
+                markers_addToGroup('<RENDER_VALUE what="marker_classes:class"/>',marker);
+            </RENDER_LOOP>
+
+            <RENDER_IFSET what="marker:open">
+                infowindow.open(<RENDER_VALUE what="marker:map"/>,marker);
+            </RENDER_IFSET>
+        }
+        markers_<RENDER_VALUE what="marker:map"/>_count++;
+    </RENDER_JS>
+
+    <div id="{marker:id}" style="display:none;">
+        <RENDER_VALUE what="marker:content"/>
+    </div>
+    <RENDER_IFNOTSET what="marker:existing_inputs">
+        <RENDER_IFSET what="marker:name">
+            Latitude : <input id="{marker:name}_lat" name="{marker:name}_lat" value="{marker:lat}"/><br />
+            Longitude : <input id="{marker:name}_lng" name="{marker:name}_lng" value="{marker:lng}"/>
+        </RENDER_IFSET>
+        <RENDER_IFSET what="marker:name_lat">
+            Latitude : <input id="{marker:name_lat}" name="{marker:name_lat}" value="{marker:lat}"/><br />
+            Longitude : <input id="{marker:name_lng}" name="{marker:name_lng}" value="{marker:lng}"/>
+        </RENDER_IFSET>
+    </RENDER_IFNOTSET>
+</div>

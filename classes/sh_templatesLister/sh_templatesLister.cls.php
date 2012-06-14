@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Brice PARENT for Shopsailors
+ * @author Brice PARENT (Websailors) for Shopsailors
  * @copyright Shopsailors 2009
  * @license http://www.cecill.info
  * @version See version in the params/global.params.php file.
@@ -13,6 +13,21 @@ if(!defined('SH_MARKER')) {header('location: directCallForbidden.php');}
  *
  */
 class sh_templatesLister extends sh_core {
+    const CLASS_VERSION = '1.1.11.03.29';
+
+    public $shopsailors_dependencies = array(
+        'sh_linker','sh_params','sh_db'
+    );
+
+    public function construct() {
+        $installedVersion = $this->getClassInstalledVersion();
+        if($installedVersion != self::CLASS_VERSION){
+            // The class datas are not in the same version as this file, or don't exist (installation)
+            $this->helper->addClassesSharedMethods('sh_contact', '', __CLASS__);
+            $this->helper->addClassesSharedMethods('sh_sitemap', '', __CLASS__);
+            $this->setClassInstalledVersion(self::CLASS_VERSION);
+        }
+    }
 
     /**
      * public function sitemap_renew
@@ -63,15 +78,35 @@ class sh_templatesLister extends sh_core {
      */
     public function showList(){
         if(!$this->getParam('active', false)){
-            $this->links->path->redirect(404);
+            $this->linker->path->redirect(404);
         }
-        $this->links->html->setTitle($this->getI18n('list_title'));
+        $this->linker->html->setTitle($this->getI18n('list_title'));
 
         $templates = $this->getList();
 
         ksort($templates);
         $values['templates'] = $templates;
         $this->render('list',$values);
+    }
+
+    public function getSubmenus($method,$id){
+        $ret = array();
+        if($method == 'showList'){
+            $templates = $this->getList();
+
+            ksort($templates);
+            
+            if(is_array($templates)){
+                foreach($templates as $templateId=>$template){
+                    $ret[$templateId] = array(
+                        'title' => $template['name'],
+                        'link' => $template['link']
+                    );
+                }
+            }
+            
+        }
+        return $ret;
     }
 
     public function getList($alsoListRestricted = false){
@@ -81,7 +116,7 @@ class sh_templatesLister extends sh_core {
             if(preg_match('`((sh_|cm_)[1-9][0-9]*)-(.+)`', $element, $matches)){
                 if($alsoListRestricted || !file_exists(SH_TEMPLATE_FOLDER.$element.'/restricted.php')){
                     // This is a template folder
-                    $template = $this->getTemplateDescription($element);
+                    $template = $this->linker->template->getTemplateDescription($element);
                     if($template){
                         $templates[$matches[1]] = $template;
                     }
@@ -91,39 +126,8 @@ class sh_templatesLister extends sh_core {
         return $templates;
     }
 
-    protected function getTemplateDescription($templateName){
-        if(file_exists(SH_TEMPLATE_FOLDER.$templateName.'/template.description.php')){
-            list($id, $name) = explode('-',$templateName);
-            include(SH_TEMPLATE_FOLDER.$templateName.'/template.description.php');
-            $lang = $this->links->i18n->getLang();
-            if(isset($template['description'][$lang])){
-                $template['description'] = $template['description'][$lang];
-            }else{
-                $template['description'] = array_shift($template['description']);
-            }
-            $template['name'] = $name;
-            $template['longName'] = $templateName;
-            $template['page'] = $this->shortClassName.'/show/'.$id;
-            //$template['link'] = $this->translatePageToUri($this->shortClassName.'/show/'.$id);
-            $template['link'] = $this->translatePageToUri($this->shortClassName.'/show/').'?template='.$id;
-
-            $imagesRoot = $this->getImagesRoot($templateName);
-
-            $template['variations'] = $imagesRoot.$template['variations'];
-            $template['thumbnail'] = $imagesRoot.$template['thumbnail'];
-            $template['background'] = $imagesRoot.$template['background'];
-            if(is_array($template['slides'])){
-                foreach($template['slides'] as &$slide){
-                    $slide['src'] = $imagesRoot.$slide['src'];
-                }
-            }
-            return $template;
-        }
-        return false;
-    }
-
-    public function getImagesRoot($templateName){
-        return '/images/templates/'.$templateName.'/';
+    public function getRestrictedList(){
+        return $this->linker->template->restricted_getAll();
     }
 
     public function build(){
@@ -141,10 +145,10 @@ class sh_templatesLister extends sh_core {
                 if($baseVariation != 'default'){
                     // If needed, we empty the "default" variation folder
                     if(is_dir(SH_TEMPLATE_FOLDER.$templateName.'/images/variations/default/')){
-                        $this->links->helper->emptyDir(SH_TEMPLATE_FOLDER.$templateName.'/images/variations/default/');
+                        $this->helper->emptyDir(SH_TEMPLATE_FOLDER.$templateName.'/images/variations/default/');
                     }
                     // And copy the base images to that folder
-                    $this->links->helper->moveDirContent(
+                    $this->helper->moveDirContent(
                         SH_TEMPLATE_FOLDER.$templateName.'/images/variations/'.$baseVariation.'/',
                         SH_TEMPLATE_FOLDER.$templateName.'/images/variations/default/'
                     );
@@ -156,7 +160,7 @@ class sh_templatesLister extends sh_core {
             }
         }
 
-        $this->links->html->setTitle($this->getI18n('variationsCreatorTitle'));
+        $this->linker->html->setTitle($this->getI18n('variationsCreatorTitle'));
         $values['form']['id'] = $formId;
         $scan =  scandir(SH_TEMPLATE_FOLDER);
         $areNotTemplates = array('builder','fonts','global','preview','variations');
@@ -202,8 +206,7 @@ class sh_templatesLister extends sh_core {
 
         echo '<html><head>
 <title>Shopsailors - Variations builder</title>
-<link rel="shortcut icon" href="'.$this->links->favicon->getPath().'"></link>';
-        echo $this->links->javascript->get(sh_javascript::PROTOTYPE,false);
+<link rel="shortcut icon" href="'.$this->linker->favicon->getPath().'"></link>';
         echo '</head><body>';
         echo '<div style="font-weight:bold">Building the variations for the template '.$templateName.'</div>';
         echo 'Base variation : '.$baseVariation;
@@ -219,7 +222,7 @@ class sh_templatesLister extends sh_core {
         if(is_array($filesList)){
             $total = 0;
             for($degree = 0; $degree<=360; $degree+=20){
-                $this->links->helper->emptyDir($variationFolder.$degree);
+                $this->helper->emptyDir($variationFolder.$degree);
 
                 if(!is_dir($variationFolder.$degree)){
                     mkdir($variationFolder.$degree);
@@ -307,18 +310,21 @@ class sh_templatesLister extends sh_core {
      */
     public function show(){
         if(!$this->getParam('active', false)){
-            $this->links->path->redirect(404);
+            $this->linker->path->redirect(404);
         }
         
         $id = $_GET['template'];
 
         $realName = $this->getTemplateRealName($id);
         $errorRestricted = file_exists(SH_TEMPLATE_FOLDER.$realName.'/restricted.php');
-        $template = $this->getTemplateDescription($realName);
-
+        $template = $this->linker->template->getTemplateDescription($realName);
         if($errorRestricted || !$template){
-            $this->links->path->error(404);
+            $this->linker->path->error(404);
         }
+
+        $template['template']['description'] = $template['description'];
+        $template['template']['variations'] = $template['variations'];
+        $template['template']['background'] = $template['background'];
 
         $this->render('show', $template);
         return true;

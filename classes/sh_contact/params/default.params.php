@@ -7,5 +7,28 @@ if(!defined('SH_MARKER'))
 	header('location: directCallForbidden.php');
 
 $this->default = array(
-        'default' => 'fr_FR'
+  'address' =>
+  array (
+  ),
+  'phone' =>
+  array (
+    0 =>
+    array (
+      'name' => '',
+      'value' => '',
+    ),
+  ),
+  'mail' =>
+  array (
+    0 =>
+    array (
+      'name' => '',
+      'value' => '',
+    ),
+  ),
+  'sendMail' => true,
+  'showMail' => false,
+  'showAddress' => true,
+  'showPhone' => false,
+  'activated' => true,
 );

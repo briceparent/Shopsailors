@@ -1,0 +1,5 @@
+<RENDER_NOTIF size="M" title="Commande déjà validée">
+    Vous venez de rafraichir la page de prise de commande.<br />
+    Celle-ci a déjà été passée, et validée avec succès.<br /><br />
+    Cliquez ici pour retourner dans la boutique.
+</RENDER_NOTIF>

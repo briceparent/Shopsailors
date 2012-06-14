@@ -1,0 +1,31 @@
+
+<div>
+    <NORENDER>Billing address</NORENDER>
+    <RENDER_VALUE what="i18n:billing_address"/>
+    <br />
+    <RENDER_VALUE what="billing:name"/>
+    <br />
+    <RENDER_VALUE what="billing:address"/>
+    <br />
+    <RENDER_VALUE what="billing:zip"/>&#160;
+    <RENDER_VALUE what="billing:city"/>
+    <br />
+    <br />
+    <RENDER_VALUE what="i18n:command_yourEMail"/>
+    <br />
+    <RENDER_VALUE what="user:mail"/>
+    <br />
+    <br />
+    <RENDER_VALUE what="i18n:command_yourPhone"/>
+    <br />
+    <RENDER_VALUE what="user:phone"/>
+    <br />
+    <br />
+    
+    <div  class="shop_modifyInfo_link">
+        <a href="{modify:link}">
+            <RENDER_VALUE what="i18n:modify_billing_address"/>
+        </a>
+    </div>
+    <hr />
+</div>

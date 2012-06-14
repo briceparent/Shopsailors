@@ -1,0 +1,97 @@
+
+<div id="admin_userlist">
+    <RENDER_TABGROUP size="L" validate="{i18n:save}" admin="admin">
+        <RENDER_TAB title="{i18n:usersList_byType}">
+            <div class="admin_blueText"><RENDER_VALUE what="i18n:usersGroups"/></div>
+            <ul id="groups_list">
+                <RENDER_LOOP what="groups">
+                    <li>
+                        <a href="{groups:link}">
+                            <RENDER_VALUE what="groups:name"/>
+                        </a>
+                    </li>
+                </RENDER_LOOP>
+                <li>
+                    <span onclick="addGroup();" class="falseLink admin_blueLink">
+                        <RENDER_VALUE what="i18n:newGroup"/>
+                    </span>
+                </li>
+            </ul>
+        </RENDER_TAB>
+        <NORENDER>
+            <RENDER_TAB title="{i18n:usersList_search}">
+                <RENDER_VALUE what="i18n:searchUsersTitle"/>
+                <table id="forum_searchUsersSettings">
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:searchUsersNameTitle"/>
+                        </td>    
+                        <td>
+                            <input />
+                        </td>   
+                    </tr>    
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:searchUsersLastNameTitle"/>
+                        </td>    
+                        <td>
+                            <input />
+                        </td>   
+                    </tr>    
+                    <tr>
+                        <td>
+                            <input type="checkbox"/>
+                            <RENDER_VALUE what="i18n:searchUsersOpenTitle"/>
+                        </td>    
+                        <td>
+                            <input style="width:20px;"/>
+                            <RENDER_VALUE what="i18n:ofTopics"/>
+                        </td>    
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox"/>
+                            <RENDER_VALUE what="i18n:searchUsersAnswerTitle"/>
+                        </td>    
+                        <td>
+                            <input style="width:20px;"/>
+                            <RENDER_VALUE what="i18n:ofTopics"/>
+                        </td>    
+                    </tr>
+                </table>
+            
+            </RENDER_TAB>
+        </NORENDER>
+    </RENDER_TABGROUP>
+    <RENDER_ENDJS>
+    function addGroup(){
+        sh_popup.prompt(
+            '<RENDER_VALUE what="i18n:addGroup_name"/>',
+            '<RENDER_VALUE what="i18n:addGroup_default"/>',
+            {
+                title:"<RENDER_VALUE what="i18n:addGroup_title"/>",
+                onpromptok:function(value){
+                    uri = '<RENDER_VALUE what="links:addGroup"/>';
+                    new Ajax.Request(uri,{
+                        method : "post",
+                        parameters: {name: value},
+                        onSuccess: function(transport) {
+                            var rep = new Array();
+                            eval(transport.responseText);
+                            if(rep['error'] == 'DUPLICATE'){
+                                alert('Cette catégorie existe déjà!');
+                            }else{
+                                var line = '<a href="'+rep['link']+'">';
+                                line += rep['name'];
+                                line += '</a>';
+                                $('groups_list').innerHTML = '<li>'+line+'</li>'+$('groups_list').innerHTML;
+                            }
+                            return true
+                        }
+                    });
+                }
+            }
+        );
+    }
+    </RENDER_ENDJS>
+</div>

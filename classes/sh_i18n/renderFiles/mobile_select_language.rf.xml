@@ -1,0 +1,9 @@
+<div>
+    <RENDER_LOOP what="language">
+        <span>
+            <a href="{language:link}">
+                <RENDER_VALUE what="language:shortDesc"/>
+            </a>
+        </span>
+    </RENDER_LOOP>
+</div>

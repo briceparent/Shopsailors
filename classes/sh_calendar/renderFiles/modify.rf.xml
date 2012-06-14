@@ -1,0 +1,33 @@
+
+<div>
+    <RENDER_FORM id="calendar_modify">
+        <RENDER_TABGROUP size="l" validate="{i18n:save}" admin="admin">
+            <RENDER_TAB title="{i18n:modify_tab_title}">
+                <RENDER_VALUE what="i18n:modify_name"/>
+                <RENDER_I18NINPUT class="sh_calendar" name="title" i18n="{calendar:name}"/>
+                <br />
+                <br />
+
+                <RENDER_VALUE what="i18n:modify_description"/>
+                <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_calendar" name="description" i18n="{calendar:description}"/>
+
+            </RENDER_TAB>
+            <RENDER_TAB title="{i18n:modify_tab2_title}">
+                <RENDER_VALUE what="i18n:modify_whatAreTypes"/>
+                <ul>
+                    <RENDER_LOOP what="types">
+                        <li>
+                            <RENDER_I18NINPUT class="sh_calendar" name="types[{types:id}][name]" i18n="{types:name}"/>
+                            <RENDER_COLORPICKER name="types[{types:id}][color]" value="#{types:color}"/>
+                        </li>
+                    </RENDER_LOOP>
+                </ul>
+
+                <div class="tab_buttons">
+                    <input class="tab_button btn_add" type="submit" name="add_type" value="{i18n:modify_types_add}"/>
+                </div>
+
+            </RENDER_TAB>
+        </RENDER_TABGROUP>
+    </RENDER_FORM>
+</div>

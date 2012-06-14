@@ -1,11 +1,11 @@
-<span id="global_{help>id}" style="display:none;">
+<span id="global_{help:id}" style="display:none;">
     <RENDER_JS when="onEnd">
-        $('global_<RENDER_VALUE what="help>id"/>').appear();
+        $('global_<RENDER_VALUE what="help:id"/>').appear();
     </RENDER_JS>
-    <img src="/images/shared/icons/help.png" class="aLink helpToolTip" title="{i18n>help}" onmouseover="UnTip();TagToTip('{help>id}', BALLOON, true)" onmouseout="UnTip()"/>
-    <span id="{help>id}">
+    <img src="/images/shared/icons/help.png" class="aLink helpToolTip" title="{i18n:help}" onmouseover="UnTip();TagToTip('{help:id}', BALLOON, true)" onmouseout="UnTip()"/>
+    <span id="{help:id}">
         <span class="render_help_explanation">
-            <RENDER_VALUE what="help>what"/>
+            <RENDER_VALUE what="help:what"/>
         </span>
     </span>
 </span>

@@ -1,0 +1,23 @@
+<RENDER_FORM id="bank_manager">
+    <RENDER_IFSET what="message:text">
+        <RENDER_NOTIF size="L" type="alert">
+            <RENDER_VALUE what="message:text"/>
+        </RENDER_NOTIF>
+    </RENDER_IFSET>
+    <RENDER_ADMINBOX title="{bank:name}">
+        <RENDER_ADMINBOXCONTENT>
+            <RENDER_CHECKBOX text="{i18n:activated}" name="active" state="{bank:state}" help="{i18n:activated_explanation}"/>
+        </RENDER_ADMINBOXCONTENT>
+        <RENDER_ADMINBOXCONTENT>
+            <RENDER_VALUE what="i18n:describeMode"/>
+            <RENDER_I18NTEXTAREA class="sh_payment_cheque" i18n="{bank:description}" name="description"/><br />
+            <RENDER_VALUE what="i18n:extraTextForBill"/><RENDER_HELP>
+                <RENDER_VALUE what="i18n:extraTextForBill_explanations"/>
+            </RENDER_HELP>
+            <RENDER_I18NTEXTAREA class="sh_payment_cheque" i18n="{bank:extraTextForBill}" name="extraTextForBill"/>
+        </RENDER_ADMINBOXCONTENT>
+    </RENDER_ADMINBOX>
+    <div class="tab_buttons">
+        <input type="submit" value="{i18n:save}" class="tab_button btn_validate"/>
+    </div>
+</RENDER_FORM>

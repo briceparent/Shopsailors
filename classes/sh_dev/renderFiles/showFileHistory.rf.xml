@@ -26,8 +26,8 @@
     </style>
     <RENDER_SCRIPT file="SCRIPTACULOUSONLY" absolute="absolute" direct="direct"/>
     <RENDER_SCRIPT file="PROTOTYPE" absolute="absolute"/>
-    <div class="bold">Projet : <RENDER_VALUE what="project>name"/></div>
-    <div class="bold">File : <RENDER_VALUE what="file>name"/></div>
+    <div class="bold">Projet : <RENDER_VALUE what="project:name"/></div>
+    <div class="bold">File : <RENDER_VALUE what="file:name"/></div>
     <table class="dottedTable" cellspacing="0">
         <tr>
             <td class="borderTop borderLeft">
@@ -46,30 +46,30 @@
         <RENDER_LOOP what="revisions">
             <tr>
                 <td class="borderLeft">
-                    <div><RENDER_VALUE what="revisions>number"/></div>
+                    <div><RENDER_VALUE what="revisions:number"/></div>
                 </td>
                 <td>
-                    <RENDER_IFSET what="revisions>{constants>file_new}">
-                        <img src="{constants>image_file_new}" alt="New" title="New"/>
+                    <RENDER_IFSET what="revisions:{constants:file_new}">
+                        <img src="{constants:image_file_new}" alt="New" title="New"/>
                     </RENDER_IFSET>
-                    <RENDER_IFSET what="revisions>{constants>file_modified}">
-                        <img src="{constants>image_file_modified}" alt="Modification" title="Modification"/>
+                    <RENDER_IFSET what="revisions:{constants:file_modified}">
+                        <img src="{constants:image_file_modified}" alt="Modification" title="Modification"/>
                     </RENDER_IFSET>
-                    <RENDER_IFSET what="revisions>{constants>file_deleted}">
-                        <img src="{constants>image_file_deleted}" alt="Removed" title="Removed"/>
+                    <RENDER_IFSET what="revisions:{constants:file_deleted}">
+                        <img src="{constants:image_file_deleted}" alt="Removed" title="Removed"/>
                     </RENDER_IFSET>
-                    <RENDER_IFSET what="revisions>{constants>file_notChanged}">
-                        <img src="{constants>image_file_notChanged}" alt="No change" title="No change"/>
+                    <RENDER_IFSET what="revisions:{constants:file_notChanged}">
+                        <img src="{constants:image_file_notChanged}" alt="No change" title="No change"/>
                     </RENDER_IFSET>
-                    <RENDER_IFSET what="revisions>{constants>file_inexistant}">
-                        <img src="{constants>image_file_inexistant}" alt="Removed" title="Removed"/>
+                    <RENDER_IFSET what="revisions:{constants:file_inexistant}">
+                        <img src="{constants:image_file_inexistant}" alt="Removed" title="Removed"/>
                     </RENDER_IFSET>
                 </td>
                 <td>
-                    <div><RENDER_VALUE what="revisions>description"/>&#160;</div>
+                    <div><RENDER_VALUE what="revisions:description"/>&#160;</div>
                 </td>
                 <td>
-                    <div><RENDER_VALUE what="revisions>reason"/>&#160;</div>
+                    <div><RENDER_VALUE what="revisions:reason"/>&#160;</div>
                 </td>
             </tr>
         </RENDER_LOOP>

@@ -1,0 +1,64 @@
+
+<div>
+    <RENDER_IFSET what="error:exists">
+        <RENDER_NOTIF size="L" type="alert" title="{i18n:error_title}">
+            <div>
+                <RENDER_VALUE what="i18n:error_intro"/>
+            </div>
+            <RENDER_IFSET what="error:noBillingAddress">
+                <div class="italic">
+                    <RENDER_VALUE what="i18n:error_noBillingAddress"/>
+                </div>
+            </RENDER_IFSET>
+            <RENDER_IFSET what="error:noBillingMail">
+                <div class="italic">
+                    <RENDER_VALUE what="i18n:error_noBillingMail"/>
+                </div>
+            </RENDER_IFSET>
+        </RENDER_NOTIF>
+    </RENDER_IFSET>
+    <NORENDER>Billing address</NORENDER>
+    <div class="billing_enterAdress">
+        <RENDER_VALUE what="i18n:billing_enterAdress"/>
+    </div>
+    <div class="command_billing_name">
+        <RENDER_VALUE what="i18n:command_billing_name"/>
+        <br />
+        <input name="name" placeholder="{i18n:command_billing_name_ph}" value="{billing:name}" style="width:180px;" pattern=".+ .+" class="autocheck" required="required"/>
+    </div>
+    <div class="command_billing_address">
+        <RENDER_VALUE what="i18n:command_billing_addressInput"/>
+        <br />
+        <textarea placeholder="{i18n:command_billing_addressInput_ph}" name="address" style="width: 180px">
+            <RENDER_VALUE what="billing:address"/>
+        </textarea>
+    </div>
+    <div class="command_billing_zipCode">
+        <RENDER_VALUE what="i18n:command_billing_zipCode"/>&#160;
+        <input placeholder="{i18n:command_billing_zipCode_ph}" name="zip" value="{billing:zip}" style="width: 50px" pattern="[0-9 ]{5}" class="autocheck" required="required"/>
+    </div>
+    <div class="command_billing_city">
+        <RENDER_VALUE what="i18n:command_billing_city"/>
+        <br />
+        <input placeholder="{i18n:command_billing_city_ph}" name="city" value="{billing:city}" class="autocheck" required="required"/>
+    </div>
+    <div class="marginTop_5px">
+        <RENDER_VALUE what="i18n:command_yourEMail"/>
+        <RENDER_HELP>
+            <RENDER_VALUE what="i18n:command_yourEMail_explanations"/>
+        </RENDER_HELP>
+        <br />
+        <input type="email" placeholder="{i18n:command_yourEMail_ph}" class="autocheck" name="mail" value="{billing:mail}" required="required"/>
+    </div>
+    
+    <div class="marginTop_5px">
+        <RENDER_VALUE what="i18n:command_yourPhone"/>
+        <RENDER_HELP>
+            <RENDER_VALUE what="i18n:command_yourPhone_explanations"/>
+        </RENDER_HELP>
+        <br />
+        <input class="autocheck" placeholder="{i18n:command_billing_phone_ph}" pattern="\+?[0-9 .-]{6,}" required="required" name="phone" value="{billing:phone}"/>
+    </div>
+
+    <input type="hidden" name="step" value="set_billing_address"/>
+</div>

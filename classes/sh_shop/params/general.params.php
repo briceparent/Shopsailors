@@ -10,6 +10,8 @@ if(!defined('SH_MARKER')){
     header('location: directCallForbidden.php');
 }
 
+// We have to be sure that the sh_banks has been loaded before the rest of this
+$payment = $this->linker->payment;
 $this->general = array (
   'version' => '1.09.118.1',
   'monney_formats_listing'=>array(
@@ -45,20 +47,26 @@ $this->general = array (
       ),
   ),
   'currencies' => array(
-      'Euro'=>array(
+      sh_banks::CUR_EUR => array(
           'symbol' => '€',
           'before' => '',
           'after' => '€',
+          'name' => 'Euro',
+          'toDecimals' => 100
       ),
-      'Dollar'=>array(
+      sh_banks::CUR_USD=>array(
           'symbol' => '$',
           'before' => '$',
           'after' => '',
+          'name' => 'Dollar',
+          'toDecimals' => 100
       ),
-      'Pound'=>array(
+      sh_banks::CUR_GBP=>array(
           'symbol' => '£',
           'before' => '£',
           'after' => '',
+          'name' => 'Pound',
+          'toDecimals' => 100
       ),
   ),
   'billColors'=>array(

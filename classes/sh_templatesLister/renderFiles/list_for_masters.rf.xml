@@ -2,8 +2,8 @@
     <ul>
         <RENDER_LOOP what="templates">
         <li>
-            <a href="{templates>link}">
-                <RENDER_VALUE what="templates>name"/>
+            <a href="{templates:link}">
+                <RENDER_VALUE what="templates:name"/>
             </a>
         </li>
         </RENDER_LOOP>

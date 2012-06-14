@@ -1,0 +1,99 @@
+<div>
+    <RENDER_FORM id="shopShipModesEditor" >
+        <RENDER_TABGROUP size="XL" validate="{i18n:save}" admin="admin">
+            <RENDER_TAB title="{i18n:editShipModesTitle}">
+                <div class="ship_activeExpedition">
+                    <RENDER_CHECKBOX text="{i18n:activateShipping}" help="{i18n:activateShipping_explanation}" name="activateShipping" state="{activateShipping:checked}"/>
+                </div>
+                <div class="ship_showExpeditionInLegacy">
+                    <RENDER_CHECKBOX text="{i18n:ship_showExpeditionInLegacy}" help="{i18n:ship_showExpeditionInLegacy_explanation}" name="showExpeditionInLegacy" state="{showExpeditionInLegacy:checked}"/>
+                </div>
+
+                <div>
+                    <RENDER_VALUE what="i18n:taxRate"/><input class="inputQuantity" name="taxRate" value="{taxRate:value}"/>%
+                    <div class="noteText">
+                        <RENDER_VALUE what="i18n:productEditor_taxRateNote"/>
+                    </div>
+                </div>
+                <hr />
+                <div class="ship_address">
+                    <RENDER_CHECKBOX text="{i18n:ship_comeTakeIt}" help="{i18n:ship_comeTakeIt_explanation}" name="comeTakeIt_activated" state="{comeTakeIt:activated}"/><br />
+                    <textarea name="comeTakeIt_addresses">
+                        <RENDER_VALUE what="comeTakeIt:addresses"/>
+                    </textarea>
+                    <div class="noteText">
+                        <RENDER_VALUE what="i18n:ship_multiAddress_note"/>
+                    </div>
+                </div>
+                <div class="ship_addressPrice ship_global">
+                    <RENDER_VALUE what="i18n:ship_comeTakeIt_price"/>&#160;
+                    <RENDER_VALUE what="constants:currencyBefore"/>
+                    <input name="comeTakeIt_price" value="{comeTakeIt:price}"/>
+                    <RENDER_VALUE what="constants:currencyAfter"/>&#160;
+                    <RENDER_VALUE what="constants:taxes"/>
+                </div>
+            </RENDER_TAB>
+
+            <RENDER_TAB title="{i18n:shipPriceRules_title}">
+                <div class="ship_priceRules">
+                    <div>
+                    <RENDER_VALUE what="i18n:shipPriceRules"/>
+                    <RENDER_HELP>
+                        <RENDER_VALUE what="i18n:shipPriceRules_explanation"/>
+                    </RENDER_HELP>
+                    </div>
+
+                    <div><RENDER_VALUE what="i18n:shipPriceRule0"/></div>
+                    <div><RENDER_VALUE what="i18n:shipPriceRule1"/></div>
+                    <div><RENDER_VALUE what="i18n:shipPriceRule2"/></div>
+                </div>
+            </RENDER_TAB>
+
+            <RENDER_LOOP what="modes">
+                <RENDER_TAB title="{modes:name}">
+                    <div class="ship_providerName">
+                        <RENDER_VALUE what="i18n:ship_providerName"/><br /><input name="supplyers[{modes:id}][name]" value="{modes:name}"/>
+                    </div>
+                    <div class="ship_logoSelector ship_global">
+                        <RENDER_VALUE what="i18n:shipLogo"/>&#160;
+                        <RENDER_HELP what="{i18n:shipLogo_explanation}"/>
+                        <div class="ship_logoImage">
+                            <RENDER_IMAGESELECTOR name="supplyers[{modes:id}][logo]" value="{modes:logo}" folder="shop/shippers" style="width:100px;height:80px;vertical-align:top;"/>
+                        </div>
+                    </div>
+                    <div class="ship_price ship_global">
+                        <RENDER_VALUE what="i18n:shipPrice"/><br />
+                        <RENDER_VALUE what="constants:currencyBefore"/>
+                        <input name="supplyers[{modes:id}][price]" value="{modes:price}"/>
+                        <RENDER_VALUE what="constants:currencyAfter"/>&#160;
+                        <RENDER_VALUE what="constants:taxes"/>
+                    </div>
+                    <div class="ship_description ship_global">
+                        <RENDER_VALUE what="i18n:shipDescription"/>&#160;
+                        <RENDER_HELP what="{i18n:shipDescription_explanation}"/><br />
+                        <textarea name="supplyers[{modes:id}][description]">
+                            <RENDER_VALUE what="modes:description"/>
+                        </textarea>
+                    </div>
+                    <div class="ship_activateMode ship_global">
+                        <RENDER_CHECKBOX text="{i18n:activateMode}" name="supplyers[{modes:id}][activated]" state="{modes:activated}"/>
+                    </div>
+                    <hr />
+                    <div class="ship_description ship_global">
+                        Minimum de commande pour activer ce mode de livraison : 
+                        <RENDER_VALUE what="constants:currencyBefore"/>
+                        <input style="width:50px;" name="supplyers[{modes:id}][minimum]" value="{modes:minimum}"/>
+                        <RENDER_VALUE what="constants:currencyAfter"/>&#160;
+                        <RENDER_VALUE what="constants:taxes"/>
+                    </div>
+                    <hr />
+                    <div class="marginBottom_10px marginLeft_5px"><RENDER_VALUE what="i18n:shipMode_remove"/></div>
+                    <div class="tab_buttons left">
+                        <input type="submit" name="removeShipMode[{modes:id}]" value="{i18n:delete}"  class="tab_button btn_cancel"/>
+                    </div>
+                </RENDER_TAB>
+            </RENDER_LOOP>
+            <RENDER_TAB type="image" name="addShipMode" value="{i18n:new}" title="{i18n:addShipMode}" src="/templates/global/admin/icons/picto_add2.png"/>
+        </RENDER_TABGROUP>
+    </RENDER_FORM>
+</div>

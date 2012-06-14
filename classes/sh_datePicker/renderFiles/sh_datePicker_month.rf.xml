@@ -1,0 +1,171 @@
+
+<span class="sh_date_picker">
+    <span id="{datePicker:id}_form_nojs">
+        <RENDER_VALUE what="i18n:dp_month_form"/>
+    </span>
+    <input type="hidden" name="entries_verifier[sh_datePicker][]" value="{datePicker:name}"/>
+    
+    <table id="{datePicker:id}_form" style="padding:6px 6px 0px 6px;display: none; border:1px solid rgb(128,128,128);border-radius:4px;box-shadow: 2px 2px 0 rgba(128,128,128,0.5);" class="datePickerTable">
+        <thead>
+            <tr role="presentation">
+                <th>
+                    <span title="{i18n:previousYear}" class="previousYear pointer">«</span>
+                </th>
+                <th>&#160;</th>
+                <th>
+                    <span title="{i18n:previousMonth}" class="previousMonth pointer">‹</span>
+                </th>
+                <th>&#160;</th>
+                <th style="width:140px;text-align:center;">
+                    <span class="date-picker-month">
+
+                    </span>
+                    <span>
+                    &#160;
+                    </span>
+                    <span class="date-picker-year">
+
+                    </span>
+                </th>
+                <th>&#160;</th>
+                <th>
+                    <span title="{i18n:nextMonth}" class="nextMonth pointer">›</span>
+                </th>
+                <th>&#160;</th>
+                <th>
+                    <span title="{i18n:nextYear}" class="nextYear pointer">»</span>
+                </th>
+            </tr>
+        </thead>
+    </table>
+    
+    <script type="text/javascript">
+        new function(){
+            function pad(value, length) { 
+                    length = length || 2; 
+                    return "0000".substr(0,length - Math.min(String(value).length, length)) + value; 
+            };
+            
+            function change(newmonth,newyear){
+                if(newmonth == 0){
+                    newmonth = 12;
+                    newyear -= 1;
+                }else if(newmonth == 13){
+                    newmonth = 1;
+                    newyear += 1;
+                }
+                
+                var previousMonth = (newyear*10000)+(newmonth*100)+1;
+                
+                setButtonState( 'previousYear', true );
+                setButtonState( 'previousMonth', true );
+                setButtonState( 'nextMonth', true );
+                setButtonState( 'nextYear', true );
+                
+                
+                if( greaterThan( fromInt, previousMonth - 100 ) ){
+                    setButtonState( 'previousMonth', false );
+                }
+                if( greaterThan( fromInt, previousMonth - 10000 ) ){
+                    setButtonState( 'previousYear', false );
+                }
+                if( lessThan( toInt, previousMonth + 100 ) ){
+                    setButtonState( 'nextMonth', false );
+                }
+                if( lessThan( toInt, previousMonth + 10000 ) ){
+                    setButtonState( 'nextYear', false );
+                }
+                
+                $$('#'+thisDatePicker+'_form .date-picker-month')[0].innerHTML = months[parseInt(newmonth)];
+                $$('#'+thisDatePicker+'_form .date-picker-year')[0].innerHTML = newyear;
+                
+                month = newmonth;
+                year = newyear;
+                $(thisDatePicker+'_m').value=pad(newmonth,2);
+                $(thisDatePicker+'_y').value=newyear;
+                
+                <RENDER_VALUE what="datePicker:callback"/>
+            }
+            
+            function setButtonState(button, state){
+                if(state){
+                    $$('#'+thisDatePicker+'_form .'+button)[0].style.color = 'black';
+                }else{
+                    $$('#'+thisDatePicker+'_form .'+button)[0].style.color = '#CCC';
+                }
+            }
+            
+            function isUsable(button){
+                return ($$('#'+thisDatePicker+'_form .'+button)[0].style.color == 'black');
+            }
+            
+            var months = new Array();
+            months[1] = 
+            <RENDER_VALUE what="i18n:month_1" quotes="'"/>;
+            months[2] = 
+            <RENDER_VALUE what="i18n:month_2" quotes="'"/>;
+            months[3] = 
+            <RENDER_VALUE what="i18n:month_3" quotes="'"/>;
+            months[4] = 
+            <RENDER_VALUE what="i18n:month_4" quotes="'"/>;
+            months[5] = 
+            <RENDER_VALUE what="i18n:month_5" quotes="'"/>;
+            months[6] = 
+            <RENDER_VALUE what="i18n:month_6" quotes="'"/>;
+            months[7] = 
+            <RENDER_VALUE what="i18n:month_7" quotes="'"/>;
+            months[8] = 
+            <RENDER_VALUE what="i18n:month_8" quotes="'"/>;
+            months[9] = 
+            <RENDER_VALUE what="i18n:month_9" quotes="'"/>;
+            months[10] = 
+            <RENDER_VALUE what="i18n:month_10" quotes="'"/>;
+            months[11] = 
+            <RENDER_VALUE what="i18n:month_11" quotes="'"/>;
+            months[12] = 
+            <RENDER_VALUE what="i18n:month_12" quotes="'"/>;
+            
+            var thisDatePicker = 
+            <RENDER_VALUE what="datePicker:id" quotes="'"/>;
+            
+            var from = 
+            <RENDER_VALUE what="from:date" quotes="'"/>;
+            var to = 
+            <RENDER_VALUE what="to:date" quotes="'"/>;
+                
+            var fromInt = from.replace(/-/g,'');
+            var toInt = to.replace(/-/g,'');
+            
+            $(thisDatePicker+'_form').style.display = 'inline';
+            $(thisDatePicker+'_form_nojs').style.display = 'none';
+            
+            var month = 
+            parseInt(<RENDER_VALUE what="datePicker:month" quotes="'"/>);
+            var year = 
+            parseInt(<RENDER_VALUE what="datePicker:year" quotes="'"/>);
+            
+            Event.observe($$('#'+thisDatePicker+'_form .previousYear')[0],'click',function(){
+                if(isUsable('previousYear')){
+                    change(month, year - 1);
+                }
+            });
+            Event.observe($$('#'+thisDatePicker+'_form .previousMonth')[0],'click',function(){
+                if(isUsable('previousMonth')){
+                    change(month - 1, year);
+                }
+            });
+            Event.observe($$('#'+thisDatePicker+'_form .nextMonth')[0],'click',function(){
+                if(isUsable('nextMonth')){
+                    change(month + 1,year);
+                }
+            });
+            Event.observe($$('#'+thisDatePicker+'_form .nextYear')[0],'click',function(){
+                if(isUsable('nextYear')){
+                    change(month, year + 1);
+                }
+            });
+            
+            change(month, year);
+        }();        
+    </script>
+</span>

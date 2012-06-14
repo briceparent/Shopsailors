@@ -2,19 +2,19 @@
     <RENDER_LOOP what="results">
         <div class="search_results_type">
             <div class="search_results_type_name">
-                <RENDER_VALUE what="i18n>resultsName"/>&#160;
-                <RENDER_IFSET what="results>count">
-                    <RENDER_VALUE what="i18n>showCountPlural"/>
+                <RENDER_VALUE what="i18n:resultsName"/>&#160;
+                <RENDER_IFSET what="results:count">
+                    <RENDER_VALUE what="i18n:showCountPlural"/>
                 </RENDER_IFSET>
-                <RENDER_IFNOTSET what="results>count">
-                    <RENDER_VALUE what="i18n>showCountSingular"/>
+                <RENDER_IFNOTSET what="results:count">
+                    <RENDER_VALUE what="i18n:showCountSingular"/>
                 </RENDER_IFNOTSET>
             </div>
             <div class="search_results_type_content">
-                <RENDER_VALUE what="results>content"/>
+                <RENDER_VALUE what="results:content"/>
             </div>
-            <RENDER_IFSET what="results>listLink">
-                <RENDER_VALUE what="i18n>showAllResults"/>
+            <RENDER_IFSET what="results:listLink">
+                <div class="searcher_showMore"><RENDER_VALUE what="i18n:showAllResults"/></div>
             </RENDER_IFSET>
         </div>
     </RENDER_LOOP>

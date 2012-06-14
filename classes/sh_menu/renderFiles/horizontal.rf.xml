@@ -1,0 +1,35 @@
+
+<ul class="one_menu">
+    <RENDER_LOOP what="sections">
+        <RENDER_IFNOTSET what="sections:submenus">
+            <li class="menu_entry no_submenus {sections:class}">
+                <div class="menu_entry_img" style="width:{sections:width}px;height:{sections:height}px;">
+                    <a href="{sections:href}" class="menu_entry">
+                        <img class="hover" src="{sections:imageHover}?uid={suffix:images}" alt="{sections:title}"/>
+                        <img class="notHover" src="{sections:image}?uid={suffix:images}" alt="{sections:title}"/>
+                    </a>
+                </div>
+            </li>
+        </RENDER_IFNOTSET>
+        <RENDER_IFSET what="sections:submenus">
+            <li class="menu_entry with_submenus {sections:class}" id="{sections:uid}">
+                <div class="menu_entry_img" style="width:{sections:width}px;height:{sections:height}px;">
+                    <a href="{sections:href}" class="menu_entry">
+                        <img class="hover" src="{sections:imageHover}?uid={suffix:images}" alt="{sections:title}"/>
+                        <img class="notHover" src="{sections:image}?uid={suffix:images}" alt="{sections:title}"/>
+                    </a>
+                </div>
+                <ul class="submenus">
+                    <RENDER_LOOP what="submenus">
+                        <li class="submenu">
+                            <a href="{submenus:link}" class="{submenus:class}">
+                                <RENDER_VALUE what="submenus:title"/>
+                            </a>
+                        </li>
+                    </RENDER_LOOP>
+                </ul>
+            </li>
+        </RENDER_IFSET>
+    </RENDER_LOOP>
+    <li style="clear:both;"></li>
+</ul>

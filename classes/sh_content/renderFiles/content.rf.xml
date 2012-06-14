@@ -1,6 +1,18 @@
-<div class="content">
-    <RENDER_IFSET what="content>date">
-        <div class="content_date"><RENDER_VALUE what="content>date"/></div>
-    </RENDER_IFSET>
-    <RENDER_VALUE what="content>content"/>
+
+<div class="content contentFreePages">
+    <article>
+        <RENDER_ADD_VALUES file="classes/sh_content/renderFiles/content.php"/>
+        <RENDER_IFSET what="content:date">
+            <div class="content_date">
+                <RENDER_VALUE what="content:date"/>
+            </div>
+        </RENDER_IFSET>
+        <div class="freePages_container">
+            <RENDER_VALUE what="content:content"/>
+        </div>
+        <div class="clear"></div>
+        <div class="likebutton">
+            <RENDER_FACEBOOK_LIKEBUTTON class="sh_content" element="content_articles" title="{content:title}" image="{content:image}" width="500" height="20" show_faces="show_faces"/>
+        </div>
+    </article>
 </div>

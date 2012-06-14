@@ -1,0 +1,77 @@
+<RENDER_NOTIF size="XL" title="{i18n:billing_details}">
+    <div class="left">
+        <RENDER_VALUE what="i18n:billId"/>
+        <RENDER_VALUE what="bill:id"/><br />
+        <RENDER_VALUE what="i18n:emission"/>
+        <RENDER_VALUE what="bill:date"/><br />
+        <RENDER_VALUE what="i18n:customer"/>
+        <RENDER_VALUE what="bill:customerName"/><br />
+        <RENDER_VALUE what="bill:customeraddress"/>
+    </div>
+    <table cellspacing="0" class="notif_table">
+        <tr>
+            <th class="notif_borderRight notif_borderTop notif_borderLeft notif_borderBottom">
+                <RENDER_VALUE what="i18n:name"/>
+            </th>
+            <th class="notif_borderRight notif_borderTop notif_borderBottom">
+                <RENDER_VALUE what="i18n:ref"/>
+            </th>
+            <th class="notif_borderRight notif_borderTop notif_borderBottom">
+                <RENDER_VALUE what="i18n:quantity"/>
+            </th>
+            <th class="notif_borderRight notif_borderTop notif_borderBottom">
+                <RENDER_VALUE what="i18n:price"/>
+            </th>
+            <th class="notif_borderRight notif_borderTop notif_borderBottom">
+                <RENDER_VALUE what="i18n:total"/>
+            </th>
+        </tr>
+        <RENDER_LOOP what="elements">
+            <tr>
+                <td class="notif_borderRight notif_borderLeft notif_borderBottom">
+                    <RENDER_VALUE what="elements:name"/>
+                </td>
+                <td class="notif_borderRight notif_borderBottom">
+                    <RENDER_VALUE what="elements:ref"/>
+                </td>
+                <td class="notif_borderRight notif_borderBottom">
+                    <span class="nobr"><RENDER_VALUE what="elements:quantity"/></span>
+                </td>
+                <td class="notif_borderRight notif_borderBottom">
+                    <span class="nobr"><RENDER_VALUE what="elements:price"/></span>
+                </td>
+                <td class="notif_borderRight notif_borderBottom">
+                    <span class="nobr"><RENDER_VALUE what="elements:total"/></span>
+                </td>
+            </tr>
+        </RENDER_LOOP>
+        <tr>
+            <td colspan="3" class="notif_borderRight">
+            </td>
+            <td colspan="2" class="notif_borderRight notif_borderBottom">
+                <span class="bold nobr"><RENDER_VALUE what="i18n:totalht"/><RENDER_VALUE what="bill:totalht"/></span><br />
+                <span class="bold nobr"><RENDER_VALUE what="i18n:totalttc"/><RENDER_VALUE what="bill:totalttc"/></span>
+            </td>
+        </tr>
+    </table>
+    <div class="left">
+        <div>
+            <div class="bold"><RENDER_VALUE what="i18n:billingaddress"/></div>
+            <RENDER_VALUE what="bill:billingaddress"/>
+        </div>
+        <div class="marginTop_5px">
+            <div class="bold"><RENDER_VALUE what="i18n:shippingaddress"/></div>
+            <RENDER_VALUE what="bill:shippingaddress"/>
+        </div>
+        <div class="marginTop_5px">
+            <div class="bold"><RENDER_VALUE what="i18n:paymentmode"/></div>
+            <RENDER_VALUE what="bill:paymentmode"/>
+        </div>
+        <div class="marginTop_5px">
+        <a href="{bill:pdf}"><RENDER_VALUE what="i18n:bill_pdf"/></a>
+        </div>
+        <div class="marginTop_5px">
+        <a href="{bill:delete}"><RENDER_VALUE what="i18n:bill_delete"/></a>
+        </div>
+    </div>
+</RENDER_NOTIF>

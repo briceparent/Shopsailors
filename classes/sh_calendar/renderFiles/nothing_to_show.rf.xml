@@ -1,0 +1,7 @@
+
+<div id="calendar">
+    <div class="cal_nothingToday">Il n'y a aucun événement spécial prévu ce jour.</div>
+    <a class="cal_prev" href="{links:previousDayLink}"><RENDER_VALUE what="i18n:dayPrev"/></a>
+    <a class="cal_next" href="{links:nextDayLink}"><RENDER_VALUE what="i18n:dayNext"/></a>
+
+</div>

@@ -1,142 +1,114 @@
-<div class="createAccount_mainContainer">
+<div id="connection_mainContainer">
     <RENDER_FORM id="createAccountForm" >
-        <div class="bg_identification_top">
-        </div>
-        <div class="bg_identification_middle">
-            <div  class="createAccount_title">
-                <RENDER_VALUE what="i18n>createAccount"/>
-            </div>
-            <div class="createAccount_contents">
-                <RENDER_IFSET what="message>error">
-                    <div class="alertError">
-                        <RENDER_VALUE what="message>error"/>
-                    </div>
+        <RENDER_NOTIF size="M" title="{i18n:createAccount}">
+            <RENDER_IFSET what="message:error">
+                <div class="errorLogin">
+                    <RENDER_VALUE what="message:error"/>
+                </div>
+            </RENDER_IFSET>
+
+            <table id="createAccount_formTable" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="partTitle" colspan="2"><RENDER_VALUE what="i18n:stepOne"/></td>
+                </tr>
+                <tr>
+                    <td class="formAccount_{name:error} createAccount_name"><RENDER_VALUE what="i18n:accountName"/></td>
+                    <td class="formAccount_{name:error} createAccount_name"><input name="name" value="{old:name}"/></td>
+                </tr>
+                <tr>
+                    <td class="formAccount_{lastname:error}"><RENDER_VALUE what="i18n:accountLastname"/></td>
+                    <td class="formAccount_{lastname:error}"><input name="lastName" value="{old:lastName}"/></td>
+                </tr>
+                <tr>
+                    <td class="formAccount_{mail:error}">
+                        <RENDER_VALUE what="i18n:accountEmail"/>
+                        <RENDER_HELP what="{i18n:createAccount_email}"/>
+                    </td>
+                    <td class="formAccount_{mail:error}"><input name="mail" value="{old:mail}"/></td>
+                </tr>
+                <tr>
+                    <td class="formAccount_{phone:error}"><RENDER_VALUE what="i18n:accountPhone"/></td>
+                    <td class="formAccount_{phone:error}"><input name="phone" value="{old:phone}"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="noteText"><RENDER_VALUE what="i18n:optional"/></td>
+                </tr>
+                <tr>
+                    <td><RENDER_VALUE what="i18n:accountAddress"/><RENDER_HELP what="{i18n:createAccount_address}"/></td>
+                    <td>
+                        <textarea name="address">
+                            <RENDER_VALUE what="old:address"/>
+                        </textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="noteText"><RENDER_VALUE what="i18n:optional"/></td>
+                </tr>
+                <tr>
+                    <td><RENDER_VALUE what="i18n:accountZipCode"/></td>
+                    <td><input name="zipCode" style="width: 50px" value="{old:zipCode}"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="noteText"><RENDER_VALUE what="i18n:optional"/></td>
+                </tr>
+                <tr>
+                    <td><RENDER_VALUE what="i18n:accountCity"/></td>
+                    <td><input name="city" value="{old:city}"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="noteText"><RENDER_VALUE what="i18n:optional"/></td>
+                </tr>
+                <tr>
+                    <td class="partTitle partTitle2" colspan="2"><RENDER_VALUE what="i18n:stepTwo"/></td>
+                </tr>
+                <tr>
+                    <td class="formAccount_{login:error} createAccount_login"><RENDER_VALUE what="i18n:login"/><RENDER_HELP what="{i18n:createAccount_login}"/></td>
+                    <td class="formAccount_{login:error} createAccount_login"><input name="login" value="{old:login}"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="noteText"><RENDER_VALUE what="i18n:notification"/></td>
+                </tr>
+                <tr>
+                    <td class="formAccount_{password:error}"><RENDER_VALUE what="i18n:password"/></td>
+                    <td class="formAccount_{password:error}"> <input type="password" name="password" value="{old:password}"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="noteText"><RENDER_VALUE what="i18n:notification"/></td>
+                </tr>
+                <tr>
+                    <td class="formAccount_{password:error}"><RENDER_VALUE what="i18n:passwordConfirm"/></td>
+                    <td class="formAccount_{password:error}"><input type="password" name="passwordConfirm" value="{old:password}"/></td>
+                </tr>
+                <tr>
+                    <td class="formAccount_{verification:error}">
+                        <RENDER_VALUE what="i18n:verification"/>
+                        <RENDER_HELP what="{i18n:createAccount_verification}"/>
+                    </td>
+                    <td class="formAccount_{verification:error}">
+                        <textarea name="verification"><RENDER_VALUE what="old:verification"/></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="formAccount_captcha formAccount_{captcha:error} captchaContainer">
+                        <RENDER_CAPTCHA what="createAccountForm" error="{captcha:error}"/>
+                    </td>
+                </tr>
+                <tr><td colspan="2" class="inputContainer"><input type="submit" value="{i18n:send}"/></td></tr>
+                <tr>
+                    <td colspan="2" class="noteText createAccount_bottom"><RENDER_VALUE what="i18n:sendMailConfirm"/></td>
+                </tr>
+                <RENDER_IFSET what="account:exists">
+                    <tr>
+                        <td colspan="2"><a href="{:}" title="{i18n:backToAccount}"><RENDER_VALUE what="i18n:backToAccount"/></a></td>
+                    </tr>
                 </RENDER_IFSET>
-                <table>
-                    <tr>
-                        <td class="partTitle">
-                            <RENDER_VALUE what="i18n>stepOne"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formAccount_{name>error}">
-                            <RENDER_VALUE what="i18n>accountName"/>
-                            <br />
-                            <input name="name" value="{old>name}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formAccount_{lastname>error}">
-                            <RENDER_VALUE what="i18n>accountLastname"/>
-                            <br />
-                            <input name="lastName" value="{old>lastName}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formAccount_{phone>error}">
-                            <RENDER_VALUE what="i18n>accountPhone"/>
-                            <br />
-                            <input name="phone" value="{old>phone}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formAccount_{mail>error}">
-                            <RENDER_VALUE what="i18n>accountEmail"/>
-                            <RENDER_HELP what="{i18n>createAccount_email}"/>
-                            <br />
-                            <input name="mail" value="{old>mail}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formAccount_">
-                            <RENDER_VALUE what="i18n>accountAddress"/>
-                            <RENDER_HELP what="{i18n>createAccount_address}"/>
-                            <br />
-                            <textarea name="address">
-                                <RENDER_VALUE what="old>address"/>
-                            </textarea>
-                            <br />
-                            <div class="noteText">
-                                <RENDER_VALUE what="i18n>addressNote"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formAccount_">
-                            <RENDER_VALUE what="i18n>accountCity"/>
-                            <br />
-                            <input name="city" value="{old>city}"/>
-                            <br />
-                            <div class="noteText">
-                                <RENDER_VALUE what="i18n>addressNote"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formAccount_">
-                            <RENDER_VALUE what="i18n>accountZipCode"/>
-                            <input name="zipCode" style="width: 40px" value="{old>zipCode}"/>
-                            <br />
-                            <div class="noteText">
-                                <RENDER_VALUE what="i18n>addressNote"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="partTitle">
-                            <RENDER_VALUE what="i18n>stepTwo"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formAccount_{login>error}">
-                            <RENDER_VALUE what="i18n>login"/>
-                            <RENDER_HELP what="{i18n>createAccount_login}"/>
-                            <br />
-                            <input name="login" value="{old>login}"/>
-                            <div class="noteText">
-                                <RENDER_VALUE what="i18n>notification"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formAccount_{password>error}">
-                            <RENDER_VALUE what="i18n>password"/>
-                            <RENDER_HELP what="{i18n>createAccount_password}"/>
-                            <br />
-                            <input type="password" name="password" value="{old>password}"/>
-                            <div class="noteText">
-                                <RENDER_VALUE what="i18n>notification"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formAccount_{password>error}">
-                            <RENDER_VALUE what="i18n>passwordConfirm"/>
-                            <br />
-                            <input type="password" name="passwordConfirm" value="{old>password}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="formAccount_{verification>error}">
-                            <RENDER_VALUE what="i18n>verification"/>
-                             <RENDER_HELP what="{i18n>createAccount_verification}"/>
-                           <br />
-                            <textarea name="verification" value="{old>verification}"></textarea>
-                        </td>
-                    </tr>
-                </table>
-                <div class="marginTop_10px formAccount_captcha formAccount_{captcha>error}">
-                    <RENDER_CAPTCHA what="createAccountForm"/>
-                </div>
-                <div class="submitAccount">
-                    <input type="submit" value="{i18n>send}"/>
-                </div>
-                <div id="sendMailConfirm">
-                    <RENDER_VALUE what="i18n>sendMailConfirm"/>
-                </div>
-            </div>
-        </div>
-        <div class="bg_identification_bottom">
-        </div>
+            </table>
+        </RENDER_NOTIF>
     </RENDER_FORM>
 </div>

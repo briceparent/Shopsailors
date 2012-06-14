@@ -1,0 +1,524 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+    <head>
+        <title>Websailors</title>
+        <base href="/"/>
+        <meta name="description" content="Websailors"/>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" media="screen" type="text/css" href="/templates/global/admin.css"></link>
+        <link rel="stylesheet" media="screen" type="text/css" href="/CSS/default/main.css"></link>
+    <RENDER_SCRIPT file="PROTOTYPE" direct="direct"/>
+    <RENDER_SCRIPT file="SCRIPTACULOUSONLY" direct="direct"/>
+    <RENDER_SCRIPT file="MODALBOX_JS" direct="direct"/>
+    <RENDER_SCRIPT file="MODALBOX_CSS" direct="direct"/>
+    <RENDER_SCRIPT file="SHOPSAILORS_JS" direct="direct"/>
+    <script type="text/javascript">
+
+        var changesHaveOccured = false;
+        document.observe("dom:loaded", function() {
+            // initially hide all containers for tab content
+            $$('input').each(function(field){
+                field.observe(
+                    'change',
+                    function (){
+                        changesHaveOccured = true;
+                        preview();
+                        if($('name').value != ''){
+                            $('submit').disabled = false;
+                        }else{
+                            $('submit').disabled = true;
+                        }
+                    }
+                );
+            });
+            if($('name').value != ''){
+                $('submit').disabled = false;
+            }else{
+                $('submit').disabled = true;
+            }
+            Event.observe('chooseLink','submit',function(event){
+                event.stop();
+                send();
+            });
+        });
+        
+        var activeStyleId = 0;
+        function tryToChangeStyle(){
+            if(changesHaveOccured){
+                if($('style_id').value != activeStyleId){
+                    sh_popup.confirm(
+                        'Le style actuellement affiché a été modifié.<br />Si vous souhiatez \n\
+                        conserver ces modifications, faites Annulez puis faites Enregistrer.<br />\n\
+                        <br />\n\
+                        Dans le cas contraire, toutes ces modifications seront perdues.',
+                        {
+                            title:'Attention!',
+                            onconfirmok:function(){
+                                loadStyle($('style_id').value);
+                            },
+                            onconfirmcancel:function(){
+                                $('style_id').value = activeStyleId;
+                            }
+                        }
+                    );
+                }
+                return true;
+            }
+            loadStyle($('style_id').value);
+        }
+        
+        function loadStyle(id){
+            var uri = "/sh_wEditor/getStyle.php?class="+id;
+            new Ajax.Request(uri,{
+                method : "post",
+                parameters: {},
+                onSuccess: function(transport) {
+                    eval('var json = '+transport.responseText);
+                    $('name').value = json.name;
+                                
+                    $$('.unsetToRestart').each(function(el){
+                        el.checked = false;
+                    });
+                    var css = json.css;
+                    
+                    var font = 'noChange';
+                    if(isset(css.font_family)){
+                        switch(css.font_family){
+                            case 'Arial, Arial, Helvetica, sans_serif': font = "arial"; break;
+                            case 'Arial Black, Arial Black, Gadget, sans_serif': font = "arialBlack";break;
+                            case 'Comic Sans MS, Comic Sans MS5, cursive': font = "comic";break;
+                            case 'Courier New, Courier New, monospace': font = "courier";break;
+                            case 'Georgia, Georgia, serif': font = "georgia";break;
+                            case 'Impact, Impact, Charcoal, sans_serif': font = "impact";break;
+                            case 'Lucida Console, Monaco, monospace': font = "lucida";break;
+                            case 'Palatino Linotype, Book Antiqua, Palatino, serif': font = "palatino";break;
+                            case 'Tahoma, Geneva, sans_serif': font = "tahoma";break;
+                            case 'Times New Roman, Times New Roman, Times, serif': font = "times";break;
+                            case 'Trebuchet MS, Trebuchet MS, sans_serif': font = "trebuchet";break;
+                            case 'Verdana, Verdana, Geneva, sans_serif': font = "verdana";break;
+                        }
+                    }
+                    $('font').value = font;
+                    
+                    if(css.font_weight == 'bold'){
+                        $('b').checked = 'checked';
+                    }else if(css.font_weight == 'normal'){
+                        $('nb').checked = 'checked';
+                    }
+                    
+                    if(css.font_style == 'italic'){
+                        $('i').checked = 'checked';
+                    }else if(css.font_style == 'normal'){
+                        $('ni').checked = 'checked';
+                    }
+                    
+                    if(css.text_decoration == 'underline'){
+                        $('du').checked = 'checked';
+                    }else if(css.text_decoration == 'line_through'){
+                        $('ds').checked = 'checked';
+                    }else if(css.text_decoration == 'none'){
+                        $('dn').checked = 'checked';
+                    }
+                    
+                    if(css.text_transform == 'uppercase'){
+                        $('cu').checked = 'checked';
+                    }else if(css.font_variant == 'small_caps'){
+                        $('cs').checked = 'checked';
+                    }else if(css.text_transform == 'none'){
+                        $('cn').checked = 'checked';
+                    }
+                    
+                    if(isset(css.font_size)){
+                        $('size').value = parseInt(css.font_size);
+                    }else{
+                        $('size').value = 'noChange';
+                    }
+                    
+                    if(isset(css.color)){
+                        colorPicker_changeColor('textColor',css.color);
+                    }else{
+                        colorPicker_changeColor('textColor','default');
+                    }
+                    
+                    if(isset(css.background_color)){
+                        colorPicker_changeColor('bgColor',css.background_color);
+                    }else{
+                        colorPicker_changeColor('bgColor','default');
+                    }
+                    preview();
+                    changesHaveOccured = false;
+                    
+                                
+                    if($('name').value != ''){
+                        $('submit').disabled = false;
+                    }else{
+                        $('submit').disabled = true;
+                    }
+                    return true
+                },
+                onFailure: function(){
+                    alert('Erreur lors de la transmission des données de style');
+                }
+            });
+        }
+
+        function isset(variable){
+            if(typeof(variable) != "undefined"){
+                if(variable !== null){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function preview(){
+            if($('b').checked){
+                $('tester').style.fontWeight = 'bold';
+            }else{
+                $('tester').style.fontWeight = 'normal';
+            }
+            if($('i').checked){
+                $('tester').style.fontStyle = 'italic';
+            }else{
+                $('tester').style.fontStyle = 'normal';
+            }
+            if($('du').checked){
+                $('tester').style.textDecoration = 'underline';
+            }else if($('ds').checked){
+                $('tester').style.textDecoration = 'line-through';
+            }else{
+                $('tester').style.textDecoration = 'none';
+            }
+            if($('cu').checked){
+                $('tester').style.textTransform = 'uppercase';
+                $('tester').style.fontVariant = 'normal';
+            }else if($('cs').checked){
+                $('tester').style.fontVariant = 'small-caps';
+                $('tester').style.textTransform = 'none';
+            }else{
+                $('tester').style.textTransform = 'none';
+                $('tester').style.fontVariant = 'normal';
+            }
+            var size = $('size').value;
+            if(size == 'noChange'){
+                size = 12;
+            }
+            $('tester').style.fontSize = size;
+
+            var font = $('font').value;
+            if(font == 'noChange'){
+                font = 'inherit';
+            }else{
+                switch(font){
+                    case 'arial': font = "Arial, Arial, Helvetica, sans-serif"; break;
+                    case 'arialBlack': font = "Arial Black, Arial Black, Gadget, sans-serif"; break;
+                    case 'comic': font = "Comic Sans MS, Comic Sans MS5, cursive"; break;
+                    case 'courier': font = "Courier New, Courier New, monospace"; break;
+                    case 'georgia': font = "Georgia, Georgia, serif"; break;
+                    case 'impact': font = "Impact, Impact, Charcoal, sans-serif"; break;
+                    case 'lucida': font = "Lucida Console, Monaco, monospace"; break;
+                    case 'palatino': font = "Palatino Linotype, Book Antiqua, Palatino, serif"; break;
+                    case 'tahoma': font = "Tahoma, Geneva, sans-serif"; break;
+                    case 'times': font = "Times New Roman, Times New Roman, Times, serif"; break;
+                    case 'trebuchet': font = "Trebuchet MS, Trebuchet MS, sans-serif"; break;
+                    case 'verdana': font = "Verdana, Verdana, Geneva, sans-serif"; break;
+                }
+                $('tester').style.fontFamily = font;
+            }
+            if($('textColor').value == '' || $('textColor').value == 'default'){
+                $('tester').style.color = 'inherit';
+            }else{
+                $('tester').style.color = '#'+$('textColor').value;
+            }
+            if($('bgColor').value == '' || $('bgColor').value == 'default'){
+                $('tester').style.backgroundColor = 'transparent';
+            }else{
+                $('tester').style.backgroundColor = '#'+$('bgColor').value;
+            }
+        }
+
+        function send(){
+     
+            /* We verify if we are generating a new style, or if it already exists */
+            var id = $('style_id').value;
+            if(id == 0){
+                var uri = "/sh_wEditor/getNewStyleId.php";
+                new Ajax.Request(uri,{
+                    method : "post",
+                    parameters: {},
+                    onSuccess: function(transport) {
+                        id = transport.responseText;
+                        /*alert('New id is '+id);*/
+                        var elOptNew = document.createElement('option');
+                        elOptNew.value = id;
+                        elOptNew.text = $('name').value;
+                        $('style_id').add(elOptNew, null);
+                        addStyle(id);
+                        return true
+                    },
+                    onFailure: function(){
+                        alert('Erreur lors de la transmission des données de style');
+                    }
+                });
+            }else{
+                addStyle(id);
+            }
+        }
+        
+        function addStyle(id){
+            var name = $('name').value;
+            var cssName=id,style="";
+            
+            switch($('font').value){
+                case 'arial': style += "font-family: Arial, Arial, Helvetica, sans-serif;"; break;
+                case 'arialBlack': style += "font-family: Arial Black, Arial Black, Gadget, sans-serif;";break;
+                case 'comic': style += "font-family: Comic Sans MS, Comic Sans MS5, cursive;"; break;
+                case 'courier': style += "font-family: Courier New, Courier New, monospace;"; break;
+                case 'georgia': style += "font-family: Georgia, Georgia, serif;"; break;
+                case 'impact': style += "font-family: Impact, Impact, Charcoal, sans-serif;"; break;
+                case 'lucida': style += "font-family: Lucida Console, Monaco, monospace;"; break;
+                case 'palatino': style += "font-family: Palatino Linotype, Book Antiqua, Palatino, serif;"; break;
+                case 'tahoma': style += "font-family: Tahoma, Geneva, sans-serif;"; break;
+                case 'times': style += "font-family: Times New Roman, Times New Roman, Times, serif;"; break;
+                case 'trebuchet': style += "font-family: Trebuchet MS, Trebuchet MS, sans-serif;"; break;
+                case 'verdana': style += "font-family: Verdana, Verdana, Geneva, sans-serif;"; break;
+            }
+
+            if($('b').checked){
+                style += 'font-weight:bold;';
+            }else if($('nb').checked){
+                style += 'font-weight:normal;';
+            }
+
+            if($('i').checked){
+                style += 'font-style:italic;';
+            }else if($('ni').checked){
+                style += 'font-style:normal;';
+            }
+
+            if($('du').checked){
+                style += 'text-decoration:underline;';
+            }else if($('ds').checked){
+                style += 'text-decoration:line-through;';
+            }else if($('dn').checked){
+                style += 'text-decoration:none;';
+            }
+
+            if($('cu').checked){
+                style += 'text-transform:uppercase;';
+                style += 'font-variant:normal;';
+            }else if($('cs').checked){
+                style += 'text-transform:none;';
+                style += 'font-variant:small-caps;';
+            }else if($('cn').checked){
+                style += 'text-transform:none;';
+                style += 'font-variant:normal;';
+            }
+
+            if($('size').value != 'noChange'){
+                style += 'font-size: '+$('size').value+'px;';
+            }
+
+            if(!($('textColor').value == '' || $('textColor').value == 'default')){
+                style += 'color: #'+$('textColor').value+';';
+            }
+            if(!($('bgColor').value == '' || $('bgColor').value == 'default')){
+                style += 'background-color: #'+$('bgColor').value+';';
+            }
+
+            var uri = "/sh_wEditor/addStyle.php";
+            
+            new Ajax.Request(uri,{
+                method : "post",
+                parameters: {name: name, cssName: cssName,css:style},
+                onSuccess: function() {
+                    window.opener.updateStyles();
+                    location.reload(true);
+                    return true
+                },
+                onFailure: function(){
+                    alert('Erreur lors de la transmission des données de style');
+                }
+            });
+
+            return true;
+        }
+    </script>
+    <style type="text/css">
+        table{
+            font-size: inherit;
+        }
+        .action_icon{
+            width:18px;
+        }
+    </style>
+</head>
+<body>
+    <form id="chooseLink" >
+        <div style="margin-top:10px;"></div>
+        <RENDER_ADMINBOX title="{i18n:styleEditor_title}" size="L">
+            <div id="styleForm">
+                <table cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td colspan="4">
+                            <div class="styleName">
+                                <select name="style_id" id="style_id" onchange="tryToChangeStyle();">
+                                    <option value="0">Nouveau style</option>
+                                    <optgroup label="Styles existant">
+                                    <RENDER_LOOP what="styles">
+                                        <option value="{styles:cssName}"><RENDER_VALUE what="styles:name"/></option>
+                                    </RENDER_LOOP>
+                                    </optgroup>
+                                </select>
+                                <input name="name" id="name" placeholder="Nouveau nom"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 110px;border-right: none;">
+                            <input type="radio" id="nb" name="b" class="unsetToRestart"/>&#160;
+                            <label for="nb">Normal</label>
+                        </td>
+                        <td style="width: 110px;border-left: none;border-right: none">
+                            <input type="radio" id="b" name="b" class="unsetToRestart"/>&#160;
+                            <label for="b" style="font-weight: bold;">Gras</label>
+                        </td>
+                        <td style="width: 25px;border-left: none">
+                            <span onclick="$('b').checked=false;$('nb').checked=false;preview();" class="falseLink">
+                                <img class="action_icon" src="/images/shared/icons/picto_delete_small2.png" alt="Hériter du reste du texte" title="Hériter du reste du texte"/>
+                            </span>
+                        </td>
+                        <td rowspan="13" style="vertical-align: top;width:300px;padding: 4px;">
+                            <p>
+                                Le paragraphe suivant utilise le style que vous êtes en train de définir :
+                            </p>
+                            <p id="tester" style="font-size:12px;line-height:1em;width:300px;height:260px;overflow:auto;">
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+                                euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad
+                                minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut
+                                aliquip ex ea commodo consequat.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-right: none;">
+                            <input type="radio" id="ni" name="i" class="unsetToRestart"/>&#160;
+                            <label for="ni">Normal</label>
+                        </td>
+                        <td style="border-right: none;border-left: none;">
+                            <input type="radio" id="i" name="i" class="unsetToRestart"/>&#160;
+                            <label for="i" style="font-style: italic;">Italic</label>
+                        </td>
+                        <td style="border-left: none;">
+                            <span onclick="$('i').checked=false;$('ni').checked=false;preview();" class="falseLink">
+                                <img class="action_icon" src="/images/shared/icons/picto_delete_small2.png" alt="Hériter du reste du texte" title="Hériter du reste du texte"/>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-right: none;" colspan="2">
+                            <input type="radio" id="dn" name="decoration" class="unsetToRestart"/>&#160;
+                            <label for="dn">Normal</label><br />
+                            <input type="radio" id="du" name="decoration" class="unsetToRestart"/>&#160;
+                            <label for="du" style="text-decoration: underline;">Souligné</label><br />
+                            <input type="radio" id="ds" name="decoration" class="unsetToRestart"/>&#160;
+                            <label for="ds" style="text-decoration: line-through;">Barré</label>
+                        </td>
+                        <td style="border-left: none;">
+                            <span onclick="$('dn').checked=false;$('du').checked=false;$('ds').checked=false;preview();" class="falseLink">
+                                <img class="action_icon" src="/images/shared/icons/picto_delete_small2.png" alt="Hériter du reste du texte" title="Hériter du reste du texte"/>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-right: none;" colspan="2">
+                            <input type="radio" name="case" id="cn" class="unsetToRestart"/>&#160;<label for="cn">Normal</label>
+                            <br />
+                            <input type="radio" name="case" id="cu" class="unsetToRestart"/>&#160;<label for="cu">MAJUSCULES</label>
+                            <br />
+                            <input type="radio" name="case" id="cs" class="unsetToRestart"/>&#160;<label for="cs" style="font-variant: small-caps;">Petites majuscules</label>
+
+                        </td>
+                        <td style="border-left: none;">
+                            <span onclick="$('cn').checked=false;$('cu').checked=false;$('cs').checked=false;preview();" class="falseLink">
+                                <img class="action_icon" src="/images/shared/icons/picto_delete_small2.png" alt="Hériter du reste du texte" title="Hériter du reste du texte"/>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <label for="font">Police :</label>
+                            <select name="font" id="font" onclick="this.style.fontFamily = this.options[this.selectedIndex].style.fontFamily;preview();">
+                                <option value="noChange">Aucun changement</option>
+                                <option value="arial" style="font-family: Arial, Arial, Helvetica, sans-serif;">Arial</option>
+                                <option value="arialBlack" style="font-family: Arial Black, Arial Black, Gadget, sans-serif;">Arial Black</option>
+                                <option value="comic" style="font-family: Comic Sans MS, Comic Sans MS5, cursive;">Comic Sans MS</option>
+                                <option value="courier" style="font-family: Courier New, Courier New, monospace;">Courier New</option>
+                                <option value="georgia" style="font-family: Georgia, Georgia, serif;">Georgia</option>
+                                <option value="impact" style="font-family: Impact, Impact, Charcoal, sans-serif;">Impact</option>
+                                <option value="lucida" style="font-family: Lucida Console, Monaco, monospace;">Lucida Console</option>
+                                <option value="palatino" style="font-family: Palatino Linotype, Book Antiqua, Palatino, serif;">Palatino Linotype</option>
+                                <option value="tahoma" style="font-family: Tahoma, Geneva, sans-serif;">Tahoma</option>
+                                <option value="times" style="font-family: Times New Roman, Times New Roman, Times, serif;">Times New Roman</option>
+                                <option value="trebuchet" style="font-family: Trebuchet MS, Trebuchet MS, sans-serif;">Trebuchet MS</option>
+                                <option value="verdana" style="font-family: Verdana, Verdana, Geneva, sans-serif;">Verdana</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <label for="size">Taille : </label>
+                            <select id="size" onclick="this.style.fontSize = this.options[this.selectedIndex].style.fontSize;preview();">
+                                <option value="noChange" style="font-size:12px;">Aucun changement</option>
+                                <optgroup label="Petit">
+                                    <option value="10" style="font-size:10px;">10 pixels</option></optgroup>
+                                <optgroup label="Normal">
+                                    <option value="12" style="font-size:12px;">12 pixels</option>
+                                    <option value="14" style="font-size:14px;">14 pixels</option>
+                                </optgroup>
+                                <optgroup label="Grand">
+                                    <option value="16" style="font-size:16px;">16 pixels</option>
+                                    <option value="18" style="font-size:18px;">18 pixels</option>
+                                    <option value="20" style="font-size:20px;">20 pixels</option>
+                                    <option value="22" style="font-size:22px;">22 pixels</option>
+                                    <option value="24" style="font-size:24px;">24 pixels</option>
+                                    <option value="32" style="font-size:32px;">32 pixels</option>
+                                    <option value="48" style="font-size:48px;">48 p...</option>
+                                </optgroup>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Couleur&#160;du&#160;texte&#160;:
+                        </td>
+                        <td>
+                    <RENDER_COLORPICKER id="textColor" name="textColor" value="" onchange="preview();"/>
+                    </td>
+                    <td style="border-left: none;">
+                        <span onclick="colorPicker_changeColor('textColor','default');preview();" class="falseLink">
+                            <img class="action_icon" src="/images/shared/icons/picto_delete_small2.png" alt="Hériter du reste du texte" title="Hériter du reste du texte"/>
+                        </span>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Arrière plan :
+                        </td>
+                        <td>
+                    <RENDER_COLORPICKER id="bgColor" name="bgColor" value="" onchange="preview();"/>
+                    </td>
+                    <td style="border-left: none;">
+                        <span onclick="colorPicker_changeColor('bgColor','default');preview();" class="falseLink">
+                            <img class="action_icon" src="/images/shared/icons/picto_delete_small2.png" alt="Hériter du reste du texte" title="Hériter du reste du texte"/>
+                        </span>
+                    </td>
+                    </tr>
+                </table>
+            </div>
+        </RENDER_ADMINBOX>
+        <div class="admin_buttons" style="text-align:center;">
+            <input class="admin_button admin_validate" type="submit" id="submit" value="{i18n:validate}" disabled="disabled" />
+        </div>
+    </form>
+</body>
+</html>

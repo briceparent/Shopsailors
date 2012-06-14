@@ -7,6 +7,63 @@ if(!defined('SH_MARKER'))
 	header('location: directCallForbidden.php');
 
 $this->queries = array(
+    'cookies_setDate' => array(
+        'query' => '
+            UPDATE
+            ###user_cookies
+            SET
+            `date` = "{date}"
+            WHERE 
+            `user` = "{user}"
+            AND `cookie` = "{cookie}";',
+        'type' =>'insert'
+    ),
+    'cookies_get' => array(
+        'query' => '
+            SELECT
+            `user`
+            FROM
+            ###user_cookies
+            WHERE `cookie` = "{cookie}";',
+        'type' =>'get'
+    ),
+    'cookies_create' => array(
+        'query' => '
+            INSERT INTO 
+            ###user_cookies
+            (`user`,`cookie`,`expire`)
+            VALUES
+            ("{user}","{cookie}","{expire}");',
+        'type' =>'insert'
+    ),
+    'cookies_delete' => array(
+        'query' => '
+            DELETE FROM
+            ###user_cookies
+            WHERE
+            `user` = "{user}"
+            AND `cookie` = "{cookie}"
+            LIMIT 1;',
+        'type' =>'set'
+    ),
+    'cookies_deleteAllForUser' => array(
+        'query' => '
+            DELETE FROM
+            ###user_cookies
+            WHERE
+            `user` = "{user}";',
+        'type' =>'set'
+    ),
+    'cookies_deleteOlderThan' => array(
+        'query' => '
+            DELETE FROM
+            ###user_cookies
+            WHERE
+            `date` < "{date}";',
+        'type' =>'set'
+    ),
+    
+    /* MASTER SERVER QUERIES */
     'getOneUserId' => array(
         'query' => '
             SELECT
@@ -16,6 +73,33 @@ $this->queries = array(
             WHERE
             `{field}` = "{value}"
             ;',
+        'type' =>'get'
+    ),
+    'checkUser' => array(
+        'query' => '
+            SELECT
+            `id`,
+            `mail`
+            FROM
+            ###users
+            WHERE
+            `login` = "{login}"
+            AND
+            `password` = "{password}"
+            LIMIT 1;',
+        'type' =>'get'
+    ),
+    'connectOneUser_single_step' => array(
+        'query' => '
+            SELECT
+            `id`
+            FROM
+            ###users
+            WHERE
+            `login` = "{userName}"
+            AND
+            `password` = "{password}"
+            LIMIT 1;',
         'type' =>'get'
     ),
     'connectOneUser' => array(
@@ -114,9 +198,18 @@ $this->queries = array(
             LIMIT 1;',
         'type' =>'set'
     ),
+    'changeVerification' => array(
+        'query' => '
+            UPDATE ###users SET
+            `verification` = "{verification}"
+            WHERE
+            `id` = "{id}"
+            LIMIT 1;',
+        'type' =>'set'
+    ),
     'createAccount_setIncrement' => array(
         'query' => '
-            ALTER TABLE `users`
+            ALTER TABLE `###users`
             AUTO_INCREMENT = {increment};',
         'type' =>'set'
     ),
@@ -155,9 +248,25 @@ $this->queries = array(
         'query' => '
             INSERT INTO 
             ###users
-            (`login`,`active`,`name`,`lastName`,`mail`,`phone`,`password`,`address`,`verification`)
+            (`login`,`active`,`name`,`lastName`,`mail`,`phone`,`password`,`address`,`zip`,`city`,`verification`)
             VALUES
-            ("{login}","0","{name}","{lastName}","{mail}","{phone}","{password}","{address}","{verification}");',
+            ("{login}","0","{name}","{lastName}","{mail}","{phone}","{password}","{address}","{zip}","{city}","{verification}");',
+        'type' =>'insert'
+    ),
+    'updateAccount' => array(
+        'query' => '
+            UPDATE ###users SET
+            /*`verification` = "{verification}",*/
+            `name` = "{name}",
+            `lastName` = "{lastName}",
+            `mail` = "{mail}",
+            `phone` = "{phone}",
+            `address` = "{address}",
+            `zip` = "{zip}",
+            `city` = "{city}"
+            WHERE
+            `login` = "{login}"
+            LIMIT 1;',
         'type' =>'insert'
     ),
     // Connections status logger
@@ -242,4 +351,62 @@ $this->queries = array(
             DATEDIFF(CURDATE() , `date`) > 30;',
         'type' =>'set'
     ),
+
+    // Creation of the tables
+    'create_table_users' => array(
+        'query' => 'CREATE TABLE IF NOT EXISTS `###users` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT \'YYMMDD[5 digits counter]\',
+  `active` tinyint(1) NOT NULL DEFAULT \'0\',
+  `login` varchar(50) COLLATE utf8_bin NOT NULL,
+  `name` varchar(50) COLLATE utf8_bin NOT NULL,
+  `lastName` varchar(50) COLLATE utf8_bin NOT NULL,
+  `mail` varchar(100) COLLATE utf8_bin NOT NULL,
+  `password` varchar(32) COLLATE utf8_bin NOT NULL,
+  `phone` varchar(20) COLLATE utf8_bin NOT NULL,
+  `address` varchar(300) COLLATE utf8_bin NOT NULL,
+  `zip` int(11) NOT NULL,
+  `city` varchar(64) COLLATE utf8_bin NOT NULL,
+  `temporaryPassword` varchar(32) COLLATE utf8_bin NOT NULL,
+  `temporaryPasswordTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `verification` varchar(150) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `mail` (`mail`),
+  UNIQUE KEY `login` (`login`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT=\'used by sh_user\' AUTO_INCREMENT=10010100001;',
+        'type' =>'set'
+    ),
+    'create_table_connections_failures' => array(
+        'query' => 'CREATE TABLE IF NOT EXISTS `###connections_failures` (
+  `user` bigint(20) NOT NULL,
+  `site` varchar(50) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `shown` tinyint(1) NOT NULL,
+  `ip` varchar(23) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT=\'used by sh_user\';',
+        'type' =>'set'
+    ),
+    'create_table_connections_successes' => array(
+        'query' => 'CREATE TABLE IF NOT EXISTS `###connections_successes` (
+  `user` bigint(20) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `site` varchar(50) NOT NULL,
+  UNIQUE KEY `user` (`user`,`date`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT=\'used by sh_user\';',
+        'type' =>'set'
+    ),
+    'remove_case_in_logins' => array(
+        'query' => 'ALTER TABLE `###users` CHANGE `login` `login` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ;',
+        'type' =>'set'
+    ),
+    'create_cookies_table' => array(
+        'query' => '
+CREATE TABLE IF NOT EXISTS `###user_cookies` (
+  `user` bigint(20) NOT NULL,
+  `cookie` varchar(64) DEFAULT NULL,
+  `expire` date NOT NULL,
+  UNIQUE KEY `cookie` (`cookie`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;',
+        'type' =>'set'
+    ),
+
 );

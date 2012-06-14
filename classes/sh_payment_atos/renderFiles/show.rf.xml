@@ -1,0 +1,20 @@
+<div>
+    <div class="bold">
+        <RENDER_VALUE what="i18n:payment_creditCard"/>
+    </div>
+    <table>
+        <tr>
+            <td>
+                <img src="{bank:logo}" alt="{bank:name}" title="{bank:name}" style="width:40px;"/>
+            </td>
+            <td class="left">
+                <RENDER_VALUE what="bank:name"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="paddingTop_20px">
+                <RENDER_VALUE what="atos:form"/>
+            </td>
+        </tr>
+    </table>
+</div>

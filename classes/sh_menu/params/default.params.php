@@ -7,14 +7,17 @@ if(!defined('SH_MARKER'))
 	header('location: directCallForbidden.php');
 
 $this->default = array(
-    'renderFiles' => array(
-        0 => 'oneLineMenu',
-        1 => 'oneLineMenu',
-        2 => 'oneLineMenu',
-        3 => 'oneLineMenu'),
-    'availableLinks'=>array(
-        'Page d\'accueil' => '/index.php',
-        'Page de contact' => '/contact.php'
-        ),
-        'sitemap'=>array('priority' => '0.7',
-                        'frequency' => 'weekly'));
+  'activated' => 
+  array (
+    1 => true,
+  ),
+  'textHeight' => 
+  array (
+    1 => '18',
+  ),
+  'renderFiles' => 
+  array (
+    1 => 'withSubmenus',
+  ),
+  'uid' => '72dbda',
+);

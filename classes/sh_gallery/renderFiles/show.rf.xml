@@ -1,0 +1,71 @@
+
+<div class="gallery">
+    <style>
+        #gallery_active_image{
+            width:100%;
+            text-align:center;
+        }
+        #gallery_active_image img{
+            width:675px;
+            height:450px;
+        }
+        #gallery_active_image_description{
+            width:300px;
+            background-color:rgba(128,128,128,0.8);
+            border-radius:5px;
+            color:black;
+            padding:10px;
+            text-align:center;
+            margin:0 auto;
+        }
+        #gallery_all_images img{
+            margin:5px;
+        }
+        .hidden{
+            display:none;
+        }
+    </style>
+    <RENDER_IFSET what="other_galleries">
+<div id="otherGaleries_title" class="toggle_next_element"><RENDER_VALUE what="i18n:moreGalleries"/></div>
+    <div id="otherGaleries_links">
+    <RENDER_LOOP what="other_galleries">
+        <div>
+        <a href="{other_galleries:link}" title="{other_galleries:name}"><RENDER_VALUE what="other_galleries:name"/></a>
+        </div>
+    </RENDER_LOOP>
+    </div>
+    </RENDER_IFSET>
+    <RENDER_MODIFYVALUE what="main_image:src" class="browser" method="getTitle|br" new="main_image:title"/>
+    <div id="gallery_active_image">
+        <img id="gallery_active_image_tag" src="{main_image:src}.resized.675.450.png" title="{main_image:title}" alt="{main_image:title} - full"/>
+        <div id="gallery_active_image_description">
+            <RENDER_VALUE what="main_image:title"/>
+        </div>
+    </div>
+    <script>
+        $('gallery_active_image').style.display='none';
+        $('otherGaleries_links').style.position='absolute';
+        
+    </script>
+    <div id="gallery_all_images">
+        <RENDER_LOOP what="images">
+            <RENDER_MODIFYVALUE what="images:src" class="browser" method="getTitle|dash" new="images:title"/>
+            <RENDER_MODIFYVALUE what="images:src" class="browser" method="getTitle|br" new="images:title_br"/>
+            <a class="gallery_oneImageLink" title="{images:title}" href="{auto:page_short}?image={images:src}" rel="lightbox[miniatures]">
+                <img src="{images:src}.resized.208.139.png" title="{images:title}" alt="{images:title}"/>
+                <div class="hidden">
+                    <RENDER_VALUE what="images:title_br"/>
+                </div>
+            </a>
+        </RENDER_LOOP>
+    </div>
+    <script>
+        $$('.gallery_oneImageLink').each(function(el){
+            el.href=el.href.substr(el.href.indexOf('image=')+6)+'.resized.675.450.png';
+        });
+        function gallery_set_image(image,title){
+            $('gallery_active_image_tag').src=image+'.resized.900.600.png';
+            $('gallery_active_image_description').innerHTML = title;
+        }
+    </script>
+</div>

@@ -1,0 +1,13 @@
+<div>
+    <RENDER_TABGROUP size="L" validate="{i18n:save}" admin="admin">
+        <RENDER_TAB title="{i18n:manage_general_title}">
+            <div class="admin_blueLink marginBottom_10px">
+                <RENDER_CHECKBOX text="{i18n:manage_activateForum}" name="active" state="{active:checked}"/>
+            </div>
+            <RENDER_CHECKBOX text="{i18n:manage_forum_is_public}" name="public" state="{public:checked}" help="{i18n:manage_forum_is_public_explanations}"/>
+
+            <RENDER_CHECKBOX text="{i18n:manage_allow_anonymous}" name="anonymous" state="{anonymous:checked}" help="{i18n:manage_allow_anonymous_explanations}"/>
+
+        </RENDER_TAB>
+    </RENDER_TABGROUP>
+</div>

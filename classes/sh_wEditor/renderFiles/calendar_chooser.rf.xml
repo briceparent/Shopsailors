@@ -1,0 +1,72 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+    <head>
+        <title>Websailors</title>
+        <base href="/"/>
+        <meta name="description" content="Websailors"/>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" media="screen" type="text/css" href="/templates/global/admin.css"></link>
+        <link rel="stylesheet" media="screen" type="text/css" href="/templates/global/global.css"></link>
+    <RENDER_SCRIPT file="PROTOTYPE" direct="direct"/>
+    <RENDER_SCRIPT file="SCRIPTACULOUSONLY" direct="direct"/>
+    <RENDER_SCRIPT file="SHOPSAILORS_JS" direct="direct"/>
+    <script type="text/javascript">
+        function send(){
+            chosenValue = 'none';
+            
+            $$('input.calendar').each(function(s) {
+                if(s.checked){
+                    chosenValue = s.value;
+                }
+            });
+            var theDate = 'ACTIVE';
+            if($('selected_month_sel').checked){
+                theDate = $('sel_y').value+'-'+$('sel_m').value+'-'+$('sel_d').value;
+            }
+            
+            window.opener.tinymce_insertCalendar(chosenValue, theDate);
+            window.close ();
+        }
+    </script>
+    <style type="text/css">
+        .diapo_form{
+            text-align:left;
+            width:376px; 
+            height:300px;
+            padding-left: 15px;
+        }
+    </style>
+</head>
+<body class="adminPopup_body">
+<RENDER_FORM action="javascript:send()" id="chooseCalendra" >
+    <RENDER_ADMINBOX size="M" title="{i18n:calendarTitle}">
+        <div class="diapo_form">
+            <RENDER_VALUE what="i18n:calendarIntro"/>
+            <div>
+                <RENDER_LOOP what="calendars">
+                    <div>
+                        <input class="calendar" type="radio" name="calendar" id="calendar_{calendars:id}" value="{calendars:id}"/>
+                        <label for="calendar_{calendars:id}">
+                            <RENDER_VALUE what="calendars:name"/>
+                        </label>
+                    </div>
+                </RENDER_LOOP>
+            </div>
+            <hr />
+            <div>
+                Mois affiché : <br />
+                <input type="radio" name="selected_month" id="selected_month_now" value="now" checked="checked"/>
+                <label for="selected_month_now">Mois en cours</label><br />
+                <input type="radio" name="selected_month" id="selected_month_sel" value="sel"/>
+                <label for="selected_month_sel">
+                    Le mois suivant : 
+                </label>
+                <RENDER_DATEPICKER id="sel" name="sel" type="month"/>
+            </div>
+        </div>
+    </RENDER_ADMINBOX>
+    <div class="admin_buttons">
+        <input class="admin_button admin_validate" type="submit" value="{i18n:validate}" onclick="send();" />
+    </div>
+</RENDER_FORM>
+</body>
+</html>

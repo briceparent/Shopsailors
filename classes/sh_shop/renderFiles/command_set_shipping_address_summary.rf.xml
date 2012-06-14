@@ -1,0 +1,20 @@
+
+<div>
+    <NORENDER>shipping address</NORENDER>
+    <RENDER_VALUE what="i18n:shipping_address"/>
+    <br />
+    <RENDER_VALUE what="shipping:name"/>
+    <br />
+    <RENDER_VALUE what="shipping:address"/>
+    <br />
+    <RENDER_VALUE what="shipping:more"/>
+    <br />
+    <RENDER_VALUE what="shipping:zip"/>&#160;
+    <RENDER_VALUE what="shipping:city"/>
+    <div class="shop_modifyInfo_link">
+        <a href="{modify:link}">
+            <RENDER_VALUE what="i18n:modify_shipping_address"/>
+        </a>
+    </div>
+    <hr />
+</div>

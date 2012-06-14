@@ -20,7 +20,6 @@
   */
 
 /************************************************** Configuration **************************************************/
-
 $chars = 'ABCDEFGHKMNPRTUVWX3689';		// liste des charactère (certain caractères ne sont pas présents pour éviter les confusions)
 $nbChar = 5;					// nombre de charactères du code
 $startOffset = 5;				// offset de départ sur l'image (en pixels)
@@ -45,7 +44,7 @@ if(!isset($_SESSION)) {
     session_start();
 }
 
-// cr�ation de l'image contenant le code
+// creation de l'image contenant le code
 $_charsImgHandler = imagecreatetruecolor($width,$height) OR exit('please activate GD lib');
 $white = imagecolorallocate($_charsImgHandler, 255, 255, 255);
 imagefill($_charsImgHandler, 0, 0,$white);
@@ -54,6 +53,7 @@ imagefill($_charsImgHandler, 0, 0,$white);
 $i = -1;
 $pos_x = $startOffset;
 $cnt = strlen($chars)-1;
+$charList = '';
 
 while(++$i<$nbChar) {
     $char = $chars[mt_rand(0,$cnt)];
@@ -65,7 +65,7 @@ while(++$i<$nbChar) {
         mt_rand(0,150)
     );
     $size =  mt_rand($size_min, $size_max);
-    $pos_y = mt_rand( $size, $height-3);
+    $pos_y = mt_rand( min($size,$height-3), max($size,$height-3));
     imagettftext(
         $_charsImgHandler,
         $size,

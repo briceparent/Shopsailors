@@ -56,7 +56,7 @@ var TagsToTip	= true		// false or true - if true, HTML elements to be converted 
 // Example: onmouseover="Tip('Tooltip text', LEFT, true, BGCOLOR, '#FF9900', FADEIN, 400)"
 
 config. Above			= true		// false or true - tooltip above mousepointer
-config. BgColor			= '#E2E7FF'	// Background colour (HTML colour value, in quotes)
+config. BgColor			= '#e7e7e7'	// Background colour (HTML colour value, in quotes)
 config. BgImg			= ''		// Path to background image, none if empty string ''
 config. BorderColor		= '#003366'
 config. BorderStyle		= 'solid'	// Any permitted CSS value, but I recommend 'solid', 'dotted' or 'dashed'
@@ -89,7 +89,7 @@ config. OffsetY			= 5		// Vertical offset
 config. Opacity			= 100		// Integer between 0 and 100 - opacity of tooltip in percent
 config. Padding			= 3		// Spacing between border and content
 config. Shadow			= true		// false or true
-config. ShadowColor		= '#C0C0C0'
+config. ShadowColor		= ''
 config. ShadowWidth		= 5
 config. Sticky			= false		// false or true - fixate tip, ie. don't follow the mouse and don't hide on mouseout
 config. TextAlign		= 'left'	// 'left', 'right' or 'justify'

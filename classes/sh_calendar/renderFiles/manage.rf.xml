@@ -1,0 +1,25 @@
+
+<div>
+    <RENDER_TABGROUP size="l" admin="admin">
+        <RENDER_TAB title="{i18n:manager_tab_list_title}">
+            <ul>
+                <RENDER_LOOP what="calendars">
+                    <li>
+                        <RENDER_VALUE what="calendars:name"/>
+                        &#160;-&#160;
+                        <a href="{calendars:modify}">
+                            <RENDER_VALUE what="i18n:manager_tab_list_modify"/>
+                        </a>
+                        &#160;-&#160;
+                        <a href="{calendars:addDate}">
+                            <RENDER_VALUE what="i18n:manager_tab_list_addDate"/>
+                        </a>
+                    </li>
+                </RENDER_LOOP>
+            </ul>
+            <a href="{links:new}">
+                <RENDER_VALUE what="i18n:manager_tab_list_new"/>
+            </a>
+        </RENDER_TAB>
+    </RENDER_TABGROUP>
+</div>

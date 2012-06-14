@@ -1,34 +1,31 @@
-<div id="admin_box">
+<div id="admin_box" style="position:fixed">
     <div id="admin_panelTop" class="admin_title pointer" onmouseup="adminBoxShowHide()">
         <div class="adminPanel_titleText">
-            <RENDER_VALUE what="i18n>adminPanel_title"/>
+            <RENDER_VALUE what="i18n:adminPanel_title"/>
         </div>
     </div>
     <div id="admin_box_hideable" onload='Effect.hide(this);' style="display:none">
         <RENDER_LOOP what="sections">
             <div class="admin_box_sections">
-                <div class="admin_title_{sections>number} pointer" onmouseup="adminBoxCategoryShowHide('admin_content_{sections>id}')">
+                <div class="admin_title_{sections:number} pointer" onmouseup="adminBoxCategoryShowHide('admin_content_{sections:id}')">
                     <div class="admin_small_vspace"></div>
-                    <div class="admin_titles" name="{sections>name}">
-                        <RENDER_VALUE what="sections>name"/>
+                    <div class="admin_titles" name="{sections:name}">
+                        <RENDER_VALUE what="sections:name"/>
                     </div>
                 </div>
-                <div class="admin_content_{sections>number}" id="admin_content_{sections>id}" onload="Effect.hide(this);" style="display:none">
+                <div class="admin_content_{sections:number}" id="admin_content_{sections:id}" onload="Effect.hide(this);" style="display:none">
                     <div class="admin_contents">
                         <RENDER_LOOP what="elements">
-                            <div class="admin_oneElement marginTop_5px"><RENDER_VALUE what="elements>element"/></div>
+                            <div class="admin_oneElement marginTop_5px"><RENDER_VALUE what="elements:element"/></div>
                         </RENDER_LOOP>
                     </div>
                 </div>
             </div>
         </RENDER_LOOP>
         <div id="adminPanel_bottom" class="admin_close adminPanel_closeText">
-            <a href="{admin>closeHref}">
-                <RENDER_VALUE what="i18n>adminPanel_close"/>
-            </a>
         </div>
     </div>
-    <RENDER_IFSET what="master>on">
+    <RENDER_IFSET what="master:on">
         <div id="usingAMasterSession"/>
     </RENDER_IFSET>
     <div id="debug"></div>

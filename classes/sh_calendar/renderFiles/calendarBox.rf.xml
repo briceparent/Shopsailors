@@ -1,0 +1,63 @@
+
+<div class="calendarBox" id="calendar_{calendar:id}">
+    <style type="text/css">
+        .calendar_table th{
+            text-align:center;
+        }
+        .calendar_day{
+            width:22px;
+            height:24px;
+            text-align:center;
+            line-height:24px;
+        }
+    </style>
+    <RENDER_VALUE what="calendar:month_name"/>
+
+    <table class="calendar_table">
+        <tr>
+            <th>
+                <RENDER_VALUE what="i18n:day_1_short"/>
+            </th>
+            <th>
+                <RENDER_VALUE what="i18n:day_2_short"/>
+            </th>
+            <th>
+                <RENDER_VALUE what="i18n:day_3_short"/>
+            </th>
+            <th>
+                <RENDER_VALUE what="i18n:day_4_short"/>
+            </th>
+            <th>
+                <RENDER_VALUE what="i18n:day_5_short"/>
+            </th>
+            <th>
+                <RENDER_VALUE what="i18n:day_6_short"/>
+            </th>
+            <th>
+                <RENDER_VALUE what="i18n:day_7_short"/>
+            </th>
+        </tr>
+        <RENDER_TABLE cols="7" what="days" opened="opened">
+            <div class="calendar_day" style="background-color:{days:color};">
+                <RENDER_IFSET what="days:link">
+                    <a href="{days:link}">
+                        <RENDER_VALUE what="days:day"/>
+                    </a>
+                </RENDER_IFSET>
+                <RENDER_IFNOTSET what="days:link">
+                    <RENDER_VALUE what="days:day"/>
+                </RENDER_IFNOTSET>
+            </div>
+
+        </RENDER_TABLE>
+        <tr>
+            <th colspan="3">
+                <a href="{links:previousMonthLink}">←</a>
+            </th>
+            <th></th>
+            <th colspan="3">
+                <a href="{links:nextMonthLink}">→</a>
+            </th>
+        </tr>
+    </table>
+</div>

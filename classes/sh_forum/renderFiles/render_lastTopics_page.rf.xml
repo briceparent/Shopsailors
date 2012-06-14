@@ -1,0 +1,45 @@
+
+<div>
+    <RENDER_CSS>
+    #forumMenu_lastTopics{background-color:#ccc}    
+    </RENDER_CSS>
+    <RENDER_FORUM_MENUBAR/>
+    <table id="forum_topicList">
+        <tr>
+            <th class="topicTitle_th">Titre du sujet</th>
+            <th class="topicPublishInfo_th">Infos de publication</th>
+            <th class="topicAnswersNumber_th">Nombre de réponses</th>
+        </tr>
+        <RENDER_LOOP what="topics">
+            <tr>
+                <td class="topicList_oneTitle">
+                    <a href="{topics:link}" title="{topics:title}">
+                        <RENDER_VALUE what="topics:title"/>
+                    </a>
+                </td>    
+                <td class="topicList_oneInfos">
+                            Par
+                    <a href="{topics:userProfile}">
+                       <RENDER_VALUE what="topics:alias"/>
+                    </a> - 
+                     <RENDER_MODIFYVALUE what="topics:date" method="toLocalDateAndTime" class="datePicker" new="topicsDate:value"/><RENDER_VALUE what="topicsDate:value"/>
+                    <RENDER_IFSET what="topics:last_post_date">
+                        <br />
+                            Dernière réponse : 
+                        <RENDER_MODIFYVALUE what="topics:last_post_date" method="toLocalDateAndTime" class="datePicker" new="topicsLastPostDate:value"/><RENDER_VALUE what="topicsLastPostDate:value"/>
+                    </RENDER_IFSET>
+                </td>    
+                <td class="topicList_oneAnswers">
+                    <RENDER_VALUE what="topics:posts"/>&#160;
+                    <RENDER_IFSET what="topics:posts_plural">
+                        <RENDER_VALUE what="i18n:answers"/>
+                    </RENDER_IFSET>
+                    <RENDER_IFNOTSET what="topics:posts_plural">
+                        <RENDER_VALUE what="i18n:answer"/>
+                    </RENDER_IFNOTSET>
+                            
+                </td>    
+            </tr>
+        </RENDER_LOOP>
+    </table>
+</div>

@@ -1,0 +1,12 @@
+<span class="chooseLink_field">
+    <RENDER_JS>
+        var i18n_chooseLinkTitle = '<RENDER_VALUE what="i18n:chooseLinkTitle"/>';
+    </RENDER_JS>
+    <RENDER_CSS>
+        .chooseLink_field input{
+            cursor:pointer;
+            width:360px;
+        }
+    </RENDER_CSS>
+    <input id="{input:id}" name="{link:name}" value="{link:value}" class="{input:class}" onclick="inPlaceChangeLink('{input:id}');"/>
+</span>

@@ -1,0 +1,39 @@
+<span class="browser_documentSelector">
+    <input class="browser_documentSelector_input" readonly="readonly" id="{selector:inputId}_shown" value="{selector:shownValue}"/>
+    <input type="hidden" id="{selector:inputId}" name="{selector:name}" value="{selector:value}"/>
+    <NORENDER><img src="/images/shared/icons/picto_delete.png"/></NORENDER>
+    <script type="text/javascript">
+        Event.observe(
+            '<RENDER_VALUE what="selector:inputId"/>_shown',
+            'click',
+            function(){
+        <RENDER_IFSET what="selector:onclick">
+            <RENDER_VALUE what="selector:onclick"/>
+        </RENDER_IFSET>
+                var folder = 'documents';
+                /*Launches the browser*/
+                popupBrowser.clearParameters();
+                popupBrowser.parameters.set('type','url');
+                popupBrowser.parameters.set('types','all');
+                popupBrowser.parameters.set('folder',folder);
+                popupBrowser.parameters.set('action','sh_doc_<RENDER_VALUE what="selector:inputId"/>');
+                popupBrowser.parameters.set('element','0');
+                popupBrowser.open();
+            }
+        );
+        function sh_doc_<RENDER_VALUE what="selector:inputId"/>(value,id){
+            var input = $('<RENDER_VALUE what="selector:inputId"/>');
+            input.value=value;
+
+            var input = $('<RENDER_VALUE what="selector:inputId"/>_shown');
+            input.value=value.substring(value.lastIndexOf('/')+1);
+        }
+    </script>
+    <style type="text/css">
+        .browser_documentSelector_input{
+            background:#ffffff url(/images/shared/icons/picto_download_20.png) no-repeat top left;
+            padding-left:44px;
+            height:20px;
+        }
+    </style>
+</span>

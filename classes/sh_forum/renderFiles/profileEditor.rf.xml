@@ -1,0 +1,52 @@
+
+<div>
+    <RENDER_FORM id="forum_profile" type="file">
+        Votre alias : 
+        <input name="forum_alias" value="{profile:alias}"/><hr />
+        Genre : 
+        <select name="forum_gender">
+            <option value="unset">Non communiqué</option>
+            <option value="female" state="{profile:gender_female}">Femme</option>
+            <option value="male" state="{profile:gender_male}">Homme</option>
+        </select>
+        <hr />
+        Image : 
+        <RENDER_IFSET what="profile:image">
+            <img src="{profile:image}.resized.100.100.png" alt="image" title="image" style="width:150px;"/>
+            <br />
+            Remplacer par : 
+            <input type="file" name="forum_image"/>
+        </RENDER_IFSET>
+        <RENDER_IFNOTSET what="profile:image">
+            <input type="file" name="forum_image"/>
+        </RENDER_IFNOTSET>
+        <hr />
+        Signature : 
+        <textarea style="width:400px;height:80px;vertical-align:top;" name="forum_signature">
+            <RENDER_VALUE what="profile:signature"/>
+        </textarea>
+        <hr />
+        <RENDER_CHECKBOX name="forum_notifications_my_topics" state="{profile:notifications_my_topics}" text="Recevoir un mail quand quelqu'un répond à un de mes sujets"/>
+        <RENDER_CHECKBOX name="forum_notifications_other_topics" state="{profile:notifications_other_topics}" text="Recevoir un mail quand quelqu'un répond à un sujet auquel j'ai répondu"/>
+        
+        <hr />
+        Votre profil 
+        <RENDER_HELP>
+            <div>
+                Entrez ici un petit texte descriptif qui s'affichera quand les gens cliqueront sur votre nom.<br />
+                Ce champs est facultatif.
+            </div>
+        </RENDER_HELP> :
+        <RENDER_WEDITOR name="forum_profile_text" type="forum" style="width:600px;">
+            <RENDER_VALUE what="profile:profile_text"/>
+        </RENDER_WEDITOR>
+        <hr />
+        <RENDER_IFSET what="external_classes:form">
+            <RENDER_VALUE what="external_classes:form"/>
+            <hr />
+        </RENDER_IFSET>
+        <div class="tab_buttons">
+            <input class="tab_button btn_validate" type="submit"/>
+        </div>
+    </RENDER_FORM>
+</div>

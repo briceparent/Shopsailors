@@ -1,0 +1,35 @@
+<div>
+    <NORENDER>Billing and shipping addresses</NORENDER>
+    <table cellspacing="0" class="notif_table" style="margin:0 auto;">
+        <tr>
+            <td style="width:200px;">
+                <RENDER_VALUE what="i18n:billing_address"/><br />
+                <RENDER_VALUE what="billing:name"/><br />
+                <RENDER_VALUE what="billing:address"/><br />
+                <RENDER_VALUE what="billing:zip"/>&#160;
+                <RENDER_VALUE what="billing:city"/>
+            </td>
+            <RENDER_IFNOTSET what="ship:comeTakeIt">
+                <td class="command_billing_middleTD">
+                </td>
+                <td style="width:200px;">
+                    <RENDER_VALUE what="i18n:shipping_address"/><br />
+                    <RENDER_VALUE what="ship:name"/><br />
+                    <RENDER_VALUE what="ship:address"/><br />
+                    <RENDER_VALUE what="ship:zip"/>&#160;
+                    <RENDER_VALUE what="ship:city"/>
+                </td>
+            </RENDER_IFNOTSET>
+            <td class="command_billing_middleTD">
+            </td>
+            <td style="width:200px;">
+                <RENDER_VALUE what="i18n:command_yourEMail"/><br />
+                <RENDER_VALUE what="user:mail"/>
+            </td>
+        </tr>
+    </table>
+    <div  class="shop_modifyInfo_link">
+        <a href="{modify:link}">Modifier ces coordonnées</a>
+    </div>
+    <hr />
+</div>

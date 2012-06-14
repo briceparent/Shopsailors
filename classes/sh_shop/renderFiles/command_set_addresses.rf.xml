@@ -1,0 +1,125 @@
+<div>
+    <RENDER_IFSET what="error:exists">
+        <RENDER_NOTIF size="L" type="alert" title="{i18n:error_title}">
+            <div><RENDER_VALUE what="i18n:error_intro"/></div>
+            <RENDER_IFSET what="error:noBillingAddress">
+                <div class="italic">
+                    <RENDER_VALUE what="i18n:error_noBillingAddress"/>
+                </div>
+            </RENDER_IFSET>
+            <RENDER_IFSET what="error:noShippingAddress">
+                <div class="italic">
+                    <RENDER_VALUE what="i18n:error_noShippingAddress"/>
+                </div>
+            </RENDER_IFSET>
+        </RENDER_NOTIF>
+    </RENDER_IFSET>
+        <NORENDER>Billing and shipping addresses</NORENDER>
+        <RENDER_IFSET what="shipping:toCustomer">
+            <RENDER_NOTIF size="L" title="{i18n:command_billing}">
+                <table cellspacing="0" class="notif_table">
+                    <tr>
+                        <td>
+                            <NORENDER>Enter billing address</NORENDER>
+                            <div class="billing_enterAdress">
+                                <RENDER_VALUE what="i18n:billing_enterAdress"/>
+                            </div>
+                            <div class="command_billing_name">
+                                <RENDER_VALUE what="i18n:command_billing_name"/><br />
+                                <input name="name" value="{billing:name}" style="width:180px;"/>
+                            </div>
+                            <div class="command_billing_address">
+                                <RENDER_VALUE what="i18n:command_billing_address"/><br />
+                                <textarea name="address" style="width: 180px">
+                                    <RENDER_VALUE what="billing:address"/>
+                                </textarea>
+                            </div>
+                            <div class="command_billing_zipCode">
+                                <RENDER_VALUE what="i18n:command_billing_zipCode"/>&#160;
+                                <input name="zip" value="{billing:zip}" style="width: 40px"/>
+                            </div>
+                            <div class="command_billing_city">
+                                <RENDER_VALUE what="i18n:command_billing_city"/><br />
+                                <input name="city" value="{billing:city}"/>
+                            </div>
+                        </td>
+                        <td class="command_billing_middleTD">
+                        </td>
+                        <td>
+                            <div class="command_deliveryRadiobox">
+                                <RENDER_RADIOBOX id="shipToBilling" text="{i18n:command_billingAddress}" name="shipTo" value="billing" state="{shipTo:billing}"/>
+                                <RENDER_RADIOBOX id="shipToSpecific" text="{i18n:command_followingAddress}" name="shipTo" value="other" state="{shipTo:specific}"/>
+                            </div>
+                            <NORENDER>Enter shipping address</NORENDER>
+                            <div id="shipping_address">
+                                <div class="command_billing_name">
+                                    <RENDER_VALUE what="i18n:command_billing_name"/><br />
+                                    <input name="ship_name" value="{ship:name}" style="width:180px;" onchange="$('shipToSpecific').checked=true;"/>
+                                </div>
+                                <div class="command_billing_address">
+                                    <RENDER_VALUE what="i18n:command_billing_address"/><br />
+                                    <textarea name="ship_address" style="width:180px;" onchange="$('shipToSpecific').checked=true;">
+                                        <RENDER_VALUE what="ship:address"/>
+                                    </textarea>
+                                </div>
+                                <div class="command_billing_zipCode">
+                                    <RENDER_VALUE what="i18n:command_billing_zipCode"/>&#160;
+                                    <input name="ship_zip" value="{ship:zip}" style="width:40px;" onchange="$('shipToSpecific').checked=true;"/>
+                                </div>
+                                <div class="command_billing_city">
+                                    <RENDER_VALUE what="i18n:command_billing_city"/><br />
+                                    <input name="ship_city"  value="{ship:city}" style="width:180px;" onchange="$('shipToSpecific').checked=true;"/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="separator">
+                    <RENDER_VALUE what="i18n:command_yourEMail"/>
+                    <RENDER_HELP>
+                        <RENDER_VALUE what="i18n:command_yourEMail_explanations"/>
+                    </RENDER_HELP>
+                    <div class="marginTop_5px"><input name="mail" value="{user:mail}"/></div>
+                </div>
+            </RENDER_NOTIF>
+        </RENDER_IFSET>
+        <RENDER_IFSET what="shipping:comeTakeIt">
+            <RENDER_NOTIF size="M" title="{i18n:command_justBilling}">
+                <div class="command_billingM_elements">
+                    <div class="command_billingM_enterAdress">
+                        <RENDER_VALUE what="i18n:billing_enterAdress"/>
+                    </div>
+                    <div>
+                        <RENDER_VALUE what="i18n:command_billing_name"/><br />
+                        <input name="name" value="{billing:name}" style="width:180px;"/>
+                    </div>
+                    <div>
+                        <RENDER_VALUE what="i18n:command_billing_address"/><br />
+                        <textarea name="address" style="width: 180px">
+                            <RENDER_VALUE what="billing:address"/>
+                        </textarea>
+                    </div>
+                    <div>
+                        <RENDER_VALUE what="i18n:command_billing_zipCode"/>&#160;
+                        <input name="zip" value="{billing:zip}" style="width: 40px"/>
+                    </div>
+                    <div>
+                        <RENDER_VALUE what="i18n:command_billing_city"/><br />
+                        <input name="city" value="{billing:city}" style="width: 180px"/>
+                    </div>
+                </div>
+                <div class="separator">
+                    <RENDER_VALUE what="i18n:command_yourEMail"/>
+                    <RENDER_HELP>
+                        <RENDER_VALUE what="i18n:command_yourEMail_explanations"/>
+                    </RENDER_HELP>
+                    <div class="marginTop_5px">
+                        <input name="mail" value="{user:mail}"/>
+                    </div>
+                </div>
+            </RENDER_NOTIF>
+            <input type="hidden" name="shipTo" value="comeTakeIt"/>
+        </RENDER_IFSET>
+
+    <input type="hidden" name="step" value="set_addresses"/>
+</div>

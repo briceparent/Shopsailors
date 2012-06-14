@@ -1,251 +1,247 @@
 <?php
+
 /**
- * @author Brice PARENT for Shopsailors
+ * @author Brice PARENT (Websailors) for Shopsailors
  * @copyright Shopsailors 2009
  * @license http://www.cecill.info
  * @version See version in the params/global.params.php file.
  * @package Shopsailors Core Classes
  */
-if(!defined('SH_MARKER')){header('location: directCallForbidden.php');}
+if( !defined( 'SH_MARKER' ) ) {
+    header( 'location: directCallForbidden.php' );
+}
 
 /**
  * Class that manages the fonts.
  */
 class sh_fonts extends sh_core {
-    protected $minimal = array('addThisFont' => true);
-    protected $afterFlushValues = array();
+
+    const CLASS_VERSION = '1.1.11.07.23';
+
+    public $shopsailors_dependencies = array(
+        'sh_linker', 'sh_params', 'sh_db'
+    );
+    protected $minimal = array( 'addThisFont' => true );
+    protected $afterFlushValues = array( );
     const FONT_THUMB_TEXT = 'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789 áàâäãåçéèêëíìîïñóòôöõúùûü';
 
-    /**
-     * protected function prepareFonts
-     *
-     */
-    protected function prepareFonts(){
-        $files = scandir(SH_FONTS_FOLDER);
-        $imagesBuilder = $this->links->imagesBuilder;
-        echo 'Fonts that are already ready: <br />';
-        $none = 'None';
-        if(is_array($files)){
-            foreach($files as $file){
-                $parts = explode('.',$file);
-                $ext = array_pop($parts);
-                if(strtolower($ext) == 'ttf'){
-                    if($ext != strtolower($ext)){
-                        $file = implode('.',$parts);
-                        rename(
-                            SH_FONTS_FOLDER.$file.'.'.$ext,
-                            SH_FONTS_FOLDER.$file.'.ttf'
-                        );
-                        $file .= '.ttf';
-                    }
-                    if(strpos($file,' ') !== false){
-                        $newFileName = str_replace(' ','_',$file);
-                        rename(
-                            SH_FONTS_FOLDER.$file,
-                            SH_FONTS_FOLDER.$newFileName
-                        );
-                        echo 'We renamed '.$file.' to '.$newFileName.'<br />';
-                        $file = $newFileName;
-                        $parts = explode('.',$file);
-                        $ext = array_pop($parts);
-                    }
-                    $shortFileName = implode('.',$parts);
-                    if(
-                        !file_exists(SH_FONTS_FOLDER.$shortFileName.'.php')
-                        || !file_exists(SH_FONTS_FOLDER.$shortFileName.'.png')
-                    ){
-                        $fonts[] = $shortFileName;
-                    }else{
-                        echo $separator.'"'.$shortFileName.'"';
-                        flush();
-                        $none = '';
-                        $separator = ', ';
-                    }
+    public function construct() {
+        $installedVersion = $this->getClassInstalledVersion();
+        if( $installedVersion != self::CLASS_VERSION ) {
+            if( version_compare( $installedVersion, '1.1.11.03.28', '<' ) ) {
+                if( !is_dir( SH_FONTS_FOLDER ) ) {
+                    mkdir( SH_FONTS_FOLDER );
                 }
+                // The class datas are not in the same version as this file, or don't exist (installation)
+                $this->helper->addClassesSharedMethods( 'sh_admin', sh_admin::ADMINMENUENTRIES, __CLASS__ );
+                $this->linker->renderer->add_render_tag( 'render_fontSelector', __CLASS__, 'render_fontSelector' );
+            }
+            $this->setClassInstalledVersion( self::CLASS_VERSION );
+        }
+
+        // Use this method to rebuild all the fonts files.
+        // $this->regenerate_all_fonts();
+    }
+
+    protected function regenerate_all_fonts() {
+        // We first delete all generated fonts files and then re-create them all
+        $folders = array( SH_ROOT_FOLDER . 'templates/fonts/' );
+        $templates = scandir( SH_ROOT_FOLDER . 'templates/' );
+        foreach( $templates as $template ) {
+            if( $template != '.' && is_dir( SH_ROOT_FOLDER . 'templates/' . $template . '/fonts/' ) ) {
+                $folders[ ] = SH_ROOT_FOLDER . 'templates/' . $template . '/fonts/';
             }
         }
-        echo $none.'<br />';
-        $total = count($fonts);
-        set_time_limit(0);
-        if(is_array($fonts)){
-            foreach($fonts as $font){
-                $shortFileName = $font;
-                echo 'Building font "'.$font.'"<br />';
-                flush();
-                $boxes = array();
-                for($a = 10;$a<=100;$a++){
-                    list($fontSize,$tmp,$box) = $imagesBuilder->getFontSizeByTextHeight(
-                        $shortFileName.' - '.self::FONT_THUMB_TEXT,
-                        SH_FONTS_FOLDER.$shortFileName.'.ttf',
-                        $a
-                    );
 
-                    $boxes[$a] = array(
-                        'fontSize'=>$fontSize,
-                        'top'=>$box['top'],
-                        'left'=>$box['left']
-                    );
-                    echo '.';
-                    flush();
+        foreach( $folders as $folder ) {
+            $files = scandir( $folder );
+            foreach( $files as $file ) {
+                if( in_array( substr( $file, -4 ), array( '.png', '.php' ) ) ) {
+                    unlink( $folder . $file );
                 }
-
-                $done++;
-                $this->links->helper->writeArrayInFile(
-                    SH_FONTS_FOLDER.$shortFileName.'.php',
-                    'boxes',
-                    $boxes
-                );
-
-                $imagesBuilder->buildTextImage(
-                    SH_FONTS_FOLDER.$shortFileName.'.png',
-                    $shortFileName.' - '.self::FONT_THUMB_TEXT,
-                    SH_FONTS_FOLDER.$shortFileName.'.ttf',
-                    16
-                );
-
-                echo '<br />';
-                flush();
+            }
+            foreach( $files as $file ) {
+                if( substr( $file, -4 ) == '.ttf' ) {
+                    $this->prepareFont( $folder . $file );
+                }
             }
         }
     }
 
-    public function render_fontSelector($attributes = array()){
-        if(!isset($attributes['name']) && !isset($attributes['id'])){
-            $attributes['name'] = $attributes['id'] = 'font';
-        }elseif(!isset($attributes['name'])){
-            $attributes['name'] = $attributes['id'];
-        }elseif(!isset($attributes['id'])){
-            $attributes['id'] = $attributes['name'];
+    protected function prepareFont( $fontFile ) {
+        $baseFileName = substr( $fontFile, 0, -4 );
+        $boxes = array( );
+        for( $a = 6; $a <= 200; $a++ ) {
+            if( $a > 30 ) {
+                // every 2 (1 + 1)
+                $a++;
+            }
+            if( $a > 50 ) {
+                // every 5 (1 + 1 + 3)
+                $a += 3;
+            }
+            if( $a > 90 ) {
+                // every 10 (1 + 1 + 3 + 5)
+                $a += 5;
+            }
+            list($fontSize, $tmp, $box) = $this->linker->imagesBuilder->getFontSizeByTextHeight(
+                substr( basename( $fontFile ), 0, -4 ) . ' - ' . self::FONT_THUMB_TEXT, $fontFile, $a
+            );
+
+            $boxes[ $a ] = array(
+                'fontSize' => $fontSize,
+                'top' => $box[ 'top' ],
+                'left' => $box[ 'left' ],
+                'box' => $box[ 'box' ]
+            );
+        }
+
+        $done++;
+        $this->helper->writeArrayInFile(
+            $baseFileName . '.php', 'boxes', $boxes
+        );
+
+        $this->linker->imagesBuilder->buildTextImage(
+            $baseFileName . '.png', basename( $baseFileName ) . ' - ' . self::FONT_THUMB_TEXT, $fontFile, 16
+        );
+    }
+
+    public function render_fontSelector( $attributes = array( ) ) {
+        if( !isset( $attributes[ 'name' ] ) && !isset( $attributes[ 'id' ] ) ) {
+            $attributes[ 'name' ] = $attributes[ 'id' ] = 'font';
+        } elseif( !isset( $attributes[ 'name' ] ) ) {
+            $attributes[ 'name' ] = $attributes[ 'id' ];
+        } elseif( !isset( $attributes[ 'id' ] ) ) {
+            $attributes[ 'id' ] = $attributes[ 'name' ];
         }
 
         $list = $this->getList();
-        if(isset($attributes['csv'])){
-            $entries = explode(',',$attributes['csv']);
-            foreach($list as $key=>$oneFont){
-                if(!in_array($oneFont['name'],$entries)){
-                    unset($list[$key]);
+
+        if( isset( $attributes[ 'csv' ] ) ) {
+            $entries = explode( ',', $attributes[ 'csv' ] );
+            foreach( $list as $key => $oneFont ) {
+                if( !in_array( $oneFont[ 'filepath' ], $entries ) ) {
+                    unset( $list[ $key ] );
                 }
             }
-            sort($entries);
-            unset($attributes['csvEntries']);
+            sort( $entries );
+            unset( $attributes[ 'csvEntries' ] );
         }
 
-        if(isset($attributes['value'])){
-           $default = $attributes['value'];
+        if( isset( $attributes[ 'value' ] ) ) {
+            $defaultPath = $attributes[ 'value' ];
+            $defaultName = basename( $defaultPath );
         }
 
         $defaultIsSet = false;
-        foreach($list as &$oneFont){
-            if($oneFont['name'] == $default){
-                $oneFont['state'] = 'selected';
+        foreach( $list as &$oneFont ) {
+            if( $oneFont[ 'name' ] == $defaultName ) {
+                $oneFont[ 'state' ] = 'selected';
                 $defaultIsSet = true;
                 break;
             }
         }
-        $values['font'] = $attributes;
-        if(!$defaultIsSet){
-            $default = $list[0]['name'];
-            $list[0]['state'] = 'selected';
+        $values[ 'font' ] = $attributes;
+        if( !$defaultIsSet ) {
+            $defaultName = $list[ 0 ][ 'name' ];
+            $list[ 0 ][ 'state' ] = 'selected';
         }
-        $values['font']['selected'] = $default;
+        $values[ 'font' ][ 'selected' ] = $defaultName;
 
-        $values['fonts'] = $list;
+        $values[ 'fonts' ] = $list;
 
-        return $this->render('fontSelector', $values, false, false);
+        return $this->render( 'fontSelector', $values, false, false );
     }
 
     /**
      * public function addThisFont
      *
      */
-    public function addThisFont(){
+    public function addThisFont() {
         $this->onlyMaster();
-        if($this->formSubmitted('addFont')){
-            $fileName = $_FILES["font"]['name'];
-            if(move_uploaded_file($_FILES["font"]['tmp_name'], SH_TEMP_FOLDER.$fileName)){
-                // Deletes the folder if it already exists
-                $sentFile = substr($fileName,0,-4);
-                $table = explode('.',$_FILES["font"]['name']);
-                $last = strtolower($table[count($table)-1]);
-                if($last == 'zip'){
-                    echo 'On dézippe<br />';
-                    $this->unzip(SH_TEMP_FOLDER.$fileName,SH_FONTS_FOLDER,array('ttf','TTF'));
-                }elseif(strtolower($last) == 'ttf'){
-                    rename(SH_TEMP_FOLDER.$fileName,SH_FONTS_FOLDER.basename($fileName));
-                }
-            }else{
-                $this->links->html->insert('Il y a eu une erreur lors de l\'envoi du fichier. Si le problème persiste, contactez l\'administrateur du site.<br />');
-                return false;
+        if( $this->formSubmitted( 'addFont' ) ) {
+            $fileName = $_FILES[ "font" ][ 'name' ];
+            if( !is_dir( SH_TEMP_FOLDER . __CLASS__ . '/' ) ) {
+                $this->helper->createDir( SH_TEMP_FOLDER . __CLASS__ . '/' );
             }
-            $this->prepareFonts();
-            echo 'Done!<br />Press "F5" to exit.';
-        }else{
-            header('location: '.$this->links->path->getLink('fonts/add/'));
+            if( move_uploaded_file( $_FILES[ "font" ][ 'tmp_name' ], SH_TEMP_FOLDER . __CLASS__ . '/' . $fileName ) ) {
+                $sentFile = substr( $fileName, 0, -4 );
+                $last = array_pop( explode( '.', $_FILES[ "font" ][ 'name' ] ) );
+                if( strtolower( $last ) != 'ttf' ) {
+                    $this->linker->html->addMessage( 'Unrecognized file type... <br />Only *.ttf files (for TTF fonts) are accepted.' );
+                    $error = true;
+                }
+            } else {
+                $this->linker->html->addMessage( 'There was an error during the file transfert.<br />' );
+                $error = true;
+            }
+            if( !$error ) {
+                $this->prepareFont( SH_TEMP_FOLDER . __CLASS__ . '/' . $fileName );
+                $this->linker->html->addMessage( $this->getI18n( 'fontAddedSuccessfully' ) );
+            }
         }
-        return true;
+        header( 'location: ' . $this->linker->path->getLink( 'fonts/add/' ) );
     }
 
     /**
      * public function add
      *
      */
-    public function add(){
+    public function add() {
         $this->onlyMaster();
-        $this->links->html->setTitle($this->getI18n('title_add'));
-        $vars['font']['addlink'] = $this->links->path->getLink('fonts/addThisFont/');
-        $this->render('add',$vars);
+        $this->linker->html->setTitle( $this->getI18n( 'title_add' ) );
+        $vars[ 'font' ][ 'addlink' ] = $this->linker->path->getLink( 'fonts/addThisFont/' );
+        $this->render( 'add', $vars );
         return true;
     }
 
     /**
-     * loadZip
-     * Load the zip, unzip the php and png files, deletes the zip, and copy the
-     * default params file, if needed
-     */
-    protected function unzip($from,$to,$types = array('.*')){
-        // Unzips the archive
-        if(!is_dir(dirname($to))){
-            mkdir(dirname($to));
-        }
-        $this->links->zipper->extract($from,$to,$types);
-/*        $typesReg = '('.implode('|',$types).')';
-        require_once('include/libphp-pclzip/pclzip.lib.php');
-        $archive = new PclZip($from);
-        if($archive->extract(PCLZIP_OPT_PATH,$to,
-                PCLZIP_OPT_BY_PREG, $typesReg) == 0) {
-            die("Error : ".$archive->errorInfo(true));
-        }
- *
- */
-        // Deletes the archive
-        unlink($from);
-        return true;
-    }
-
-     /**
      * public function showList
      */
-    public function showList(){
-        if(!$this->isMaster()){header('location: access_forbiden.php');}
-        $this->links->html->setTitle('Polices');
-        $loop['fonts'] = $this->getList();
-        $loop['add']['link'] = $this->links->path->getLink('fonts/add/');
-        $this->render('list',$loop);
+    public function showList() {
+        if( !$this->isMaster() ) {
+            header( 'location: access_forbiden.php' );
+        }
+        $this->linker->html->setTitle( 'Polices' );
+        $loop[ 'fonts' ] = $this->getList();
+        $loop[ 'add' ][ 'link' ] = $this->linker->path->getLink( 'fonts/add/' );
+        $this->render( 'list', $loop );
     }
 
     /**
      * public function getList
      *
      */
-    public function getList(){
-        $scan =  scandir(SH_FONTS_FOLDER);
-        if(is_array($scan)){
-            foreach($scan as $element){
-                if(substr($element,0,1) != '.' && substr($element,-4) == '.ttf'){
-                    $ret[] = array(
+    public function getList() {
+        // Adding the shared fonts
+        $scan = scandir( SH_FONTS_FOLDER );
+        if( is_array( $scan ) ) {
+            foreach( $scan as $element ) {
+                if( substr( $element, 0, 1 ) != '.' && substr( $element, -4 ) == '.ttf' ) {
+                    $ret[ $element ] = array(
+                        'path' => SH_FONTS_PATH,
+                        'filepath' => SH_FONTS_FOLDER . $element,
                         'name' => $element,
-                        'preview' => SH_FONTS_PATH.substr($element,0,-4).'.png'
+                        'preview' => SH_FONTS_PATH . substr( $element, 0, -4 ) . '.png'
                     );
+                }
+            }
+        }
+        // Adding the template's specific fonts (if any)
+        $specificPath = $this->linker->template->path . 'fonts/';
+        if( is_dir( $specificPath ) ) {
+            $specificFolder = $this->linker->path->changeToShortFolder( $specificPath );
+            $scan = scandir( $this->linker->template->path . 'fonts' );
+            if( is_array( $scan ) ) {
+                foreach( $scan as $element ) {
+                    if( substr( $element, 0, 1 ) != '.' && substr( $element, -4 ) == '.ttf' ) {
+                        $ret[ $element ] = array(
+                            'path' => $specificFolder,
+                            'filepath' => $specificPath . $element,
+                            'name' => $element,
+                            'preview' => $specificFolder . substr( $element, 0, -4 ) . '.png'
+                        );
+                    }
                 }
             }
         }
@@ -256,38 +252,62 @@ class sh_fonts extends sh_core {
      * public function modify
      *
      */
-    public function modify(){
-        if(!$this->isMaster()){header('location: access_forbiden.php');}
-        $buttonName = $_GET['name'];
-        $this->links->html->setTitle('Modification du bouton "'.$buttonName.'"');
-        $values = new sh_params(SH_TEMPLATE_FOLDER.'builder/'.$buttonName.'/params.php');
-        $template['GET'][0] = array(
-            'width' => $values->get('width'),
-            'menuWidth'=>$values->get('menuButtons>totalWidth'),
-            'expandYes'=>($values->get('menuButtons>expand')?'selected="selected"':''),
-            'expandNo'=>($values->get('menuButtons>expand')?'':'selected="selected"')
+    public function modify() {
+        if( !$this->isMaster() ) {
+            header( 'location: access_forbiden.php' );
+        }
+        $buttonName = $_GET[ 'name' ];
+        $this->linker->html->setTitle( 'Modification du bouton "' . $buttonName . '"' );
+        $values = new sh_params( SH_TEMPLATE_FOLDER . 'builder/' . $buttonName . '/params.php' );
+        $template[ 'GET' ][ 0 ] = array(
+            'width' => $values->get( 'width' ),
+            'menuWidth' => $values->get( 'menuButtons>totalWidth' ),
+            'expandYes' => ($values->get( 'menuButtons>expand' ) ? 'selected="selected"' : ''),
+            'expandNo' => ($values->get( 'menuButtons>expand' ) ? '' : 'selected="selected"')
         );
-        foreach($values->get('variations') as $variationName=>$variation){
+        foreach( $values->get( 'variations' ) as $variationName => $variation ) {
             $cpt++;
-            $loops['VARIATIONS'][$cpt]['name'] = $variationName;
-            $loops['VARIATIONS'][$cpt]['color'] = str_replace('#','',$variation['color']);
-            $loops['VARIATIONS'][$cpt]['selectedColor'] = str_replace('#','',$variation['selectedColor']);
-            $loops['VARIATIONS'][$cpt]['activeColor'] = str_replace('#','',$variation['activeColor']);
+            $loops[ 'VARIATIONS' ][ $cpt ][ 'name' ] = $variationName;
+            $loops[ 'VARIATIONS' ][ $cpt ][ 'color' ] = str_replace( '#', '', $variation[ 'color' ] );
+            $loops[ 'VARIATIONS' ][ $cpt ][ 'selectedColor' ] = str_replace( '#', '', $variation[ 'selectedColor' ] );
+            $loops[ 'VARIATIONS' ][ $cpt ][ 'activeColor' ] = str_replace( '#', '', $variation[ 'activeColor' ] );
         }
         $cpt = 0;
-        foreach(array_keys($values->get('fonts')) as $fontName){
+        foreach( array_keys( $values->get( 'fonts' ) ) as $fontName ) {
             $cpt++;
-            $loops['FONTS'][$cpt]['name'] = $fontName;
+            $loops[ 'FONTS' ][ $cpt ][ 'name' ] = $fontName;
         }
-        $this->links->html->insert($this->renderer->render(dirname(__FILE__).'/modify.php',$template,$loops));
+        $this->linker->html->insert( $this->renderer->render( dirname( __FILE__ ) . '/modify.php', $template, $loops ) );
     }
 
+    public function getFilePath( $fontName ) {
+        // We first look for it in the template's folder
+        if( file_exists( $this->linker->template->path . 'fonts/' . $fontName ) ) {
+            return $this->linker->template->path . 'fonts/' . $fontName;
+        }
+        if( file_exists( SH_FONTS_FOLDER . $fontName ) ) {
+            return SH_FONTS_FOLDER . $fontName;
+        }
+        return false;
+    }
+
+    public function master_getMenuContent() {
+        $masterMenu[ 'Section Master' ][ ] = array(
+            'link' => 'fonts/add/', 'text' => 'Ajouter des polices', 'icon' => 'picto_tool.png'
+        );
+        return $masterMenu;
+    }
+
+    public function admin_getMenuContent() {
+        return array( );
+    }
 
     /**
      * public function __tostring
      * Returns the name of the class
      */
-    public function __tostring(){
+    public function __tostring() {
         return get_class();
     }
+
 }

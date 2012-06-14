@@ -10,7 +10,7 @@
         <script type="text/javascript" src="/sh_browser/singles/getBrowser.js"></script>
         <script type="text/javascript" src="/sh_colorPicker/singles/colorPicker.js"></script>
         <script type="text/javascript">
-            var folder = '<RENDER_VALUE what="get>folder"/>';
+            var folder = '<RENDER_VALUE what="get:folder"/>';
             function send(){
                 $$('input.page').each(function(s) {
                     if(s.checked){

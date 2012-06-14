@@ -14,4 +14,5 @@ $i18n = array(
     'showCountPlural' => '(<RENDER_VALUE what="results>count"/> results)',
     'showCountSingular' => '(1 result)',
     'scopes' => 'Scope of the researches :',
+    'enterSearch' => 'Search',
 );

@@ -1,0 +1,47 @@
+<div>
+    <RENDER_VALUE what="i18n:yourBillingList"/>
+    <table cellspacing="0" class="notif_table">
+        <RENDER_LOOP what="years">
+            <tr>
+                <td colspan="5" class="notif_borderBottom"></td>
+            </tr>
+            <tr>
+                <td class="bold notif_borderLeft notif_borderRight notif_borderBottom center" colspan="4">
+                    <RENDER_VALUE what="i18n:billings_list_year"/><RENDER_VALUE what="years:name"/>
+                </td>
+            </tr>
+            <tr>
+                <th class="notif_borderTop notif_borderBottom notif_borderLeft notif_borderRight">
+                    <RENDER_VALUE what="i18n:billList_num"/>
+                </th>
+                <th class="notif_borderTop notif_borderBottom notif_borderRight">
+                    <RENDER_VALUE what="i18n:billList_date"/>
+                </th>
+                <th class="notif_borderTop notif_borderBottom notif_borderRight">
+                    <RENDER_VALUE what="i18n:billList_ht"/>
+                </th>
+                <th class="notif_borderTop notif_borderBottom notif_borderRight">
+                    <RENDER_VALUE what="i18n:billList_ttc"/>
+                </th>
+            </tr>
+            <RENDER_LOOP what="commands">
+                <tr>
+                    <td class="bold notif_borderLeft notif_borderRight notif_borderBottom">
+                        <a href="{commands:link}" title="{i18n:bill_link}">
+                            <RENDER_VALUE what="commands:id"/>
+                        </a>
+                    </td>
+                    <td class="notif_borderRight notif_borderBottom">
+                        <RENDER_VALUE what="commands:date"/>
+                    </td>
+                    <td class="notif_borderRight notif_borderBottom">
+                        <span class="nobr"><RENDER_VALUE what="commands:totalht"/></span>
+                    </td>
+                    <td class="notif_borderRight notif_borderBottom">
+                        <span class="nobr"><RENDER_VALUE what="commands:totalttc"/></span>
+                    </td>
+                </tr>
+            </RENDER_LOOP>
+        </RENDER_LOOP>
+    </table>
+</div>

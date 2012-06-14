@@ -3,7 +3,7 @@ $i18n = array(
     'listing_className' => 'Notices légales',
     'title' => 'Mentions légales',
     'action_show'=>'Page "Mentions légales"',
-    'description' => 'Inscrivez ici les mentions légales qui seront apposées
+    'description' => 'Inscrivez ici les mentions légales dont le lien sera apposé
  en bas toutes les pages de votre site.',
     'help' => 'Vous devez entrer ici toutes les données obligatoires comme:<br />
 Pour les professionnels:
@@ -23,6 +23,10 @@ Pour les particuliers:
     <li>Un numéro de téléphone ET un email</li>
     <li>Le nom du ou des rédacteurs du site (ou les responsables, le cas échéant)</li>
 </ul>
+<div style="color:red;">Attention : Si vous faites de la vente en ligne, il est impératif
+de mentionner ici un numéro de hotline (suivi de commande, facturation, logistique, ...)
+non surtaxé (au coût d\'un appel local).
+</div>
 ',
     'separatorInLegacyLine'=>'&#160;-&#160;',
     'hosterBeforeText'=>'Site hébergé par&#160;',
@@ -30,5 +34,5 @@ Pour les particuliers:
     'hosterAfterText'=>'',
 
     'createWithShopsailors'=>'Créé avec
-<a href="http://www.shopsailors.org/index.php">Shopsailors</a>',
+<a target="blank" href="http://www.shopsailors.org/index.php">Shopsailors</a>',
 );

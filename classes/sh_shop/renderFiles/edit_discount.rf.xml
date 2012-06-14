@@ -1,0 +1,76 @@
+
+<div>
+    <RENDER_FORM id="discountEditor" >
+        <NORENDER>FIRST TAB</NORENDER>
+        <RENDER_TABGROUP size="XL" validate="{i18n:save}" admin="admin">
+            
+            <RENDER_TAB title="{i18n:discount_type_title}">
+                <RENDER_VALUE what="i18n:discount_new_name"/>
+                <input name="name" value="{discount:name}" style="width:400px;"/>
+                <hr />
+
+                <RENDER_VALUE what="i18n:discount_new_when"/>
+                <br />
+                <input type="radio" state="{discount:when_always}" name="when" value="always"/>
+                <RENDER_VALUE what="i18n:discount_new_when_always"/>
+                <br />
+                <br />
+
+                <input type="radio" state="{discount:when_period}" name="when" value="period"/>
+                <RENDER_VALUE what="i18n:discount_new_when_from"/>
+                <RENDER_DATEPICKER name="from" value="{discount:from}"/>
+                <RENDER_VALUE what="i18n:discount_new_when_to"/>
+                <RENDER_DATEPICKER name="to" value="{discount:to}"/>
+                <hr />
+
+                <RENDER_VALUE what="i18n:discount_days_title"/>
+                <br />
+                <RENDER_RADIOBOX name="daysOfWeek" value="all" state="{discount:days_all}" text="{i18n:discount_everyday}"/>
+                <RENDER_RADIOBOX name="daysOfWeek" value="selected" state="{discount:days_selected}" text="{i18n:discount_someDays}"/>
+                <div style="margin-left:30px;">
+                    <RENDER_CHECKBOX name="days[1]" text="{i18n:monday}" state="{discount:days_1}"/>
+                    <RENDER_CHECKBOX name="days[2]" text="{i18n:tuesday}" state="{discount:days_2}"/>
+                    <RENDER_CHECKBOX name="days[3]" text="{i18n:wednesday}" state="{discount:days_3}"/>
+                    <RENDER_CHECKBOX name="days[4]" text="{i18n:thursday}" state="{discount:days_4}"/>
+                    <RENDER_CHECKBOX name="days[5]" text="{i18n:friday}" state="{discount:days_5}"/>
+                    <RENDER_CHECKBOX name="days[6]" text="{i18n:saturday}" state="{discount:days_6}"/>
+                    <RENDER_CHECKBOX name="days[7]" text="{i18n:sunday}" state="{discount:days_7}"/>
+                </div>
+            </RENDER_TAB>
+            <RENDER_TAB title="{i18n:discount_title}">
+                <div>
+                    <RENDER_VALUE what="i18n:discount_from"/>
+                    <input name="discount[quantity]" value="{discount:quantity}" style="width:50px;text-align:center;"/>
+                    <br />
+                    <input type="radio" state="{discount:type_percents}" name="discount[type]" value="percents"/>
+                    <RENDER_VALUE what="i18n:discount_percents_before"/>
+                    <input name="discount[percents]" value="{discount:percents}" style="width:50px;text-align:center;"/>
+                    <RENDER_VALUE what="i18n:discount_percents_after"/>
+                    <br />
+                    <br />
+
+                    <input type="radio" state="{discount:type_monney}" name="discount[type]" value="monney"/>
+                    <RENDER_VALUE what="i18n:discount_monney_before"/>
+                    <input name="discount[monney]" value="{discount:monney}" style="width:50px;text-align:center;"/>
+                    <RENDER_VALUE what="i18n:discount_monney_after"/>
+                </div>
+            </RENDER_TAB>
+            <RENDER_TAB title="{i18n:discount_texts_title}">
+                <RENDER_VALUE what="i18n:discountEditor_texts_intro"/>
+                <br />
+                <RENDER_VALUE what="i18n:discountEditor_title"/>
+                <br />
+                <RENDER_I18NINPUT name="discount[title]" i18n="{discount:title}" class="sh_shop"/>
+                <br />
+
+                <RENDER_VALUE what="i18n:discountEditor_description_categories"/>
+                <br />
+                <RENDER_I18NTEXTAREA name="discount[description_categories]" i18n="{discount:description_categories}" class="sh_shop"/>
+                <br />
+                <RENDER_VALUE what="i18n:discountEditor_description_product"/>
+                <br />
+                <RENDER_I18NTEXTAREA name="discount[description_product]" i18n="{discount:description_product}" class="sh_shop"/>
+            </RENDER_TAB>
+        </RENDER_TABGROUP>
+    </RENDER_FORM>
+</div>

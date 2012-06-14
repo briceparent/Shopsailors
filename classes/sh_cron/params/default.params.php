@@ -8,7 +8,8 @@ if(!defined('SH_MARKER'))
 
 $this->default = array(
     'launchers' => array(
-        'localhost',
-        '127.0.0.1'
+        '127.0.0.1',
+        '192.168.*',
+        '88.191.116.222'
     )
 );

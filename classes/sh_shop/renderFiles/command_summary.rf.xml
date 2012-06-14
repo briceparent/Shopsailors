@@ -1,0 +1,7 @@
+<div id="shop_commandSummary">
+    <RENDER_LOOP what="summary">
+        <RENDER_VALUE what="summary:content"/>
+    </RENDER_LOOP>
+
+    <input type="hidden" name="step" value="choose_payment"/>
+</div>

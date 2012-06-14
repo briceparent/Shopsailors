@@ -1,0 +1,73 @@
+
+<div>
+    <RENDER_FORM id="news_edit">
+        <RENDER_TABGROUP size="XL" validate="{i18n:save}" admin="admin">
+            <NORENDER>FIRST TAB</NORENDER>
+            <RENDER_TAB title="{i18n:news_edit_boxtitle}">
+                <table>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:news_edit_title"/>
+                        </td>
+                        <td>
+                            <RENDER_I18NINPUT class="sh_content" name="title" i18n="{news:title}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:news_edit_intro"/>
+                        </td>
+                        <td>
+                            <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_content" i18n="{news:intro}" name="intro"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:news_edit_numberByPage"/>
+                        </td>
+                        <td>
+                            <select name="number_by_page" id="number_by_page">
+                                <RENDER_LOOP from="1" to="18">
+                                    <option value="{loop:id}">
+                                        <RENDER_VALUE what="loop:id"/>
+                                    </option>
+                                </RENDER_LOOP>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                                <option value="50">50</option>
+                            </select>
+                            <script type="text/javascript">
+                                var number_by_page = '<RENDER_VALUE what="news:number_by_page"/>';
+                                if(number_by_page == ''){
+                                    number_by_page = 16;
+                                }
+                                $('number_by_page').value = number_by_page;
+                            </script>
+                        </td>
+                    </tr>
+                </table>
+            </RENDER_TAB>
+
+            <NORENDER>SECOND TAB - SEO</NORENDER>
+            <RENDER_TAB title="{i18n:seo_title}">
+                <div class="italic">
+                    <RENDER_VALUE what="i18n:seo_explanations"/>
+                </div>
+                <div class="marginTop_10px">
+                    <RENDER_VALUE what="i18n:seo_titleBar"/>
+                    <RENDER_HELP what="{i18n:seo_titleBar_explanations}"/>
+                    <br />
+                    <RENDER_I18NINPUT name="seo_titleBar" class="sh_content" i18n="{news:seo_titleBar}"/>
+                    <br />
+                    <br />
+                    <RENDER_VALUE what="i18n:seo_metaDescription"/>
+                    <RENDER_HELP what="{i18n:seo_metaDescription_explanations}"/>
+                    <br />
+                    <RENDER_I18NTEXTAREA name="seo_metaDescription" class="sh_content" i18n="{news:seo_metaDescription}"/>
+                </div>
+            </RENDER_TAB>
+        </RENDER_TABGROUP>
+    </RENDER_FORM>
+</div>

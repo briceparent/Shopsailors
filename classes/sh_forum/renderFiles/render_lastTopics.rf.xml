@@ -1,0 +1,22 @@
+
+<div>
+    <RENDER_LOOP what="topics">
+        <div class="forum_lastPosts_one">
+            <div class="forum_lastPosts_one_title">
+                <a href="{topics:link}" title="{topics:title}"><RENDER_VALUE what="topics:title"/></a>
+            </div>
+            <div class="forum_lastPosts_one_date">
+                <RENDER_VALUE what="topics:date"/>
+            </div>
+            <div class="clear"></div>
+            <div class="forum_lastPosts_one_content">
+                <RENDER_MODIFYVALUE what="topics:content" method="cut|520|word" new="temp:value"/><RENDER_VALUE what="temp:value"/>...
+            </div>
+            <div class="lastPosts_knowMore">
+                <a href="{topics:link}" title="En savoir plus">
+                    <RENDER_VALUE what="i18n:knowMore"/>
+                </a>
+            </div>
+        </div>
+    </RENDER_LOOP>
+</div>

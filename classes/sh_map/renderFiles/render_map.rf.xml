@@ -1,0 +1,136 @@
+<div>
+    <RENDER_JS>
+
+        if(typeof markerDefaultImage == 'undefined'){
+            var markerDefaultImage = new google.maps.MarkerImage(
+                '/images/shared/icons/flag.png',
+                new google.maps.Size(27, 32),//Size
+                new google.maps.Point(0, 0),//Origin
+                new google.maps.Point(10, 32));//Anchor
+            var markerDefaultShadow = new google.maps.MarkerImage(
+                '/images/shared/icons/flag_shadow.png',
+                new google.maps.Size(40, 32),
+                new google.maps.Point(0, 0),
+                new google.maps.Point(10, 32)
+            );
+            var markerDefaultShape = {
+                coord: [1, 1, 23, 2, 27, 20, 6 , 19],
+                type: 'poly'
+            };
+            function changeMarkerPosition(marker,lat,lng){
+                lat=map_parseDMS(lat);
+                lng=map_parseDMS(lng);
+                var latlng = new google.maps.LatLng(
+                    lat,
+                    lng
+                );
+                marker.setPosition(latlng);
+            }
+            /**
+             * Conversion from D/m/s to decimal degrees.
+             * Taken from http://www.movable-type.co.uk/scripts/latlong.html
+             */
+            map_parseDMS = function(dmsStr) {
+              // check for signed decimal degrees without NSEW, if so return it directly
+              var restringed = ''+parseInt(dmsStr);
+              if(parseFloat(dmsStr) == dmsStr){
+                dmsStr = parseFloat(dmsStr);
+              }
+              if (typeof dmsStr === 'number'){
+                if(isFinite(dmsStr))
+                    return Number(dmsStr);
+              }
+              
+              // strip off any sign or compass dir'n and split out separate d/m/s
+              var dms = String(dmsStr).trim().replace(/^-/,'').replace(/[NSEW]$/i,'').split(/[^0-9.,]+/);
+              if (dms[dms.length-1]=='') dms.splice(dms.length-1);  // from trailing symbol
+
+              if (dms == '') return NaN;
+
+              // and convert to decimal degrees...
+              switch (dms.length) {
+                case 3:  // interpret 3-part result as d/m/s
+                  var deg = dms[0]/1 + dms[1]/60 + dms[2]/3600;
+                  break;
+                case 2:  // interpret 2-part result as d/m
+                  var deg = dms[0]/1 + dms[1]/60;
+                  break;
+                case 1:  // just d (possibly decimal) or non-separated dddmmss
+                  var deg = dms[0];
+                  // check for fixed-width unseparated format eg 0033709W
+                  if (/[NS]/i.test(dmsStr)) deg = '0' + deg;  // - normalise N/S to 3-digit degrees
+                  if (/[0-9]{7}/.test(deg)) deg = deg.slice(0,3)/1 + deg.slice(3,5)/60 + deg.slice(5)/3600;
+                  break;
+                default:
+                  return NaN;
+              }
+              if (/^-|[WS]$/i.test(dmsStr.trim())) deg = -deg;
+              return Number(deg);
+            }
+        }
+
+        if(typeof markers_addToGroup == 'undefined') {
+            var markers_groups = Array();
+            function markers_addToGroup(group,marker){
+                if(typeof markers_groups[group] == 'undefined'){
+                    markers_groups[group] = Array();
+                }
+                markers_groups[group][markers_groups[group].length] = marker;
+            }
+            function markers_toggleGroup(group){
+                var count = markers_groups[group].length;
+                for(var c=0;c!=count;c++){
+                    markers_groups[group][c].setVisible(!markers_groups[group][c].getVisible());
+                }
+            }
+            function markers_showGroup(group){
+                var count = markers_groups[group].length;
+                for(var c=0;c!=count;c++){
+                    markers_groups[group][c].setVisible(true);
+                }
+            }
+            function markers_hideGroup(group){
+                var count = markers_groups[group].length;
+                for(var c=0;c!=count;c++){
+                    markers_groups[group][c].setVisible(false);
+                }
+            }
+        }
+
+        var <RENDER_VALUE what="map:id"/> = null;
+        var <RENDER_VALUE what="map:id"/>_loaded = Array();
+        var markers_<RENDER_VALUE what="map:id"/> = Array();
+        var markers_<RENDER_VALUE what="map:id"/>_count = 0;
+        var mapImages_<RENDER_VALUE what="map:id"/> = Array();
+        var mapImage_<RENDER_VALUE what="map:id"/> = Array();
+        var mapImages_<RENDER_VALUE what="marker:map"/><RENDER_VALUE what="map:id"/>_count = 0;
+        function initializeMap_<RENDER_VALUE what="map:id"/>() {
+            var latlng = new google.maps.LatLng(<RENDER_VALUE what="map:lat"/>,<RENDER_VALUE what="map:lng"/>);
+            var myOptions = {
+              zoom: <RENDER_VALUE what="map:zoom"/>,
+              center: latlng,
+              mapTypeId: <RENDER_VALUE what="map:type"/>
+            };
+            var map = new google.maps.Map(document.getElementById("<RENDER_VALUE what="map:id"/>"), myOptions);
+            <RENDER_VALUE what="map:id"/> = map;
+            var markersCount = markers_<RENDER_VALUE what="map:id"/>.length;
+            if(markersCount != 0){
+                for(var id=0;id != markersCount;id++){
+                    var marker = markers_<RENDER_VALUE what="map:id"/>[id];
+                    eval(marker+'();');
+                }
+            }
+            var mapImagesCount = mapImages_<RENDER_VALUE what="map:id"/>.length;
+            if(mapImagesCount != 0){
+                for(var id=0;id != mapImagesCount;id++){
+                    var mapImage = mapImages_<RENDER_VALUE what="map:id"/>[id];
+                    eval(mapImage+'();');
+                }
+            }
+            <RENDER_VALUE what="map:id"/>_loaded.each(function(func){
+                eval(func+'();');
+            });
+        }
+    </RENDER_JS>
+    <div id="{map:id}" style="width:{map:width}px;height:{map:height}px;"></div>
+</div>

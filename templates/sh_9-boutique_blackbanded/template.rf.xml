@@ -1,31 +1,37 @@
 <html xml:lang="fr">
     <head>
-        <RENDER_VALUE what="head>content"/>
+        <RENDER_VALUE what="head:content"/>
     </head>
-    <RENDER_TAG type="body" what="body>data">
+    <RENDER_TAG type="body" what="body:data">
         <div class="bg_repeated">
-        <div id="header">
-            <RENDER_IFSET what="connect>link">
-                <div id="connectionContainer">
-                    <a href="{connect>link}"><RENDER_VALUE what="i18n>connectAccountClient"/></a>
+            <div id="header">
+                <RENDER_IFSET what="connect:link">
+                    <div id="connectionContainer">
+                        <a href="{connect:link}"><RENDER_VALUE what="i18n:connectAccountClient"/></a>
+                    </div>
+                </RENDER_IFSET>
+                <RENDER_IFSET what="disconnect:link">
+                    <div id="connectionContainer">
+                        <a href="{profile:link}"><RENDER_VALUE what="i18n:profileAccountClient"/></a> -
+                        <a href="{disconnect:link}"><RENDER_VALUE what="i18n:disconnectAccountClient"/></a>
+                    </div>
+                </RENDER_IFSET>
+                <RENDER_VALUE what="language:selector"/>
+                <div class="topTitle">
+                    <h1>
+                        <RENDER_VALUE what="body:headline"/>
+                    </h1>
                 </div>
-            </RENDER_IFSET>
-            <RENDER_IFSET what="disconnect>link">
-                <div id="connectionContainer">
-                    <a href="{disconnect>link}"><RENDER_VALUE what="i18n>disconnectAccountClient"/></a>
-                </div>
-            </RENDER_IFSET>
-            <RENDER_VALUE what="language>selector"/>
-        </div>
+            </div>
             <div id="mainContainer">
-                <RENDER_VALUE what="body>beginning"/>
+                <RENDER_VALUE what="body:beginning"/>
                 <div id="contentTop">
-                    <div id="globalDiapo">
-                        <RENDER_IFNOTSET what="diaporamas>display">
-                            <div id="diapoNotset">&#160;
-                            </div>
-                        </RENDER_IFNOTSET>
-                        <RENDER_IFSET what="diaporamas>display">
+                    <RENDER_IFNOTSET what="diaporamas:display">
+                        <div id="diapoNotset">&#160;
+                        </div>
+                    </RENDER_IFNOTSET>
+                    <RENDER_IFSET what="diaporamas:display">
+                        <div id="globalDiapo">
                             <div class="bg_diapo">
                                 <table>
                                     <tr>
@@ -52,43 +58,43 @@
                                     </tr>
                                 </table>
                             </div>
-                        </RENDER_IFSET>
-                    </div>
+                        </div>
+                        <div class="diapo_spacer" style="height:28px;">&#160;</div>
+                    </RENDER_IFSET>
                     <div id="contentTop_left">
-                        <div class="logo">
-                            <img src="/images/site/logo/rectangular.png" alt="logo" title=""/>
+                        <div id="mainLogo">
+                            <img src="/images/site/logo/logo.png" alt="logo" title=""/>
                         </div>
-                        <div class="topTitle">
-                        <h1>
-                            <RENDER_VALUE what="body>headline"/>
-                        </h1>
-                        </div>
-                        <div class="menu1">
-                            <RENDER_VALUE what="body>menu_1"/>
+                        <div class="menu_container">
+                            <RENDER_VALUE what="body:menu_1"/>
                         </div>
                     </div>
+                    <div class="clear" style="background-color:#fff;width:900px;">&#160;</div>
                 </div>
                 <div class="bg_content">
                     <div class="content_middle">
-                        <RENDER_VALUE what="body>searchEngine"/>
-                       <RENDER_IFSET what="body>title">
-                            <h1><RENDER_VALUE what="body>title"/></h1>
-                        </RENDER_IFSET>
+                        <div class="titleContainer">
+                            <RENDER_IFSET what="body:title">
+                                <h1 class="bodyTitle"><RENDER_VALUE what="body:title"/></h1>
+                            </RENDER_IFSET>
+                            <RENDER_VALUE what="body:searchEngine"/>
+                            <div class="clear">&#160;</div>
+                        </div>
+                            <div class="clear">&#160;</div>
                         <div class="page_content">
-                            <RENDER_VALUE what="body>content"/>
+                            <RENDER_VALUE what="body:content"/>
                             <div class="clearBoth">&#160;</div>
                         </div>
                     </div>
-               </div>
+                </div>
             </div>
         </div>
         <div class="blackbar_bottom">
-            <div class="menu2">
-                <RENDER_VALUE what="body>menu_1"/>
+            <div style="width:900px; margin-left:auto; margin-right: auto;">
+                <div id="copyrights">
+                    <RENDER_VALUE what="body:copyrights"/>
+                </div>
             </div>
-        </div>
-        <div id="copyrights">
-            <RENDER_VALUE what="body>copyrights"/>
         </div>
     </RENDER_TAG>
 </html>

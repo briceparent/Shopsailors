@@ -1,0 +1,7 @@
+<div class="results_forum_sections">
+    <RENDER_LOOP what="sections">
+        <div class="results_oneSection">
+            <a href="{sections:link}">Catégorie du forum "<RENDER_VALUE what="sections:name"/>"</a>
+        </div>
+    </RENDER_LOOP>
+</div>

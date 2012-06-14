@@ -18,6 +18,7 @@ which belongs to the Websailors\' network, here is your passphrase&#160;:',
     'client_password'=>'Password:&#160;',
     'password_forgotten' => 'Password forgotten?',
     'create_account' => 'Create an account',
+    'noAccount' => 'You don\'t have an account?',
     'WRONG_DATA'=> 'The login and the password don\'t match.',
     'SITE_NOT_ALLOWED'=>'This website isn\'t allowed to acces to Websailors database.',
     'ERROR_USING_FORM'=>'There was an error.<br />Please contact your administrator.',
@@ -26,6 +27,7 @@ which belongs to the Websailors\' network, here is your passphrase&#160;:',
 To validate it, you have to click the link in the mail you received when you\'ve created your account.',
 
     'passwordForgotten_response_title' => 'Password forgotten',
+    'passwordForgotten_title' => 'Password forgotten',
     'passwordForgotten_response_text' => 'A new password has been generated.<br />
 It has been emailed to you.<br />
 If you don\'t use it in the next 48 hours, it will be destroyed and the previous password will be
@@ -38,7 +40,7 @@ associated to any Websailors existing account.',
     'mail_temporaryPassword' => 'Hello,<br />
 You have ordered a new password to connect to the Websailors network websites.<br />
 <br />
-Your new password is: <RENDER_VALUE what="password>new"/><br />
+Your new password is: <RENDER_VALUE what="password:new"/><br />
 You can already use it on any website of the Websailors network.<br /><br />
 This password may only be used for 48h. After this, if you haven\'t used it, you\'ll have to
 order a new one.<br/>
@@ -64,7 +66,7 @@ to control who will be able to access this site. If you don\'t check this option
 This field is only usefull if the previous option is checked. It contains the list of allowed users.<br />
 To add or remove one, you just have to add or delete a user\'s email.
 </div>',
-    'loginNotFound' => '<span class="formAccount_error">Your login is not in the database,
+    'loginNotFound' => '<span>Your login is not in the database,
 or your account hasn\'t been activated using the confirmation link.</span><br />
 You should chek:
 <ul><li>That your Websailors account really exists, and that your login is the same
@@ -80,7 +82,7 @@ Please verify that all fields have been filled. ',
     'accountLastname' => 'Last name:&#160;',
     'accountPhone' => 'Phone:&#160;',
     'accountAddress' => 'Address:&#160;',
-    'addressNote' => 'This field is not mandatory.',
+    'optional' => 'This field is optional.',
     'accountEmail' => 'Email:&#160;',
     'login' => 'Choose a login:&#160;',
     'password' => 'Choose a password:&#160;',
@@ -108,6 +110,7 @@ To do so, please send an email to contact@websailors.fr<br /><br />',
     'login_already_used' => 'Your login is already used.<br/>
 Please choose another one.<br /><br />',
     'verification' => 'Verification phrase&#160;:&#160;',
+    'backToAccount' => 'Back to customer space',
 
     'createAccount_name' => 'Enter here your first name.',
     'createAccount_lastName' => 'Enter here your last name.',

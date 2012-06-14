@@ -12,10 +12,6 @@ $this->default = array(
             'name'=>'phpMailer',
             'file'=>'cm_phpMailer.cls.php'
         ),
-        'external'=>array(
-            'name'=>'graphicMail',
-            'file'=>'cm_graphicMail.cls.php'
-        ),
     ),
 
     'cm_graphicMail'=>array(

@@ -1,17 +1,20 @@
 <span class="i18n_input">
     <RENDER_LOOP what="langs">
-        <RENDER_TAG type="input" what="langs>args"/>
+        <RENDER_TAG type="input" what="langs:args"/>
     </RENDER_LOOP>
-    <RENDER_IFSET what="langs>1">
-        <select id="{lang>id}_select" onchange="chooseLang('{lang>id}',this.value);">
+    <RENDER_IFSET what="langs:1">
+        <select id="{lang:id}_select" onchange="chooseLang('{lang:id}',this.value);">
             <RENDER_LOOP what="langs">
-                <option value="{langs>id}" style="background:#ffffff url(/images/shared/flags/{langs>name}_small.png) no-repeat top right;">
-                    <RENDER_VALUE what="langs>name"/>
+                <option value="{langs:id}" style="background:#ffffff url(/images/shared/flags/{langs:name}_small.png) no-repeat top right;">
+                    <RENDER_VALUE what="langs:name"/>
                 </option>
             </RENDER_LOOP>
         </select>
     </RENDER_IFSET>
+    <RENDER_IFNOTSET what="langs:1">
+        <input type="hidden" id="{lang:id}_select"/>
+    </RENDER_IFNOTSET>
     <script type="text/javascript">
-        chooseLang('<RENDER_VALUE what="lang>id"/>','<RENDER_VALUE what="lang>firstDisplayed"/>');
+        chooseLang('<RENDER_VALUE what="lang:id"/>','<RENDER_VALUE what="lang:firstDisplayed"/>');
     </script>
 </span>

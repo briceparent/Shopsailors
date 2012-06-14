@@ -1,160 +1,268 @@
-<div>
-    <table>
-        <tr>
-            <td>
-                <NORENDER>navigator_display_mode</NORENDER>
-                <RENDER_IFSET what="nav_bar>display">
-                    <span class="icon_display">
-                        <RENDER_IFSET what="selectors>link_grid">
-                            <a href="{selectors>link_grid}">
-                                <img src="/images/builder/icon_display/icon_grid.png" alt="aperçu en grille" title="aperçu en grille"/>
-                            </a>&#160;
-                        </RENDER_IFSET>
-                        <RENDER_IFSET what="selectors>link_list">
-                            <a href="{selectors>link_list}">
-                                <img src="/images/builder/icon_display/icon_list.png" alt="aperçu en liste" title="aperçu en liste"/>
-                            </a>&#160;
-                        </RENDER_IFSET>
-                        <RENDER_IFSET what="selectors>link_miniature">
-                            <a href="{selectors>link_miniature}">
-                                <img src="/images/builder/icon_display/icon_miniature.png" alt="aperçu en miniatures" title="aperçu en miniatures"/>
-                            </a>&#160;
-                        </RENDER_IFSET>
-                        <RENDER_IFSET what="selectors>link_table">
-                            <a href="{selectors>link_table}">
-                                <img src="/images/builder/icon_display/icon_table.png" alt="aperçu en tableau" title="aperçu en tableau"/>
-                            </a>&#160;
-                        </RENDER_IFSET>
-                    </span>
-                </RENDER_IFSET>
-            </td>
-            <td>
-                <NORENDER>breadcrumbs</NORENDER>
-                <span id="shop_navigator" class="shop_arboText">
-                    <RENDER_VALUE what="i18n>navigator_title"/>
-                    <RENDER_BREADCRUMBS what="nav_levels" sameLevelText="{i18n>breadCrumbs_sameCategoryText}"/>
-                </span>
-            </td>
-        </tr>
-    </table>
 
+<div id="productPage">
+    <RENDER_IFSET what="product:layout_top">
+        <div id="shop_layout_top">
+            <RENDER_VALUE what="product:layout_top"/>
+        </div>
+    </RENDER_IFSET>
+    
+    <NORENDER>breadcrumbs</NORENDER>
+    <span id="shop_navigator" class="shop_arboText">
+        <RENDER_VALUE what="i18n:navigator_title"/>
+        <RENDER_BREADCRUMBS what="nav_levels" sameLevelText="{i18n:breadCrumbs_sameCategoryText}"/>
+    </span>
     <NORENDER>product_details</NORENDER>
     <div class="product_details1">
-        <table class="">
+        <table>
             <tr>
-                <td class="verticalAlign_top details_previewContainer">
-                    <div class="main_preview">
-                        <img src="{product>image}" alt="main_preview"/>
+                <td class="details_previewContainer">
+                    <div>
+                        <div class="main_preview">
+                            <img src="{product:image}.resized.222.222.png" alt="main_preview"/>
+                        </div>
+                        <table id="product_pictures">
+                            <RENDER_TABLE what="productImages" cols="5" opened="opened">
+                                <a href="{productImages:src}" title="{product:name}" rel="lightbox[miniatures]" style="width:80px;">
+                                    <img src="{productImages:src}.resized.40.40.png" alt=""/>
+                                </a>
+                            </RENDER_TABLE>
+                        </table>
                     </div>
                 </td>
                 <td class="verticalAlign_top">
                     <div class="details_descriptionContainer">
-                        <div class="details_pictoContainer">
-                            <span>
-                                <RENDER_IFSET what="product>picto_addtocart_link">
-                                    <a href="{product>picto_addtocart_link}">
-                                        <img src="/images/shared/icons/picto_cart.png" class="onePicto" alt="add_to_cart" title="{i18n>pictoAddToCart}"/>
-                                    </a>
-                                </RENDER_IFSET>
-                                <RENDER_IFNOTSET what="product>picto_addtocart_link">
-                                    <img src="/images/shared/icons/picto_nocart.png" class="onePicto" alt="add_to_cart" title="{i18n>pictoAddToCart}"/>
+                        <RENDER_FORM id="product_buy" action="{update:action}">
+                            <input type="hidden" name="goToCart" value="true"/>
+                            <div class="details_productPrice">
+                                <RENDER_VALUE what="product:price"/>
+
+                            </div>
+                            <RENDER_IFSET what="product:hasDiscount">
+                                <div class="details_discounts">
+                                    <RENDER_LOOP what="discounts">
+                                        <div class="discount_title">
+                                            <RENDER_VALUE what="discounts:title"/>
+                                        </div>
+                                        <div class="discount_desc">
+                                            <RENDER_VALUE what="discounts:description_product"/>
+                                        </div>
+                                    </RENDER_LOOP>
+                                </div>
+                            </RENDER_IFSET>
+                            <div class="details_infos">
+                                <RENDER_IFNOTSET what="product:variants_change_stock">
+                                    <RENDER_IFSET what="constants:showQuantity">
+                                        <RENDER_IFNOTSET what="product:hasVariants">
+                                            <div class="marginTop_5px">
+                                                <span class="details_product_descriptionTitle">
+                                                    <RENDER_VALUE what="i18n:navigator_stock_name"/>
+                                                </span>&#160;
+                                                <span id="stock_field">
+                                                    <RENDER_VALUE what="product:stock"/>
+                                                </span>
+                                            </div>
+                                        </RENDER_IFNOTSET>
+                                    </RENDER_IFSET>
                                 </RENDER_IFNOTSET>
-                                <RENDER_IFSET what="product>picto_show_link">
-                                    <a href="{product>picto_show_link}">
-                                        <img src="/images/shared/icons/picto_details.png" class="onePicto" alt="view_details_sheet" title="{i18n>pictoShow}"/>
-                                    </a>
-                                </RENDER_IFSET>
-                                <RENDER_IFSET what="product>picto_sendmail_link">
-                                    <a href="{product>picto_sendmail_link}">
-                                        <img src="/images/shared/icons/picto_mail.png" class="onePicto" alt="send_by_mail" title="{i18n>pictoSendmail}"/>
-                                    </a>
-                                </RENDER_IFSET>
-                            </span>
-                        </div>
-                        <div>
-                            <span class="details_product_descriptionTitle">
-                                <RENDER_VALUE what="i18n>reference_title"/>
-                            </span>&#160;
-                            <span>
-                                <RENDER_VALUE what="product>reference"/>
-                            </span>
-                        </div>
-                        <div class="marginTop_5px">
-                            <span class="details_product_descriptionTitle nobr">
-                                <RENDER_VALUE what="product>price"/>
-                            </span>
-                        </div>
-                        <RENDER_IFSET what="constants>showQuantity">
-                            <div class="marginTop_5px">
+                                <RENDER_LOOP what="customProperties">
+                                    <div class="marginTop_5px">
+                                        <span class="details_product_descriptionTitle">
+                                            <RENDER_VALUE what="customProperties:name"/> :
+                                        </span>&#160;
+                                        <span>
+                                            <RENDER_VALUE what="customProperties:value"/>
+                                        </span>
+                                    </div>
+                                </RENDER_LOOP>
                                 <span class="details_product_descriptionTitle">
-                                    <RENDER_VALUE what="i18n>navigator_stock_name"/>
+                                    <RENDER_VALUE what="i18n:navigator_desc_name"/>
                                 </span>&#160;
                                 <span>
-                                    <RENDER_VALUE what="product>stock"/>
+                                    <RENDER_VALUE what="product:description"/>
                                 </span>
                             </div>
-                        </RENDER_IFSET>
-                        <div class="marginTop_5px">
-                            <span class="details_product_descriptionTitle">
-                                <RENDER_VALUE what="i18n>navigator_desc_name"/>
-                            </span>&#160;
-                            <span>
-                                <RENDER_VALUE what="product>description"/>
-                            </span>
+                            <div id="product_ajaxReturns_temp"></div>
+                            <RENDER_IFSET what="product:hasVariants">
+                                <div class="selectVariant">
+                                    <select name="variant" id="variant">
+                                        <RENDER_LOOP what="variants">
+                                            <option value="{variants:id}" state="{variants:state}">
+                                                <RENDER_VALUE what="variants:name"/>
+                                            </option>
+                                        </RENDER_LOOP>
+                                    </select>
+                                </div>
+                            </RENDER_IFSET>
+                            <RENDER_IFSET what="shop:active">
+                                <div class="selectQuantity">
+                                    <RENDER_VALUE what="i18n:product_quantity"/>
+                                    <input name="quantity" style="width:40px;" id="quantity" value="{product:quantity}" autocomplete="off"/>
+                                </div>
+                                <div class="tab_buttons" id="button_calculate">
+                                    <input class="tab_button btn_calculate" type="submit" name="calculate" value="Mettre à jour" id="btn_update"/>
+                                </div>
+
+                                <div id="product_price_complete">
+                                    <RENDER_VALUE what="price:explanations"/>
+                                </div>
+                                <hr />
+                                <div class="tab_buttons">
+                                    <input class="tab_button btn_validate" type="submit" name="validate" value="Acheter" id="{i18n:buy}"/>
+                                </div>
+                            </RENDER_IFSET>
+
+                            <RENDER_IFSET what="packs_bloc:show">
+                                <RENDER_LOOP what="packs">
+                                    <div class="onePack">
+                                        <span class="packTitle">
+                                            <RENDER_VALUE what="i18n:packTitle"/>
+                                        </span>
+                                        <span class="packName">
+                                            <RENDER_VALUE what="packs:name"/>&#160;
+                                        </span>
+
+                                        <RENDER_IFSET what="shop:active">
+                                            <div class="tab_buttons">
+                                                <input type="submit" class="tab_button btn_validate dontSubmit" name="usePack[{packs:id}]" value="En profiter" />
+                                            </div>
+                                        </RENDER_IFSET>
+                                    </div>
+                                </RENDER_LOOP>
+                            </RENDER_IFSET>
+
+                            <RENDER_ENDJS>
+                                var submitToBuy = true;
+                                $$('.dontSubmit').each(function(el){
+                                Event.observe(el,'click',function(){
+                                submitToBuy = false;
+                                });
+                                });
+                                function product_getNewPrices(event){
+                                if($('quantity').value == ''){
+                                return true;
+                                }
+                                var quantity = Math.abs(parseInt($('quantity').value));
+                                if(quantity == 0){
+                                quantity = 1;
+                                }
+                                <RENDER_IFNOTSET what="product:hasVariants">
+                                    var variant = 0;
+                                </RENDER_IFNOTSET>
+                                <RENDER_IFSET what="product:hasVariants">
+                                    var variant = $('variant').value;
+                                </RENDER_IFSET>
+                                new Ajax.Updater('product_price_complete', 
+                                <RENDER_VALUE quotes="'" what="update:action"/>, {
+                                parameters: {
+                                quantity: quantity,
+                                ajax:'ajax',
+                                variant:variant
+                                },
+                                evalScripts: true
+                                });
+                                }
+                                function product_buy(event){
+                                if(submitToBuy){
+                                event.stop();
+                                var quantity = Math.abs(parseInt($('quantity').value));
+                                if(quantity == 0){
+                                quantity = 1;
+                                }
+                                <RENDER_IFNOTSET what="product:hasVariants">
+                                    var variant = 0;
+                                </RENDER_IFNOTSET>
+                                <RENDER_IFSET what="product:hasVariants">
+                                    var variant = $('variant').value;
+                                </RENDER_IFSET>
+                                new Ajax.Request(
+                                <RENDER_VALUE quotes="'" what="buy:action"/>, {
+                                parameters: {
+                                product:
+                                <RENDER_VALUE quotes="'" what="product:id"/>,
+                                variant:variant,
+                                quantity: quantity
+                                },
+                                onSuccess: function(transport) {
+                                $('add_to_cart_message').innerHTML = transport.responseText;
+                                sh_popup.message('add_to_cart_message',{title:"Panier"});
+                                },
+                                evalScripts: true
+                                });
+                                return true;
+                                }
+                                }
+                                Event.observe('product_buy','submit',product_buy);
+                                <RENDER_IFSET what="product:hasVariants">
+                                    Event.observe('variant','change',product_getNewPrices);
+                                </RENDER_IFSET>
+                                Event.observe('quantity','keyup',product_getNewPrices);
+                                $('button_calculate').style.display = 'none';
+                            </RENDER_ENDJS>
+                        </RENDER_FORM>
+                        <div id="add_to_cart_message" style="display:none;">
                         </div>
+
                     </div>
                 </td>
             </tr>
         </table>
+
+        <div class="facebookLike">
+            <RENDER_FACEBOOK_LIKEBUTTON class="sh_shop" element="shop_products" title="{product:name}" image="{product:image}" width="500" height="25" show_faces="show_faces"/>
+        </div>
     </div>
-    <table id="product_pictures">
-        <RENDER_TABLE what="productImages" cols="5" opened="opened">
-            <a href="{productImages>src}" class="lightwindow hidden" rel="JOJO[lerigolo]" style="width:80px;">
-                <img src="{productImages>src}" alt=""/>
-            </a>
-        </RENDER_TABLE>
-    </table>
 
     <NORENDER>navigator_productCategory</NORENDER>
-    <div class="navigator_sameCategory">
-        <table>
-            <tr>
-                <td colspan="6" class="navigator_inSameCategory">
-                    <RENDER_VALUE what="i18n>inSameCategory"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="navigator_inSameCategory_pictos">
-                    <RENDER_IFSET what="pagenavigation>previous_link">
-                        <a href="{pagenavigation>previous_link}"><img src="images/shared/variations/{constants>variation}/navigation/model1_previous.png" alt="{i18n>nav_previous}"/></a>
-                    </RENDER_IFSET>
-                    <RENDER_IFNOTSET what="pagenavigation>previous_link">
-                        <img src="images/shared/variations/{constants>variation}/navigation/model1_noprevious.png" alt="{i18n>nav_previous}"/>
-                    </RENDER_IFNOTSET>
-                </td>
-                <RENDER_LOOP what="category_elements">
-                    <td class="navigator_productCategory">
-                        <div class="navigator_productCategory_imgContainer">
-                            <a href ="{category_elements>link}">
-                                <img src="{category_elements>image}"/>
-                            </a>
-                        </div>
-                        <a href ="{category_elements>link}">
-                            <RENDER_VALUE what="category_elements>name"/>
-                        </a>
+    <RENDER_IFSET what="category_elements:0">
+        <div class="navigator_sameCategory">
+            <table>
+                <tr>
+                    <td colspan="6" class="navigator_inSameCategory">
+                        <RENDER_VALUE what="i18n:inSameCategory"/>
                     </td>
-                </RENDER_LOOP>
-                <td class="navigator_inSameCategory_pictos">
-                    <RENDER_IFSET what="pagenavigation>next_link">
-                        <a href="{pagenavigation>next_link}"><img src="images/shared/variations/{constants>variation}/navigation/model1_next.png" alt="{i18n>nav_next}"/></a>
-                    </RENDER_IFSET>
-                    <RENDER_IFNOTSET what="pagenavigation>next_link">
-                        <img src="images/shared/variations/{constants>variation}/navigation/model1_nonext.png" alt="{i18n>nav_nonext}"/>
-                    </RENDER_IFNOTSET>
-                </td>
-            </tr>
-        </table>
-    </div>
+                </tr>
+                <tr>
+                    <td class="navigator_inSameCategory_pictos">
+                        <RENDER_IFSET what="pagenavigation:previous_link">
+                            <a href="{pagenavigation:previous_link}">
+                                <img src="images/shared/icons/icn_previous1.png" alt="{i18n:nav_previous}"/>
+                            </a>
+                        </RENDER_IFSET>
+                        <RENDER_IFNOTSET what="pagenavigation:previous_link">
+                            <img src="images/shared/icons/icn_noprevious1.png" alt="{i18n:nav_previous}"/>
+                        </RENDER_IFNOTSET>
+                    </td>
+                    <RENDER_LOOP what="category_elements">
+                        <td class="navigator_productCategory">
+                            <div class="navigator_productCategory_imgContainer">
+                                <a href ="{category_elements:link}">
+                                    <img src="{category_elements:image}.resized.40.40.png"/>
+                                </a>
+                            </div>
+                            <a href ="{category_elements:link}">
+                                <RENDER_VALUE what="category_elements:name"/>
+                            </a>
+                        </td>
+                    </RENDER_LOOP>
+                    <td class="navigator_inSameCategory_pictos">
+                        <RENDER_IFSET what="pagenavigation:next_link">
+                            <a href="{pagenavigation:next_link}">
+                                <img src="images/shared/icons/icn_next1.png" alt="{i18n:nav_next}"/>
+                            </a>
+                        </RENDER_IFSET>
+                        <RENDER_IFNOTSET what="pagenavigation:next_link">
+                            <img src="images/shared/icons/icn_nonext1.png" alt="{i18n:nav_nonext}"/>
+                        </RENDER_IFNOTSET>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </RENDER_IFSET>
     <div class="clearBoth"></div>
-
+    
+    <RENDER_IFSET what="product:layout_bottom">
+        <div id="shop_layout_bottom">
+            <RENDER_VALUE what="product:layout_bottom"/>
+        </div>
+    </RENDER_IFSET>
 </div>

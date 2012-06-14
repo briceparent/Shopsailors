@@ -1,0 +1,47 @@
+<RENDER_NOTIF size="L" title="{i18n:cart_yourCommand}">
+    <table cellspacing="0" class="readonly_command">
+        <tr>
+            <th class="shop_headerText bg_table">
+                <RENDER_VALUE what="i18n:cart_name"/>
+                /
+                <RENDER_VALUE what="i18n:cart_reference"/>
+            </th>
+            <th class="shop_headerText bg_table">
+                <RENDER_VALUE what="i18n:cart_quantity"/>
+            </th>
+            <th class="shop_headerText bg_table">
+                <RENDER_VALUE what="i18n:cart_price"/>
+            </th>
+            <th class="shop_headerText bg_table">
+                <RENDER_VALUE what="i18n:cart_productTotalPrice"/>
+            </th>
+        </tr>
+        <RENDER_LOOP what="contents">
+            <tr>
+                <td class="bg_table">
+                    <div class="shop_cartProduct_name"><RENDER_VALUE what="contents:name"/></div>
+                    <div class="shop_cartProduct_ref">
+                        <RENDER_VALUE what="contents:reference"/>
+                    </div>
+                </td>
+                <td class="bg_table">
+                    <RENDER_VALUE what="contents:quantity"/>
+                </td>
+                <td class="shop_productPrice bg_table">
+                    <span class="nobr"><RENDER_VALUE what="contents:price"/></span>
+                </td>
+                <td class="shop_productPrice bg_table">
+                    <span class="nobr"><RENDER_VALUE what="contents:totalPrice"/></span>
+                </td>
+            </tr>
+        </RENDER_LOOP>
+        <tr>
+            <td></td>
+            <td></td>
+            <td colspan="2" class="shop_total_textClass  bg_table">
+                <span class="nobr"><RENDER_VALUE what="i18n:totalht"/><RENDER_VALUE what="total:ht"/></span><br/>
+                <span class="nobr"><RENDER_VALUE what="i18n:totalttc"/><RENDER_VALUE what="total:ttc"/></span>
+            </td>
+        </tr>
+    </table>
+</RENDER_NOTIF>

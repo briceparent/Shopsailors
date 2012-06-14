@@ -1,0 +1,33 @@
+
+<div>
+    <RENDER_FORM id="edit_date">
+        <RENDER_TABGROUP size="l" validate="{i18n:save}" admin="admin">
+            <RENDER_TAB title="{i18n:edit_date_title}">
+                <RENDER_CHECKBOX name="active" state="{calendar:active}" text="{i18n:edit_date_active}"/>
+                
+                <RENDER_VALUE what="i18n:edit_date_date"/>
+                <RENDER_DATEPICKER name="date" value="{calendar:date}"/><br /><br />
+                
+                <RENDER_VALUE what="i18n:edit_date_eventTitle"/>
+                <RENDER_I18NINPUT class="sh_calendar" name="title" i18n="{calendar:title}"/><br /><br />
+
+                <RENDER_VALUE what="i18n:edit_date_type"/>
+                <select name="type">
+                    <RENDER_LOOP what="types">
+                        <option value="{types:id}" state="{types:state}">
+                            <RENDER_VALUE what="types:name"/>
+                        </option>
+                    </RENDER_LOOP>
+                </select>
+                <RENDER_HELP>
+                    <RENDER_VALUE what="i18n:edit_date_type_explanations"/>
+                </RENDER_HELP>
+                <br /><br />
+                
+                <RENDER_VALUE what="i18n:edit_date_content"/>
+                <RENDER_I18NWEDITOR i18nClass="sh_calendar" name="content" i18n="{calendar:content}"/>
+
+            </RENDER_TAB>
+        </RENDER_TABGROUP>
+    </RENDER_FORM>
+</div>

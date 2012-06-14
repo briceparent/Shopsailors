@@ -1,0 +1,9 @@
+<div>
+    Adresse de facturation : <br />
+    <RENDER_VALUE what="billing:name"/><br />
+    <RENDER_VALUE what="billing:address"/><br />
+    <RENDER_VALUE what="billing:zip"/>&#160;
+    <RENDER_VALUE what="billing:city"/><br /><br />
+    Mail : 
+    <RENDER_VALUE what="billing:mail"/>
+</div>

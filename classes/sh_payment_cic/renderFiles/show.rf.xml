@@ -1,0 +1,23 @@
+<div>
+    <link type="text/css" rel="stylesheet" href="/sh_payment_cic/singles/CMCIC.css" />
+    <a href="http://www.cmcicpaiement.fr"><img src="/sh_payment_cic/singles/logocmcicpaiement.gif" alt="CM-CIC P@iement" title="CM-CIC P@iement" /></a>
+    
+    <form action="<?php echo $oTpe->sUrlPaiement;?>" method="post" id="PaymentRequest">
+<p>
+	<input etype="hidden" name="version"             id="version"        value="{payment:version}" />
+	<input etype="hidden" name="TPE"                 id="TPE"            value="{payment:tpeVersion}" />
+	<input etype="hidden" name="date"                id="date"           value="{payment:date}>" />
+	<input etype="hidden" name="montant"             id="montant"        value="{payment:amount}{payment:currency}" />
+	<input etype="hidden" name="reference"           id="reference"      value="{payment:reference}" />
+	<input etype="hidden" name="MAC"                 id="MAC"            value="{payment:smac}" />
+	<input etype="hidden" name="url_retour"          id="url_retour"     value="{payment:url_ko}" />
+	<input etype="hidden" name="url_retour_ok"       id="url_retour_ok"  value="{payment:url_ok}" />
+	<input etype="hidden" name="url_retour_err"      id="url_retour_err" value="{payment:url_ko}" />
+	<input etype="hidden" name="lgue"                id="lgue"           value="{payment:lang}" />
+	<input etype="hidden" name="societe"             id="societe"        value="{payment:companyCode}" />
+	<input etype="hidden" name="texte-libre"         id="texte-libre"    value="{payment:freeText}" />
+	<input etype="hidden" name="mail"                id="mail"           value="{payment:email}" />
+	<input type="submit" name="bouton"              id="bouton"         value="Connexion / Connection" />
+</p>
+</form>
+</div>

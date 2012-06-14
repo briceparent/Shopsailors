@@ -1,6 +1,19 @@
 <div class="shop_tableCartContainer">
-    <RENDER_IFSET what="cart>existing">
-        <RENDER_VALUE what="i18n>cart_alreadyExistingCart"/>
+    <RENDER_NOTIF size="M">
+        <RENDER_FORM id="cart_save">
+            <RENDER_VALUE what="i18n:cart_save_name"/>
+            <input name="name" style="width: 100%;" value="{i18n:cart_save_defaultName_before}{cart:name}{i18n:cart_save_defaultName_after}"/><br />
+            <div class="infoText"><RENDER_VALUE what="i18n:cart_save_name_info"/></div>
+            <div class="tab_buttons">
+                <input value="{i18n:save}" class="tab_button btn_validate" type="submit"/>
+            </div>
+        </RENDER_FORM>
+    </RENDER_NOTIF>
+    
+    
+    <NORENDER>
+    <RENDER_IFSET what="cart:existing">
+        <RENDER_VALUE what="i18n:cart_alreadyExistingCart"/>
         <RENDER_FORM id="cart_save_existing">
             <RENDER_RADIOBOX text="Remplacer le contenu anciennement enregistré." name="action" state="checked" value="replace"/><br />
             <RENDER_RADIOBOX text="Annuler." name="action" value="cancel"/><br />
@@ -8,7 +21,8 @@
             <input type="submit" value="OK"/>
         </RENDER_FORM>
     </RENDER_IFSET>
-    <RENDER_IFNOTSET what="cart>existing">
-        <RENDER_VALUE what="i18n>cart_saved_successfully"/>
+    <RENDER_IFNOTSET what="cart:existing">
+        <RENDER_VALUE what="i18n:cart_saved_successfully"/>
     </RENDER_IFNOTSET>
+    </NORENDER>
 </div>

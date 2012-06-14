@@ -8,7 +8,10 @@ $i18n = array(
     'contact_intro' => 'Contact page\'s introduction text: ',
     'mail' => 'E-mail(s): ',
     'phone' => 'Phone number(s): ',
+    'contactForm' => 'Contact Form',
     'send_a_mail' => 'Send a mail: ',
+    'infos' => 'Informations',
+    'map' => 'Location',
     'company' => 'Company:',
     'contact_title' => 'Contact page\'s title:',
     'leave_empty_if_needed' => '(leave empty if needed)',
@@ -65,4 +68,5 @@ This may be usefull if you want to customize your contact page more than this
 form allows you to, such as adding images. To do so, you can create your contact 
 page using the content editor.
 </div>',
+    'requiredField' => 'Required',
 );

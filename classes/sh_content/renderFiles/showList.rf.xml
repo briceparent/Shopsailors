@@ -1,65 +1,79 @@
-<div class="menuEditor_container">
-    <div class="form_box_container">
-        <div class="form_box_top">
-            <h3 class="box_title">
-                <RENDER_VALUE what="i18n>list_description"/>
-            </h3>
-        </div>
-        <div class="form_box_middle">
-            <div class="form_box_content">
-                <div class="formContent">
-                    <div class="showList_activeList">
-                        <RENDER_VALUE what="i18n>activeList"/>
-                    </div>
-                    <ul class="showList_articles">
-                    <RENDER_LOOP what="active">
-                        <li>
-                            <RENDER_VALUE what="active>title"/>&#160;(<RENDER_VALUE what="active>date"/>)<br />
-                            <a href="{active>show_link}">
-                                <RENDER_VALUE what="i18n>show"/>
+<div>
+    <RENDER_JS>
+        function deleteConfirm (id,active){
+            new Ajax.Request(
+                '/content/delete/' + id + '.php',
+                {
+                    onSuccess: function (transport){
+                        if (active){
+                            var width = 500;
+                        }else{
+                            var width = 300;
+                        }
+                        sh_popup.confirm(
+                            transport.responseText,
+                            {
+                                title:'<RENDER_VALUE what="i18n:deletePage_title"/>',
+                                onconfirmok : function (){
+                                    document.location = '<RENDER_VALUE what="page:link"/>?delete=' + id;
+                                },
+                                width: width,
+                                icon: '/templates/global/admin/icons/picto_caution2.png'
+                            }
+                        );
+                    }
+                }
+            );
+        }
+    </RENDER_JS>
+    <RENDER_TABGROUP size="m" admin="admin">
+        <RENDER_TAB title="{i18n:activeList}">
+            <ul class="showList_articles">
+                <RENDER_LOOP what="active">
+                    <li>
+                        <div class="bold"><RENDER_VALUE what="active:title"/>&#160;(<RENDER_VALUE what="active:date"/>)</div>
+                        <div class="marginTop_5px">
+                            <a href="{active:show_link}">
+                                <RENDER_VALUE what="i18n:show"/>
                             </a>
-                            <RENDER_IFSET what="session>admin">
-                                &#160;<a href="{active>edit_link}">
-                                    <RENDER_VALUE what="i18n>edit"/>
+                            <RENDER_IFSET what="session:admin">
+                                &#160;<a href="{active:edit_link}">
+                                    <RENDER_VALUE what="i18n:edit"/>
                                 </a>
                             </RENDER_IFSET>
-                            <RENDER_IFSET what="session>admin">
-                                &#160;<a href="{active>delete_link}">
-                                    <RENDER_VALUE what="i18n>delete"/>
+                            <RENDER_IFSET what="session:admin">
+                                &#160;<span class="falseLink" onclick="deleteConfirm('{active:id}',true);">
+                                    <RENDER_VALUE what="i18n:delete"/>
+                                </span>
+                            </RENDER_IFSET>
+                        </div>
+                    </li>
+                </RENDER_LOOP>
+            </ul>
+        </RENDER_TAB>
+        <RENDER_IFSET what="inactive:0">
+            <RENDER_TAB title="{i18n:inactiveList}">
+                <ul class="showList_articles">
+                    <RENDER_LOOP what="inactive">
+                        <li>
+                            <div class="bold"><RENDER_VALUE what="inactive:title"/>&#160;(<RENDER_VALUE what="inactive:date"/>)</div>
+                            <RENDER_IFSET what="session:admin">
+                                <a href="{inactive:edit_link}">
+                                    <RENDER_VALUE what="i18n:edit"/>
                                 </a>
+                                <RENDER_IFSET what="session:admin">
+                                    &#160;<span class="falseLink" onclick="deleteConfirm('{inactive:id}',false);">
+                                        <RENDER_VALUE what="i18n:delete"/>
+                                    </span>
+                                </RENDER_IFSET>
                             </RENDER_IFSET>
                         </li>
                     </RENDER_LOOP>
-                    </ul>
-                    <RENDER_IFSET what="inactive>0">
-                        <div class="showList_inactiveList">
-                            <RENDER_VALUE what="i18n>inactiveList"/>
-                        </div>
-                        <ul class="showList_articles">
-                        <RENDER_LOOP what="inactive">
-                            <li>
-                                <RENDER_VALUE what="inactive>title"/>&#160;(<RENDER_VALUE what="inactive>date"/>)<br />
-                                <RENDER_IFSET what="session>admin">
-                                    <a href="{inactive>edit_link}">
-                                        <RENDER_VALUE what="i18n>edit"/>
-                                    </a>
-                                    <RENDER_IFSET what="session>admin">
-                                        &#160;<a href="{inactive>delete_link}">
-                                            <RENDER_VALUE what="i18n>delete"/>
-                                        </a>
-                                    </RENDER_IFSET>
-                                </RENDER_IFSET>
-                            </li>
-                        </RENDER_LOOP>
-                        </ul>
-                        <div class="showList_inactiveList_description">
-                            <RENDER_VALUE what="i18n>inactiveList_description"/>
-                        </div>
-                    </RENDER_IFSET>
+                </ul>
+                <div class="showList_inactiveList_description">
+                    <RENDER_VALUE what="i18n:inactiveList_description"/>
                 </div>
-            </div>
-        </div>
-        <div class="form_box_bottom">
-        </div>
-    </div>
+            </RENDER_TAB>
+        </RENDER_IFSET>
+    </RENDER_TABGROUP>
 </div>

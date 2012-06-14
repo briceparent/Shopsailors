@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Brice PARENT for Shopsailors
  * @copyright Shopsailors 2009
@@ -6,101 +7,142 @@
  * @version See version in the params/global.params.php file.
  * @package Shopsailors Core Classes
  */
-if(!defined('SH_MARKER')){header('location: directCallForbidden.php');}
+if( !defined( 'SH_MARKER' ) ) {
+    header( 'location: directCallForbidden.php' );
+}
 
 /**
  * Class that renders the css files, replacing the colors by those that should
  * be used in the variation.
  */
-class sh_css extends sh_core{
-    protected $minimal = array('get' => true);
+class sh_css extends sh_core {
+
+    const CLASS_VERSION = '1.1.11.03.29';
+
+    public $shopsailors_dependencies = array(
+        'sh_linker', 'sh_params', 'sh_db'
+    );
+    protected $minimal = array( 'get' => true );
+
+    public function construct() {
+        $installedVersion = $this->getClassInstalledVersion();
+        if( $installedVersion != self::CLASS_VERSION ) {
+            $this->setClassInstalledVersion( self::CLASS_VERSION );
+        }
+    }
+
+    public function uncache_css() {
+        $this->cachedPart_remove( '*', 'any' );
+    }
+
+    public function cache_css() {
+        $lang = 'any';
+        if( $_SESSION[ 'this_is_a_temp_session' ] ) {
+            $lang = 'temp';
+        }
+        // We generate the css files
+        $cssFiles = glob( $this->linker->template->path . 'css/*\.css' );
+
+        foreach( $cssFiles as $cssFile ) {
+            $css = $this->linker->renderer->render_css( $cssFile );
+
+            // We check if we have things to add at the end
+            $file = str_replace( '.css', '', basename( $cssFile ) );
+            $method = 'addTo' . ucfirst( $file ) . 'CSS';
+            $classes = $this->get_shared_methods( $method );
+            if( !empty( $classes ) ) {
+                foreach( $classes as $class ) {
+                    $addToContent = "\n" . '/* Added contents from ' . $class . ' */' . "\n";
+                    $addToContent .= trim( $this->linker->$class->$method() );
+                    $css .= $this->linker->renderer->render_css( $addToContent );
+                }
+            } else {
+                $css .= '/* No files to include */' . "\n";
+            }
+            // Saving it to the site's template folder
+            $mobile = SH_MOBILE_DEVICE == false ? '' : '|' . SH_MOBILE_DEVICE;
+            $this->cachedPart_cache( $css, basename( $cssFile ) . $mobile, $lang );
+        }
+    }
 
     /**
      * public function get
      *
      */
-    public function get(){
-        // TODO: enable the cache for this
-        $this->links->cache->disable();
+    public function get() {
+        // Disables automatic caching
+        $file = $_GET[ 'file' ];
 
-        $file = $_GET['file'];
-        
-        $templateFolder = $this->links->site->templateFolder;
-        header("Content-type: text/css");
-       
+        header( "Content-type: text/css" );
+
+        $lang = 'any';
+        if( $_SESSION[ 'this_is_a_temp_session' ] ) {
+            $lang = 'temp';
+        }
+
+        $mobile = SH_MOBILE_DEVICE == false ? '' : '|' . SH_MOBILE_DEVICE;
+        $cache = $this->cachedPart_get( $file . '.css' . $mobile, $lang );
+
+        if( $cache ) {
+            echo $cache;
+            return true;
+        }
+
+        $templateFolder = $this->linker->site->templateFolder;
+
         // We check if we have things to add at the end
-        $method = 'addTo'.ucfirst($file).'CSS';
+        $method = 'addTo' . ucfirst( $file ) . 'CSS';
         $addToContent = '';
-        if(is_dir(SH_CLASS_SHARED_FOLDER.__CLASS__.'/'.$method)){
-            $classes = scandir(SH_CLASS_SHARED_FOLDER.__CLASS__.'/'.$method);
-            foreach($classes as $class){
-                if(substr($class,0,1) == '.'){
-                    continue;
-                }
-                $class = substr($class,0,-4);
-                if($this->links->method_exists($class,$method)){
-                    $addToContent .= "\n".'/* Added contents from '.$class.' */'."\n";
-                    $ret = trim($this->links->$class->$method());
-                    // We remove the xml intro and content tag, which are here unnecessary
-                    $ret = preg_replace(
-                        array('`<\?xml[^>]*>`','`<\/?content[^>]*>`'),
-                        array('',''),
-                        $ret
-                    );
+        $classes = $this->get_shared_methods( $method );
+        if( !empty( $classes ) ) {
+            foreach( $classes as $class ) {
+                $addToContent .= "\n" . '/* Added contents from ' . $class . ' */' . "\n";
+                $ret = trim( $this->linker->$class->$method() );
 
-                    $addToContent .= $ret;
-                }else{
-                    $addToContent .= "\n".'/* No new contents from '.$class.' */'."\n";
-                }
+                $addToContent .= $ret;
             }
-        }else{
-            $addToContent = '/* No files to include */'."\n";
+        } else {
+            $addToContent = '/* No files to include */' . "\n";
         }
-        
-        if($_GET['action'] == 'replace'){
-            $templateName = $this->links->site->templateName;
-            $variation = $this->links->site->variation;
-            $siteName = $this->links->site->siteName;
-            $replacements['template'] = array('name'=>$templateName);
-            $variationReplacements = array_change_key_case(
-                $this->links->variation->get(sh_variation::ALL_VALUES)
-            );
-            $replacements['variation'] = $variationReplacements;
-            $replacements['variation']['name'] = $variation;
-            $cssFile = $templateFolder.'css/'.$file.'.css';
-            
-            if(file_exists($cssFile)){
-                $ret = $this->render($cssFile,$replacements,false,false);
-                $ret = str_replace("\n",'',$ret);
-                $getContent = '`<content>(.*)</content>`';
-                preg_match($getContent,$ret,$match);
-                $content = $match[1];
+
+        if( $_GET[ 'action' ] == 'replace' ) {
+
+            $cssFile = $templateFolder . 'css/' . $file . '.css';
+            if( file_exists( $cssFile ) ) {
+                $content = $this->linker->renderer->render_css( $cssFile, false );
             }
-            $addToContent = $this->render($addToContent,$replacements,false,false);
-            $content .= $addToContent;
-            if($content == ''){
-                $content = '/* The CSS file "'.$cssFile.'" could not be found... */';
+            if( $content == '' ) {
+                $content = '/* The CSS file "' . $cssFile . '" could not be found... */';
             }
-        }elseif($_GET['action'] == 'copy'){
-            $cssFile = SH_TEMPLATE_FOLDER.'global/'.$file.'.css';
+
+            $addToContent = $this->linker->renderer->render_css( $addToContent, false );
+        } elseif( $_GET[ 'action' ] == 'copy' ) {
+            $cssFile = SH_TEMPLATE_FOLDER . 'global/' . $file . '.css';
             $content = '';
-            if(file_exists($cssFile)){
-                $content = file_get_contents($cssFile);
+            if( file_exists( $cssFile ) ) {
+                $content = $this->linker->renderer->render_css( $cssFile, false );
             }
-            
-            $content .= $addToContent;
-            
-            if($content == ''){
-                $content = '/* The CSS file "'.$cssFile.'" could not be found... */';
+
+            if( $content == '' ) {
+                $content = '/* The CSS file "' . $cssFile . '" could not be found... */';
+            }
+
+            // We also add, if it exists, the contents of the same-named css file from the template
+            if( file_exists( $templateFolder . 'css/' . $file . '.css' ) ) {
+                $content .= "\n\n" . '/* The template wants to add some rules... */' . "\n";
+                $content .= $this->linker->renderer->render_css( $templateFolder . 'css/' . $file . '.css', false );
             }
         }
-        //$content = str_replace("\n",'',$content);
-        $content = str_replace(array("\n",'    ','*/','}','&gt;'),array('',' ','*/'."\n",'}'."\n",'>'),$content);
+        $content .= $addToContent;
+
+        //sh_cache::startCache();
         echo $content;
+        //echo sh_cache::stopCache();
         return true;
     }
 
-    public function __tostring(){
+    public function __tostring() {
         return get_class();
     }
+
 }

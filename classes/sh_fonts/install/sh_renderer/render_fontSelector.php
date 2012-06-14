@@ -1,2 +1,0 @@
-sh_fonts
-render_fontSelector

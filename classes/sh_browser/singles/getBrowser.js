@@ -27,9 +27,9 @@ function browser_show(session){
 }
 
 
-function browser_return(method,image,id){
+function browser_return(method,image,id,width,height){
     var functionToCall = eval(method);
-    functionToCall(image,id)
+    functionToCall(image,id,width,height)
 }
 
 var popupBrowser = {

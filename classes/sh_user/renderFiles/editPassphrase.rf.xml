@@ -1,0 +1,19 @@
+<div id="profile_mainContainer">
+    <RENDER_IFSET what="error:id">
+        <RENDER_NOTIF size="M" type="alert" title="Erreur">
+            <RENDER_VALUE what="i18n:{error:id}"/>
+        </RENDER_NOTIF>
+    </RENDER_IFSET>
+    <RENDER_NOTIF size="M" title="Modification de la phrase de vérification">
+        <RENDER_FORM id="editPassphrase">
+            Phrase de vérification : <br />
+            <textarea name="new" cols="51" rows="3"><RENDER_VALUE what="old:passphrase"/></textarea><br />
+            <div class="italic">
+                La phrase de vérification vous permet de lutter contre le phishing, ou
+                hameçonnage.
+                <RENDER_HELP what="{i18n:whatIsVerificationPhrase}"/>
+            </div>
+            <input style="margin-top:15px;" type="submit" value="{i18n:modify}"/>
+        </RENDER_FORM>
+    </RENDER_NOTIF>
+</div>

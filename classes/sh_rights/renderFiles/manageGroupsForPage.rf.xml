@@ -1,0 +1,15 @@
+<RENDER_NOTIF size="M" title="Sélection des groupes">
+    <div class="left">
+        <RENDER_FORM id="addGroupToPage">
+            Catégorie : <span class="bold"><RENDER_VALUE what="page:category"/></span><br />
+            Page : <span class="bold"><RENDER_VALUE what="page:name"/></span><br /><br />
+            Liste des groupes ayant des droits d'accès : <br />
+            <RENDER_LOOP what="groups">
+                <input type="checkbox" name="groups[{groups:group_id}]" state="{groups:state}"/>
+                <RENDER_VALUE what="groups:group_name"/><br />
+            </RENDER_LOOP>
+            <br />
+            <input type="submit" value="{i18n:validate}"/>
+        </RENDER_FORM>
+    </div>
+</RENDER_NOTIF>

@@ -1,0 +1,66 @@
+
+<li class="topic_post">
+    <div class="post_userInfo">
+        <img style="width:100px;height:100px;" src="{post:image}.resized.100.100.png"/>
+        <div>
+            <div class="{post:user_groups}">
+                <a href="/forum/profile/{post:user_id}.php">
+                    <RENDER_VALUE what="post:alias"/>
+                </a>
+            </div>
+        </div>
+        <div class="topic_userGroup">
+            <RENDER_VALUE what="post:user_groups"/>
+        </div>
+    </div>
+    <fieldset class="forum_answerTopic" id="post_{post:post_number}">
+        <legend style="margin-left:10px;padding:0 10px;">
+            <span style="font-weight:bold;">
+                <RENDER_VALUE what="post:post_number"/> - 
+                <RENDER_VALUE what="post:title"/>
+            </span>
+        </legend>
+        <div style="min-height:65px;padding:5px;">
+            <div class="postDate">
+                <RENDER_VALUE what="post:date"/>
+            </div>
+            <p>
+                <RENDER_VALUE what="post:text"/>
+            </p>
+            <RENDER_IFSET what="post:signature">
+                <div class="forum_signature_spacer">
+                    <hr/>
+                    <div class="{post:user_groups}"><RENDER_VALUE what="post:signature"/></div>
+                </div>
+            </RENDER_IFSET>
+        </div>
+        <div class="post_answerOrAlert">
+            <a href="{post:messageLink}">
+                Message privé
+            </a>&#160;-&#160;
+            <span class="postAnswer">
+                <a href="{post:answerLink}">
+                    <RENDER_VALUE what="i18n:answer2"/>
+                </a>
+            </span>&#160;-&#160;
+            <span class="postAlert">
+                <RENDER_IFNOTSET what="post:moderate">
+                    <a href="{post:alertLink}">
+                        <RENDER_VALUE what="i18n:alertModerator"/>
+                    </a>
+                </RENDER_IFNOTSET>
+                <RENDER_IFSET what="post:moderate">
+                    <a href="{post:moderateLink}">
+                        <RENDER_VALUE what="i18n:moderate_topic"/>
+                    </a>
+                </RENDER_IFSET>
+            </span>
+        </div>
+    </fieldset>
+    <div class="spacer"></div>
+    <RENDER_IFSET what="children:content">
+        <ul>
+            <RENDER_VALUE what="children:content"/>
+        </ul>
+    </RENDER_IFSET>
+</li>

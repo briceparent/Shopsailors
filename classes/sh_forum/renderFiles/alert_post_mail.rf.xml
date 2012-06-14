@@ -1,0 +1,39 @@
+
+<div>
+    <RENDER_IFSET what="user:connected">
+        L'utilisateur 
+        <span style="font-weight:bold;"><RENDER_VALUE what="user:alias"/></span>
+        (n°<RENDER_VALUE what="user:id"/>, IP : <RENDER_VALUE what="user:ip"/>)
+    </RENDER_IFSET>
+    <RENDER_IFNOTSET what="user:connected">
+        Un utilisateur du forum ayant l'adresse IP <RENDER_VALUE what="user:ip"/>
+    </RENDER_IFNOTSET>
+    vous signale que le post suivant doit être modéré.<br /><br />
+    <div>
+        <span style="font-weight:bold;">Auteur : </span>
+        <RENDER_VALUE what="post:alias"/>
+    </div>
+    <div>
+        <span style="font-weight:bold;">Date de publication : </span>
+        <RENDER_VALUE what="post:date"/>
+    </div>
+    <div>
+        <span style="font-weight:bold;">Titre : </span>
+        <RENDER_VALUE what="post:title"/>
+    </div>
+    <div>
+        <div style="font-weight:bold;">Contenu : </div>
+        <RENDER_VALUE what="post:text"/>
+    </div>
+    <div style="margin-top:15px;">
+        <div style="font-weight:bold;">Raison fournie par l'utilisateur : </div>
+        <RENDER_VALUE what="reason:text"/>
+    </div>
+    <div style="margin-top:15px;margin-bottom:15px;">
+        Vous pouvez accéder à ce sujet en cliquant sur le lien suivant :<br />
+        <a href="{post:link}">
+            <RENDER_VALUE what="post:link"/>
+        </a>
+    </div>
+    Si vous ne trouvez pas que ce sujet doit être modéré, ne vous préoccupez de rien, il restera publié.
+</div>

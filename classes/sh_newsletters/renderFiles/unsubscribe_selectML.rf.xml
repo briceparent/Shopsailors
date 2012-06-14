@@ -1,25 +1,25 @@
-<div>
+<div id="news_unsubscribeSelect">
     <form id="unsubscribeNewsForm">
         <div class="createAccount_contents">
-            <RENDER_IFSET what="error>oneAtLeast">
+            <RENDER_IFSET what="error:oneAtLeast">
                 <div class="alertError">
-                    <RENDER_IFSET what="error>noSelection">
+                    <RENDER_IFSET what="error:noSelection">
                         <div>
-                            <RENDER_VALUE what="i18n>error_noSelection"/>
+                            <RENDER_VALUE what="i18n:error_noSelection"/>
                         </div>
                     </RENDER_IFSET>
                 </div>
             </RENDER_IFSET>
         </div>
-        <input type="hidden" name="mail" value="{mail>value}"/>
+        <input type="hidden" name="mail" value="{mail:value}"/>
         <div class="nl_unsub_intro">
-            <RENDER_VALUE what="i18n>unsubscription_selectML_intro"/>
+            <RENDER_VALUE what="i18n:unsubscription_selectML_intro"/>
         </div>
         <RENDER_LOOP what="mailingLists">
-            <RENDER_CHECKBOX text="{mailingLists>name}" name="mailingLists[{mailingLists>id}]" state="{mailingLists>state}" help="{mailingLists>description}"/>
+            <RENDER_CHECKBOX text="{mailingLists:name}" name="mailingLists[{mailingLists:id}]" state="{mailingLists:state}" help="{mailingLists:description}"/>
         </RENDER_LOOP>
         <div class="">
-            <input type="submit" value="{i18n>send}"/>
+            <input type="submit" value="{i18n:send}"/>
         </div>
     </form>
 </div>

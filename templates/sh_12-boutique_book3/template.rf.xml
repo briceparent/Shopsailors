@@ -1,44 +1,46 @@
 <html xml:lang="fr">
     <head>
-        <RENDER_VALUE what="head>content"/>
+        <RENDER_VALUE what="head:content"/>
     </head>
-    <RENDER_TAG type="body" what="body>data">
-        <RENDER_VALUE what="body>beginning"/>
+    <RENDER_TAG type="body" what="body:data">
+        <RENDER_VALUE what="body:beginning"/>
         <div id="head">
-            <RENDER_IFSET what="connect>link">
+            <RENDER_IFSET what="connect:link">
                 <div id="connectionContainer">
-                    <a href="{connect>link}"><RENDER_VALUE what="i18n>connectAccountClient"/></a>
+                    <a href="{connect:link}"><RENDER_VALUE what="i18n:connectAccountClient"/></a>
                 </div>
             </RENDER_IFSET>
-            <RENDER_IFSET what="disconnect>link">
+            <RENDER_IFSET what="disconnect:link">
                 <div id="connectionContainer">
-                    <a href="{disconnect>link}"><RENDER_VALUE what="i18n>disconnectAccountClient"/></a>
+                    <a href="{profile:link}"><RENDER_VALUE what="i18n:profileAccountClient"/></a> -
+                    <a href="{disconnect:link}"><RENDER_VALUE what="i18n:disconnectAccountClient"/></a>
                 </div>
             </RENDER_IFSET>
-            <RENDER_VALUE what="language>selector"/>
+            <RENDER_VALUE what="language:selector"/>
             <div class="topTitle">
-                <h1><RENDER_VALUE what="body>headline"/></h1>
+                <h1><RENDER_VALUE what="body:headline"/></h1>
             </div>
-            <RENDER_VALUE what="body>searchEngine"/>
+            <RENDER_VALUE what="body:searchEngine"/>
         </div>
-        <div class="menu1">
-            <RENDER_VALUE what="body>menu_1"/>
+        <div class="menu_container">
+            <RENDER_VALUE what="body:menu_1"/>
         </div>
+            <div class="clear"></div>
         <div id="mainContainer">
             <div class="logo">
-                <img src="/images/site/logo/banner.png" alt="logo" title=""/>
+                <img src="/images/site/logo/logo.png" alt="logo" title=""/>
             </div>
             <div id="content_middle">
-               <RENDER_IFSET what="body>title">
-                    <h1><RENDER_VALUE what="body>title"/></h1>
+               <RENDER_IFSET what="body:title">
+                    <h1 class="bodyTitle"><RENDER_VALUE what="body:title"/></h1>
                 </RENDER_IFSET>
                 <div class="page_content">
-                    <RENDER_VALUE what="body>content"/>
+                    <RENDER_VALUE what="body:content"/>
                </div>
             </div>
         </div>
         <div id="copyrights">
-            <RENDER_VALUE what="body>copyrights"/>
+            <RENDER_VALUE what="body:copyrights"/>
         </div>
     </RENDER_TAG>
 </html>

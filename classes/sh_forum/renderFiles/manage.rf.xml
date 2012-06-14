@@ -1,0 +1,55 @@
+
+<div id="admin">
+    <RENDER_FORM id="forum_manage">
+        <RENDER_TABGROUP size="XL" validate="{i18n:save}" admin="admin">
+            <RENDER_TAB title="{i18n:manage_general_title}">
+                <div class="admin_blueLink marginBottom_10px">
+                    <RENDER_CHECKBOX text="{i18n:manage_activateForum}" name="active" state="{active:checked}"/>
+                </div>
+                
+                <div class="marginBottom_10px">
+                    <RENDER_CHECKBOX text="{i18n:manage_forceUserToCheckConditions}" name="forceUserToCheckConditions" state="{forceUserToCheckConditions:checked}"/>
+                    
+                    <RENDER_VALUE what="i18n:conditionsFile"/>
+                    <RENDER_HELP>
+                        <RENDER_VALUE what="i18n:conditionsFile_explanations"/>
+                    </RENDER_HELP>
+                    <br />
+                    <RENDER_DOCUMENTSELECTOR name="conditions" value="{conditions:file}"/>
+                </div>
+            </RENDER_TAB>
+            <RENDER_TAB title="Modération">
+                <RENDER_VALUE what="i18n:mailsNotifs"/>
+                <RENDER_HELP>
+                    <RENDER_VALUE what="i18n:mailsNotifs_help"/>
+                </RENDER_HELP> 
+                <br />
+                <textarea name="alertMails" style="width:350px;height:50px;">
+                    <RENDER_VALUE what="alert:mails"/>
+                </textarea>
+                <hr />
+                <RENDER_VALUE what="i18n:forbidWords"/>
+                <RENDER_HELP>
+                    <RENDER_VALUE what="i18n:forbidWords_help"/>
+                </RENDER_HELP>
+:
+                <br/>
+                <textarea name="words[forbidden]" style="width:350px;height:120px;">
+                    <RENDER_VALUE what="words:forbidden"/>
+                </textarea>
+                
+                <hr />
+                <RENDER_VALUE what="i18n:moderateWords"/>
+                <RENDER_HELP>
+                    <RENDER_VALUE what="i18n:moderateWords_help"/>
+                </RENDER_HELP>
+:
+                <br/>
+                <textarea name="words[dangerous]" style="width:350px;height:120px;">
+                    <RENDER_VALUE what="words:dangerous"/>
+                </textarea>
+                
+            </RENDER_TAB>
+        </RENDER_TABGROUP>
+    </RENDER_FORM>
+</div>

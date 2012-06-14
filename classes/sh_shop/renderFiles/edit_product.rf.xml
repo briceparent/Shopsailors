@@ -1,148 +1,411 @@
+
 <div>
+    <RENDER_JS>
+        var msg_shop_shouldSelectACategory_title = 
+        <RENDER_VALUE quotes="'" what="i18n:errorNoCategory_title"/>;
+        var msg_shop_shouldSelectACategory_content = 
+        <RENDER_VALUE quotes="'" what="i18n:errorNoCategory_content"/>;
+    </RENDER_JS>
     <RENDER_FORM id="productEditor" >
-        <div class="form_box_container">
-            <NORENDER>First box (product datas)</NORENDER>
-            <RENDER_IFSET what="message>content">
-                <div class="form_messageContainer">
-                    <div class="form_message_top">
-                    </div>
-                    <div class="form_message_middle">
-                        <div class="messageContainer">
-                            <div class="message">
-                                <RENDER_VALUE what="message>content"/>
-                            </div>
-                            <div class="link">
-                                <a href="{message>link}">
-                                    <RENDER_VALUE what="message>link"/>
-                                </a>
-                            </div>
+        <RENDER_IFSET what="message:content">
+            <RENDER_ADMINBOX>
+                <RENDER_ADMINBOXCONTENT>
+                    <div class="messageContainer">
+                        <div class="message">
+                            <RENDER_VALUE what="message:content"/>
+                        </div>
+                        <div class="link">
+                            <a href="{message:link}">
+                                <RENDER_VALUE what="message:link"/>
+                            </a>
                         </div>
                     </div>
-                    <div class="form_message_bottom">
-                    </div>
-                </div>
-            </RENDER_IFSET>           
-            <RENDER_IFSET what="error>noCategory">
-                <div class="form_messageContainer">
-                    <div class="form_message_top">
-                    </div>
-                    <div class="form_message_middle">
+                </RENDER_ADMINBOXCONTENT>
+            </RENDER_ADMINBOX>
+        </RENDER_IFSET>
+        <RENDER_IFSET what="error:noCategory">
+            <RENDER_ADMINBOX>
+                <RENDER_ADMINBOXCONTENT>
+                    <div class="form_messageContainer">
                         <div class="messageContainer">
                             <div class="alertError">
-                                <RENDER_VALUE what="i18n>errorNocategory"/>
+                                <RENDER_VALUE what="i18n:errorNocategory"/>
                             </div>
                         </div>
                     </div>
-                    <div class="form_message_bottom">
-                    </div>
+                </RENDER_ADMINBOXCONTENT>
+            </RENDER_ADMINBOX>
+        </RENDER_IFSET>
+
+        <NORENDER>FIRST TAB</NORENDER>
+        <RENDER_TABGROUP size="XL" validate="{i18n:save}" admin="admin">
+            <RENDER_TAB title="{i18n:productEditor_title}">
+                <table>
+                    <tr>
+                        <td class="admin_blueLink" colspan="2">
+                            <RENDER_CHECKBOX text="{i18n:productEditor_activateProduct}" help="{i18n:productEditor_activateProductExplanation}" name="active" state="{product:active}"/>
+                        </td>
+                    </tr>
+                </table>
+                <div class="adminSeparator"></div>
+                <table>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:productEditor_name"/>
+                        </td>
+                        <td>
+                            <RENDER_I18NINPUT class="sh_shop" i18n="{product:name}" name="name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:productEditor_reference"/>
+                            <RENDER_HELP what="{i18n:productEditor_reference_explanation}"/>
+                        </td>
+                        <td>
+                            <input class="inputForm" id="ref" name="reference" value="{product:reference}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:productEditor_price"/>
+                            <RENDER_HELP what="{i18n:productEditor_price_explanation}"/>
+                        </td>
+                        <td>
+                            <RENDER_VALUE what="constants:currencybefore"/>
+                            <input class="inputQuantity" id="price" name="price" value="{product:price}"/>
+                            <RENDER_VALUE what="constants:currencyafter"/>&#160;
+                            <RENDER_VALUE what="constants:taxes"/>
+                            <div class="noteText">
+                                <RENDER_VALUE what="i18n:productEditor_priceNote"/>
+                            </div>
+                            <RENDER_VALUE what="i18n:productEditor_taxRate"/>
+                            <br />
+                            <input class="inputQuantity" name="taxRate" value="{product:taxRate}"/>%
+                            <div class="noteText">
+                                <RENDER_VALUE what="i18n:productEditor_taxRateNote"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:productEditor_shipment"/>
+                            <RENDER_HELP what="{i18n:noShippingCost_explanation}"/>
+                        </td>
+                        <td>
+                            <RENDER_CHECKBOX text="{i18n:noShippingCost}" name="noShippingCost" state="{product:noShippingCost}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:productEditor_stock"/>
+                            <RENDER_HELP what="{i18n:productEditor_stock_explanation}"/>
+                        </td>
+                        <td>
+                            <input class="inputQuantity" id="stock" name="stock" value="{product:stock}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:productEditor_description"/>
+                            <RENDER_HELP what="{i18n:productEditor_descriptionExplanation}"/>
+                        </td>
+                        <td>
+                            <RENDER_I18NWEDITOR type="minimal" class="height250" i18nClass="sh_shop" i18n="{product:description}" name="description"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:productEditor_shortDescription"/>
+                            <RENDER_HELP what="{i18n:productEditor_shortDescriptionExplanation}"/>
+                        </td>
+                        <td>
+                            <RENDER_I18NINPUT class="sh_shop" i18n="{product:shortDescription}" name="shortDescription"/>
+                        </td>
+                    </tr>
+                </table>
+                <div class="adminSeparator"></div>
+                <table>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:productEditor_image"/>
+                            <RENDER_HELP what="{i18n:productEditor_imageExplanation}"/>
+                        </td>
+                        <td>
+                            <div class="preview_image">
+                                <RENDER_IMAGESELECTOR folder="shop/products" name="image" value="{product:image}" alt="{i18n:productEditor_clickHere}"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RENDER_VALUE what="i18n:productEditor_smallImages"/>
+                        </td>
+                        <td>
+                            <RENDER_MULTIPLEIMAGESSELECTOR name="images" value="{product:images}" folder="shop"/>
+                        </td>
+                    </tr>
+                </table>
+            </RENDER_TAB>
+
+            <NORENDER>SECOND TAB - CATEGORIES</NORENDER>
+            <RENDER_TAB title="{i18n:productEditor_categoriesTitle}">
+                <div class="marginBottom_10px italic">
+                    <RENDER_VALUE what="i18n:productEditor_categoriesExplanantion"/>
                 </div>
-            </RENDER_IFSET>
-            <div class="form_box_top">
-                <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>productEditor_title"/>
-                </h3>
-            </div>
-            <div class="form_box_middle">
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_name"/><br />
-                    <RENDER_I18NINPUT class="sh_shop" i18n="{product>name}" name="{inputs>name}"/>
-                </div>
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_reference"/><br />
-                    <input class="inputForm" name="{inputs>reference}" value="{product>reference}"/>
-                </div>
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_price"/><br />
-                    <input class="inputForm" name="{inputs>price}" value="{product>price}"/>
-                    <div class="noteText">
-                        <RENDER_VALUE what="i18n>productEditor_priceNote"/>                        
-                    </div>
-                </div>
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_stock"/><br />
-                    <input class="inputForm" name="{inputs>stock}" value="{product>stock}"/>
-                </div>
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_description"/>
-                    <RENDER_HELP what="{i18n>productEditor_descriptionExplanation}"/>
-                    <RENDER_I18NWEDITOR type="minimal" i18nClass="sh_shop" i18n="{product>description}" name="{inputs>description}"/>
-                </div>
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_shortDescription"/>
-                    <RENDER_HELP what="{i18n>productEditor_shortDescriptionExplanation}"/>
-                    <RENDER_I18NINPUT class="sh_shop" i18n="{product>shortDescription}" name="{inputs>shortDescription}"/>
-                </div>
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_image"/>
-                    <RENDER_HELP what="{i18n>productEditor_imageExplanation}"/>
-                    <div class="preview_image">
-                        <img src="{product>image}" onclick="{product>onClickReplaceImage}" alt="{i18n>productEditor_clickHere}"/>
-                        <input type="hidden" name="{inputs>image}" value="{product>image}" id="{inputs>image}"/>
-                    </div>
-                </div>
-                <div id="test"></div>
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_smallImages"/> 
-                    <RENDER_MULTIPLEIMAGESSELECTOR name="{inputs>images}" value="{product>images}" folder="{product>imagesFolder}"/>
-                </div>
-                <div class="formContent">
-                    <RENDER_CHECKBOX text="{i18n>productEditor_activateProduct}" help="{i18n>productEditor_activateProductExplanation}" name="{inputs>active}" state="{product>active}"/>
-                </div>
-            </div>
-            <div class="form_box_bottom">
-            </div>
-            <NORENDER>Second box (Custom properties)</NORENDER>
-            <div class="form_box_top">
-                <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>productEditor_custumProperties"/>
-                </h3>
-            </div>
-            <div class="form_box_middle">
-                <RENDER_LOOP what="customProperties">
-                    <div class="formContent">
-                        <input type="checkbox" name="active[{customProperties>id}]" state="{customProperties>state}"/>
-                        <RENDER_VALUE what="customProperties>name"/>&#160;:&#160;
-                        <RENDER_IFSET what="customProperties>isText">
-                            <input name="values[{customProperties>name}]" value="{customProperties>value}"/>
-                        </RENDER_IFSET>
-                        <RENDER_IFSET what="customProperties>isI18nText">
-                            <br /><RENDER_I18NINPUT class="sh_shop" name="values[{customProperties>name}]" i18n="{customProperties>value}"/>
-                        </RENDER_IFSET>
-                        <RENDER_IFSET what="customProperties>isList">
-                            <select name="values[{customProperties>id}]">
-                                <RENDER_LOOP what="values">
-                                    <option value="{values>id}" state="{values>state}">
-                                        <RENDER_VALUE what="values>value"/>
-                                    </option>
-                                </RENDER_LOOP>
-                            </select>
-                        </RENDER_IFSET>
+                <RENDER_LOOP what="categories">
+                    <div>
+                        <RENDER_CHECKBOX class="shop_categories" text="{categories:name}" name="product_categories[{categories:id}]" state="{categories:checked}"/>
                     </div>
                 </RENDER_LOOP>
-            </div>
-            <div class="form_box_bottom">
-            </div>
-            <NORENDER>Third box (categories)</NORENDER>
-            <div class="form_box_top">
-                <h3 class="box_title">
-                    <RENDER_VALUE what="i18n>productEditor_categoriesTitle"/>
-                </h3>
-            </div>
-            <div class="form_box_middle">
-                <div class="formContent">
-                    <RENDER_VALUE what="i18n>productEditor_categoriesExplanantion"/>
-                    <RENDER_LOOP what="categories">
-                        <div>
-                            <RENDER_CHECKBOX text="{categories>name}" name="{categories>inputName}" state="{categories>checked}"/>
-                        </div>
+            </RENDER_TAB>
+            
+            <NORENDER>THIRD TAB - LAYOUTS</NORENDER>
+            <RENDER_TAB title="{i18n:layout_title}">
+                Choix de l'habillage à utiliser dans cette catégorie :
+                <select name="layout">
+                    <RENDER_LOOP what="layouts">
+                        <option value="{layouts:id}" state="{layouts:state}">
+                            <RENDER_VALUE what="layouts:name"/>
+                        </option>
                     </RENDER_LOOP>
+                </select>
+            </RENDER_TAB>
+
+            <RENDER_IFSET what="shop:there_are_custom_properties">
+                <NORENDER>FOURTH TAB - CUSTOM PROPERTIES</NORENDER>
+                <RENDER_TAB title="{i18n:customPropertiesEditor_title}">
+                    <div class="italic marginBottom_10px">
+                        <RENDER_VALUE what="i18n:inactiveFields"/>
+                    </div>
+                    <table>
+                        <RENDER_LOOP what="customProperties">
+                            <tr>
+                                <td>
+                                    <RENDER_VALUE what="customProperties:name"/>&#160;:&#160;
+                                </td>
+                                <td>
+                                    <select name="customProperties[{customProperties:id}]">
+                                        <option value="unshown">Ne pas afficher ce champs</option>
+                                        <option value="empty" state="{customProperties:emptyState}">[vide]</option>
+                                        <RENDER_LOOP what="values">
+                                            <option value="{values:id}" state="{values:state}">
+                                                <RENDER_VALUE what="values:value"/>
+                                            </option>
+                                        </RENDER_LOOP>
+                                    </select>
+                                </td>
+                            </tr>
+                        </RENDER_LOOP>
+                    </table>
+                    <div class="adminSeparator"></div>
+                    <div class="italic">
+                        <RENDER_VALUE what="i18n:createCustomProperty"/>
+                    </div>
+                </RENDER_TAB>
+
+                <NORENDER>FIFTH TAB - VARIANTS</NORENDER>
+                <script type="text/javascript" src="/sh_shop/singles/productEditor.js"/>
+                <RENDER_TAB title="{i18n:productEditor_variantsTitle}">
+                    <div class="admin_blueLink">
+                        <RENDER_CHECKBOX id="hasVariants" onclick="sh_shop_toggleVariants();" name="variants[hasVariants]" state="{product:hasVariants}" text="{i18n:productEditor_hasVariants}" help="{i18n:hasVariants_explanation}"/>
+                    </div>
+                    <div id="productsVariants">
+                        <RENDER_CHECKBOX id="variantsChangeRef" onclick="sh_shop_toggleVariants();" name="variants[changeRef]" state="{product:variants_change_ref}" text="{i18n:productEditor_variantsChangeRef}"/>
+                        <RENDER_CHECKBOX id="variantsChangePrice" onclick="sh_shop_toggleVariants();" name="variants[changePrice]" state="{product:variants_change_price}" text="{i18n:productEditor_variantsChangePrice}"/>
+                        <RENDER_CHECKBOX id="variantsChangeStock" onclick="sh_shop_toggleVariants();" name="variants[changeStock]" state="{product:variants_change_stock}" text="{i18n:productEditor_variantsChangeStock}"/>
+                        <div class="adminSeparator"></div>
+                        <RENDER_VALUE what="i18n:cutomProperties_used"/>
+                        <RENDER_TABLE cols="5" what="customProperties">
+                            <input type="checkbox" name="variants[ActivatedCP][{customProperties:id}]" state="{customProperties:variant_state}" onchange="clickedElement = this;variants_enable_change();" id="{customProperties:id}" class="allowedCustomPropertiesForVariants" disabled="disabled"/>
+                            <label for="{customProperties:id}">
+                                <RENDER_VALUE what="customProperties:name"/>
+                            </label>
+                        </RENDER_TABLE>
+                        <div style="display:none;">
+                            <RENDER_LOOP what="customProperties">
+                                <table id="model_{customProperties:id}">
+                                    <tr>
+                                        <td>
+                                            <RENDER_VALUE what="customProperties:name"/> :
+                                        </td>
+                                        <td>
+                                            <select name="variants[variant_{customProperties:id}][]">
+                                                <RENDER_LOOP what="values">
+                                                    <option value="{values:id}">
+                                                        <RENDER_VALUE what="values:value"/>
+                                                    </option>
+                                                </RENDER_LOOP>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </RENDER_LOOP>
+                            <table id="model_stock">
+                                <tr>
+                                    <td>Stock : </td>
+                                    <td>
+                                        <input class="variant_stock" name="variants[variant_stock][]" value="{variants:stock}" style="width:40px;"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="model_price">
+                                <tr>
+                                    <td>Prix : </td>
+                                    <td>
+                                        <input class="variant_price" name="variants[variant_price][]" value="{variants:price}"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="model_ref">
+                                <tr>
+                                    <td>Référence : </td>
+                                    <td>
+                                        <input class="variant_ref" name="variants[variant_ref][]" value="{variants:ref}"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="admin_blueLink underline marginTop_5px" id="allowModifyProps" onclick="variants_enable_change(this);">
+                        Modifier les propriétés personnalisées utilisables
+                        </div>
+                        <div class="adminSeparator"></div>
+                        <fieldset>
+                            <legend>Variantes existantes : </legend>
+                            <RENDER_CSS>
+                            #variants li{
+                            border:1px solid grey;
+                            margin-top:4px;
+                            }
+                            </RENDER_CSS>
+                            <ol id="variants">
+                                <RENDER_LOOP what="variants">
+                                    <li>
+                                        <table>
+                                            <RENDER_LOOP what="properties">
+                                                <tr>
+                                                    <td>
+                                                        <RENDER_VALUE what="properties:name"/> :
+                                                    </td>
+                                                    <td>
+                                                        <RENDER_VALUE what="properties:value"/>
+                                                        <input type="hidden" name="variants[variant_{properties:id}][]" value="{properties:value_id}"/>
+                                                    </td>
+                                                </tr>
+                                            </RENDER_LOOP>
+                                            <tr>
+                                                <td>Stock : </td>
+                                                <td>
+                                                    <input class="variant_stock" name="variants[variant_stock][{variants:id}]" value="{variants:stock}" style="width:40px;"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Référence : </td>
+                                                <td>
+                                                    <input class="variant_ref" name="variants[variant_ref][{variants:id}]" value="{variants:ref}"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Prix : </td>
+                                                <td>
+                                                    <input class="variant_price" name="variants[variant_price][{variants:id}]" value="{variants:price}"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                </RENDER_LOOP>
+                            </ol>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Ajouter une variante : </legend>
+                            <div class="tab_buttons left">
+                                <input type="button" value="Ajouter" onclick="add_variant();" class="tab_button btn_add"/>
+                            </div>
+                        </fieldset>
+                    </div>
+                </RENDER_TAB>
+            </RENDER_IFSET>
+
+            <NORENDER>SIXTH TAB - DISCOUNTS</NORENDER>
+            <RENDER_TAB title="{i18n:categoryEditor_discountsTitle}">
+                <RENDER_VALUE what="i18n:categoryEditor_discountsIntro"/>
+
+                <RENDER_RADIOBOX name="discounts" text="{i18n:categoryEditor_listDiscounts_none}" value="none" state="{discounts_none:state}"/>
+                <RENDER_RADIOBOX name="discounts" id="discounts_selected" text="{i18n:categoryEditor_listDiscounts_those}" value="selected" state="{discounts_those:state}"/>
+                <div class="noteText">
+                    <RENDER_VALUE what="i18n:categoryEditor_listDiscounts_those_intro"/>
                 </div>
-            </div>
-            <div class="form_box_bottom">
-            </div>
-            <div class="formSubmitContainer">
-                <input type="submit" value="Enregistrer"/>
-            </div>
-        </div>
+                <table>
+                    <RENDER_LOOP from="1" to="10">
+                        <tr>
+                            <td>
+                                <RENDER_VALUE what="i18n:categoryEditor_discountNumber_before"/>
+                                <RENDER_VALUE what="loop:id"/>
+                                <RENDER_VALUE what="i18n:categoryEditor_discountNumber_after"/>
+                            </td>
+                            <td>
+                                <select name="discount[{loop:id}]" id="discount_{loop:id}" class="discountSelector">
+                                    <option value="none">
+                                        <RENDER_VALUE what="i18n:categoryEditor_listDiscounts_none"/>
+                                    </option>
+                                    <RENDER_LOOP what="discounts">
+                                        <option value="{discounts:id}">
+                                            <RENDER_VALUE what="discounts:name"/>
+                                        </option>
+                                    </RENDER_LOOP>
+                                </select>
+                            </td>
+                        </tr>
+                    </RENDER_LOOP>
+                </table>
+            </RENDER_TAB>
+            <RENDER_ENDJS>
+                $$('.discountSelector').each(function(el){
+                    Event.observe(el,'change',function(){
+                        if(el.value != 'none'){
+                            $('discounts_selected').checked = true;
+                        }
+                    });
+                });
+                var discountValues = 
+                <RENDER_VALUE what="discountValues:json"/>;
+                discountValues.each(function(el){
+                    $(el.input).value=el.value;
+                });
+
+            </RENDER_ENDJS>
+
+            <NORENDER>SEVENTH TAB - SEO</NORENDER>
+            <RENDER_TAB title="{i18n:seo_title}">
+                <div class="italic">
+                    <RENDER_VALUE what="i18n:seo_explanations"/>
+                </div>
+                <br />
+                <RENDER_VALUE what="i18n:seo_titleBar"/>
+                <RENDER_HELP what="{i18n:seo_product_titleBar_explanations}"/>
+                <br />
+                <RENDER_I18NINPUT name="seo_titleBar" class="sh_shop" i18n="{product:seo_titleBar}"/>
+                <br />
+                <br />
+                <RENDER_VALUE what="i18n:seo_metaDescription"/>
+                <RENDER_HELP what="{i18n:seo_product_metaDescription_explanations}"/>
+                <br />
+                <RENDER_I18NTEXTAREA name="seo_metaDescription" class="sh_shop" i18n="{product:seo_metaDescription}"/>
+            </RENDER_TAB>
+        </RENDER_TABGROUP>
     </RENDER_FORM>
+    <RENDER_CSS>
+        #promo_editor,
+        .admin_fieldset_content{
+            display:none;
+        }
+    </RENDER_CSS>
+    <script type="text/javascript">
+        function promo_display(promoForm){
+            $$('.admin_fieldset_content').each(function(el){
+                el.style.display = 'none';
+            });
+            $(promoForm).style.display = 'block';
+        }
+    </script>
 </div>

@@ -1,48 +1,48 @@
 <div class="forumContainer">
     <NORENDER>breadcrumbs</NORENDER>
     <span id="forum_navigator" class="forum_arboText">
-        <RENDER_VALUE what="i18n2>navigator_title"/>
-        <RENDER_BREADCRUMBS what="nav_levels" sameLevelText="{i18n2>breadCrumbs_sameCategoryText}"/>
+        <RENDER_VALUE what="i18n2:navigator_title"/>
+        <RENDER_BREADCRUMBS what="nav_levels" sameLevelText="{i18n2:breadCrumbs_sameCategoryText}"/>
     </span>
-	<h1><RENDER_VALUE what="forum>SubjectCategories"/></h1>
-    <RENDER_IFSET what="forum_categories>summary">
+	<h1><RENDER_VALUE what="forum:SubjectCategories"/></h1>
+    <RENDER_IFSET what="forum_categories:summary">
         <div class="forum_categories_intro">
-            <RENDER_VALUE what="forum_categories>summary"/>
+            <RENDER_VALUE what="forum_categories:summary"/>
         </div>
     </RENDER_IFSET>
-	<RENDER_IFSET what="rights>createCat">
+	<RENDER_IFSET what="rights:createCat">
 		<div class="forum_createNew">
-			<a href="forum_createNewCat>link"><RENDER_VALUE what="i18n2>forum_createNewCat"/></a>
+			<a href="forum_createNewCat>link"><RENDER_VALUE what="i18n2:forum_createNewCat"/></a>
 		</div>
 	</RENDER_IFSET>
-	<RENDER_IFSET what="rights>createSubject">
+	<RENDER_IFSET what="rights:createSubject">
 		<div class="forum_createNew">
-			<a href="forum_createNew>link"><RENDER_VALUE what="i18n2>forum_createNew"/></a>
+			<a href="forum_createNew>link"><RENDER_VALUE what="i18n2:forum_createNew"/></a>
 		</div>
 	</RENDER_IFSET>
 	<div class="forum_categoriesList">
 		<RENDER_LOOP what="forum_categories">
-			<RENDER_IFSET what="forum_categories>rights_read">
+			<RENDER_IFSET what="forum_categories:rights_read">
 				<div class="forum_oneCat">
 					<div class="forum_oneCat_name">
-						<a href="forum_categories>link"><RENDER_VALUE what="forum_categories>name"/></a>
+						<a href="forum_categories>link"><RENDER_VALUE what="forum_categories:name"/></a>
 					</div>
 					<div class="forum_oneCat_shortDesc">
-						<RENDER_IFSET what="forum_categories>rights_edit">
+						<RENDER_IFSET what="forum_categories:rights_edit">
 							<div class="forum_editCat">
-								<a href="{forum_categories>editLink}"><RENDER_VALUE what="i18n2>editLink"/></a>
+								<a href="{forum_categories:editLink}"><RENDER_VALUE what="i18n2:editLink"/></a>
 							</div>
 						</RENDER_IFSET>
-						<RENDER_VALUE what="forum_categories>shortDesc"/>
+						<RENDER_VALUE what="forum_categories:shortDesc"/>
 					</div>
 				</div>
 			</RENDER_IFSET>
 		</RENDER_LOOP>
 		<div class="clearBoth">&#160;</div>
-		<RENDER_IFNOTSET what="forum_categories>rights_read">
+		<RENDER_IFNOTSET what="forum_categories:rights_read">
 			<div class="forum_notConnected">
-				<RENDER_VALUE what="i18n2>connection_required"/><br />
-				<a href="/user/connect.php"><RENDER_VALUE what="i18n2>connection"/></a>
+				<RENDER_VALUE what="i18n2:connection_required"/><br />
+				<a href="/user/connect.php"><RENDER_VALUE what="i18n2:connection"/></a>
 			</div>
 		</RENDER_IFNOTSET>
 	</div>

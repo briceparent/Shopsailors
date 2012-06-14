@@ -1,2 +1,0 @@
-sh_captcha
-render_captcha

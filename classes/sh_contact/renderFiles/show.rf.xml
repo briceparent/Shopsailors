@@ -1,89 +1,91 @@
 <div id="contact">
-    <div id="sendMailForm_container">
-        <RENDER_IFSET what="contact>sendMail">
-            <h3><RENDER_VALUE what="i18n>send_a_mail"/></h3>
-            <div class="sendmailContent">
-                <RENDER_FORM method="post" action="" id="sendMail" >
-                    <table>
-                        <tr>
-                            <td>
-                                <RENDER_VALUE what="i18n>name"/><br/>
-                                <input name="name" value="{previous>name}"/>
-                            </td>
-                            <td>
-                            <RENDER_VALUE what="i18n>company"/><br/>
-                                <input name="company" value="{previous>company}"/><br/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <RENDER_VALUE what="i18n>phone"/><br/>
-                                <input name="phone" value="{previous>phone}"/>
-                            </td>
-                            <td>
-                                <RENDER_VALUE what="i18n>mail"/><br/>
-                                <input name="mail" value="{previous>mail}"/>
-                            </td>
-                        </tr>
-                    </table>
-                    <div class="noteText">
-                        <RENDER_VALUE what="i18n>required"/>
-                    </div>
-                    <div class="marginTop_5px">
-                        <RENDER_VALUE what="i18n>content"/> <br />
-                        <textarea name="content" class="mailContent">
-                            <RENDER_VALUE what="previous>content"/>
-                        </textarea>
-                    </div>
-                    <div class="contact_submitCaptcha">
-                        <div class=""><RENDER_CAPTCHA what="sendMail"/>
-                        </div>
-                        <input class="marginTop_5px" type="submit" value="{i18n>send}"/>
-                    </div>
-                </RENDER_FORM>
-            </div>
-        </RENDER_IFSET>
-    </div>
-    <div class="contact_intro">
-        <RENDER_VALUE what="contact>intro"/>
-    </div>
-    <div id="contactData_container">
-        <RENDER_IFSET what="sendMail>status">
-            <h3><RENDER_VALUE what="i18n>status"/></h3>
-            <div class="important"><RENDER_VALUE what="sendMail>status"/></div>
-        </RENDER_IFSET>
-        <div class="contact_address">
-            <RENDER_IFSET what="contact>address">
-                <h3><RENDER_VALUE what="i18n>address"/></h3>
-                <div id="test_address"><RENDER_VALUE what="contact>address"/></div>
-            </RENDER_IFSET>
-        </div><br />
-        <div class="contact_phone">
-            <RENDER_IFSET what="contact>phone">
-                <h3><RENDER_VALUE what="i18n>phone"/></h3>
-                <div>
-                    <RENDER_LOOP what="phone">
-                        <div>
-                            <RENDER_VALUE what="phone>name"/> : <RENDER_VALUE what="phone>value"/>
-                        </div>
-                    </RENDER_LOOP>
+    <table id="contactContainer" cellpadding="0" cellspacing="0">
+        <tr>
+            <td class="datas">
+                <div class="contact_intro">
+                    <RENDER_VALUE what="contact:intro"/>
                 </div>
-            </RENDER_IFSET>
-        </div><br />
-        <div class="contact_mail">
-            <RENDER_IFSET what="contact>mail">
-                <h3><RENDER_VALUE what="i18n>mail"/></h3>
-                <div>
-                        <RENDER_LOOP what="mail">
+                <div id="contactData_container">
+                    <RENDER_IFSET what="sendMail:status">
+                        <h3><RENDER_VALUE what="i18n:status"/></h3>
+                        <div class="important"><RENDER_VALUE what="sendMail:status"/></div>
+                    </RENDER_IFSET>
+                    <div class="contact_address">
+                        <RENDER_IFSET what="contact:address">
+                            <h3><RENDER_VALUE what="i18n:address"/></h3>
+                            <div id="test_address"><RENDER_VALUE what="contact:address"/></div>
+                        </RENDER_IFSET>
+                    </div><br />
+                    <div class="contact_phone">
+                        <RENDER_IFSET what="contact:phone">
+                            <h3><RENDER_VALUE what="i18n:phone"/></h3>
                             <div>
-                                <RENDER_VALUE what="mail>name"/> :
-                                <a href="MAILTO:{mail>value}" class="grey_link">
-                                    <RENDER_VALUE what="mail>value"/>
-                                </a>
+                                <RENDER_LOOP what="phone">
+                                    <div>
+                                        <RENDER_VALUE what="phone:name"/> : <RENDER_VALUE what="phone:value"/>
+                                    </div>
+                                </RENDER_LOOP>
                             </div>
-                        </RENDER_LOOP>
+                        </RENDER_IFSET>
+                    </div><br />
+                    <div class="contact_mail">
+                        <RENDER_IFSET what="contact:mail">
+                            <h3><RENDER_VALUE what="i18n:mail"/></h3>
+                            <div>
+                                <RENDER_LOOP what="mail">
+                                    <div>
+                                        <RENDER_VALUE what="mail:name"/> :
+                                        <a href="MAILTO:{mail:value}" class="grey_link">
+                                            <RENDER_VALUE what="mail:value"/>
+                                        </a>
+                                    </div>
+                                </RENDER_LOOP>
+                            </div>
+                        </RENDER_IFSET>
+                    </div>
                 </div>
-            </RENDER_IFSET>
-        </div>
-    </div>
+            </td>
+            <td class="sendmail">
+                <RENDER_IFSET what="contact:sendMail">
+                    <RENDER_FORM id="sendMail" >
+                        <RENDER_NOTIF id="sendMailForm_container" title="{i18n:send_a_mail}" size="M">
+                            <table cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td>
+                                        <RENDER_VALUE what="i18n:name"/><br/>
+                                        <input class="autocheck" placeholder="{i18n:input_mandatory}" required="required" name="name" value="{previous:name}"/>
+                                    </td>
+                                    <td>
+                                        <RENDER_VALUE what="i18n:company"/><br/>
+                                        <input class="autocheck" placeholder="{i18n:input_optional}" name="company" value="{previous:company}"/><br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <RENDER_VALUE what="i18n:mail"/><br/>
+                                        <input class="autocheck" placeholder="{i18n:input_mandatory}" required="required" type="email" name="mail" value="{previous:mail}"/>
+                                    </td>
+                                    <td>
+                                        <RENDER_VALUE what="i18n:phone"/><br/>
+                                        <input class="autocheck" placeholder="{i18n:input_optional}" pattern="\+?[0-9 \.-]{6,}" name="phone" value="{previous:phone}"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="marginTop_5px">
+                                <RENDER_VALUE what="i18n:content"/> <br />
+                                <textarea required="required" name="content" placeholder="{i18n:input_mandatory}" class="mailContent">
+                                    <RENDER_VALUE what="previous:content"/>
+                                </textarea>
+                            </div>
+                            <div class="contact_submitCaptcha">
+                                <div class=""><RENDER_CAPTCHA what="sendMail" error="{captcha:error}"/>
+                                </div>
+                                <input class="marginTop_5px" type="submit" value="{i18n:send}"/>
+                            </div>
+                        </RENDER_NOTIF>
+                    </RENDER_FORM>
+                </RENDER_IFSET>
+            </td>
+        </tr>
+    </table>
 </div>

@@ -6,42 +6,68 @@
  * Licensed under LGPL
  */
 
-if(!defined('SH_MARKER')){
+if(!defined('SH_MARKER')) {
     header('location: directCallForbidden.php');
 }
 
 $this->version = '0.2';
 
 $this->values = array (
-  'width' => 900,
-  'menusNumber' => 1,
-  'menusDescription'=>array(
+    'width' => 900,
+    'menusNumber' => 1,
+    'menusDescription'=>array(
         0=>'principal'
     ),
-  'menuButtons' =>
+    'palettes' => array(
+        'text_color' => 'text_color.php',
+        'text_hover_color' => 'text_color_hover.php',
+        'background' => 'background.php',
+        'hover_background' => 'background_hover.php',
+        'text_bw' => 'text_bw.php',
+    ),
+    'menuButtons' =>
     array (
         1 =>
         array (
-      'maxWidth' => true,
-      'totalWidth' => 875,
-      'textHeight' => 18,
-      'expand' => false,
-      'type' => 'btn_transp',
-      'textColor' => '',
-      'font' => 'FreeFontBold.ttf',
+            'maxWidth' => true,
+            'totalWidth' => 630,
+            'textHeight' => 18,
+            'expand' => false,
+            'type' => 'btn_alpha_colors',
+            'textColor' => '',
+            'font' => 'FreeFontBold.ttf',
+            'hasSubmenus' => true,
+            'renderFile' => 'horizontal',
+            'fonts' =>
+            array (
+                'Aarvark_Cafe.ttf'=>SH_FONTS_FOLDER.'Aarvark_Cafe.ttf',
+                'Abduction2002.ttf'=>SH_FONTS_FOLDER.'Abduction2002.ttf',
+                'Alpine_Regular.ttf'=>SH_FONTS_FOLDER.'Alpine_Regular.ttf',
+                'designer.ttf'=>SH_FONTS_FOLDER.'designer.ttf',
+                'FreeFont.ttf'=>SH_FONTS_FOLDER.'FreeFont.ttf',
+                'FreeFontBold.ttf'=>SH_FONTS_FOLDER.'FreeFontBold.ttf',
+                'FreeFontBoldOblique.ttf'=>SH_FONTS_FOLDER.'FreeFontBoldOblique.ttf',
+                'FreeFontOblique.ttf'=>SH_FONTS_FOLDER.'FreeFontOblique.ttf',
+                'FreeFontSerif.ttf'=>SH_FONTS_FOLDER.'FreeFontSerif.ttf',
+                'FreeFontSerifBold.ttf'=>SH_FONTS_FOLDER.'FreeFontSerifBold.ttf',
+                'FreeFontSerifBoldOblique.ttf'=>SH_FONTS_FOLDER.'FreeFontSerifBoldOblique.ttf',
+                'FreeFontSerifOblique.ttf'=>SH_FONTS_FOLDER.'FreeFontSerifOblique.ttf',
+                'Hall_Fetica_Decompose.ttf'=>SH_FONTS_FOLDER.'Hall_Fetica_Decompose.ttf',
+                'Hall_Fetica_Decompose_Italic.ttf'=>SH_FONTS_FOLDER.'Hall_Fetica_Decompose_Italic.ttf',
+                'LatiniaBlack.ttf'=>SH_FONTS_FOLDER.'LatiniaBlack.ttf',
+                'Little_Lord_Fontleroy.ttf'=>SH_FONTS_FOLDER.'Little_Lord_Fontleroy.ttf',
+                'MiddleSaxonyText.ttf'=>SH_FONTS_FOLDER.'MiddleSaxonyText.ttf',
+                'Vera.ttf'=>SH_FONTS_FOLDER.'Vera.ttf',
+                'VeraBold.ttf'=>SH_FONTS_FOLDER.'VeraBold.ttf',
+                'VeraBoldOblique.ttf'=>SH_FONTS_FOLDER.'VeraBoldOblique.ttf',
+                'VeraSe.ttf'=>SH_FONTS_FOLDER.'VeraSe.ttf',
+                'VeraSeBd.ttf'=>SH_FONTS_FOLDER.'VeraSeBd.ttf',
+            ),
         ),
-    'font' => NULL,
     ),
-  'fonts' =>
-    array (
-        0 => 'Aarvark_Cafe.ttf',
-        1 => 'Hall_Fetica_Decompose.ttf',
-        2 => 'Hall_Fetica_Decompose_Italic.ttf',
-        3 => 'FreeFontBold.ttf',
-        4 => 'VeraBold.ttf',
-        5 => 'VeraSeBd.ttf',
+    'renderFiles' => array(
     ),
-  'sh_shop'=>array(
+    'sh_shop'=>array(
         'categoriesListing' => array(
             'categoriesNumber' => 10
         ),
@@ -61,14 +87,4 @@ $this->values = array (
             'productsNumber' => 4
         )
     ),
-  'sh_newsletters'=>array(
-        'shared' => array(
-            'model'
-        ),
-        'proprietary' => array(
-        ),
-    ),
-  'defaultBuilder' => 'btn_transp',
-  'defaultFont' => 'FreeFontBold.ttf',
-  'contact'=>array('renderFile'=>'show_bgNotif')
 );

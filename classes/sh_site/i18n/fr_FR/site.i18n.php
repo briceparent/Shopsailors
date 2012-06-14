@@ -1,5 +1,8 @@
 <?php
 $i18n = array(
+    'settings_have_been_changed'=> 'Les paramètres ont bien été enregistrés.',
+    'saving_settings_title' => 'Enregistrement',
+    'saving_settings' => 'Enregistrement des paramètres, et génération des images. Merci de patienter quelques instants.',
     'changeParams_uri'=>'parametrer',
 'default_title' => 'Titre par défaut des pages : ',
 'site_name' => 'Intitulé du site (onglet navigateur) : ',
@@ -17,7 +20,7 @@ Boutique de vêtements proposant des Jeans, T-shirts, pour hommes et femmes. Pro
 'italian' => 'Italien',
 'french' => 'Frnçais',
 'addlanguage' => 'Ajouter une langue.',
-'titleParams' => 'Paramètres de titrages',
+'titleParams' => 'Paramètres généraux',
 'contactBox' => 'Contact',
 'variation' => 'Sélectionnez la couleur de votre site :',
 'variation_explanation' => '<div>Positionnez le curseur sur la couleur désirée. La sélection prendra effet après validation du formulaire.</div>',
@@ -60,7 +63,7 @@ On vous demande alors de transférer un fichier html dont le nom vous est fourni
 C\'est ce nom que vous devez placer dans le champs texte ci-dessous.
 </div>',
 'logo'=>'Sélectionnez votre logo:',
-'selectColorNote'=>'Une fois le formulaire enregistré appuyer simultanément sur "(ctrl)+(F5)"<br/> afin de recharger la page et visualiser la variation choisie.',
+'selectColorNote'=>'Une fois le formulaire enregistré appuyer simultanément sur "(ctrl)+(F5)" afin de recharger la page et visualiser la variation choisie.',
 'logo_explanation'=>'
 <div>
 Pour changer de logo, cliquez sur l\'image ci-dessous. L\'explorateur d\'images s\'ouvrira, 

@@ -1,0 +1,24 @@
+<RENDER_NOTIF size="XL" title="{i18n:billings_list_title}">
+    <ul>
+        <RENDER_LOOP what="years">
+            <li><RENDER_VALUE what="i18n:billings_list_year"/><RENDER_VALUE what="years:name"/></li>
+            <ul>
+                <RENDER_LOOP what="monthes">
+                    <li><RENDER_VALUE what="i18n:billings_list_month"/><RENDER_VALUE what="monthes:name"/></li>
+                    <ul>
+                        <RENDER_LOOP what="days">
+                            <li><RENDER_VALUE what="i18n:billings_list_date"/><RENDER_VALUE what="days:name"/></li>
+                            <ul>
+                                <RENDER_LOOP what="elements">
+                                    <li>
+                                        <RENDER_VALUE what="i18n:billings_list_details"/>
+                                    </li>
+                                </RENDER_LOOP>
+                            </ul>
+                        </RENDER_LOOP>
+                    </ul>
+                </RENDER_LOOP>
+            </ul>
+        </RENDER_LOOP>
+    </ul>
+</RENDER_NOTIF>

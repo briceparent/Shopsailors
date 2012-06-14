@@ -1,42 +1,44 @@
 <html xml:lang="fr">
     <head>
-        <RENDER_VALUE what="head>content"/>
+        <RENDER_VALUE what="head:content"/>
     </head>
-    <RENDER_TAG type="body" what="body>data">
+    <RENDER_TAG type="body" what="body:data">
         <div id="mainContainer">
             <h1 class="topTitle">
-                <RENDER_VALUE what="body>headline"/>
+                <RENDER_VALUE what="body:headline"/>
             </h1>
-            <RENDER_VALUE what="language>selector"/>
-            <RENDER_IFSET what="connect>link">
+            <RENDER_VALUE what="language:selector"/>
+            <RENDER_IFSET what="connect:link">
                 <div id="connectionContainer">
-                    <a href="{connect>link}" class=""><RENDER_VALUE what="i18n>connectAccountClient"/></a>
+                    <a href="{connect:link}" class=""><RENDER_VALUE what="i18n:connectAccountClient"/></a>
                 </div>
             </RENDER_IFSET>
-            <RENDER_IFSET what="disconnect>link">
+            <RENDER_IFSET what="disconnect:link">
                 <div id="connectionContainer">
-                    <a href="{disconnect>link}" class=""><RENDER_VALUE what="i18n>disconnectAccountClient"/></a>
+                    <a href="{profile:link}"><RENDER_VALUE what="i18n:profileAccountClient"/></a> -
+                    <a href="{disconnect:link}"><RENDER_VALUE what="i18n:disconnectAccountClient"/></a>
                 </div>
             </RENDER_IFSET>
             <div id="hb_top">
             </div>
             <div id="hb_middle">
-                <div class="logo">
-                    <img src="/images/site/logo/banner.png" alt="logo" title=""/>
+                <div id="mainLogo">
+                    <img src="/images/site/logo/logo.png" alt="logo" title=""/>
                 </div>
             </div>
             <div id="bg_middle">
-                <div id="top_menu">
-                    <RENDER_VALUE what="body>searchEngine"/>
-                    <RENDER_VALUE what="body>menu_1"/>
+                <RENDER_VALUE what="body:searchEngine"/>
+                <div class="menu_container">
+                    <RENDER_VALUE what="body:menu_1"/>
                 </div>
-                <RENDER_VALUE what="body>beginning"/>
+                <div class="clear"></div>
+                <RENDER_VALUE what="body:beginning"/>
                 <div id="content_middle">
-                    <RENDER_IFSET what="body>title">
-                        <h1><RENDER_VALUE what="body>title"/></h1>
+                    <RENDER_IFSET what="body:title">
+                        <h1><RENDER_VALUE what="body:title"/></h1>
                     </RENDER_IFSET>
                     <div class="page_content">
-                        <RENDER_VALUE what="body>content"/>
+                        <RENDER_VALUE what="body:content"/>
                     </div>
                 </div>
             <div class="noFloat">&#160;
@@ -45,7 +47,7 @@
             <div id="bg_bottom">
             </div>
             <div id="copyrights">
-                <RENDER_VALUE what="body>copyrights"/>
+                <RENDER_VALUE what="body:copyrights"/>
             </div>
         </div>
      </RENDER_TAG>

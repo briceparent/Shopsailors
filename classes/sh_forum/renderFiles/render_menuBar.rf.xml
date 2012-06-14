@@ -1,0 +1,50 @@
+
+<div>
+    <div id="forum_menu">
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <td id="forum_menu_part1">
+                    <div class="forumMenu_btn" id="forumMenu_lastTopics">
+                        <a href="/forum/lastTopics/30.php" title="">Les 30 derrniers sujets</a>
+                    </div>
+                    <div class="forum_menu_separator"></div>
+                    <div id="entryCategory_hide" style="display:none">
+                        <div class="forumMenu_btn" id="forumMenu_categories">Catégories</div>
+                        <div class="forum_menu_separator"></div>
+                    </div>
+                    <RENDER_IFSET what="constants:alias">
+                        <div class="forumMenu_btn" id="forumMenu_myProfil">
+                            <a href="/forum/profile/{auto:user_id}.php" title="">Mon profil</a>
+                        </div>
+                    </RENDER_IFSET>
+
+                </td>
+                <td id="entryCreateTopic_hide" style="display:none;width: 180px;">
+                    <div>
+                        <div id="forumMenu_createTopic">Créer un sujet</div>
+                    </div>                            
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="forumCat_menu_container">
+        <RENDER_FORUM_CATEGORY rf="forumMenu_categories"/> 
+        <RENDER_FORUM_CATEGORY rf="forumMenu_create_topic"/> 
+    </div> 
+    <script>
+                $('entryCategory_hide').style.display = 'block';
+                $('entryCreateTopic_hide').style.display = 'block';
+                $('forumCat_menu').style.display = 'none';
+                $('forumCat_menu').style.position = 'absolute';
+                $('forumCat_menu').style.marginTop = '-21px'
+                $('forumCat_createTopic').style.position = 'absolute';
+                $('forumCat_createTopic').style.marginTop = '-21px';
+                Event.observe('forumMenu_categories','click',function(){
+                 Effect.toggle('forumCat_menu','slide');   
+                });
+                Event.observe('forumMenu_createTopic','click',function(){
+                 Effect.toggle('forumCat_createTopic','slide');
+                         
+                });
+    </script>
+</div>

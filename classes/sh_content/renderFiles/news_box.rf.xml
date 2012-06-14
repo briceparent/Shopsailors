@@ -1,0 +1,24 @@
+
+<div class="news_box {news_general:class}" id="{news_general:id}" style="{news_general:style}">
+    <RENDER_IFSET what="bool:thereAreNews">
+        <RENDER_LOOP what="news">
+            <div class="news_one">
+                <div class="news_one_title">
+                    <a href="{news:link}">
+                        <RENDER_VALUE what="news:title"/>
+                    </a>
+                </div>
+                <div class="news_one_date">
+                    <RENDER_VALUE what="news:date"/>
+                </div>
+                <div class="news_one_image">
+                    <img src="{news:image}" alt="{news:title}"/>
+                </div>
+                <div class="news_one_content">
+                    <RENDER_VALUE what="news:summary"/>
+                </div>
+            </div>
+        </RENDER_LOOP>
+    </RENDER_IFSET>
+    <div class="news_box_afterContents"></div>
+</div>

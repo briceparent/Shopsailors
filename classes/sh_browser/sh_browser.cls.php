@@ -1,30 +1,35 @@
 <?php
+
 /**
- * @author Brice PARENT for Shopsailors
+ * @author Brice PARENT (Websailors) for Shopsailors
  * @copyright Shopsailors 2009
  * @license http://www.cecill.info
  * @version See version in the params/global.params.php file.
  * @package Shopsailors Core Classes
  */
-if(!defined('SH_MARKER')) {
-    header('location: directCallForbidden.php');
+if( !defined( 'SH_MARKER' ) ) {
+    header( 'location: directCallForbidden.php' );
 }
 
 /**
  * Class used to build and manage the file browser.
  */
 class sh_browser extends sh_core {
-    protected $minimal = array('showContent' => true,'show'=>true,'rename'=>true,'delete'=>true,
-            'addFolder'=>true,'deleteFolder'=>true, 'addFile'=>true,'editImage'=>true);
+
+    const CLASS_VERSION = '1.1.11.05.20';
+
+    public $shopsailors_dependencies = array(
+        'sh_linker', 'sh_params', 'sh_db'
+    );
+    protected $minimal = array( 'showContent' => true, 'show' => true, 'rename' => true, 'delete' => true,
+        'addFolder' => true, 'deleteFolder' => true, 'addFile' => true, 'editImage' => true, 'setTitle' => true );
     protected $width = 400;
     protected $height = 400;
     protected $userName = '';
     public $defaultImageSelectorImage = '';
-
     protected $goToFolder = '';
-
     protected $imagesExtensions = '`(jpe?g|png|gif)$`';
-    protected $forbiddenExtensions = '`(php.*|exe|html?|\..*)$`';
+    protected $forbiddenExtensions = '`(php.*|exe|html?|^\..*)$`';
 
     // Write accesses. Bitwise
     const READ = 1;
@@ -44,7 +49,12 @@ class sh_browser extends sh_core {
 
     const DEFAULTCREATIONRIGHTS = 127;
 
+    /**
+     * The images in this folder will have the maximum dimensions that are written
+     * in this file.
+     */
     const DIMENSIONFILE = '.dimensions';
+    const MAXDIMENSIONFILE = '.maxDimensions';
     const NOMARGINS = '.noMargins';
     const RIGHTSFILE = '.rights';
     const OWNERFILE = '.owner';
@@ -52,6 +62,7 @@ class sh_browser extends sh_core {
     const MESSAGEFILE = '.message';
     const HIDDEN = '.hidden';
     const HIDDENFILES = '.hiddenFiles';
+    const FOLDERNAMEFILES = '.folderName';
 
     // Events
     const ONCHANGE = '.onchange';
@@ -64,54 +75,106 @@ class sh_browser extends sh_core {
     const ONRENAMEFOLDER = '.onRenameFolder';
     const ONDELETEFOLDER = '.onDeleteFolder';
 
-
     public function construct() {
+        $installedVersion = $this->getClassInstalledVersion();
+        if( $installedVersion != self::CLASS_VERSION ) {
+            if( version_compare( $installedVersion, '1.1.11.03.29', '<' ) ) {
+                $this->helper->addClassesSharedMethods( 'sh_admin', sh_admin::ADMINMENUENTRIES, __CLASS__ );
+                $this->linker->renderer->add_render_tag( 'render_imageSelector', __CLASS__, 'render_imageSelector' );
+                $this->linker->renderer->add_render_tag( 'render_multipleImagesSelector', __CLASS__,
+                                                         'render_multipleImagesSelector' );
+                $this->linker->renderer->add_render_tag( 'render_showBrowser', __CLASS__, 'render_showBrowser' );
+                $this->linker->renderer->add_render_tag( 'render_browser', __CLASS__, 'render_browser' );
+            }
+
+            if( version_compare( $installedVersion, '1.1.11.05.20', '<' ) ) {
+                $this->linker->renderer->add_render_tag( 'render_documentSelector', __CLASS__, 'render_documentSelector' );
+            }
+            $this->setClassInstalledVersion( self::CLASS_VERSION );
+        }
+
         $this->userName = self::createUserName();
-        $this->defaultImageSelectorImage = SH_SHAREDIMAGES_PATH.'default/defaultContentImage.png';
-        if(!is_dir(SH_IMAGES_FOLDER.'temp/')){
+        $this->defaultImageSelectorImage = SH_SHAREDIMAGES_PATH . 'default/defaultContentImage.png';
+        if( !is_dir( SH_IMAGES_FOLDER . 'temp/' ) ) {
             $this->createFolder(
-                SH_IMAGES_FOLDER.'temp/',
-                self::READ + self::DELETEFILE
+                SH_IMAGES_FOLDER . 'temp/', self::READ + self::DELETEFILE
             );
         }
     }
 
-    public function insertScript(){
+    public function master_getMenuContent() {
+        $masterMenu = array( );
+        return $masterMenu;
+    }
+
+    public function admin_getMenuContent() {
+        $adminMenu[ 'Médias' ] = array(
+            array(
+                'type' => 'popup',
+                'width' => 750,
+                'height' => 410,
+                'link' => 'browser/show/',
+                'text' => 'Accéder à l\'explorateur',
+                'icon' => 'picto_browser.png'
+            )
+        );
+        return $adminMenu;
+    }
+
+    public function getTitle( $image,$params ) {
+        list($newLinesStyle) = explode('|',$params);
+        $image = preg_replace( '`\.resized[XY]\.[0-9]+\.png$`', '', $image );
+        $image = preg_replace( '`\.resized\.[0-9]+\.[0-9]+\.png$`', '', $image );
+        $filePath = $this->linker->path->changeToRealFolder( dirname( $image ) ) . '/' . basename( $image );
+        $filePath .= '.title';
+        $title = '';
+        if( file_exists( $filePath ) ) {
+            $title = file_get_contents( $filePath );
+        }
+        if($newLinesStyle == 'br'){
+            $title = nl2br($title);
+        }elseif($newLinesStyle == 'dash'){
+            $title = str_replace("\n",' - ',$title);
+        }
+        return $title;
+    }
+
+    public function insertScript() {
         $singlePath = $this->getSinglePath();
-        $this->links->html->addScript($singlePath.'getBrowser.js');
+        $this->linker->html->addScript( $singlePath . 'getBrowser.js' );
     }
 
     /**
      * public static function createUserName
      *
      */
-    public static function createUserName($site = '') {
-        if($site == '' || is_null($site)) {
+    public static function createUserName( $site = '' ) {
+        if( $site == '' || is_null( $site ) ) {
             $site = SH_SITE;
         }
-        return str_replace('/','',$site);
+        return str_replace( '/', '', $site );
     }
 
     /**
      * public function create
      *
      */
-    public function create($folder,$action,$types = 'images') {
-        $this->debug(__METHOD__, 2, __LINE__);
-        $uid = str_replace(array('.',' '),'',microtime());
-        if(!defined($folder)) {
-            $cpt = count($_SESSION[__CLASS__]['pathes']);
+    public function create( $folder, $action, $types = 'images' ) {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        $uid = str_replace( array( '.', ' ' ), '', microtime() );
+        if( !defined( $folder ) ) {
+            $cpt = count( $_SESSION[ __CLASS__ ][ 'pathes' ] );
             $cpt += 1;
-            $_SESSION[__CLASS__]['pathes'][$cpt] = $folder;
+            $_SESSION[ __CLASS__ ][ 'pathes' ][ $cpt ] = $folder;
             $folder = $cpt;
         }
 
-        $_SESSION[__CLASS__][$uid] = array(
-                'folder'=>$folder,
-                'action'=>$action,
-                'types'=>$types
+        $_SESSION[ __CLASS__ ][ $uid ] = array(
+            'folder' => $folder,
+            'action' => $action,
+            'types' => $types
         );
-        $_SESSION[__CLASS__]['lastBuilt'] = $uid;
+        $_SESSION[ __CLASS__ ][ 'lastBuilt' ] = $uid;
         return $uid;
     }
 
@@ -120,148 +183,151 @@ class sh_browser extends sh_core {
      *
      */
     public function show() {
-        $this->debug(__METHOD__, 2, __LINE__);
+        $this->debug( __METHOD__, 2, __LINE__ );
         $this->onlyAdmin();
 
-        if(!isset($_GET['type'])){
-            $_GET['type'] = 'url';
-            $_GET['folder'] = '';
+        if( !isset( $_GET[ 'type' ] ) ) {
+            $_GET[ 'type' ] = 'url';
+            $_GET[ 'folder' ] = '';
         }
 
-        if(isset($_GET['type'])){
+        if( isset( $_GET[ 'type' ] ) ) {
             // New version
-            if($_GET['type'] == 'url'){
-                $folderName = $_GET['folder'];
-                $types = $_GET['types'];
-                $action = $_GET['action'];
-                $element = $_GET['element'];
-                $session = $this->editBrowserSession(false, $folderName, $action, $types, $element);
-                $_GET['type'] = 'session';
-                $_GET['session'] = $session;
+            if( $_GET[ 'type' ] == 'url' ) {
+                $folderName = $_GET[ 'folder' ];
+                $types = $_GET[ 'types' ];
+                $action = $_GET[ 'action' ];
+                $element = $_GET[ 'element' ];
+                $session = $this->editBrowserSession( false, $folderName, $action, $types, $element );
+                $_GET[ 'type' ] = 'session';
+                $_GET[ 'session' ] = $session;
             }
-            if($_GET['type'] == 'session'){
-                $session = $_GET['session'];
-                $folderName = $_SESSION[__CLASS__][$session]['folder'];
-                $types = $_SESSION[__CLASS__][$session]['types'];
-                $action = $_SESSION[__CLASS__][$session]['action'];
-                $element = $_SESSION[__CLASS__][$session]['element'];
-                $this->goToFolder = $_SESSION[__CLASS__][$session]['lastFolder'];
+            if( $_GET[ 'type' ] == 'session' ) {
+                $session = $_GET[ 'session' ];
+                $folderName = $_SESSION[ __CLASS__ ][ $session ][ 'folder' ];
+                $types = $_SESSION[ __CLASS__ ][ $session ][ 'types' ];
+                $action = $_SESSION[ __CLASS__ ][ $session ][ 'action' ];
+                $element = $_SESSION[ __CLASS__ ][ $session ][ 'element' ];
+                $this->goToFolder = $_SESSION[ __CLASS__ ][ $session ][ 'lastFolder' ];
             }
-        }else{
-            if(isset($_GET['formSession'])) {
-                $this->debug('We get the browser\'s datas from the session', 3, __LINE__);
+        } else {
+            if( isset( $_GET[ 'formSession' ] ) ) {
+                $this->debug( 'We get the browser\'s datas from the session', 3, __LINE__ );
                 // The browser was called passing parametters threw session, so we get them
-                $session = $_GET['fromSession'];
-                $_GET['folder'] = $_SESSION[__CLASS__][$session]['folder'];
-                $_GET['types'] = $_SESSION[__CLASS__][$session]['types'];
-                $_GET['returnAction'] = $_SESSION[__CLASS__][$session]['returnAction'];
-                $_GET['id'] = $_SESSION[__CLASS__][$session]['id'];
-            }elseif($_GET['browser_type'] == '') {
-                $this->debug('We get the browser\'s datas from the url', 3, __LINE__);
+                $session = $_GET[ 'fromSession' ];
+                $_GET[ 'folder' ] = $_SESSION[ __CLASS__ ][ $session ][ 'folder' ];
+                $_GET[ 'types' ] = $_SESSION[ __CLASS__ ][ $session ][ 'types' ];
+                $_GET[ 'returnAction' ] = $_SESSION[ __CLASS__ ][ $session ][ 'returnAction' ];
+                $_GET[ 'id' ] = $_SESSION[ __CLASS__ ][ $session ][ 'id' ];
+            } elseif( $_GET[ 'browser_type' ] == '' ) {
+                $this->debug( 'We get the browser\'s datas from the url', 3, __LINE__ );
                 // The browser was called without any parametters, so we create them
-                $_GET['folder'] = 'SH_IMAGES_FOLDER';
-                $_GET['types'] = 'images';
-                $_GET['returnAction'] = null;
-                $_GET['id'] = 0;
+                $_GET[ 'folder' ] = 'SH_IMAGES_FOLDER';
+                $_GET[ 'types' ] = 'images';
+                $_GET[ 'returnAction' ] = null;
+                $_GET[ 'id' ] = 0;
             }
 
-            $browser_type = $_GET['browser_type'];
-            if(!defined($_GET['folder'])) {
-                if(file_exists(SH_CLASS_SHARED_FOLDER.__CLASS__.'/'.$_GET['folder'].'.browser.php')) {
-                    $this->debug('We try to get the folder to show...', 3, __LINE__);
-                    $class = trim(file_get_contents(SH_CLASS_SHARED_FOLDER.__CLASS__.'/'.$_GET['folder'].'.browser.php'));
-                    $theClass = $this->links->$class;
-                    $this->debug('... in the class '.$class, 3, __LINE__);
-                    $folderName = constant($_GET['folder']);
-                    $this->debug('The folder is '.$folderName, 3, __LINE__);
-                }elseif(isset($_SESSION[__CLASS__]['pathes'][$_GET['folder']])) {
-                    $this->debug('We get the browser\'s datas from the session, in the "pathes" variable', 3, __LINE__);
-                    $folderName = $_SESSION[__CLASS__]['pathes'][$_GET['folder']];
-                }elseif(is_dir(SH_IMAGES_FOLDER.$_GET['folder'])) {
-                    $this->debug('We get the browser\'s datas into the images path, in the subfolder '.$_GET['folder'], 3, __LINE__);
-                    $folderName = SH_IMAGES_FOLDER.$_GET['folder'];
-                }else {
-                    $this->debug('We don\'t know which folder to show...', 3, __LINE__);
-                    $this->debug('The file '.SH_CLASS_SHARED_FOLDER.__CLASS__.'/'.$_GET['folder'].'.browser.php does not exist!', 3, __LINE__);
-                    $folderName='ERROR';
+            $browser_type = $_GET[ 'browser_type' ];
+            if( !defined( $_GET[ 'folder' ] ) ) {
+                if( file_exists( SH_CLASS_SHARED_FOLDER . __CLASS__ . '/' . $_GET[ 'folder' ] . '.browser.php' ) ) {
+                    $this->debug( 'We try to get the folder to show...', 3, __LINE__ );
+                    $class = trim( file_get_contents( SH_CLASS_SHARED_FOLDER . __CLASS__ . '/' . $_GET[ 'folder' ] . '.browser.php' ) );
+                    $theClass = $this->linker->$class;
+                    $this->debug( '... in the class ' . $class, 3, __LINE__ );
+                    $folderName = constant( $_GET[ 'folder' ] );
+                    $this->debug( 'The folder is ' . $folderName, 3, __LINE__ );
+                } elseif( isset( $_SESSION[ __CLASS__ ][ 'pathes' ][ $_GET[ 'folder' ] ] ) ) {
+                    $this->debug( 'We get the browser\'s datas from the session, in the "pathes" variable', 3, __LINE__ );
+                    $folderName = $_SESSION[ __CLASS__ ][ 'pathes' ][ $_GET[ 'folder' ] ];
+                } elseif( is_dir( SH_IMAGES_FOLDER . $_GET[ 'folder' ] ) ) {
+                    $this->debug( 'We get the browser\'s datas into the images path, in the subfolder ' . $_GET[ 'folder' ],
+                                  3, __LINE__ );
+                    $folderName = SH_IMAGES_FOLDER . $_GET[ 'folder' ];
+                } else {
+                    $this->debug( 'We don\'t know which folder to show...', 3, __LINE__ );
+                    $this->debug( 'The file ' . SH_CLASS_SHARED_FOLDER . __CLASS__ . '/' . $_GET[ 'folder' ] . '.browser.php does not exist!',
+                                  3, __LINE__ );
+                    $folderName = 'ERROR';
                 }
-            }else {
-                $this->debug('We get the folder to show in the constant '.$_GET['folder'], 3, __LINE__);
-                $folderName = constant($_GET['folder']);
+            } else {
+                $this->debug( 'We get the folder to show in the constant ' . $_GET[ 'folder' ], 3, __LINE__ );
+                $folderName = constant( $_GET[ 'folder' ] );
             }
 
-            $this->debug('The folder to show is '.$folderName, 2, __LINE__);
-            $types = $_GET['types'];
-            $action = $_GET['returnAction'];
-            $id = $_GET['id'];
-            if(!isset($fromSession)){
-                $session = md5(microtime());
+            $this->debug( 'The folder to show is ' . $folderName, 2, __LINE__ );
+            //$types = $_GET['types'];
+            $action = $_GET[ 'returnAction' ];
+            $id = $_GET[ 'id' ];
+            if( !isset( $fromSession ) ) {
+                $session = md5( microtime() );
 
-                $_GET['folder'] = $_SESSION[__CLASS__][$session]['folder'];
-                $_GET['types'] = $_SESSION[__CLASS__][$session]['types'];
-                $_GET['returnAction'] = $_SESSION[__CLASS__][$session]['returnAction'];
-                $_GET['id'] = $_SESSION[__CLASS__][$session]['id'];
+                $_GET[ 'folder' ] = $_SESSION[ __CLASS__ ][ $session ][ 'folder' ];
+                $_GET[ 'types' ] = $_SESSION[ __CLASS__ ][ $session ][ 'types' ];
+                $_GET[ 'returnAction' ] = $_SESSION[ __CLASS__ ][ $session ][ 'returnAction' ];
+                $_GET[ 'id' ] = $_SESSION[ __CLASS__ ][ $session ][ 'id' ];
             }
         }
         $this->allowedTypes = $types;
 
-        if($action == 'null' || is_null($action) || $action == '') {
-            $elements['browser']['doaction'] = 'false';
-        }else {
-            $elements['browser']['doaction'] = 'true';
+        if( $action == 'null' || is_null( $action ) || $action == '' ) {
+            $elements[ 'browser' ][ 'doaction' ] = 'false';
+        } else {
+            $elements[ 'browser' ][ 'doaction' ] = 'true';
         }
 
-        $elements['browser']['action'] = $action;
-        $elements['browser']['element'] = $element;
+        $elements[ 'browser' ][ 'action' ] = $action;
+        $elements[ 'browser' ][ 'element' ] = $element;
 
-        $elements['browser']['action'] = $action;
-        $elements['browser']['id'] = $id;
-        $elements['browser']['session'] = $session;
+        $elements[ 'browser' ][ 'action' ] = $action;
+        $elements[ 'browser' ][ 'id' ] = $id;
+        $elements[ 'browser' ][ 'session' ] = $session;
 
 
-        $elements['browser']['base'] = 'http://'.$_SERVER['SERVER_NAME'];
-        if(is_dir($folderName)) {
-            $this->debug('The folder exists', 3, __LINE__);
-            $activeFolder2 = $this->getSubFolders($folderName,$elements['folder']);
+        $elements[ 'browser' ][ 'base' ] = 'http://' . $_SERVER[ 'SERVER_NAME' ];
+        if( is_dir( $folderName ) ) {
+            $this->debug( 'The folder exists', 3, __LINE__ );
+            $activeFolder2 = $this->getSubFolders( $folderName, $elements[ 'folder' ] );
 
-            if(!isset($activeFolder)) {
+            if( !isset( $activeFolder ) ) {
                 $activeFolder = $activeFolder2;
             }
-            $this->debug('active folder is '.$activeFolder, 3, __LINE__);
-            $elements['browser']['initfolder'] = $activeFolder;
+            $this->debug( 'active folder is ' . $activeFolder, 3, __LINE__ );
+            $elements[ 'browser' ][ 'initfolder' ] = $activeFolder;
 
-            if(!$elements['browser']['initfolder']) {
-                $this->debug('The access to the folder is restricted', 2, __LINE__);
-                $vars['restrictions']['notallowed'] = true;
-                $vars['restrictions']['base'] = $this->links->path->protocol.'://'.$this->links->path->getDomain().'/';
-                $vars['i18n'] = $this->__tostring();
-                echo $this->render('restriction',$vars,false,false);
+            if( !$elements[ 'browser' ][ 'initfolder' ] ) {
+                $this->debug( 'The access to the folder is restricted', 2, __LINE__ );
+                $vars[ 'restrictions' ][ 'notallowed' ] = true;
+                $vars[ 'restrictions' ][ 'base' ] = $this->linker->path->protocol . '://' . $this->linker->path->getDomain() . '/';
+                $vars[ 'i18n' ] = $this->__tostring();
+                echo $this->render( 'restriction', $vars, false, false );
                 return false;
             }
-        }else {
-            $this->debug('The folder '.$folderName.' was not found', 2, __LINE__);
-            $vars['restrictions']['nofolder'] = true;
-            $vars['restrictions']['base'] = $this->links->path->protocol.'://'.$this->links->path->getDomain().'/';
-            $vars['i18n'] = $this->__tostring();
-            echo $this->render('restriction',$vars,false,false);
+        } else {
+            $this->debug( 'The folder ' . $folderName . ' was not found', 2, __LINE__ );
+            $vars[ 'restrictions' ][ 'nofolder' ] = true;
+            $vars[ 'restrictions' ][ 'base' ] = $this->linker->path->protocol . '://' . $this->linker->path->getDomain() . '/';
+            $vars[ 'i18n' ] = $this->__tostring();
+            echo $this->render( 'restriction', $vars, false, false );
             return false;
         }
-        if(isset($_SESSION[__CLASS__]['goToFolder'])) {
-            unset($_SESSION[__CLASS__]['goToFolder']);
+        if( isset( $_SESSION[ __CLASS__ ][ 'goToFolder' ] ) ) {
+            unset( $_SESSION[ __CLASS__ ][ 'goToFolder' ] );
         }
-        if(isset($_SESSION[__CLASS__]['openedFolder'])) {
-            $elements['browser']['initFolder'] = $_SESSION[__CLASS__]['openedFolder'];
-            unset($_SESSION[__CLASS__]['openedFolder']);
+        if( isset( $_SESSION[ __CLASS__ ][ 'openedFolder' ] ) ) {
+            $elements[ 'browser' ][ 'initFolder' ] = $_SESSION[ __CLASS__ ][ 'openedFolder' ];
+            unset( $_SESSION[ __CLASS__ ][ 'openedFolder' ] );
         }
-        $path = $this->links->path;
+        $path = $this->linker->path;
         $class = $this->shortClassName;
-        $elements['links']['showContent'] = $path->getLink($class.'/showContent/');
-        $elements['links']['addFolder'] = $path->getLink($class.'/addFolder/');
-        $elements['links']['delete'] = $path->getLink($class.'/delete/');
-        $elements['links']['deleteFolder'] = $path->getLink($class.'/deleteFolder/');
-        $elements['links']['rename'] = $path->getLink($class.'/rename/');
-        $elements['links']['renameFolder'] = $path->getLink($class.'/renameFolder/');
-        echo $this->render('index',$elements,false,false);
+        $elements[ 'links' ][ 'showContent' ] = $path->getLink( $class . '/showContent/' );
+        $elements[ 'links' ][ 'addFolder' ] = $path->getLink( $class . '/addFolder/' );
+        $elements[ 'links' ][ 'delete' ] = $path->getLink( $class . '/delete/' );
+        $elements[ 'links' ][ 'setTitle' ] = $path->getLink( $class . '/setTitle/' );
+        $elements[ 'links' ][ 'deleteFolder' ] = $path->getLink( $class . '/deleteFolder/' );
+        $elements[ 'links' ][ 'rename' ] = $path->getLink( $class . '/rename/' );
+        $elements[ 'links' ][ 'renameFolder' ] = $path->getLink( $class . '/renameFolder/' );
+        echo $this->render( 'index', $elements, false, false );
         return true;
     }
 
@@ -269,94 +335,106 @@ class sh_browser extends sh_core {
      * protected function getSubFolders
      *
      */
-    protected function getSubFolders($folder,&$folders,$indent = '') {
-        $this->debug(__METHOD__, 2, __LINE__);
-        if(!file_exists($folder.'/'.self::HIDDEN)) {
-            if(self::getRights($folder, self::READ)) {
-                $this->debug('The user is allowed to access the folder '.$folder, 3, __LINE__);
-                $folder = str_replace('//','/',$folder.'/');
+    protected function getSubFolders( $folder, &$folders, $indent = '' ) {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        if( !file_exists( $folder . '/' . self::HIDDEN ) ) {
+            if( self::getRights( $folder, self::READ ) ) {
+                $this->debug( 'The user is allowed to access the folder ' . $folder, 3, __LINE__ );
+                $folder = str_replace( '//', '/', $folder . '/' );
 
-                $uid = MD5('sh_browser_show'.microtime());
-                $_SESSION[__CLASS__][$uid]['path'] = $folder;
-                $_SESSION[__CLASS__][$uid]['types'] = $this->allowedTypes;
-                if($this->goToFolder == $folder) {
-                    $_SESSION[__CLASS__]['openedFolder'] = $uid;
+                $uid = MD5( 'sh_browser_show' . microtime() );
+                $_SESSION[ __CLASS__ ][ $uid ][ 'path' ] = $folder;
+                $_SESSION[ __CLASS__ ][ $uid ][ 'types' ] = $this->allowedTypes;
+                if( $this->goToFolder == $folder ) {
+                    $_SESSION[ __CLASS__ ][ 'openedFolder' ] = $uid;
                 }
 
-                $count = count($folders);
+                $count = count( $folders );
 
-                $folders[$count]['indent']=$indent;
-                $folders[$count]['image']='/templates/global/admin/sh_browser/folder.png';
-                $folders[$count]['name']=basename($folder);
-                $folders[$count]['path']=$uid;
-                $scan =  scandir($folder);
-                if(is_array($scan)) {
-                    foreach($scan as $element) {
-                        if(substr($element,0,1) != '.' && is_dir($folder.$element)) {
-                            if(self::getRights($folder.$element,self::READ)) {
-                                $this->getSubFolders($folder.$element,$folders,$indent.'<img src="/images/shared/icons/transparent.png" style="width:8px" alt=""/>');
+                $folders[ $count ][ 'indent' ] = $indent;
+                $folders[ $count ][ 'image' ] = '/templates/global/admin/sh_browser/folder.png';
+                if( file_exists( $folder . self::FOLDERNAMEFILES ) ) {
+                    include($folder . self::FOLDERNAMEFILES );
+                    $lang = $this->linker->i18n->getLang();
+                    if( isset( $message[ $lang ] ) ) {
+                        $folders[ $count ][ 'name' ] = $folderName[ $lang ];
+                    } else {
+                        $folders[ $count ][ 'name' ] = $defaultFolderName;
+                    }
+                } else {
+                    $folders[ $count ][ 'name' ] = basename( $folder );
+                }
+                $folders[ $count ][ 'path' ] = $uid;
+                $scan = scandir( $folder );
+                if( is_array( $scan ) ) {
+                    foreach( $scan as $element ) {
+                        if( substr( $element, 0, 1 ) != '.' && is_dir( $folder . $element ) ) {
+                            if( self::getRights( $folder . $element, self::READ ) ) {
+                                $this->getSubFolders( $folder . $element, $folders,
+                                                      $indent . '<img src="/images/shared/icons/transparent.png" style="width:8px" alt=""/>' );
                             }
                         }
                     }
                 }
                 return $uid;
-            }else {
-                $this->debug('The user is not allowed to access the folder '.$folder, 0, __LINE__);
+            } else {
+                $this->debug( 'The user is not allowed to access the folder ' . $folder, 0, __LINE__ );
             }
-        }else {
-            $this->debug('The folder '.$folder.' is hidden, so the user may not access it', 0, __LINE__);
+        } else {
+            $this->debug( 'The folder ' . $folder . ' is hidden, so the user may not access it', 0, __LINE__ );
         }
         return false;
     }
-    protected function getArbo($folder,&$arbo,$spacer = '') {
-        //$this->debug(__METHOD__.'('.$folder.')', 2, __LINE__);
-        if(!file_exists($folder.'/'.self::HIDDEN)) {
-            if(self::getRights($folder, self::READ)) {
-                $folder = str_replace('//','/',$folder.'/');
-                $this->debug($spacer.basename($folder), 3, __LINE__);
 
-                $uid = MD5('sh_browser_show'.microtime());
-                $_SESSION[__CLASS__][$uid]['path'] = $folder;
-                $_SESSION[__CLASS__][$uid]['types'] = $this->allowedTypes;
-                if($_SESSION[__CLASS__]['goToFolder'].'/' == $folder) {
-                    $_SESSION[__CLASS__]['openedFolder'] = $uid;
+    protected function getArbo( $folder, &$arbo, $spacer = '' ) {
+        //$this->debug(__METHOD__.'('.$folder.')', 2, __LINE__);
+        if( !file_exists( $folder . '/' . self::HIDDEN ) ) {
+            if( self::getRights( $folder, self::READ ) ) {
+                $folder = str_replace( '//', '/', $folder . '/' );
+                $this->debug( $spacer . basename( $folder ), 3, __LINE__ );
+
+                $uid = MD5( 'sh_browser_show' . microtime() );
+                $_SESSION[ __CLASS__ ][ $uid ][ 'path' ] = $folder;
+                $_SESSION[ __CLASS__ ][ $uid ][ 'types' ] = $this->allowedTypes;
+                if( $_SESSION[ __CLASS__ ][ 'goToFolder' ] . '/' == $folder ) {
+                    $_SESSION[ __CLASS__ ][ 'openedFolder' ] = $uid;
                 }
 
-                $arbo['name']=basename($folder);
-                $arbo['path']=$uid;
-                $scan =  scandir($folder);
+                $arbo[ 'name' ] = basename( $folder );
+                $arbo[ 'path' ] = $uid;
+                $scan = scandir( $folder );
                 $cpt = 0;
-                if(is_array($scan)) {
-                    $sons = array();
+                if( is_array( $scan ) ) {
+                    $sons = array( );
                     $id = 0;
-                    foreach($scan as $element) {
-                        if(substr($element,0,1) != '.') {
-                            if(is_dir($folder.$element)) {
+                    foreach( $scan as $element ) {
+                        if( substr( $element, 0, 1 ) != '.' ) {
+                            if( is_dir( $folder . $element ) ) {
                                 //$this->debug($spacer.'adding $arbo['.$id.'] = '.$element.' in '.basename($folder), 3, __LINE__);
-                                if(self::getRights($folder.$element,self::READ)) {
+                                if( self::getRights( $folder . $element, self::READ ) ) {
                                     $id++;
-                                    $this->debug($spacer.'entering [folders]['.$id.']', 3, __LINE__);
-                                    $this->getArbo($folder.$element,$sons['folders'][$id],$spacer.'    ');
-                                    $arbo['arbo']['hasSubFolders'] = true;
+                                    $this->debug( $spacer . 'entering [folders][' . $id . ']', 3, __LINE__ );
+                                    $this->getArbo( $folder . $element, $sons[ 'folders' ][ $id ], $spacer . '    ' );
+                                    $arbo[ 'arbo' ][ 'hasSubFolders' ] = true;
                                 }
                             }
                         }
                     }
-                    $this->debug('', 3, __LINE__);
-                    $this->debug('', 3, __LINE__);
-                    $this->debug($spacer.'Sons : '.print_r($sons,true), 3, __LINE__);
+                    $this->debug( '', 3, __LINE__ );
+                    $this->debug( '', 3, __LINE__ );
+                    $this->debug( $spacer . 'Sons : ' . print_r( $sons, true ), 3, __LINE__ );
                     //$this->render('oneFolder', $sons);
-                    $arbo['content'] = $this->render('oneFolder', $sons, SH_TEMP_FOLDER.'arbo_loops.php', false);
-                    $this->debug($spacer.'rendered : '.print_r($arbo,true), 3, __LINE__);
-                    $this->debug('', 3, __LINE__);
-                    $this->debug('', 3, __LINE__);
+                    $arbo[ 'content' ] = $this->render( 'oneFolder', $sons, SH_TEMP_FOLDER . 'arbo_loops.php', false );
+                    $this->debug( $spacer . 'rendered : ' . print_r( $arbo, true ), 3, __LINE__ );
+                    $this->debug( '', 3, __LINE__ );
+                    $this->debug( '', 3, __LINE__ );
                 }
                 return $uid;
-            }else {
-                $this->debug('The user is not allowed to access the folder '.$folder, 0, __LINE__);
+            } else {
+                $this->debug( 'The user is not allowed to access the folder ' . $folder, 0, __LINE__ );
             }
-        }else {
-            $this->debug('The folder '.$folder.' is hidden, so the user may not access it', 0, __LINE__);
+        } else {
+            $this->debug( 'The folder ' . $folder . ' is hidden, so the user may not access it', 0, __LINE__ );
         }
         return false;
     }
@@ -365,15 +443,15 @@ class sh_browser extends sh_core {
      * public static function getRights
      *
      */
-    public static function getRights($folder, $type = self::READ) {
-        $links = sh_links::getInstance();
-        if(file_exists($folder.'/'.self::RIGHTSFILE)) {
-            $rights = (int) file_get_contents($folder.'/'.self::RIGHTSFILE);
-            if(!($rights & self::ANYONE) && file_exists($folder.'/'.self::OWNERFILE)) {
-                $owner = trim(file_get_contents($folder.'/'.self::OWNERFILE));
+    public static function getRights( $folder, $type = self::READ ) {
+        $linker = sh_linker::getInstance();
+        if( file_exists( $folder . '/' . self::RIGHTSFILE ) ) {
+            $rights = ( int ) file_get_contents( $folder . '/' . self::RIGHTSFILE );
+            if( !($rights & self::ANYONE) && file_exists( $folder . '/' . self::OWNERFILE ) ) {
+                $owner = trim( file_get_contents( $folder . '/' . self::OWNERFILE ) );
             }
-            if((self::createUserName() == $owner) || ($rights & self::ANYONE)) {
-                if($type & $rights) {
+            if( (self::createUserName() == $owner) || ($rights & self::ANYONE) ) {
+                if( $type & $rights ) {
                     return true;
                 }
             }
@@ -385,27 +463,27 @@ class sh_browser extends sh_core {
      * public function createFolder
      *
      */
-    public function createFolder($folder,$rights = self::READ, $owner = '') {
-        $this->debug(__METHOD__, 2, __LINE__);
-        $container = dirname($folder);
-        $folderName = self::modifyName(basename($folder));
-        $newName = $container.'/'.$folderName;
-        if($rights=='' || is_null($rights)) {
+    public function createFolder( $folder, $rights = self::READ, $owner = '' ) {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        $container = dirname( $folder );
+        $folderName = self::modifyName( basename( $folder ) );
+        $newName = $container . '/' . $folderName;
+        if( $rights == '' || is_null( $rights ) ) {
             $rights = self::READ;
         }
-        if($owner=='' || is_null($owner)) {
+        if( $owner == '' || is_null( $owner ) ) {
             $owner = self::createUserName();
         }
-        if(is_dir($folder)){
-            $this->links->helper->writeInFile($newName.'/'.self::RIGHTSFILE, $rights);
-            $this->links->helper->writeInFile($newName.'/'.self::OWNERFILE, $owner);
+        if( is_dir( $folder ) ) {
+            $this->helper->writeInFile( $newName . '/' . self::RIGHTSFILE, $rights );
+            $this->helper->writeInFile( $newName . '/' . self::OWNERFILE, $owner );
             return true;
-        }elseif(mkdir($newName)) {
-            $this->links->helper->writeInFile($newName.'/'.self::RIGHTSFILE, $rights);
-            $this->links->helper->writeInFile($newName.'/'.self::OWNERFILE, $owner);
+        } elseif( mkdir( $newName ) ) {
+            $this->helper->writeInFile( $newName . '/' . self::RIGHTSFILE, $rights );
+            $this->helper->writeInFile( $newName . '/' . self::OWNERFILE, $owner );
             return $newName;
         }
-        echo 'We couldn\'t build the directory '.$newName.'<br />';
+        echo 'We couldn\'t build the directory ' . $newName . '<br />';
         return false;
     }
 
@@ -413,240 +491,293 @@ class sh_browser extends sh_core {
      * public function showContent
      */
     public function showContent() {
-        $this->debug(__METHOD__, 2, __LINE__);
-        if(!$this->isAdmin()) {
-            $this->links->path->error('403');
+        $this->debug( __METHOD__, 2, __LINE__ );
+        if( !$this->isAdmin() ) {
+            $this->linker->path->error( '403' );
         }
-        $uid = $_GET['folder'];
-        $folder = $_SESSION[__CLASS__][$uid]['path'];
+        $uid = $_GET[ 'folder' ];
+        $folder = $_SESSION[ __CLASS__ ][ $uid ][ 'path' ];
         // We check for the types list in the session, in the get args, and at last we give a default to 'images'
-        $types = $this->getParam('types>'.$_SESSION[__CLASS__][$_GET['folder']]['types'],false);
-        if(!$types && isset($_GET['types'])) {
-            $types = $this->getParam('types>'.$_GET['types'],false);
-        }
-        if(!$types) {
-            $types = $this->getParam('types>images',array());
-        }
-        $shownAsImage = $this->getParam('shownAsImage');
-
-        $shortFolder = str_replace(SH_ROOT_FOLDER,'/',$folder);
-
-        $vars['folder']['uid'] = $uid;
-        $vars['folder']['folder'] = $folder;
-        $_SESSION[__CLASS__][$_GET['browserSession']]['lastFolder'] = $folder;
-        $vars['folder']['basename'] = basename($folder);
-        $message = $_SESSION[__CLASS__]['showContentMessage'];
-        if(empty($message) && file_exists($folder.'/.message')) {
-            include($folder.'/.message');
-            $lang = $this->links->i18n->getLang();
-            if(isset($message[$lang])) {
-                $message = $message[$lang];
-            }else {
-                $message = array_shift($message);
+        $types = $_SESSION[ __CLASS__ ][ $_GET[ 'folder' ] ][ 'types' ];
+        if( !is_array( $types ) ) {
+            $types = $this->getParam( 'types>' . $_SESSION[ __CLASS__ ][ $_GET[ 'folder' ] ][ 'types' ], false );
+            if( !$types && isset( $_GET[ 'types' ] ) ) {
+                $types = $this->getParam( 'types>' . $_GET[ 'types' ], false );
+            }
+            if( !$types ) {
+                $types = $this->getParam( 'types>medias', array( ) );
             }
         }
-        $_SESSION[__CLASS__]['showContentMessage'] = '';
-        $vars['actions']['addfile'] = $this->links->path->getUri('browser/addFile/');
+        $shownAsImage = $this->getParam( 'shownAsImage' );
 
+        $shortFolder = str_replace( SH_ROOT_FOLDER, '/', $folder );
 
-        if(self::getRights(dirname($folder),self::DELETEFOLDER)) {
-            $vars['folder']['deletePreviousFolder'] = true;
-        }else {
-            $vars['folder']['nodeletePreviousFolder'] = true;
+        $vars[ 'folder' ][ 'uid' ] = $uid;
+        $vars[ 'folder' ][ 'folder' ] = $folder;
+        $_SESSION[ __CLASS__ ][ $_GET[ 'browserSession' ] ][ 'lastFolder' ] = $folder;
+        $vars[ 'folder' ][ 'basename' ] = basename( $folder );
+        $message = $_SESSION[ __CLASS__ ][ 'showContentMessage' ];
+        if( empty( $message ) && file_exists( $folder . '/.message' ) ) {
+            include($folder . '/.message');
+            $lang = $this->linker->i18n->getLang();
+            if( isset( $message[ $lang ] ) ) {
+                $message = $message[ $lang ];
+            } else {
+                $message = array_shift( $message );
+            }
         }
-        if(self::getRights(dirname($folder),self::RENAMEFOLDER)) {
-            $vars['folder']['renamePreviousFolder'] = true;
-        }else {
-            $vars['folder']['norenamePreviousFolder'] = true;
+        $_SESSION[ __CLASS__ ][ 'showContentMessage' ] = '';
+        $vars[ 'actions' ][ 'addfile' ] = $this->linker->path->getUri( 'browser/addFile/' );
+
+        if( self::getRights( dirname( $folder ), self::DELETEFOLDER ) ) {
+            $vars[ 'folder' ][ 'deletePreviousFolder' ] = true;
+        } else {
+            $vars[ 'folder' ][ 'nodeletePreviousFolder' ] = true;
         }
-        if(self::getRights($folder,self::ADDFOLDER)) {
-            $vars['folder']['addFolder'] = true;
-        }else {
-            $vars['folder']['noaddFolder'] = true;
+        if( self::getRights( dirname( $folder ), self::RENAMEFOLDER ) ) {
+            $vars[ 'folder' ][ 'renamePreviousFolder' ] = true;
+        } else {
+            $vars[ 'folder' ][ 'norenamePreviousFolder' ] = true;
+        }
+        if( self::getRights( $folder, self::ADDFOLDER ) ) {
+            $vars[ 'folder' ][ 'addFolder' ] = true;
+        } else {
+            $vars[ 'folder' ][ 'noaddFolder' ] = true;
         }
 
-        $scan =  scandir($folder);
+        $scan = scandir( $folder );
 
-        $addFile = self::getRights($folder,self::ADDFILE);
-        $renameFile = self::getRights($folder,self::RENAMEFILE);
-        $deleteFile = self::getRights($folder,self::DELETEFILE);
-        if($addFile) {
-            $vars['folder']['addFile'] = true;
-        }else {
-            $vars['folder']['noAddFile'] = true;
+        $addFile = self::getRights( $folder, self::ADDFILE );
+        $renameFile = self::getRights( $folder, self::RENAMEFILE );
+        $deleteFile = self::getRights( $folder, self::DELETEFILE );
+        if( $addFile ) {
+            $vars[ 'folder' ][ 'addFile' ] = true;
+        } else {
+            $vars[ 'folder' ][ 'noAddFile' ] = true;
         }
-        if(self::getRights($folder,self::READ)) {
-            $vars['folder']['style'] = 'width:80px;height:80px;text-align:center;';
-            $renamePage = $this->links->path->getLink('browser/rename/');
+        if( self::getRights( $folder, self::READ ) ) {
+            $vars[ 'folder' ][ 'style' ] = 'width:80px;height:80px;text-align:center;';
+            $renamePage = $this->linker->path->getLink( 'browser/rename/' );
             $cpt = 0;
-            if(file_exists($folder.'/'.self::HIDDENFILES)) {
-                $hiddenFiles = file($folder.'/'.self::HIDDENFILES);
-                $hiddenFiles = array_map('trim',$hiddenFiles);
-            }else {
-                $hiddenFiles = array();
+            if( file_exists( $folder . '/' . self::HIDDENFILES ) ) {
+                $hiddenFiles = file( $folder . '/' . self::HIDDENFILES );
+                $hiddenFiles = array_map( 'trim', $hiddenFiles );
+            } else {
+                $hiddenFiles = array( );
             }
-            foreach($scan as $element) {
-                if(substr($element,0,1) != '.' && !is_dir($folder.$element)) {
-                    if(!in_array($element,$hiddenFiles)) {
-                        $ext = strtolower(array_pop(explode('.',$element)));
-                        $file = $shortFolder.$element;
-                        if(in_array($ext,$types)) {
-                            $cpt++;
-                            if(in_array($ext,$shownAsImage)) {
-                                $imageSize = getimagesize($folder.$element);
-                                $w = $imageSize[0];
-                                $h = $imageSize[1];
-                                if($w > $h) {
-                                    $vars['pictures'][$cpt]['imagestyle'] = 'width:80px;';
-                                }else {
-                                    $vars['pictures'][$cpt]['imagestyle'] = 'height:80px;';
+            foreach( $scan as $element ) {
+                if( substr( $element, 0, 1 ) != '.' && !is_dir( $folder . $element ) ) {
+                    if( !in_array( $element, $hiddenFiles ) ) {
+                        $ext = strtolower( array_pop( explode( '.', $element ) ) );
+                        $file = $shortFolder . $element;
+                        if( in_array( $ext, $types ) ) {
+                            $reg1 = '`.*\.resized\.[0-9]+\.[0-9]+\.png`';
+                            $reg2 = '`.*\.resized[XY]{1}\.[0-9]+\.png`';
+                            if( $ext == 'png' && (preg_match( $reg1, $element ) || preg_match( $reg2, $element )) ) {
+                                // We do not show the resized versions of the images
+                                continue;
+                            } else {
+                                $cpt++;
+                                $theFile = SH_ROOT_FOLDER . $file;
+                                if( in_array( $ext, $shownAsImage ) ) {
+                                    $imageSize = getimagesize( $folder . $element );
+                                    $w = $imageSize[ 0 ];
+                                    $h = $imageSize[ 1 ];
+                                    if( $w > $h ) {
+                                        $vars[ 'pictures' ][ $cpt ][ 'imagestyle' ] = 'width:80px;';
+                                    } else {
+                                        $vars[ 'pictures' ][ $cpt ][ 'imagestyle' ] = 'height:80px;';
+                                    }
+                                    $icon = SH_ROOT_FOLDER . $file;
+                                    $description = $w . 'x' . $h . ' px<br />';
+                                } else {
+                                    if( file_exists( SH_SHAREDIMAGES_FOLDER . '/icons/' . $ext . '.png' ) ) {
+                                        $icon = SH_SHAREDIMAGES_PATH . '/icons/' . $ext . '.png';
+                                    } else {
+                                        $icon = SH_SHAREDIMAGES_PATH . '/icons/default.png';
+                                    }
+                                    $imageSize = getimagesize(
+                                        str_replace( SH_SHAREDIMAGES_PATH, SH_SHAREDIMAGES_FOLDER, $icon )
+                                    );
+                                    $w = $imageSize[ 0 ];
+                                    $h = $imageSize[ 1 ];
                                 }
-                                $picture = $file;
-                                $description = $w.'x'.$h.' px<br />';
-                            }else {
-                                if(file_exists(SH_SHAREDIMAGES_FOLDER.'/icons/'.$ext.'.png')) {
-                                    $picture = SH_SHAREDIMAGES_PATH.'/icons/'.$ext.'.png';
-                                }else {
-                                    $picture = SH_SHAREDIMAGES_PATH.'/icons/default.png';
+
+                                if( strlen( basename( $file ) ) <= 30 ) {
+                                    $shownName = basename( $file );
+                                } else {
+                                    $shownName = substr( basename( $file ), 0, 12 ) . ' [...] ' . substr( basename( $file ),
+                                                                                                                    -12 );
+                                    $shownName = basename( $file );
                                 }
+
+                                if( $renameFile ) {
+                                    $vars[ 'pictures' ][ $cpt ][ 'renameFile' ] = true;
+                                } else {
+                                    $vars[ 'pictures' ][ $cpt ][ 'noRenameFile' ] = true;
+                                }
+
+                                if( $deleteFile ) {
+                                    $vars[ 'pictures' ][ $cpt ][ 'deleteFile' ] = true;
+                                } else {
+                                    $vars[ 'pictures' ][ $cpt ][ 'noDeleteFile' ] = true;
+                                }
+
+                                $vars[ 'pictures' ][ $cpt ][ 'description' ] = $description . (round( filesize( $folder . $element ) / 1024 )) . 'kio';
+
+                                if( file_exists( $folder . $element . '.title' ) ) {
+                                    $vars[ 'pictures' ][ $cpt ][ 'title' ] = file_get_contents( $folder . $element . '.title' );
+                                } else {
+                                    $vars[ 'pictures' ][ $cpt ][ 'title' ] = $shownName;
+                                }
+                                $vars[ 'pictures' ][ $cpt ][ 'imagestyle' ] .= 'cursor:pointer;';
+                                $vars[ 'pictures' ][ $cpt ][ 'icon' ] = $this->linker->path->changeToShortFolder( $icon );
+                                $newWidth = $w > 400 ? 400 : $w;
+                                $vars[ 'pictures' ][ $cpt ][ 'file' ] = $this->linker->path->changeToShortFolder( $theFile );
+                                $vars[ 'pictures' ][ $cpt ][ 'width' ] = $newWidth;
+                                $vars[ 'pictures' ][ $cpt ][ 'height' ] = round( $h / $w * $newWidth );
+                                $vars[ 'pictures' ][ $cpt ][ 'basename' ] = basename( $file );
+                                $vars[ 'pictures' ][ $cpt ][ 'shownname' ] = $shownName;
+                                $vars[ 'pictures' ][ $cpt ][ 'folder' ] = $folder;
+                                $vars[ 'pictures' ][ $cpt ][ 'element' ] = $element;
+                                if( $ext == 'mp3' ) {
+                                    $vars[ 'pictures' ][ $cpt ][ 'playSound' ] = true;
+                                }
+                                $containsSomething = true;
                             }
-                            if(strlen(basename($file)) <= 30) {
-                                $showedName = basename($file);
-                            }else {
-                                $showedName = substr(basename($file),0,12).' [...] '.substr(basename($file),-12);
-                                $showedName = basename($file);
-                            }
-
-
-                            if($renameFile) {
-                                $vars['pictures'][$cpt]['renameFile'] = true;
-                            }else {
-                                $vars['pictures'][$cpt]['noRenameFile'] = true;
-                            }
-
-                            if($deleteFile) {
-                                $vars['pictures'][$cpt]['deleteFile'] = true;
-                            }else {
-                                $vars['pictures'][$cpt]['noDeleteFile'] = true;
-                            }
-
-                            $vars['pictures'][$cpt]['description'] = $description.(round(filesize($folder.$element) / 1024)).'ko';
-
-                            $vars['pictures'][$cpt]['imagestyle'] .= 'cursor:pointer;';
-                            $vars['pictures'][$cpt]['file'] = $this->links->path->changeToShortFolder(SH_ROOT_FOLDER.$picture);
-                            $vars['pictures'][$cpt]['basename'] = basename($file);
-                            $vars['pictures'][$cpt]['showedname'] = $showedName;
-                            $vars['pictures'][$cpt]['folder'] = $folder;
-                            $vars['pictures'][$cpt]['element'] = $element;
-                            $containsSomething = true;
                         }
                     }
                 }
             }
-        }else {
-            $vars['restrictions']['base'] = $this->links->path->protocol.'://'.$this->links->path->getDomain().'/';
-            echo $this->render('restriction',$vars,false,false);
+        } else {
+            $vars[ 'restrictions' ][ 'base' ] = $this->linker->path->protocol . '://' . $this->linker->path->getDomain() . '/';
+            echo $this->render( 'restriction', $vars, false, false );
             return false;
         }
-        if(!$containsSomething && empty($message)) {
-            $message = $this->getI18n('emptyFolder_message');
+        if( !$containsSomething && empty( $message ) ) {
+            $message = $this->getI18n( 'emptyFolder_message' );
         }
 
-        $vars['browser']['session'] = $_GET['browserSession'];
-        $vars['folder']['message'] = $message;
-        $vars['called']['page'] = $_SERVER['REQUEST_URI'];
-        $vars['i18n'] = $this->__tostring();
-        echo $this->render('folder_content',$vars,false,false);
+        $vars[ 'browser' ][ 'session' ] = $_GET[ 'browserSession' ];
+        $vars[ 'folder' ][ 'message' ] = $message;
+        $vars[ 'called' ][ 'page' ] = $_SERVER[ 'REQUEST_URI' ];
+        $vars[ 'i18n' ] = $this->__tostring();
+        echo $this->render( 'folder_content', $vars, false, false );
         return true;
     }
 
-    public function resize_image($img, $dstx, $dsty, $forceBoth = true) {
-        $this->debug(__METHOD__, 2, __LINE__);
-        $parts = explode('.',$img);
-        $fileExtension = strtolower(array_pop($parts));
-        if($fileExtension != 'png') {
-            $dest = implode('.',$parts).'.png';
-        }else {
+    public function resizeX_image( $img, $dstx, $forceBoth = true ) {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        $parts = explode( '.', $img );
+        $fileExtension = strtolower( array_pop( $parts ) );
+        if( $fileExtension != 'png' ) {
+            $dest = implode( '.', $parts ) . '.png';
+        } else {
             $dest = $img;
         }
 
-        list($width,$height) = getImageSize($img);
+        list($width, $height) = getImageSize( $img );
+        $dsty = $height / $width * $dstx;
+        return $this->resize_image( $img, $dstx, $dsty, $forceBoth );
+    }
 
-        if($fileExtension == "jpg" || $fileExtension=='jpeg') {
-            $from = ImageCreateFromJpeg($img);
-        }elseif ($fileExtension == 'png') {
-            $from = imageCreateFromPNG($img);
-        }elseif ($fileExtension == 'gif') {
-            $from = imageCreateFromGIF($img);
+    public function resizeY_image( $img, $dsty, $forceBoth = true ) {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        $parts = explode( '.', $img );
+        $fileExtension = strtolower( array_pop( $parts ) );
+        if( $fileExtension != 'png' ) {
+            $dest = implode( '.', $parts ) . '.png';
+        } else {
+            $dest = $img;
         }
 
-        $xRate = $width / $dstx;
-        $yRate = $height / $dsty;
-        $biggestRate = max(array($xRate,$yRate));
+        list($width, $height) = getImageSize( $img );
+        $dstx = $width / $height * $dsty;
+        return $this->resize_image( $img, $dstx, $dsty, $forceBoth );
+    }
 
-        if($biggestRate < 1) {
+    public function resize_image( $img, $dstx, $dsty, $forceBoth = true ) {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        $parts = explode( '.', $img );
+        $fileExtension = strtolower( array_pop( $parts ) );
+        if( $fileExtension != 'png' ) {
+            $dest = implode( '.', $parts ) . '.png';
+        } else {
+            $dest = $img;
+        }
+
+        list($width, $height) = getImageSize( $img );
+
+        if( $fileExtension == "jpg" || $fileExtension == 'jpeg' ) {
+            $from = ImageCreateFromJpeg( $img );
+        } elseif( $fileExtension == 'png' ) {
+            $from = imageCreateFromPNG( $img );
+        } elseif( $fileExtension == 'gif' ) {
+            $from = imageCreateFromGIF( $img );
+        }
+
+        if( $dstx > 0 ) {
+            $xRate = $width / $dstx;
+        } else {
+            $dstx = $width;
+            $xRate = 1;
+        }
+        if( $dsty > 0 ) {
+            $yRate = $height / $dsty;
+        } else {
+            $dsty = $height;
+            $yRate = 1;
+        }
+        $biggestRate = max( array( $xRate, $yRate ) );
+
+        if( $biggestRate < 1 ) {
             $biggestRate = 1;
         }
 
-        if($forceBoth) {
+        if( $forceBoth ) {
             $startX = ($dstx - ($width / $biggestRate)) / 2;
             $startY = ($dsty - ($height / $biggestRate)) / 2;
-            $newImage = ImageCreateTrueColor ($dstx,$dsty);
+            $newImage = ImageCreateTrueColor( $dstx, $dsty );
             $trans = imagecolorallocatealpha(
-                    $newImage,
-                    $trans['R'],
-                    $trans['G'],
-                    $trans['B'],
-                    127
+                $newImage, $trans[ 'R' ], $trans[ 'G' ], $trans[ 'B' ], 127
             );
-            imagefill($newImage, 0, 0, $trans);
-            imagecolortransparent($newImage,$trans);
-            imageSaveAlpha($newImage, true);
-            ImageAlphaBlending($newImage, false);
-            imagecopyresized (
-                    $newImage,
-                    $from,
-                    $startX, $startY,
-                    0, 0,
-                    $dstx - 2 * $startX, $dsty - 2 * $startY,
-                    $width, $height
+            imagefill( $newImage, 0, 0, $trans );
+            imagecolortransparent( $newImage, $trans );
+            imageSaveAlpha( $newImage, true );
+            ImageAlphaBlending( $newImage, false );
+            imagecopyresampled(
+                $newImage, $from, $startX, $startY, 0, 0, $dstx - 2 * $startX, $dsty - 2 * $startY, $width, $height
             );
-        }else {
-            if($xRate>$yRate) {
+        } else {
+            if( $xRate > $yRate ) {
                 $newWidth = $width / $xRate;
                 $newHeight = $height / $xRate;
-                //echo $newWidth.'x'.$newHeight.' = '.$width.' / '.$xRate. ' x '.$height.' / '.$xRate. ' x <br />';
-            }else {
+            } else {
                 $newWidth = $width / $yRate;
                 $newHeight = $height / $yRate;
-                //echo $newWidth.'x'.$newHeight.' = '.$width.' / '.$yRate. ' x '.$height.' / '.$yRate. ' x <br />';
             }
-            $newImage = ImageCreateTrueColor($newWidth,$newHeight);
-            $trans = imagecolorallocatealpha($newImage,$trans['R'],$trans['G'],$trans['B'],127);
-            imagefill($newImage, 0, 0, $trans);
-            imagecolortransparent($newImage,$trans);
-            imageSaveAlpha($newImage, true);
-            ImageAlphaBlending($newImage, false);
+            $newImage = ImageCreateTrueColor( $newWidth, $newHeight );
+            $trans = imagecolorallocatealpha( $newImage, $trans[ 'R' ], $trans[ 'G' ], $trans[ 'B' ], 127 );
+            imagefill( $newImage, 0, 0, $trans );
+            imagecolortransparent( $newImage, $trans );
+            imageSaveAlpha( $newImage, true );
+            ImageAlphaBlending( $newImage, false );
 
-            imagecopyresized (
-                    $newImage,
-                    $from,
-                    0, 0,
-                    0, 0,
-                    $newWidth, $newHeight,
-                    $width, $height
+            imagecopyresized(
+                $newImage, $from, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height
             );
         }
 
-        unlink($img);
-        imagepng($newImage, $dest);
-        imagedestroy($from);
-        imagedestroy($newImage);
+        unlink( $img );
+        imagepng( $newImage, $dest );
+        imagedestroy( $from );
+        imagedestroy( $newImage );
 
         return $dest;
     }
 
-    function fastimagecopyresampled (&$dst_image, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h, $quality = 3) {
+    function fastimagecopyresampled( &$dst_image, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w,
+                                     $src_h, $quality = 3 ) {
         // Plug-and-Play fastimagecopyresampled function replaces much slower imagecopyresampled.
         // Just include this function and change all "imagecopyresampled" references to "fastimagecopyresampled".
         // Typically from 30 to 60 times faster when reducing high resolution images down to thumbnail size using the default quality setting.
@@ -660,90 +791,86 @@ class sh_browser extends sh_core {
         // 4 = Up to 25 times faster.  Almost identical to imagecopyresampled for most images.
         // 5 = No speedup. Just uses imagecopyresampled, no advantage over imagecopyresampled.
 
-        if (empty($src_image) || empty($dst_image) || $quality <= 0) {
+        if( empty( $src_image ) || empty( $dst_image ) || $quality <= 0 ) {
             return false;
         }
-        if ($quality < 5 && (($dst_w * $quality) < $src_w || ($dst_h * $quality) < $src_h)) {
-            $temp = imagecreatetruecolor ($dst_w * $quality + 1, $dst_h * $quality + 1);
-            imagecopyresized ($temp, $src_image, 0, 0, $src_x, $src_y, $dst_w * $quality + 1, $dst_h * $quality + 1, $src_w, $src_h);
-            imagecopyresampled ($dst_image, $temp, $dst_x, $dst_y, 0, 0, $dst_w, $dst_h, $dst_w * $quality, $dst_h * $quality);
-            imagedestroy ($temp);
+        if( $quality < 5 && (($dst_w * $quality) < $src_w || ($dst_h * $quality) < $src_h) ) {
+            $temp = imagecreatetruecolor( $dst_w * $quality + 1, $dst_h * $quality + 1 );
+            imagecopyresized( $temp, $src_image, 0, 0, $src_x, $src_y, $dst_w * $quality + 1, $dst_h * $quality + 1,
+                              $src_w, $src_h );
+            imagecopyresampled( $dst_image, $temp, $dst_x, $dst_y, 0, 0, $dst_w, $dst_h, $dst_w * $quality,
+                                $dst_h * $quality );
+            imagedestroy( $temp );
         } else {
-            imagecopyresampled ($dst_image, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
+            imagecopyresampled( $dst_image, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h );
         }
         return true;
     }
 
-    public function resample_image($img, $dstx, $dsty, $forceBoth = true) {
-        $this->debug(__METHOD__, 2, __LINE__);
-        $parts = explode('.',$img);
-        $fileExtension = strtolower(array_pop($parts));
-        if($fileExtension != 'png') {
-            $dest = implode('.',$parts).'.png';
-        }else {
+    public function resample_image( $img, $dstx, $dsty, $forceBoth = true ) {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        $parts = explode( '.', $img );
+        $fileExtension = strtolower( array_pop( $parts ) );
+        if( $fileExtension != 'png' ) {
+            $dest = implode( '.', $parts ) . '.png';
+        } else {
             $dest = $img;
         }
 
-        list($width,$height) = getImageSize($img);
+        list($width, $height) = getImageSize( $img );
+        //echo 'Resampling image '.$img.' from '.$width.'x'.$height.' to '.$dstx.'x'.$dsty.'<br />';
 
-        if($fileExtension == "jpg" || $fileExtension=='jpeg') {
-            $from = ImageCreateFromJpeg($img);
-        }elseif($fileExtension == 'png') {
-            $from = imageCreateFromPNG($img);
+        if( $fileExtension == "jpg" || $fileExtension == 'jpeg' ) {
+            $from = ImageCreateFromJpeg( $img );
+        } elseif( $fileExtension == 'png' ) {
+            $from = imageCreateFromPNG( $img );
         }
 
         $xRate = $width / $dstx;
         $yRate = $height / $dsty;
-        $biggestRate = max(array($xRate,$yRate));
+        $biggestRate = max( array( $xRate, $yRate ) );
+        $smallestRate = min( array( $xRate, $yRate ) );
+        //echo 'Rates are '.$xRate.' x '.$yRate.' so we keep '.$biggestRate.'<br />';
 
-        if($forceBoth) {
+        if( $forceBoth ) {
             $startX = ($dstx - ($width / $biggestRate)) / 2;
             $startY = ($dsty - ($height / $biggestRate)) / 2;
-            $newImage = ImageCreateTrueColor ($dstx,$dsty);
-            $trans = imagecolorallocatealpha($newImage,$trans['R'],$trans['G'],$trans['B'],127);
-            imagefill($newImage, 0, 0, $trans);
-            imagecolortransparent($newImage,$trans);
-            imageSaveAlpha($newImage, true);
-            ImageAlphaBlending($newImage, false);
-            imagecopyresampled (
-                    $newImage,
-                    $from,
-                    $startX, $startY,
-                    0, 0,
-                    $dstx - 2 * $startX, $dsty - 2 * $startY,
-                    $width, $height
+            //echo 'Start point is '.$startX.','.$startY.'<br />';
+            $newImage = ImageCreateTrueColor( $dstx, $dsty );
+            $trans = imagecolorallocatealpha( $newImage, $trans[ 'R' ], $trans[ 'G' ], $trans[ 'B' ], 127 );
+            imagefill( $newImage, 0, 0, $trans );
+            imagecolortransparent( $newImage, $trans );
+            imageSaveAlpha( $newImage, true );
+            ImageAlphaBlending( $newImage, false );
+            imagecopyresampled(
+                $newImage, $from, $startX, $startY, 0, 0, $dstx - 2 * $startX, $dsty - 2 * $startY, $width, $height
             );
-        }else {
-            if($xRate>$yRate) {
+        } else {
+            if( $xRate > $yRate ) {
                 $newWidth = $width / $xRate;
                 $newHeight = $height / $xRate;
-                echo $newWidth.'x'.$newHeight.' = '.$width.' / '.$xRate. ' x '.$height.' / '.$xRate. ' x <br />';
-            }else {
+                echo $newWidth . 'x' . $newHeight . ' = ' . $width . ' / ' . $xRate . ' x ' . $height . ' / ' . $xRate . ' x <br />';
+            } else {
                 $newWidth = $width / $yRate;
                 $newHeight = $height / $yRate;
-                echo $newWidth.'x'.$newHeight.' = '.$width.' / '.$yRate. ' x '.$height.' / '.$yRate. ' x <br />';
+                echo $newWidth . 'x' . $newHeight . ' = ' . $width . ' / ' . $yRate . ' x ' . $height . ' / ' . $yRate . ' x <br />';
             }
-            $newImage = ImageCreateTrueColor($newWidth,$newHeight);
-            $trans = imagecolorallocatealpha($newImage,$trans['R'],$trans['G'],$trans['B'],127);
-            imagefill($newImage, 0, 0, $trans);
-            imagecolortransparent($newImage,$trans);
-            imageSaveAlpha($newImage, true);
-            ImageAlphaBlending($newImage, false);
+            $newImage = ImageCreateTrueColor( $newWidth, $newHeight );
+            $trans = imagecolorallocatealpha( $newImage, $trans[ 'R' ], $trans[ 'G' ], $trans[ 'B' ], 127 );
+            imagefill( $newImage, 0, 0, $trans );
+            imagecolortransparent( $newImage, $trans );
+            imageSaveAlpha( $newImage, true );
+            ImageAlphaBlending( $newImage, false );
 
-            imagecopyresampled (
-                    $newImage,
-                    $from,
-                    0, 0,
-                    0, 0,
-                    $newWidth, $newHeight,
-                    $width, $height
+            imagecopyresampled(
+                $newImage, $from, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height
             );
         }
 
-        unlink($img);
-        imagepng($newImage, $dest);
-        imagedestroy($from);
-        imagedestroy($newImage);
+        unlink( $img );
+        imagepng( $newImage, $dest );
+        imagedestroy( $from );
+        imagedestroy( $newImage );
 
         return $dest;
     }
@@ -754,19 +881,19 @@ class sh_browser extends sh_core {
      * @param str $event The name of the event, which should be a constant.
      * @param str $folder The name of the folder in which the change occured.
      */
-    protected function raiseEvent($event,$folder) {
-        $this->debug(__METHOD__, 2, __LINE__);
-        if(file_exists($folder.'/'.$event)) {
-            $elements = explode('|',file_get_contents($folder.'/'.$event));
-            $class = array_shift($elements);
-            $method = array_shift($elements);
-            $this->links->$class->$method($event,$folder,$elements);
+    protected function raiseEvent( $event, $folder ) {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        if( file_exists( $folder . '/' . $event ) ) {
+            $elements = explode( '|', file_get_contents( $folder . '/' . $event ) );
+            $class = array_shift( $elements );
+            $method = array_shift( $elements );
+            $this->linker->$class->$method( $event, $folder, $elements );
         }
-        if(file_exists($folder.'/'.self::ONCHANGE)) {
-            $elements = explode('|',file_get_contents($folder.'/'.self::ONCHANGE));
-            $class = array_shift($elements);
-            $method = array_shift($elements);
-            $this->links->$class->$method($event,$folder,$elements);
+        if( file_exists( $folder . '/' . self::ONCHANGE ) ) {
+            $elements = explode( '|', file_get_contents( $folder . '/' . self::ONCHANGE ) );
+            $class = array_shift( $elements );
+            $method = array_shift( $elements );
+            $this->linker->$class->$method( $event, $folder, $elements );
         }
     }
 
@@ -781,21 +908,20 @@ class sh_browser extends sh_core {
      * @param str $newName Used only if the event is self::ONRENAMEFOLDER.
      * Contains the new name of the renamed folder.
      */
-    protected function raiseFolderEvent($event,$parentFolder,$folder,$newName = '') {
-        $this->debug(__METHOD__, 2, __LINE__);
-        if(file_exists($parentFolder.'/'.$event)) {
-            $elements = explode('|',file_get_contents($parentFolder.'/'.$event));
-            $class = array_shift($elements);
-            $method = array_shift($elements);
-            $this->links->$class->$method($event,$parentFolder,$folder,$newName,$elements);
+    protected function raiseFolderEvent( $event, $parentFolder, $folder, $newName = '' ) {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        if( file_exists( $parentFolder . '/' . $event ) ) {
+            $elements = explode( '|', file_get_contents( $parentFolder . '/' . $event ) );
+            $class = array_shift( $elements );
+            $method = array_shift( $elements );
+            $this->linker->$class->$method( $event, $parentFolder, $folder, $newName, $elements );
         }
-        if(file_exists($parentFolder.'/'.self::ONCHANGEFOLDER)) {
-            $elements = explode('|',file_get_contents($parentFolder.'/'.self::ONCHANGEFOLDER));
-            $class = array_shift($elements);
-            $method = array_shift($elements);
-            $this->links->$class->$method($event,$parentFolder,$folder,$newName,$elements);
+        if( file_exists( $parentFolder . '/' . self::ONCHANGEFOLDER ) ) {
+            $elements = explode( '|', file_get_contents( $parentFolder . '/' . self::ONCHANGEFOLDER ) );
+            $class = array_shift( $elements );
+            $method = array_shift( $elements );
+            $this->linker->$class->$method( $event, $parentFolder, $folder, $newName, $elements );
         }
-
     }
 
     /**
@@ -807,12 +933,11 @@ class sh_browser extends sh_core {
      * @param str $method The name of the method to call.
      * @param array $params An array containing all the params to give to the method.
      */
-    public static function addEvent($event,$folder,$class,$method,$params = array()) {
-        $content = $class.'|'.$method.'|'.implode('|',$params);
-        $links = sh_links::getInstance();
-        $links->helper->writeInFile($folder.'/'.$event, $content);
+    public static function addEvent( $event, $folder, $class, $method, $params = array( ) ) {
+        $content = $class . '|' . $method . '|' . implode( '|', $params );
+        $linker = sh_linker::getInstance();
+        $linker->helper->writeInFile( $folder . '/' . $event, $content );
     }
-
 
     /**
      * Adds an event (on folders) to a folder.<br />
@@ -824,289 +949,372 @@ class sh_browser extends sh_core {
      * @param str $method The name of the method to call.
      * @param array $params An array containing all the params to give to the method.
      */
-    public static function addFolderEvent($event,$folder,$class,$method,$params = array()) {
-        return self::addEvent($event, $folder, $class, $method, $params);
+    public static function addFolderEvent( $event, $folder, $class, $method, $params = array( ) ) {
+        return self::addEvent( $event, $folder, $class, $method, $params );
     }
 
     /**
-     * public function addFile
-     *
+     * This methods moves the file $file in the folder $folder (which is in the SH_IMAGES_FOLDER),
+     * and resizes it if need. It also, if there is any, calls the on_add events.
+     * @param str $folder The name of the folder in which to insert the file. <br />
+     * The script prepends SH_IMAGES_FOLDER to it. (ex : shop/mini/ -> SH_IMAGES_FOLDER.'shop/mini/')
+     * @param str $file The file where it is right now (probably in a temp folder)
+     * @return bool True on success, false on failure 
      */
-    public function addFile() {
-        $this->debug(__METHOD__, 2, __LINE__);
-        $folder = $_POST['folder'];
-        $fullFolder = str_replace('//','/',$folder.'/');
-        
-        if(self::getRights($fullFolder, self::ADDFILE)) {
-            $file = $_FILES['file']['name'];
-            $file = self::modifyName($file);
-            $weight = $_FILES['file']['size'];
-            if ($file != ''){
-                //Creates the real path
-                $filePath = $fullFolder.$file;
-                if(preg_match($this->imagesExtensions,strtolower($file))){
-                    move_uploaded_file($_FILES['file']['tmp_name'], SH_IMAGES_FOLDER.'temp/'.$file);
-                    $count = count($_SESSION[__CLASS__]['uploaded_images']);
-                    $_SESSION[__CLASS__]['uploaded_images'][$count] = array(
-                        'id' => $count,
-                        'name' => $file,
-                        'src' => SH_IMAGES_FOLDER.'temp/',
-                        'destination' => $fullFolder,
-                        'browserSession' => $_POST['browserSession']
-                    );
-                    $this->links->path->redirect(__CLASS__,'editImage',$count);
-                    $added = true;
-                    return true;
-                }elseif(!preg_match($this->forbiddenExtensions,strtolower($file))){
-                    // The file is not an image, so we just copy it
-                    move_uploaded_file($_FILES['file']['tmp_name'], $filePath);
-                    $added = true;
-                }
-
-                if($added && file_exists($fullFolder.self::ONADD.self::MESSAGEFILE)) {
-                    include($fullFolder.self::ONADD.self::MESSAGEFILE);
-                    $lang = $this->links->i18n->getLang();
-                    if(isset($message[$lang])) {
-                        $message = $message[$lang];
-                    }else {
-                        $message = array_shift($message);
-                    }
-                }else{
-                    $message = $this->getI18n('file_sent_successfully');
-                }
-            }
+    public function addImage( $folder, $file ) {
+        $folder = str_replace( '//', '/', SH_IMAGES_FOLDER . $folder . '/' );
+        if( !is_dir( $folder ) ) {
+            $this->lastError = 'The folder ' . $folder . ' does not exist';
+            return false;
         }
-        $_SESSION[__CLASS__]['showContentMessage'] = $message;
-        $_SESSION[__CLASS__]['openedFolder'] = $_POST['folderUid'];
-        $datas['addfile']['message'] = $message;
-        $datas['addfile']['folder'] = $folder;
-        $datas['addfile']['filePath'] = $filePath;
-        $this->raiseEvent(self::ONADD,$fullFolder);
-        echo $this->render('addFile',$datas,false,false);
+        if( !self::getRights( $folder, self::ADDFILE ) ) {
+            $this->lastError = 'This user is not allowed to add a file in ' . $folder;
+            return false;
+        }
+        if( !file_exists( $file ) ) {
+            $this->lastError = 'This file to add ("' . $file . '") hasn\'nt been found';
+            return false;
+        }
+        $newFile = basename( $file );
+        rename( $file, $folder . $newFile );
+        if( file_exists( $folder . self::ONADD . self::MESSAGEFILE ) ) {
+            include($folder . self::ONADD . self::MESSAGEFILE);
+            $lang = $this->linker->i18n->getLang();
+            if( isset( $message[ $lang ] ) ) {
+                $message = $message[ $lang ];
+            } else {
+                $message = array_shift( $message );
+            }
+        } else {
+            $message = $this->getI18n( 'file_sent_successfully' );
+        }
+        $this->linker->html->addMessage( $message );
+
+        $newFileName = $folder . $newFile;
+
+        // Resizing the image, if needed
+        if( file_exists( $folder . self::DIMENSIONFILE ) ) {
+            // The file has to be resized
+            $dims = file_get_contents( $folder . self::DIMENSIONFILE );
+            $margins = !(file_exists( $folder . self::NOMARGINS ));
+
+            list($width, $height) = explode( 'x', $dims );
+            $newFileName = $this->resize_image( $folder . $newFile, $width, $height, $margins );
+        }
+
+        // We remove old resized images for that name
+        $files = glob( $newFileName . '.*' );
+        foreach( $files as $oneFile ) {
+            unlink( $oneFile );
+        }
+
+        $this->raiseEvent( self::ONADD, $folder );
+
+
+        $_SESSION[ __CLASS__ ][ 'showContentMessage' ] = $message;
+        $this->raiseEvent( self::ONADD, $folder );
+        return $newFileName;
     }
 
-    public function editImage(){
-        $this->debug(__METHOD__, 2, __LINE__);
-        sh_cache::disable();
-        $id = (int) $this->links->path->page['id'];
-        $name = $_SESSION[__CLASS__]['uploaded_images'][$id]['name'];
-        $srcFolder = $_SESSION[__CLASS__]['uploaded_images'][$id]['src'];
-        $destFolder = $_SESSION[__CLASS__]['uploaded_images'][$id]['destination'];
-        $filePath = $srcFolder.$name;
-        $values['img']['src'] = $this->links->path->changeToShortFolder($filePath);
-        if(file_exists($destFolder.self::DIMENSIONFILE)) {
-            // The file has to be resized
-            $dims = file_get_contents($destFolder.self::DIMENSIONFILE);
-            $margins = !(file_exists($destFolder.self::NOMARGINS));
-            list($width,$height) = explode('x',$dims);
-            $hasMaxDims = true;
-        }
-
-        if(isset($_GET['cancel'])){
-            $this->links->path->redirect(__CLASS__,__FUNCTION__,$id);
-        }
-        
-        if(isset($_GET['crop'])){
-            $filePath = $this->crop_image(
-                $filePath,
-                $_GET['startX'], $_GET['startY'],
-                $_GET['stopX'], $_GET['stopY']
-            );
-            $name = baseName($filePath);
-            $_SESSION[__CLASS__]['uploaded_images'][$id]['name'] = $name;
-            $this->links->path->redirect(__CLASS__,__FUNCTION__,$id);
-        }elseif(isset($_GET['rotation'])){
-            $rotation = $_GET['rotation'];
-            $filePath = $this->rotateImage($filePath,$rotation);
-            $_SESSION[__CLASS__]['uploaded_images'][$id]['name'] = basename($filePath);
-            $this->links->path->redirect(__CLASS__,__FUNCTION__,$id);
-        }
-
-        if(isset($_GET['action'])){
-            $action = $_GET['action'];
-            if($action == 'crop'){
-                if($margins){
-                    $values['dimensions']['forced'] = true;
-                    $values['dimensions']['forcedX'] = $width;
-                    $values['dimensions']['forcedY'] = $height;
-                }elseif($hasMaxDims){
-                    $values['dimensions']['max'] = true;
-                    $values['dimensions']['maxX'] = $width;
-                    $values['dimensions']['maxY'] = $height;
+    public function addFile() {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        $folder = $_POST[ 'folder' ];
+        $fullFolder = str_replace( '//', '/', $folder . '/' );
+        if( self::getRights( $fullFolder, self::ADDFILE ) ) {
+            $file = $_FILES[ 'file' ][ 'name' ];
+            $file = self::modifyName( $file );
+            $weight = $_FILES[ 'file' ][ 'size' ];
+            if( $file != '' ) {
+                //Creates the real path
+                $filePath = $fullFolder . $file;
+                if( preg_match( $this->imagesExtensions, strtolower( $file ) ) ) {
+                    move_uploaded_file( $_FILES[ 'file' ][ 'tmp_name' ], SH_IMAGES_FOLDER . 'temp/' . $file );
+                    $count = count( $_SESSION[ __CLASS__ ][ 'uploaded_images' ] );
+                    $_SESSION[ __CLASS__ ][ 'uploaded_images' ][ $count ] = array(
+                        'id' => $count,
+                        'name' => $file,
+                        'src' => SH_IMAGES_FOLDER . 'temp/',
+                        'destination' => $fullFolder,
+                        'browserSession' => $_POST[ 'browserSession' ]
+                    );
+                    $this->linker->path->redirect( __CLASS__, 'editImage', $count );
+                    return true;
+                } elseif( preg_match( $this->forbiddenExtensions, strtolower( $file ) ) ) {
+                    $forbiddenFileType = true;
+                } else {
+                    // The file is not an image, so we just copy it
+                    move_uploaded_file( $_FILES[ 'file' ][ 'tmp_name' ], $filePath );
+                    $added = true;
                 }
-                echo $this->render('editor/crop',$values,false,false);
-            }elseif($action == 'rotate'){
-                $ext = '.'.array_pop(explode('.',$name));
-                $miniPath = $filePath.'.mini';
-                copy($filePath,$miniPath.$ext);
-                $newFile = $this->resize_image($miniPath.$ext, 100, 100, true);
-                $ext = '.png';
-                copy($newFile,$miniPath.'.90'.$ext);
-                $this->rotateImage($miniPath.'.90'.$ext,90);
-                copy($newFile,$miniPath.'.180'.$ext);
-                $this->rotateImage($miniPath.'.180'.$ext,180);
-                copy($newFile,$miniPath.'.270'.$ext);
-                $this->rotateImage($miniPath.'.270'.$ext,270);
-                $values['images']['path'] = $this->links->path->changeToShortFolder($miniPath);
-                echo $this->render('editor/rotate',$values,false,false);
-            }elseif($action == 'validate'){
-                list($originalWidth,$originalHeight) = getImageSize($filePath);
-                if($hasMaxDims) {
-                    $filePath = $this->resize_image($filePath, $width, $height,$margins);
-                }elseif(
-                    ($originalWidth > 900 || $originalHeight > 900)
-                    && !file_exists($destFolder.self::NOMAXSIZEFILE)
-                ){
-                    $filePath = $this->resize_image($filePath, 900, 900, false);
+
+                if( $added && file_exists( $fullFolder . self::ONADD . self::MESSAGEFILE ) ) {
+                    include($fullFolder . self::ONADD . self::MESSAGEFILE);
+                    $lang = $this->linker->i18n->getLang();
+                    if( isset( $message[ $lang ] ) ) {
+                        $message = $message[ $lang ];
+                    } else {
+                        $message = array_shift( $message );
+                    }
+                } elseif( $added ) {
+                    $message = $this->getI18n( 'file_sent_successfully' );
+                } elseif( $forbiddenFileType ) {
+                    $message = $this->getI18n( 'file_forbiddenFileType' );
+                } else {
+                    $message = $this->getI18n( 'file_notSent' );
                 }
-                $name = basename($filePath);
-                rename($filePath, $destFolder.$name);
-                $this->raiseEvent(self::ONADD,$destFolder);
-                $session = $_SESSION[__CLASS__]['uploaded_images'][$id]['browserSession'];
-                unset($_SESSION[__CLASS__]['uploaded_images'][$id]);
-                header('location: /browser/show.php?type=session&session='.$session);
+                $_SESSION[ __CLASS__ ][ 'showContentMessage' ] = $message;
+
+                header( 'location: /browser/show.php?type=session&session=' . $_POST[ 'browserSession' ] );
                 return true;
             }
-        }else{
-            list($originalWidth,$originalHeight) = getImageSize($filePath);
-            if($originalWidth > $originalHeight){
-                $values['img']['direction'] = 'hImage';
-            }else{
-                $values['img']['direction'] = 'vImage';
+        }
+        $_SESSION[ __CLASS__ ][ 'showContentMessage' ] = $message;
+        $_SESSION[ __CLASS__ ][ 'openedFolder' ] = $_POST[ 'folderUid' ];
+        $datas[ 'addfile' ][ 'message' ] = $message;
+        $datas[ 'addfile' ][ 'folder' ] = $folder;
+        $datas[ 'addfile' ][ 'filePath' ] = $filePath;
+        $this->raiseEvent( self::ONADD, $fullFolder );
+        echo $this->render( 'addFile', $datas, false, false );
+    }
+
+    public function editImage() {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        sh_cache::disable();
+        $id = ( int ) $this->linker->path->page[ 'id' ];
+        $name = $_SESSION[ __CLASS__ ][ 'uploaded_images' ][ $id ][ 'name' ];
+        $srcFolder = $_SESSION[ __CLASS__ ][ 'uploaded_images' ][ $id ][ 'src' ];
+        $destFolder = $_SESSION[ __CLASS__ ][ 'uploaded_images' ][ $id ][ 'destination' ];
+        $filePath = $srcFolder . $name;
+        $values[ 'img' ][ 'src' ] = $this->linker->path->changeToShortFolder( $filePath );
+        if( file_exists( $destFolder . self::DIMENSIONFILE ) ) {
+            // The file has to be resized
+            $dims = file_get_contents( $destFolder . self::DIMENSIONFILE );
+            $margins = !(file_exists( $destFolder . self::NOMARGINS ));
+
+            list($width, $height) = explode( 'x', $dims );
+            $haxFixedDimensions = true;
+        } elseif( file_exists( $destFolder . self::MAXDIMENSIONFILE ) ) {
+            // The file has to be resized
+            $dims = file_get_contents( $destFolder . self::MAXDIMENSIONFILE );
+
+            list($width, $height) = explode( 'x', $dims );
+            $haxMaxDimensions = true;
+        }
+
+
+        if( isset( $_GET[ 'cancel' ] ) ) {
+            $this->linker->path->redirect( __CLASS__, __FUNCTION__, $id );
+        }
+
+        if( isset( $_GET[ 'crop' ] ) ) {
+            $filePath = $this->crop_image(
+                $filePath, $_GET[ 'startX' ], $_GET[ 'startY' ], $_GET[ 'stopX' ], $_GET[ 'stopY' ]
+            );
+            $name = baseName( $filePath );
+            $_SESSION[ __CLASS__ ][ 'uploaded_images' ][ $id ][ 'name' ] = $name;
+            $this->linker->path->redirect( __CLASS__, __FUNCTION__, $id );
+        } elseif( isset( $_GET[ 'rotation' ] ) ) {
+            $rotation = $_GET[ 'rotation' ];
+            $filePath = $this->rotateImage( $filePath, $rotation );
+            $_SESSION[ __CLASS__ ][ 'uploaded_images' ][ $id ][ 'name' ] = basename( $filePath );
+            $this->linker->path->redirect( __CLASS__, __FUNCTION__, $id );
+        }
+
+        if( isset( $_GET[ 'action' ] ) ) {
+            $action = $_GET[ 'action' ];
+            if( $action == 'crop' ) {
+                if( $margins ) {
+                    $values[ 'dimensions' ][ 'forced' ] = true;
+                    $values[ 'dimensions' ][ 'forcedX' ] = $width;
+                    $values[ 'dimensions' ][ 'forcedY' ] = $height;
+                } elseif( $haxFixedDimensions ) {
+                    $values[ 'dimensions' ][ 'max' ] = true;
+                    $values[ 'dimensions' ][ 'maxX' ] = $width;
+                    $values[ 'dimensions' ][ 'maxY' ] = $height;
+                }
+                echo $this->render( 'editor/crop', $values, false, false );
+            } elseif( $action == 'rotate' ) {
+                $ext = '.' . array_pop( explode( '.', $name ) );
+                $miniPath = $filePath . '.mini';
+                copy( $filePath, $miniPath . $ext );
+                $newFile = $this->resize_image( $miniPath . $ext, 100, 100, true );
+                $ext = '.png';
+                copy( $newFile, $miniPath . '.90' . $ext );
+                $this->rotateImage( $miniPath . '.90' . $ext, 90 );
+                copy( $newFile, $miniPath . '.180' . $ext );
+                $this->rotateImage( $miniPath . '.180' . $ext, 180 );
+                copy( $newFile, $miniPath . '.270' . $ext );
+                $this->rotateImage( $miniPath . '.270' . $ext, 270 );
+                $values[ 'images' ][ 'path' ] = $this->linker->path->changeToShortFolder( $miniPath );
+                echo $this->render( 'editor/rotate', $values, false, false );
+            } elseif( $action == 'validate' ) {
+                list($oWidth, $oHeight) = getImageSize( $filePath );
+                if( $haxFixedDimensions ) {
+                    $filePath = $this->resize_image( $filePath, $width, $height, $margins );
+                } elseif( $haxMaxDimensions && ($oWidth > $width || $oHeight > $height) ) {
+                    $filePath = $this->resize_image( $filePath, $width, $height, false );
+                } elseif(
+                    ($oWidth > 900 || $oHeight > 900)
+                    && !file_exists( $destFolder . self::NOMAXSIZEFILE )
+                ) {
+                    $filePath = $this->resize_image( $filePath, 900, 900, false );
+                }
+                $name = basename( $filePath );
+                rename( $filePath, $destFolder . $name );
+                $this->raiseEvent( self::ONADD, $destFolder );
+                $session = $_SESSION[ __CLASS__ ][ 'uploaded_images' ][ $id ][ 'browserSession' ];
+                unset( $_SESSION[ __CLASS__ ][ 'uploaded_images' ][ $id ] );
+                header( 'location: /browser/show.php?type=session&session=' . $session );
+                return true;
             }
-            $actions = scandir(SH_CLASS_FOLDER.$this->__tostring().'/renderFiles/editor/');
-            foreach($actions as $action){
-                if(substr($action,0,1) != '.'){
-                    $name = substr($action,0,-7);
-                    $values['actions'][] = array(
+        } else {
+            list($oWidth, $oHeight) = getImageSize( $filePath );
+            if( $oWidth > $oHeight ) {
+                $values[ 'img' ][ 'direction' ] = 'hImage';
+            } else {
+                $values[ 'img' ][ 'direction' ] = 'vImage';
+            }
+            $actions = scandir( SH_CLASS_FOLDER . $this->__tostring() . '/renderFiles/editor/' );
+            foreach( $actions as $action ) {
+                if( substr( $action, 0, 1 ) != '.' ) {
+                    $name = substr( $action, 0, -7 );
+                    $values[ 'actions' ][ ] = array(
                         'name' => $name,
-                        'description' => $this->getI18n('editor_'.$name)
+                        'description' => $this->getI18n( 'editor_' . $name )
                     );
                 }
             }
-            echo $this->render('editImage',$values,false,false);
+            echo $this->render( 'editImage', $values, false, false );
         }
         return true;
     }
 
-    public function crop_image($img,$startX,$startY,$stopX,$stopY){
-        $this->debug(__METHOD__.'('.$startX.', '.$startY.', '.$stopX.', '.$stopY.')', 2, __LINE__);
-        $parts = explode('.',$img);
-        $fileExtension = strtolower(array_pop($parts));
-        if($fileExtension != 'png') {
-            $dest = implode('.',$parts).'.png';
-        }else {
+    public function crop_image( $img, $startX, $startY, $stopX, $stopY ) {
+        $this->debug( __METHOD__ . '(' . $startX . ', ' . $startY . ', ' . $stopX . ', ' . $stopY . ')', 2, __LINE__ );
+        $parts = explode( '.', $img );
+        $fileExtension = strtolower( array_pop( $parts ) );
+        if( $fileExtension != 'png' ) {
+            $dest = implode( '.', $parts ) . '.png';
+        } else {
             $dest = $img;
         }
 
-        list($width,$height) = getImageSize($img);
-        $fromX = min($startX,$stopX);
-        $toX = max($startX,$stopX);
-        $fromY = min($startY,$stopY);
-        $toY = max($startY,$stopY);
+        list($width, $height) = getImageSize( $img );
+        $fromX = min( $startX, $stopX );
+        $toX = max( $startX, $stopX );
+        $fromY = min( $startY, $stopY );
+        $toY = max( $startY, $stopY );
         $newWidth = $toX - $fromX;
         $newHeight = $toY - $fromY;
 
-        if($fileExtension == "jpg" || $fileExtension=='jpeg') {
-            $from = ImageCreateFromJpeg($img);
-        }elseif ($fileExtension == 'png') {
-            $from = imageCreateFromPNG($img);
-        }elseif ($fileExtension == 'gif') {
-            $from = imageCreateFromGIF($img);
+        if( $fileExtension == "jpg" || $fileExtension == 'jpeg' ) {
+            $from = ImageCreateFromJpeg( $img );
+        } elseif( $fileExtension == 'png' ) {
+            $from = imageCreateFromPNG( $img );
+        } elseif( $fileExtension == 'gif' ) {
+            $from = imageCreateFromGIF( $img );
         }
-        $newImage = ImageCreateTrueColor ($newWidth,$newHeight);
+        $newImage = ImageCreateTrueColor( $newWidth, $newHeight );
         $trans = imagecolorallocatealpha(
-                $newImage,
-                $trans['R'],
-                $trans['G'],
-                $trans['B'],
-                127
+            $newImage, $trans[ 'R' ], $trans[ 'G' ], $trans[ 'B' ], 127
         );
-        imagefill($newImage, 0, 0, $trans);
-        imagecolortransparent($newImage,$trans);
-        imageSaveAlpha($newImage, true);
-        ImageAlphaBlending($newImage, false);
-        imagecopy (
-            $newImage,
-            $from,
-            0, 0,
-            $fromX,$fromY,
-            $newWidth,$newHeight
+        imagefill( $newImage, 0, 0, $trans );
+        imagecolortransparent( $newImage, $trans );
+        imageSaveAlpha( $newImage, true );
+        ImageAlphaBlending( $newImage, false );
+        imagecopy(
+            $newImage, $from, 0, 0, $fromX, $fromY, $newWidth, $newHeight
         );
 
-        unlink($img);
-        imagepng($newImage, $dest);
-        imagedestroy($from);
-        imagedestroy($newImage);
+        unlink( $img );
+        imagepng( $newImage, $dest );
+        imagedestroy( $from );
+        imagedestroy( $newImage );
 
         return $dest;
     }
 
-    public function rotateImage($img,$rotation = 90){
-        $this->debug(__METHOD__, 2, __LINE__);
+    public function rotateImage( $img, $rotation = 90 ) {
+        $this->debug( __METHOD__, 2, __LINE__ );
         $rotation = $rotation % 360;
-        if(!in_array($rotation,array(0,90,180,270))){
-            $this->debug('The only allowed values for an image rotation are 0, 90, 180, and 270 (and multiples)', 2, __LINE__);
+        if( !in_array( $rotation, array( 0, 90, 180, 270 ) ) ) {
+            $this->debug( 'The only allowed values for an image rotation are 0, 90, 180, and 270 (and multiples)', 2,
+                          __LINE__ );
             return false;
         }
-        $parts = explode('.',$img);
-        $fileExtension = strtolower(array_pop($parts));
-        if($fileExtension != 'png') {
-            $dest = implode('.',$parts).'.png';
-        }else {
+        $parts = explode( '.', $img );
+        $fileExtension = strtolower( array_pop( $parts ) );
+        if( $fileExtension != 'png' ) {
+            $dest = implode( '.', $parts ) . '.png';
+        } else {
             $dest = $img;
         }
 
-        if($fileExtension == "jpg" || $fileExtension=='jpeg') {
-            $from = ImageCreateFromJpeg($img);
-        }elseif ($fileExtension == 'png') {
-            $from = imageCreateFromPNG($img);
-        }elseif ($fileExtension == 'gif') {
-            $from = imageCreateFromGIF($img);
+        if( $fileExtension == "jpg" || $fileExtension == 'jpeg' ) {
+            $from = ImageCreateFromJpeg( $img );
+        } elseif( $fileExtension == 'png' ) {
+            $from = imageCreateFromPNG( $img );
+        } elseif( $fileExtension == 'gif' ) {
+            $from = imageCreateFromGIF( $img );
         }
-        
-        $width = imagesx($from);
-        $height = imagesy($from);
-        if($rotation == 0){
+
+        $width = imagesx( $from );
+        $height = imagesy( $from );
+        if( $rotation == 0 ) {
             return $dest;
-        }elseif($rotation == 90){
-            $newimg= imagecreatetruecolor($height , $width );
-        }elseif($rotation == 180){
-            $newimg= imagecreatetruecolor($width , $height );
-        }else{
-            $newimg= imagecreatetruecolor($height , $width );
+        } elseif( $rotation == 90 ) {
+            $newimg = imagecreatetruecolor( $height, $width );
+        } elseif( $rotation == 180 ) {
+            $newimg = imagecreatetruecolor( $width, $height );
+        } else {
+            $newimg = imagecreatetruecolor( $height, $width );
         }
         // Setting transparency
         $trans = imagecolorallocatealpha(
-                $newimg,
-                $trans['R'],
-                $trans['G'],
-                $trans['B'],
-                127
+            $newimg, $trans[ 'R' ], $trans[ 'G' ], $trans[ 'B' ], 127
         );
-        imagefill($newimg, 0, 0, $trans);
-        imagecolortransparent($newimg,$trans);
-        imageSaveAlpha($newimg, true);
-        ImageAlphaBlending($newimg, false);
+        imagefill( $newimg, 0, 0, $trans );
+        imagecolortransparent( $newimg, $trans );
+        imageSaveAlpha( $newimg, true );
+        ImageAlphaBlending( $newimg, false );
 
-        for($i = 0;$i < $width ; $i++) {
-            for($j = 0;$j < $height ; $j++) {
-                $reference = imagecolorat($from,$i,$j);
-                if($rotation == 90){
-                    imagesetpixel($newimg, ($height - 1) - $j, $i, $reference );
-                }elseif($rotation == 180){
-                    imagesetpixel($newimg, $width - $i - 1, ($height - 1) - $j, $reference );
-                }else{
-                    imagesetpixel($newimg, $j, $width - $i - 1, $reference );
+        for( $i = 0; $i < $width; $i++ ) {
+            for( $j = 0; $j < $height; $j++ ) {
+                $reference = imagecolorat( $from, $i, $j );
+                if( $rotation == 90 ) {
+                    imagesetpixel( $newimg, ($height - 1) - $j, $i, $reference );
+                } elseif( $rotation == 180 ) {
+                    imagesetpixel( $newimg, $width - $i - 1, ($height - 1) - $j, $reference );
+                } else {
+                    imagesetpixel( $newimg, $j, $width - $i - 1, $reference );
                 }
             }
         }
-        unlink($img);
-        imagepng($newimg, $dest);
-        imagedestroy($from);
-        imagedestroy($newimg);
+        unlink( $img );
+        imagepng( $newimg, $dest );
+        imagedestroy( $from );
+        imagedestroy( $newimg );
 
         return $dest;
+    }
+
+    public function setTitle() {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        $dir = dirname( $_POST[ 'element' ] );
+        $reason = 'get rights on ' . $dir;
+        if( self::getRights( $dir, self::ADDFILE ) || self::getRights( $dir, self::RENAMEFILE ) ) {
+            $element = $_POST[ 'element' ];
+            $element = $this->getFile( $element );
+            if( file_exists( $element ) ) {
+                $this->helper->writeInFile( $_POST[ 'element' ] . '.title', $_POST[ 'title' ] );
+                echo 'OK';
+                return true;
+            } else {
+                $reason = 'File ' . $element . ' not found';
+            }
+        }
+        echo 'ERROR ' . $reason;
+        return true;
     }
 
     /**
@@ -1114,21 +1322,32 @@ class sh_browser extends sh_core {
      *
      */
     public function delete() {
-        $this->debug(__METHOD__, 2, __LINE__);
-        $dir = dirname($_GET['element']);
-        $reason = 'get rights on '.$dir;
-        if(self::getRights($dir,self::DELETEFILE)) {
-            $element = $_GET['element'];
-            $element = $this->getFile($element);
-            if(file_exists($element)) {
-                if(unlink($element)) {
-                    $this->raiseEvent(self::ONDELETE,$dir);
+        $this->debug( __METHOD__, 2, __LINE__ );
+        $dir = dirname( $_GET[ 'element' ] );
+        $reason = 'get rights on ' . $dir;
+        if( self::getRights( $dir, self::DELETEFILE ) ) {
+            $element = $_GET[ 'element' ];
+            $element = $this->getFile( $element );
+            if( file_exists( $element ) ) {
+                if( unlink( $element ) ) {
+                    // We should delete the resized versions before raising the event
+                    foreach( glob( $element . '.resized*' ) as $filename ) {
+                        unlink( $filename );
+                    }
+                    if( file_exists( $element . '.title' ) ) {
+                        unlink( $element . '.title' );
+                    }
+                    $this->raiseEvent( self::ONDELETE, $dir );
                     echo $dir;
                     return true;
+                } else {
+                    $reason = 'Could not unlink the file';
                 }
+            } else {
+                $reason = 'File ' . $element . ' not found';
             }
         }
-        echo 'ERROR '.$reason;
+        echo 'ERROR ' . $reason;
         return true;
     }
 
@@ -1150,46 +1369,120 @@ class sh_browser extends sh_core {
      * @return bool|string True if it is a success, or a string explaining the
      * error.
      */
-    public function addFolder($parentFolderName = '',$folderName = '', $rights = self::ALL, $dimension = '500x500', $owner = '', $margins = true) {
-        if(empty($owner)) {
+    public function addFolder( $parentFolderName = '', $folderName = '', $rights = self::ALL, $dimension = false,
+                               $owner = '', $margins = true ) {
+        if( empty( $owner ) ) {
             $owner = $this->userName;
         }
-        $this->debug(__METHOD__, 2, __LINE__);
-        if(empty($parentFolderName) && empty($folderName)) {
-            list($parentFolderName,$folderName) = explode('|',$_GET['element'],2);
+        $this->debug( __METHOD__, 2, __LINE__ );
+        $beginningRights = $rights;
+        if( empty( $parentFolderName ) && empty( $folderName ) ) {
+            list($parentFolderName, $folderName) = explode( '|', $_GET[ 'element' ], 2 );
             $echoName = true;
-            if(file_exists($parentFolderName.self::RIGHTSFILE)) {
-                $rights = file_get_contents($parentFolderName.self::RIGHTSFILE);
+            if( file_exists( $parentFolderName . self::RIGHTSFILE ) ) {
+                $rights = file_get_contents( $parentFolderName . self::RIGHTSFILE );
             }
-            if(file_exists($parentFolderName.self::DIMENSIONFILE)) {
-                $dimension = file_get_contents($parentFolderName.self::DIMENSIONFILE);
-            }
-            if(file_exists($parentFolderName.self::OWNERFILE)) {
-                $owner = file_get_contents($parentFolderName.self::OWNERFILE);
-            }
-
-        }
-        $error = 'You are not allowed to do this...';
-        if(self::getRights($parentFolderName,self::ADDFOLDER)) {
-            $folderName = self::modifyName($folderName);
-            if(mkdir($parentFolderName.'/'.$folderName)) {
-                $this->links->helper->writeInFile($parentFolderName.'/'.$folderName.'/'.self::RIGHTSFILE,$rights);
-                $this->links->helper->writeInFile($parentFolderName.'/'.$folderName.'/'.self::DIMENSIONFILE,$dimension);
-                $this->links->helper->writeInFile($parentFolderName.'/'.$folderName.'/'.self::OWNERFILE,$owner);
-                if($echoName) {
-                    echo $parentFolderName.'/'.$folderName;
+            if( file_exists( $parentFolderName . self::DIMENSIONFILE ) ) {
+                $dimension = file_get_contents( $parentFolderName . self::DIMENSIONFILE );
+                if( file_exists( $parentFolderName . self::NOMARGINS ) ) {
+                    $noMargins = true;
                 }
-                $this->raiseFolderEvent(self::ONADDFOLDER,$parentFolderName,$folderName);
-                $_SESSION[__CLASS__]['goToFolder'] = $parentFolderName.$folderName;
-                self::setNoMargins($parentFolderName.$folderName,$margins);
+            } elseif( file_exists( $parentFolderName . self::MAXDIMENSIONFILE ) ) {
+                $maxDimension = file_get_contents( $parentFolderName . self::MAXDIMENSIONFILE );
+            }
+            if( file_exists( $parentFolderName . self::OWNERFILE ) ) {
+                $owner = file_get_contents( $parentFolderName . self::OWNERFILE );
+            }
+        }
+        $rights = $rights | self::RENAMEFOLDER | self::DELETEFOLDER;
+        $modifiedRights = $rights;
+
+        $error = ' - ' . $this->shortClassName . ' - You are not allowed to do this...';
+        if( self::getRights( $parentFolderName, self::ADDFOLDER ) ) {
+            $folderName = self::modifyName( $folderName );
+
+            if( !is_dir( $parentFolderName . '/' . $folderName ) ) {
+                $mkresult = mkdir( $parentFolderName . '/' . $folderName );
+            } else {
+                $mkresult = true;
+            }
+            if( $mkresult ) {
+                $this->helper->writeInFile( $parentFolderName . '/' . $folderName . '/' . self::RIGHTSFILE, $rights );
+                if( $dimension ) {
+                    $this->helper->writeInFile( $parentFolderName . '/' . $folderName . '/' . self::DIMENSIONFILE,
+                                                $dimension );
+                    if( $noMargins ) {
+                        self::setNoMargins( $parentFolderName . $folderName, $margins );
+                    }
+                }
+                if( $maxDimension ) {
+                    $this->helper->writeInFile( $parentFolderName . '/' . $folderName . '/' . self::MAXDIMENSIONFILE,
+                                                $maxDimension );
+                }
+                $this->helper->writeInFile( $parentFolderName . '/' . $folderName . '/' . self::OWNERFILE, $owner );
+                if( $echoName ) {
+                    echo $parentFolderName . '/' . $folderName;
+                }
+                $this->raiseFolderEvent( self::ONADDFOLDER, $parentFolderName, $folderName );
+                $_SESSION[ __CLASS__ ][ 'goToFolder' ] = $parentFolderName . $folderName;
+                $this->helper->writeInFile( $parentFolderName . '/' . $folderName . '/' . self::RIGHTSFILE . '.calculation',
+                                            $beginningRights . "\n" . $modifiedRights );
                 return true;
             }
             $error = 'There was a problem.';
         }
-        echo 'ERROR'.$error;
+        echo 'ERROR' . $error;
         return false;
     }
 
+    /**
+     * Creates a folder, adds the owner and rights, and eventually the dimensions
+     * and the noMargins flag.
+     * Every parametter is optionnal, because the may be passed by the browser
+     * by a GET request.
+     * @param str $parentFolderName The folder in which to create it
+     * @param str $folderName The name of the new folder
+     * @param int $rights The rights on this folder (using the rights constants)
+     * @param str $dimension The dimensions the images are resized to (ex: "800x600")
+     * @param str $owner The name of the owner. Most of the time, is the name of
+     * the site (default behaviour). Changing this will disallow the admin to
+     * access this folder in a browser, but not the users to see the images
+     * which are in.
+     * @param bool $margins Whether to add transparent margins or not, if there
+     * are dimensions, and the w/h ratio isn't the same as the image's one.
+     * @return bool|string True if it is a success, or a string explaining the
+     * error.
+     */
+    public function addRootFolder( $folderName = '', $rights = self::ALL, $dimension = false, $owner = '',
+                                   $margins = true ) {
+        if( empty( $owner ) ) {
+            $owner = $this->userName;
+        }
+        $this->debug( __METHOD__, 2, __LINE__ );
+        $parentFolderName = SH_IMAGES_FOLDER;
+        $folderName = self::modifyName( $folderName );
+        if( mkdir( $parentFolderName . '/' . $folderName ) ) {
+            $this->helper->writeInFile( $parentFolderName . '/' . $folderName . '/' . self::RIGHTSFILE, $rights );
+            if( $dimension ) {
+                $this->helper->writeInFile( $parentFolderName . '/' . $folderName . '/' . self::DIMENSIONFILE,
+                                            $dimension );
+                if( $noMargins ) {
+                    self::setNoMargins( $parentFolderName . $folderName, $margins );
+                }
+            }
+            if( $maxDimension ) {
+                $this->helper->writeInFile( $parentFolderName . '/' . $folderName . '/' . self::MAXDIMENSIONFILE,
+                                            $maxDimension );
+            }
+            $this->helper->writeInFile( $parentFolderName . '/' . $folderName . '/' . self::OWNERFILE, $owner );
+            if( $echoName ) {
+                echo $parentFolderName . '/' . $folderName;
+            }
+            $this->raiseFolderEvent( self::ONADDFOLDER, $parentFolderName, $folderName );
+            $_SESSION[ __CLASS__ ][ 'goToFolder' ] = $parentFolderName . $folderName;
+            return true;
+        }
+    }
 
     /**
      * Deletes the folder that is in the $_GET['element'] variable
@@ -1197,16 +1490,16 @@ class sh_browser extends sh_core {
      * error.
      */
     public function deleteFolder() {
-        $this->debug(__METHOD__, 2, __LINE__);
-        $element = $_GET['element'];
+        $this->debug( __METHOD__, 2, __LINE__ );
+        $element = $_GET[ 'element' ];
         $error = 'You are not allowed to do this...';
-        if(self::getRights(dirname($element),self::DELETEFOLDER)) {
-            $this->raiseFolderEvent(self::ONDELETEFOLDER,dirname($element),dirname($element));
-            $this->links->helper->deleteDir($element);
-            $_SESSION[__CLASS__]['goToFolder'] = dirname($element);
+        if( self::getRights( dirname( $element ), self::DELETEFOLDER ) ) {
+            $this->raiseFolderEvent( self::ONDELETEFOLDER, dirname( $element ), dirname( $element ) );
+            $this->helper->deleteDir( $element );
+            $_SESSION[ __CLASS__ ][ 'goToFolder' ] = dirname( $element );
             return true;
         }
-        echo 'ERROR'.$error;
+        echo 'ERROR' . $error;
         return false;
     }
 
@@ -1217,14 +1510,13 @@ class sh_browser extends sh_core {
      * @param str $value The name to clean up
      * @return str The cleaned up name
      */
-    public static function modifyName($value) {
+    public static function modifyName( $value ) {
         // TODO : WILL CAUSE AN ERROR WITH PHP6. TAKE OUT THE SECOND ARGUMENT WHEN UPGRADING
         $value = str_replace(
-                str_split('ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ',2),
-                str_split('AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy'),
-                $value
+            str_split( 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 2 ),
+                       str_split( 'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy' ), $value
         );
-        return preg_replace('/([^.a-z0-9-]+)/i', '_', $value);
+        return preg_replace( '/([^.a-z0-9-]+)/i', '_', $value );
     }
 
     /**
@@ -1233,32 +1525,38 @@ class sh_browser extends sh_core {
      * error.
      */
     public function rename() {
-        $this->debug(__METHOD__, 2, __LINE__);
-        list($element,$value) = explode('|',$_GET['element'],2);
-        $ext = array_pop(explode('.',$element));
-        $newExt = array_pop(explode('.',$value));
-        if(strtolower($ext) != strtolower($newExt)) {
-            $value .= '.'.$ext;
+        $this->debug( __METHOD__, 2, __LINE__ );
+        list($element, $value) = explode( '|', $_GET[ 'element' ], 2 );
+        $ext = array_pop( explode( '.', $element ) );
+        $newExt = array_pop( explode( '.', $value ) );
+        if( strtolower( $ext ) != strtolower( $newExt ) ) {
+            $value .= '.' . $ext;
         }
-        $dir = dirname($element);
-        if(self::getRights($dir,self::RENAMEFILE)) {
-            $value = self::modifyName($value);
+        $dir = dirname( $element );
+        if( self::getRights( $dir, self::RENAMEFILE ) ) {
+            $value = self::modifyName( $value );
 
-            $newName = $dir.'/'.$value;
+            $newName = $dir . '/' . $value;
 
-            $oldName = $this->getFile($element);
+            $oldName = $this->getFile( $element );
 
-            if($value != '' && $oldName && rename($oldName,$newName)) {
+            if( $value != '' && $oldName && rename( $oldName, $newName ) ) {
+                foreach( glob( $oldName . '.resized*' ) as $filename ) {
+                    unlink( $filename );
+                }
+                if( file_exists( $oldName . '.title' ) ) {
+                    rename( $oldName . '.title', $newName . '.title' );
+                }
                 echo $value;
                 // Stores the new value, because the form is not sent another time, so if
                 // the user wants to rename the file another time, he will ask to rename it using
                 // it's old name.
-                $_SESSION[__CLASS__]['renamed'][$element] = $newName;
-                $this->raiseEvent(self::ONRENAME,$dir);
+                $_SESSION[ __CLASS__ ][ 'renamed' ][ $element ] = $newName;
+                $this->raiseEvent( self::ONRENAME, $dir );
                 return true;
             }
         }
-        echo '<script type="text/javascript">alert("An error occured... The file was not renamed.");inPlaceRenameCancel("'.$element.'")</script>';
+        echo '<script type="text/javascript">sh_popup.alert("An error occured... The file was not renamed.");inPlaceRenameCancel("' . $element . '")</script>';
         return false;
     }
 
@@ -1268,30 +1566,30 @@ class sh_browser extends sh_core {
      * error.
      */
     public function renameFolder() {
-        $this->debug(__METHOD__, 2, __LINE__);
-        list($element,$value) = explode('|',$_GET['element'],2);
+        $this->debug( __METHOD__, 2, __LINE__ );
+        list($element, $value) = explode( '|', $_GET[ 'element' ], 2 );
 
-        $dir = dirname($element);
-        if(self::getRights($dir,self::RENAMEFOLDER)) {
-            $value = self::modifyName($value);
+        $dir = dirname( $element );
+        if( self::getRights( $dir, self::RENAMEFOLDER ) ) {
+            $value = self::modifyName( $value );
 
-            $newName = $dir.'/'.$value;
+            $newName = $dir . '/' . $value;
 
-            $oldName = $this->getFile($element);
+            $oldName = $this->getFile( $element );
 
-            if($value != '' && $oldName && rename($oldName,$newName)) {
+            if( $value != '' && $oldName && rename( $oldName, $newName ) ) {
                 echo $value;
                 // Stores the new value, because the form is not sent another time, so if
                 // the user wants to rename the file another time, he will ask to rename it using
                 // it's old name.
-                $_SESSION[__CLASS__]['renamed'][$element] = $newName;
-                $this->raiseFolderEvent(self::ONRENAMEFOLDER,$dir,$oldName,$newName);
-                $_SESSION[__CLASS__]['goToFolder'] = $newName;
+                $_SESSION[ __CLASS__ ][ 'renamed' ][ $element ] = $newName;
+                $this->raiseFolderEvent( self::ONRENAMEFOLDER, $dir, $oldName, $newName );
+                $_SESSION[ __CLASS__ ][ 'goToFolder' ] = $newName;
 
                 return true;
             }
         }
-        echo '<script type="text/javascript">alert("An error occured... The file was not renamed.");inPlaceRenameCancel("'.$element.'")</script>';
+        echo '<script type="text/javascript">sh_popup.alert("An error occured... The file was not renamed.");inPlaceRenameCancel("' . $element . '")</script>';
         return false;
     }
 
@@ -1300,12 +1598,12 @@ class sh_browser extends sh_core {
      * @param str $element The [old] file name
      * @return str The actual file name
      */
-    protected function getFile($element) {
-        $this->debug(__METHOD__, 2, __LINE__);
-        if(file_exists($element)) {
+    protected function getFile( $element ) {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        if( file_exists( $element ) ) {
             return $element;
-        }elseif(isset($_SESSION[__CLASS__]['renamed'][$element]) && file_exists($_SESSION[__CLASS__]['renamed'][$element])) {
-            return $_SESSION[__CLASS__]['renamed'][$element];
+        } elseif( isset( $_SESSION[ __CLASS__ ][ 'renamed' ][ $element ] ) && file_exists( $_SESSION[ __CLASS__ ][ 'renamed' ][ $element ] ) ) {
+            return $_SESSION[ __CLASS__ ][ 'renamed' ][ $element ];
         }
         return false;
     }
@@ -1317,25 +1615,25 @@ class sh_browser extends sh_core {
      * SH_IMAGES_FOLDER) or a path (like SH_IMAGES_FOLDER/some_path/)
      * @return str The javascript to put in the onclick argument.
      */
-    public function getOnClickReplaceImage($id,$folder = 'SH_IMAGES_FOLDER') {
-        $this->debug(__METHOD__, 2, __LINE__);
-        /*if(!defined($folder)) {
-            if(is_dir(SH_ROOT_FOLDER.$folder)) {
-                $folder = SH_ROOT_FOLDER.$folder;
-            }elseif(is_dir(SH_IMAGES_FOLDER.$folder)) {
-                $folder = SH_IMAGES_FOLDER.$folder;
-            }
-            if(is_dir($folder)) {
-                $cpt = count($_SESSION[__CLASS__]['pathes']);
-                $cpt += 1;
-                $_SESSION[__CLASS__]['pathes'][$cpt] = $folder;
-                $folder = $cpt;
-            }
-        }*/
-        $this->debug('The method is browser_changeImg(this,\''.$id.'\',\''.$folder.'\')', 3, __LINE__);
-        $this->links->html->addScript('/sh_browser/singles/getBrowser.js');
-        //$this->links->html->addScript('/sh_browser/singles/changeImg.js');
-        return 'browser_changeImg(this,\''.$id.'\',\''.$folder.'\')';
+    public function getOnClickReplaceImage( $id, $folder = 'SH_IMAGES_FOLDER' ) {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        /* if(!defined($folder)) {
+          if(is_dir(SH_ROOT_FOLDER.$folder)) {
+          $folder = SH_ROOT_FOLDER.$folder;
+          }elseif(is_dir(SH_IMAGES_FOLDER.$folder)) {
+          $folder = SH_IMAGES_FOLDER.$folder;
+          }
+          if(is_dir($folder)) {
+          $cpt = count($_SESSION[__CLASS__]['pathes']);
+          $cpt += 1;
+          $_SESSION[__CLASS__]['pathes'][$cpt] = $folder;
+          $folder = $cpt;
+          }
+          } */
+        $this->debug( 'The method is browser_changeImg(this,\'' . $id . '\',\'' . $folder . '\')', 3, __LINE__ );
+        $this->linker->html->addScript( '/sh_browser/singles/getBrowser.js' );
+        //$this->linker->html->addScript('/sh_browser/singles/changeImg.js');
+        return 'browser_changeImg(this,\'' . $id . '\',\'' . $folder . '\')';
     }
 
     /**
@@ -1345,18 +1643,74 @@ class sh_browser extends sh_core {
      * SH_IMAGES_FOLDER) or a path (like SH_IMAGES_FOLDER/some_path/)
      * @return str The javascript to put in the onclick argument.
      */
-    public function getOnClickShowBrowser($folder = 'SH_IMAGES_FOLDER') {
-        $this->debug(__METHOD__, 2, __LINE__);
-        $this->links->html->addScript('/sh_browser/singles/getBrowser.js');
-        if(!defined($folder)) {
-            $cpt = count($_SESSION[__CLASS__]['pathes']);
+    public function getOnClickShowBrowser( $folder = 'SH_IMAGES_FOLDER' ) {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        $this->linker->html->addScript( '/sh_browser/singles/getBrowser.js' );
+        if( !defined( $folder ) ) {
+            $cpt = count( $_SESSION[ __CLASS__ ][ 'pathes' ] );
             $cpt += 1;
-            $_SESSION[__CLASS__]['pathes'][$cpt] = $folder;
+            $_SESSION[ __CLASS__ ][ 'pathes' ][ $cpt ] = $folder;
             $folder = $cpt;
         }
-        return 'showBrowser(\''.$folder.'\')';
-        //$this->links->html->addScript('/sh_browser/singles/showBrowser.js');
+        return 'showBrowser(\'' . $folder . '\')';
+        //$this->linker->html->addScript('/sh_browser/singles/showBrowser.js');
         //return 'showBrowser(this,\''.$folder.'\')';
+    }
+
+    /**
+     * Renders a document selector.
+     * @param array $attributes
+     * @return <type>
+     */
+    public function render_documentSelector( $attributes = array( ) ) {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        if( !is_dir( SH_IMAGES_FOLDER . 'documents' ) ) {
+            mkdir( SH_IMAGES_FOLDER . 'documents' );
+            $this->setRights(
+                SH_IMAGES_FOLDER . 'documents', self::ALL
+            );
+        }
+        $this->setOwner(
+            SH_IMAGES_FOLDER . 'documents'
+        );
+
+        $this->linker->html->addScript( '/sh_browser/singles/getBrowser.js' );
+        if( empty( $attributes[ 'name' ] ) ) {
+            $this->debug( 'There is no atribute name, so we don\'t create the documentSelector', 2, __LINE__ );
+            return false;
+        }
+        $name = $attributes[ 'name' ];
+        $values[ 'selector' ][ 'name' ] = $name;
+
+        unset( $attributes[ 'name' ] );
+        if( !empty( $attributes[ 'value' ] ) ) {
+            $value = $attributes[ 'value' ];
+            $values[ 'selector' ][ 'value' ] = $value;
+            $values[ 'selector' ][ 'shownValue' ] = basename( $value );
+        }
+        if( !empty( $attributes[ 'folder' ] ) ) {
+            $folder = $attributes[ 'folder' ];
+        } else {
+            $folder = SH_IMAGES_FOLDER . 'documents/';
+        }
+        if( !empty( $attributes[ 'onclick' ] ) ) {
+            $values[ 'selector' ][ 'onclick' ] = $attributes[ 'onclick' ];
+        }
+        if( !empty( $attributes[ 'types' ] ) ) {
+            $types = $attributes[ 'types' ];
+        } else {
+            $types = 'documents';
+        }
+
+        if( !empty( $attributes[ 'id' ] ) ) {
+            $inputId = $attributes[ 'id' ];
+        } else {
+            $inputId = 'doc_' . substr( md5( microtime() ), 0, 8 );
+        }
+        $values[ 'selector' ][ 'inputId' ] = $inputId;
+
+        // Renders the element
+        return $this->render( 'documentSelector', $values, false, false );
     }
 
     /**
@@ -1364,115 +1718,113 @@ class sh_browser extends sh_core {
      * @param array $attributes
      * @return <type>
      */
-    public function render_imageSelector($attributes = array()) {
-        $this->debug(__METHOD__, 2, __LINE__);
-        $this->links->html->addScript('/sh_browser/singles/getBrowser.js');
-        //$this->links->html->addScript('/sh_browser/singles/changeImg.js');
-        if(empty($attributes['name'])) {
-            $this->debug('There is no atribute name, so we don\'t create the imageSelector', 2, __LINE__);
+    public function render_imageSelector( $attributes = array( ) ) {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        $this->linker->html->addScript( '/sh_browser/singles/getBrowser.js' );
+        if( empty( $attributes[ 'name' ] ) ) {
+            $this->debug( 'There is no atribute name, so we don\'t create the imageSelector', 2, __LINE__ );
             return false;
         }
-        $name = $attributes['name'];
-        unset($attributes['name']);
-        if(!empty($attributes['value'])) {
-            $value = $attributes['value'];
-            unset($attributes['value']);
-        }else {
+        $name = $attributes[ 'name' ];
+        unset( $attributes[ 'name' ] );
+        if( !empty( $attributes[ 'value' ] ) ) {
+            $value = $attributes[ 'value' ];
+            unset( $attributes[ 'value' ] );
+        } else {
             $value = $this->defaultImageSelectorImage;
         }
-        if(!empty($attributes['folder'])) {
-            $folder = $attributes['folder'];
-            unset($attributes['folder']);
-        }else {
+        if( !empty( $attributes[ 'folder' ] ) ) {
+            $folder = $attributes[ 'folder' ];
+            unset( $attributes[ 'folder' ] );
+        } else {
             $folder = SH_IMAGES_FOLDER;
         }
-        if(!empty($attributes['types'])) {
-            $types = $attributes['types'];
-            unset($attributes['types']);
-        }else {
+        if( !empty( $attributes[ 'types' ] ) ) {
+            $types = $attributes[ 'types' ];
+            unset( $attributes[ 'types' ] );
+        } else {
             $types = 'images';
         }
         $argsList = '';
-        foreach($attributes as $attributeName=>$attributeValue) {
-            $argsList .= ' '.$attributeName.'="'.$attributeValue.'"';
+        foreach( $attributes as $attributeName => $attributeValue ) {
+            $argsList .= ' ' . $attributeName . '="' . $attributeValue . '"';
         }
-        if(!isset($attributes['alt'])) {
-            $argsList .= ' alt="'.$this->getI18n('replaceImage_alt').'"';
+        if( !isset( $attributes[ 'alt' ] ) ) {
+            $argsList .= ' alt="' . $this->getI18n( 'replaceImage_alt' ) . '"';
         }
-        if(!isset($attributes['title'])) {
-            $argsList .= ' title="'.$this->getI18n('replaceImage_alt').'"';
+        if( !isset( $attributes[ 'title' ] ) ) {
+            $argsList .= ' title="' . $this->getI18n( 'replaceImage_alt' ) . '"';
         }
 
-        $inputId = substr(md5(microtime()),0,8);
-        $onClick = $this->getOnClickReplaceImage($inputId,$folder);
+        $inputId = substr( md5( microtime() ), 0, 8 );
+        $onClick = $this->getOnClickReplaceImage( $inputId, $folder );
 
-        $argsList .= ' src="'.$value.'"';
-        $argsList .= ' onclick="'.$onClick.'"';
+        $argsList .= ' src="' . $value . '"';
+        $argsList .= ' onclick="' . $onClick . '"';
 
-        $values['args']['list'] = $argsList;
-        $values['selector']['inputId'] = $inputId;
-        $values['selector']['value'] = $value;
-        $values['selector']['name'] = $name;
+        $values[ 'args' ][ 'list' ] = $argsList;
+        $values[ 'selector' ][ 'inputId' ] = $inputId;
+        $values[ 'selector' ][ 'value' ] = $value;
+        $values[ 'selector' ][ 'name' ] = $name;
 
 
         // Renders the element
-        return $this->render('imageSelector', $values, false, false);
+        return $this->render( 'imageSelector', $values, false, false );
     }
 
-    protected function saveFolderInSession($folder = 'SH_IMAGES_FOLDER') {
-        if(is_dir(SH_IMAGES_FOLDER.$folder)) {
-            $folder = SH_IMAGES_FOLDER.$folder;
-        }elseif(is_dir(SH_ROOT_FOLDER.$folder)) {
-            $folder = SH_ROOT_FOLDER.$folder;
+    protected function saveFolderInSession( $folder = 'SH_IMAGES_FOLDER' ) {
+        if( is_dir( SH_IMAGES_FOLDER . $folder ) ) {
+            $folder = SH_IMAGES_FOLDER . $folder;
+        } elseif( is_dir( SH_ROOT_FOLDER . $folder ) ) {
+            $folder = SH_ROOT_FOLDER . $folder;
         }
-        $cpt = count($_SESSION[__CLASS__]['pathes']);
+        $cpt = count( $_SESSION[ __CLASS__ ][ 'pathes' ] );
         $cpt += 1;
-        $_SESSION[__CLASS__]['pathes'][$cpt] = $folder;
+        $_SESSION[ __CLASS__ ][ 'pathes' ][ $cpt ] = $folder;
         return $cpt;
     }
 
-    public function render_multipleImagesSelector($attributes = array()) {
-        $this->debug(__METHOD__, 2, __LINE__);
-        $this->links->html->addScript('/sh_browser/singles/getBrowser.js');
-        //$this->links->html->addScript('/sh_browser/singles/changeImg.js');
-        if(empty($attributes['name'])) {
-            $this->debug('There is no atribute name, so we don\'t create the imageSelector', 2, __LINE__);
+    public function render_multipleImagesSelector( $attributes = array( ) ) {
+        $this->debug( __METHOD__, 2, __LINE__ );
+        $this->linker->html->addScript( '/sh_browser/singles/getBrowser.js' );
+        if( empty( $attributes[ 'name' ] ) ) {
+            $this->debug( 'There is no atribute name, so we don\'t create the imageSelector', 2, __LINE__ );
             return false;
         }
-        $name = $attributes['name'];
-        unset($attributes['name']);
-        if(!empty($attributes['value'])) {
-            $value = $attributes['value'];
-            unset($attributes['value']);
-            $images = explode('|',$value);
+        $name = $attributes[ 'name' ];
+        unset( $attributes[ 'name' ] );
+        if( !empty( $attributes[ 'value' ] ) ) {
+            $value = $attributes[ 'value' ];
+            unset( $attributes[ 'value' ] );
+            $images = explode( '|', $value );
         }
-        if(!empty($attributes['folder'])) {
-            if(!defined($attributes['folder']) && !is_dir($attributes['folder'])) {
-                $folder = $this->saveFolderInSession($attributes['folder']);
-            }else {
-                $folder = $attributes['folder'];
+        if( !empty( $attributes[ 'folder' ] ) ) {
+            if( !defined( $attributes[ 'folder' ] ) && !is_dir( $attributes[ 'folder' ] ) && !is_dir( SH_IMAGES_FOLDER . $attributes[ 'folder' ] ) ) {
+                $folder = $this->saveFolderInSession( $attributes[ 'folder' ] );
+            } else {
+                $folder = $attributes[ 'folder' ];
             }
-            unset($attributes['folder']);
-        }else {
+            unset( $attributes[ 'folder' ] );
+        } else {
             $folder = 'SH_IMAGES_FOLDER';
         }
 
-        $values['mis']['value'] = $value;
-        $values['mis']['uid'] = substr(md5(microtime()),0,5);
-        $values['mis']['name'] = $name;
-        $values['mis']['folder'] = $folder;
+        $values[ 'mis' ][ 'value' ] = $value;
+        $values[ 'mis' ][ 'uid' ] = substr( md5( microtime() ), 0, 5 );
+        $values[ 'mis' ][ 'name' ] = $name;
+        $values[ 'mis' ][ 'folder' ] = $folder;
 
-        if(is_array($images)) {
-            $images = array_unique($images);
-            foreach($images as $image) {
-                $values['images'][]['src'] = $image;
+        if( is_array( $images ) ) {
+            $images = array_unique( $images );
+            foreach( $images as $image ) {
+                $values[ 'images' ][ ][ 'src' ] = $image;
             }
         }
 
         // Renders the element
-        return $this->render('multipleImagesSelector', $values, false, false);
+        return $this->render( 'multipleImagesSelector', $values, false, false );
     }
-    
+
     /**
      * Creates or edits a browser session, which may be called using RENDER_BROWSER,
      * or directly using a ling created with the javascript method browser_show
@@ -1490,127 +1842,148 @@ class sh_browser extends sh_core {
      * be shown in that browser.
      * @return int The id that should be given to access that browser.
      */
-    public function editBrowserSession($idIfExisting = false,$folder = '',$action = array(),$types = array(),$element = 0){
+    public function editBrowserSession( $idIfExisting = false, $folder = '', $action = array( ), $types = array( ),
+                                        $element = 0 ) {
         // Eventually creating the unic id
-        if(!$idIfExisting){
-            $idIfExisting = count($_SESSION[__CLASS__]);
+        if( !$idIfExisting ) {
+            $idIfExisting = count( $_SESSION[ __CLASS__ ] );
             $idIfExisting += 1;
         }
 
         // Setting the folder and the others params in session
-        if(defined($folder)){
-            $_SESSION[__CLASS__][$idIfExisting]['folder'] = constant($folder);
-        }elseif(is_dir(SH_IMAGES_FOLDER.$folder)){
-            $_SESSION[__CLASS__][$idIfExisting]['folder'] = SH_IMAGES_FOLDER.$folder;
-        }elseif(is_dir(SH_ROOT_FOLDER.$folder)){
-            $_SESSION[__CLASS__][$idIfExisting]['folder'] = SH_ROOT_FOLDER.$folder;
-        }else{
-            $_SESSION[__CLASS__][$idIfExisting]['folder'] = SH_IMAGES_FOLDER;
+        if( defined( $folder ) ) {
+            $_SESSION[ __CLASS__ ][ $idIfExisting ][ 'folder' ] = constant( $folder );
+        } elseif( is_dir( SH_IMAGES_FOLDER . $folder ) ) {
+            $_SESSION[ __CLASS__ ][ $idIfExisting ][ 'folder' ] = SH_IMAGES_FOLDER . $folder;
+        } elseif( is_dir( SH_ROOT_FOLDER . $folder ) ) {
+            $_SESSION[ __CLASS__ ][ $idIfExisting ][ 'folder' ] = SH_ROOT_FOLDER . $folder;
+        } else {
+            $_SESSION[ __CLASS__ ][ $idIfExisting ][ 'folder' ] = SH_IMAGES_FOLDER;
         }
-        if(!empty($action)){
-            $_SESSION[__CLASS__][$idIfExisting]['action'] = $action;
+        if( !empty( $action ) ) {
+            $_SESSION[ __CLASS__ ][ $idIfExisting ][ 'action' ] = $action;
         }
-        $_SESSION[__CLASS__][$idIfExisting]['element'] = $element;
-        if(!empty($types)){
-            if(is_array($types)){
-                $_SESSION[__CLASS__][$idIfExisting]['types'] = $types;
+        $_SESSION[ __CLASS__ ][ $idIfExisting ][ 'element' ] = $element;
+        if( !empty( $types ) ) {
+            if( is_array( $types ) ) {
+                $_SESSION[ __CLASS__ ][ $idIfExisting ][ 'types' ] = $types;
                 $typesSet = true;
             }
-        }else{
+        } else {
             // By default, we authorize "any" kind of files
             $types = 'any';
         }
-        if(!$typesSet){
+        if( !$typesSet ) {
             //echo 'Get param : '.'types>'.$types.'|types>any<br />';
-            $types = $this->getParam('types>'.$types.'|types>any');
-            $_SESSION[__CLASS__][$idIfExisting]['types'] = $types;
+            $types = $this->getParam( 'types>' . $types . '|types>any' );
+            $_SESSION[ __CLASS__ ][ $idIfExisting ][ 'types' ] = $types;
         }
 
         // Returning the session id
         return $idIfExisting;
     }
-    
-    public function render_browser($attributes = array()){
+
+    public function render_browser( $attributes = array( ) ) {
         // Inserting the javascript file
-        if(!sh_html::$willRender){
+        if( !sh_html::$willRender ) {
             // We should insert the javascript file directly, because
             // sh_html::render will not be called
-            $values['js']['insert'] = true;
-        }else{
-            $this->links->html->addScript('/sh_browser/singles/getBrowser.js');
+            $values[ 'js' ][ 'insert' ] = true;
+        } else {
+            $this->linker->html->addScript( '/sh_browser/singles/getBrowser.js' );
         }
 
         // Getting the folder
-        $folder = $attributes['folder'];
+        $folder = $attributes[ 'folder' ];
 
         // Getting the action
-        if(!empty($attributes['action'])) {
-            $action['name'] = $attributes['action'];
-            $action['params'] = explode('|',$attributes['params']);
-        }else {
-            $action = array();
+        if( !empty( $attributes[ 'action' ] ) ) {
+            $action[ 'name' ] = $attributes[ 'action' ];
+            $action[ 'params' ] = explode( '|', $attributes[ 'params' ] );
+        } else {
+            $action = array( );
         }
 
         // Gettng the images types
-        if(!empty($attributes['types'])) {
-            $types = $attributes['types'];
-            unset($attributes['types']);
-        }elseif(!empty($attributes['typesList'])){
-            $types = explode(',',$attributes['typesList']);
-        }else{
-            $types = array();
+        if( !empty( $attributes[ 'types' ] ) ) {
+            $types = $attributes[ 'types' ];
+            unset( $attributes[ 'types' ] );
+        } elseif( !empty( $attributes[ 'typesList' ] ) ) {
+            $types = explode( ',', $attributes[ 'typesList' ] );
+        } else {
+            $types = array( );
         }
 
         // Creating the browser in session
-        $values['session']['id'] = $this->editBrowserSession(false, $folder, $action, $types);
+        $values[ 'session' ][ 'id' ] = $this->editBrowserSession( false, $folder, $action, $types );
 
         // Getting the text
-        if(!empty($attributes['text'])){
-            $values['link']['text'] = $attributes['text'];
-        }else{
-            $values['link']['text'] = $this->getI18n('showBrowser');
+        if( !empty( $attributes[ 'text' ] ) ) {
+            $values[ 'link' ][ 'text' ] = $attributes[ 'text' ];
+        } else {
+            $values[ 'link' ][ 'text' ] = $this->getI18n( 'showBrowser' );
         }
 
         // Rendering
-        return $this->render('createBrowserLink', $values, false, false);
+        return $this->render( 'createBrowserLink', $values, false, false );
     }
-    
-    public function render_showBrowser($attributes = array()) {
 
-        //$this->links->html->addScript('/sh_browser/singles/changeImg.js');
-        $this->links->html->addScript('/sh_browser/singles/getBrowser.js');
-        if(!empty($attributes['folder'])) {
-            $folder = $attributes['folder'];
-            unset($attributes['folder']);
-        }else {
+    public function render_showBrowser( $attributes = array( ), $content = '' ) {
+
+        //$this->linker->html->addScript('/sh_browser/singles/changeImg.js');
+        $this->linker->html->addScript( '/sh_browser/singles/getBrowser.js' );
+        if( !empty( $attributes[ 'folder' ] ) ) {
+            $folder = $attributes[ 'folder' ];
+            unset( $attributes[ 'folder' ] );
+        } else {
             $folder = SH_IMAGES_FOLDER;
         }
-        if(!empty($attributes['types'])) {
-            $types = $attributes['types'];
-            unset($attributes['types']);
-        }else {
+        if( !empty( $attributes[ 'types' ] ) ) {
+            $types = $attributes[ 'types' ];
+            unset( $attributes[ 'types' ] );
+        } else {
             $types = 'images';
+        }
+        if( !empty( $attributes[ 'tag' ] ) ) {
+            $values[ 'args' ][ 'tag' ] = $attributes[ 'tag' ];
+        } else {
+            $values[ 'args' ][ 'tag' ] = 'div';
         }
         $argsList = '';
 
-        $inputId = substr(md5(microtime()),0,8);
-        $onClick = $this->getOnClickReplaceImage($inputId,$folder);
+        if( trim( $content ) != '' ) {
+            $values[ 'link' ][ 'text' ] = $content;
+        }
 
-        $argsList .= ' onclick="'.$onClick.'"';
+        $inputId = substr( md5( microtime() ), 0, 8 );
+        $onClick = $this->getOnClickReplaceImage( $inputId, $folder );
 
-        $values['args']['list'] = $argsList;
+        $argsList .= ' onclick="' . $onClick . '"';
+        $argsList .= ' class="falseLink"';
+
+        $values[ 'args' ][ 'list' ] = $argsList;
 
         // Renders the element
-        return $this->render('showBrowser', $values, false, false);
+        return $this->render( 'showBrowser', $values, false, false );
     }
 
     /**
      * public static function addDimension
      *
      */
-    public static function addDimension($folder,$w,$h) {
-        return sh_links::getInstance()->helper->writeInFile(
-                $folder.'/'.self::DIMENSIONFILE, $w.'x'.$h
+    public static function addDimension( $folder, $w, $h ) {
+        return sh_linker::getInstance()->helper->writeInFile(
+                $folder . '/' . self::DIMENSIONFILE, $w . 'x' . $h
+        );
+    }
+
+    /**
+     * public static function addMaxDimension
+     *
+     */
+    public static function addMaxDimension( $folder, $w, $h ) {
+        return sh_linker::getInstance()->helper->writeInFile(
+                $folder . '/' . self::MAXDIMENSIONFILE, $w . 'x' . $h
         );
     }
 
@@ -1618,13 +1991,13 @@ class sh_browser extends sh_core {
      * public static function setNoMargins
      *
      */
-    public static function setNoMargins($folder,$status = true) {
-        if($status) {
-            sh_links::getInstance()->helper->writeInFile(
-                    $folder.'/'.self::NOMARGINS , ''
+    public static function setNoMargins( $folder, $status = true ) {
+        if( $status ) {
+            sh_linker::getInstance()->helper->writeInFile(
+                $folder . '/' . self::NOMARGINS, ''
             );
-        }elseif(file_exists($folder.'/'.self::NOMARGINS)) {
-            unlink($folder.'/'.self::NOMARGINS);
+        } elseif( file_exists( $folder . '/' . self::NOMARGINS ) ) {
+            unlink( $folder . '/' . self::NOMARGINS );
         }
         return true;
     }
@@ -1633,13 +2006,13 @@ class sh_browser extends sh_core {
      * public static function setHidden
      *
      */
-    public static function setHidden($folder,$status = true) {
-        if($status) {
-            sh_links::getInstance()->helper->writeInFile(
-                    $folder.'/'.self::HIDDEN , ''
+    public static function setHidden( $folder, $status = true ) {
+        if( $status ) {
+            sh_linker::getInstance()->helper->writeInFile(
+                $folder . '/' . self::HIDDEN, ''
             );
-        }elseif(file_exists($folder.'/'.self::HIDDEN)) {
-            unlink($folder.'/'.self::HIDDEN);
+        } elseif( file_exists( $folder . '/' . self::HIDDEN ) ) {
+            unlink( $folder . '/' . self::HIDDEN );
         }
         return true;
     }
@@ -1648,9 +2021,24 @@ class sh_browser extends sh_core {
      * public static function setRights
      *
      */
-    public static function setRights($folder,$rights) {
-        return sh_links::getInstance()->helper->writeInFile(
-                $folder.'/'.self::RIGHTSFILE, $rights
+    public static function setRights( $folder, $rights ) {
+        return sh_linker::getInstance()->helper->writeInFile(
+                $folder . '/' . self::RIGHTSFILE, $rights
+        );
+    }
+
+    /**
+     * public static function setDimensions
+     *
+     */
+    public static function setDimensions( $folder, $dimensionsOrWidth, $height = null ) {
+        if( is_null( $height ) ) {
+            $dimensions = $dimensionsOrWidth;
+        } else {
+            $dimensions = $dimensionsOrWidth . 'x' . $height;
+        }
+        return sh_linker::getInstance()->helper->writeInFile(
+                $folder . '/' . self::DIMENSIONFILE, $dimensions
         );
     }
 
@@ -1658,12 +2046,38 @@ class sh_browser extends sh_core {
      * public static function setRights
      *
      */
-    public static function setOwner($folder,$owner = null) {
-        if(is_null($owner)) {
-            $owner = file_get_contents(dirname($folder).'/'.self::OWNERFILE);
+    public static function setOwner( $folder, $owner = null ) {
+        if( is_null( $owner ) ) {
+            if( file_exists( dirname( $folder ) . '/' . self::OWNERFILE ) ) {
+                $owner = file_get_contents( dirname( $folder ) . '/' . self::OWNERFILE );
+            } else {
+                $owner = SH_SITENAME;
+            }
         }
-        return sh_links::getInstance()->helper->writeInFile(
-                $folder.'/'.self::OWNERFILE, $owner
+        return sh_linker::getInstance()->helper->writeInFile(
+                $folder . '/' . self::OWNERFILE, $owner
+        );
+    }
+
+    /**
+     * This method sets a message in a specific folder. It will be shown when the users access this folder
+     * through the browser.<br />
+     * If there is no $message parametter, this method will remove any previously set message from this folder.
+     * @param str $folder The folder name (from the filesystem root)
+     * @param array $message An array containing the message in the different languages.<br />
+     * Ex : array('fr_FR' => 'Bonjour le monde!','en_GB' => 'Hello World!');
+     * @return bool True for success, false for failiure
+     */
+    public static function setMessage( $folder, $message = null ) {
+        if( is_null( $message ) ) {
+            // We remove the message if there is one
+            if( file_exists( $folder . '/' . self::MESSAGEFILE ) ) {
+                unlink( $folder . '/' . self::MESSAGEFILE );
+                return true;
+            }
+        }
+        return sh_linker::getInstance()->helper->writeArrayInFile(
+                $folder . '/' . self::MESSAGEFILE, 'message', $message, false
         );
     }
 
@@ -1672,12 +2086,12 @@ class sh_browser extends sh_core {
      * @param string $page The page we want to translate to uri
      * @return string|bool The uri, or false
      */
-    public function translatePageToUri($page){
-        list($class,$method,$id) = explode('/',$page);
-        if($method == 'editImage'){
-            return '/'.$this->shortClassName.'/editImage/'.$id.'.php';
+    public function translatePageToUri( $page ) {
+        list($class, $method, $id) = explode( '/', $page );
+        if( $method == 'editImage' ) {
+            return '/' . $this->shortClassName . '/editImage/' . $id . '.php';
         }
-        return parent::translatePageToUri($page);
+        return parent::translatePageToUri( $page );
     }
 
     /**
@@ -1685,13 +2099,13 @@ class sh_browser extends sh_core {
      * @param string $page The page we want to translate to uri
      * @return string|bool The uri, or false
      */
-    public function translateUriToPage($uri){
-        if(preg_match('`/'.$this->shortClassName.'/([^/]+)(/([0-9]+)(-[^/]+)?)?\.php`',$uri,$matches)){
-            if($matches[1] == 'editImage'){
-                return $this->shortClassName.'/editImage/'.$matches[3];
+    public function translateUriToPage( $uri ) {
+        if( preg_match( '`/' . $this->shortClassName . '/([^/]+)(/([0-9]+)(-[^/]+)?)?\.php`', $uri, $matches ) ) {
+            if( $matches[ 1 ] == 'editImage' ) {
+                return $this->shortClassName . '/editImage/' . $matches[ 3 ];
             }
         }
-        return parent::translateUriToPage($uri);
+        return parent::translateUriToPage( $uri );
     }
 
     /**

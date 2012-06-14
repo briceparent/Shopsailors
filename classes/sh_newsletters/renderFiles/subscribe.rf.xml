@@ -1,77 +1,79 @@
 <div>
-    <RENDER_IFSET what="subscription>done">
+    <RENDER_IFSET what="subscription:done">
         <RENDER_NOTIF size="M">
             <div class="bold">
-                <RENDER_VALUE what="i18n>subscription_successfull"/>
+                <RENDER_VALUE what="i18n:subscription_successfull"/>
             </div>
         </RENDER_NOTIF>
     </RENDER_IFSET>
-    <RENDER_IFNOTSET what="subscription>done">
-        <RENDER_FORM id="subscribeNewsForm" >
-            <div class="createAccount_contents">
-                <RENDER_IFSET what="error>oneAtLeast">
-                    <div class="alertError">
-                        <RENDER_IFSET what="error>nothingSelected">
-                            <div>
-                                <RENDER_VALUE what="i18n>error_nothingSelected"/>
+    <RENDER_IFNOTSET what="subscription:done">
+        <RENDER_NOTIF size="L">
+            <RENDER_FORM id="subscribeNewsForm" >
+                <div class="left">
+                    <RENDER_IFSET what="error:oneAtLeast">
+                        <div class="alertError">
+                            <RENDER_IFSET what="error:nothingSelected">
+                                <div>
+                                    <RENDER_VALUE what="i18n:error_nothingSelected"/>
+                                </div>
+                            </RENDER_IFSET>
+                            <RENDER_IFSET what="error:mail">
+                                <div>
+                                    <RENDER_VALUE what="i18n:error_mail"/>
+                                </div>
+                            </RENDER_IFSET>
+                            <RENDER_IFSET what="captcha:error">
+                                <div>
+                                    <RENDER_VALUE what="i18n:error_captchaError"/>
+                                </div>
+                            </RENDER_IFSET>
+                        </div>
+                    </RENDER_IFSET>
+                    <RENDER_IFSET what="content:intro">
+                        <div class="">
+                            <RENDER_VALUE what="content:intro"/>
+                        </div>
+                    </RENDER_IFSET>
+                    <div class="nl_Sub_mailAddress">
+                        <RENDER_VALUE what="i18n:inputMail"/>
+                        <br />
+                        <input name="mail" value="{mail:value}"/>
+                    </div>
+                    <RENDER_IFSET what="nl_list:moreThanOne">
+                        <div class="nl_chooseList">
+                            <RENDER_VALUE what="i18n:chooseList"/>
+                        </div>
+                        <div class="">
+                            <RENDER_LOOP what="newsletters">
+                                <RENDER_CHECKBOX text="{newsletters:name}" name="newsletters[{newsletters:id}]" state="{newsletters:state}" help="{newsletters:description}"/>
+                            </RENDER_LOOP>
+                        </div>
+                    </RENDER_IFSET>
+                    <RENDER_IFNOTSET what="nl_list:moreThanOne">
+                        <RENDER_LOOP what="newsletters">
+                            <div class="nl_autoChoosenList">
+                                <RENDER_VALUE what="i18n:autoChoosenList"/>
                             </div>
-                        </RENDER_IFSET>
-                        <RENDER_IFSET what="error>mail">
-                            <div>
-                                <RENDER_VALUE what="i18n>error_mail"/>
+                            <div class="nl_autoChoosenList_name">
+                                <RENDER_VALUE what="newsletters:name"/>
                             </div>
-                        </RENDER_IFSET>
-                        <RENDER_IFSET what="captcha>error">
-                            <div>
-                                <RENDER_VALUE what="i18n>error_captchaError"/>
+                            <div class="nl_autoChoosenList_desc">
+                                <RENDER_VALUE what="newsletters:description"/>
                             </div>
-                        </RENDER_IFSET>
+                            <input type="hidden" name="newsletters[{newsletters:id}]" checked="checked"/>
+                        </RENDER_LOOP>
+                    </RENDER_IFNOTSET>
+                    <div class="marginTop_20px center formAccount_captcha formAccount_{captcha:error}">
+                        <RENDER_CAPTCHA what="subscribeNewsForm" error="{captcha:error}"/><br />
+                        <input type="submit" value="{i18n:send}"/>
                     </div>
-                </RENDER_IFSET>
-            </div>
-            <RENDER_IFSET what="content>intro">
-                <div class="nl_Sub_intro">
-                    <RENDER_VALUE what="content>intro"/>
+                    <div class="">
+                    </div>
+                    <div id="sendMailConfirm">
+                        <RENDER_VALUE what="i18n:sendMailConfirm"/>
+                    </div>
                 </div>
-            </RENDER_IFSET>
-            <div class="nl_Sub_mailAddress">
-                <RENDER_VALUE what="i18n>inputMail"/>
-                <br />
-                <input name="mail" value="{mail>value}"/>
-            </div>
-            <RENDER_IFSET what="nl_list>moreThanOne">
-                <div class="nl_chooseList">
-                    <RENDER_VALUE what="i18n>chooseList"/>
-                </div>
-                <div class="">
-                    <RENDER_LOOP what="newsletters">
-                        <RENDER_CHECKBOX text="{newsletters>name}" name="newsletters[{newsletters>id}]" state="{newsletters>state}" help="{newsletters>description}"/>
-                    </RENDER_LOOP>
-                </div>
-            </RENDER_IFSET>
-            <RENDER_IFNOTSET what="nl_list>moreThanOne">
-                <RENDER_LOOP what="newsletters">
-                    <div class="nl_autoChoosenList">
-                        <RENDER_VALUE what="i18n>autoChoosenList"/>
-                    </div>
-                    <div class="nl_autoChoosenList_name">
-                        <RENDER_VALUE what="newsletters>name"/>
-                    </div>
-                    <div class="nl_autoChoosenList_desc">
-                        <RENDER_VALUE what="newsletters>description"/>
-                    </div>
-                    <input type="hidden" name="newsletters[{newsletters>id}]" checked="checked"/>
-                </RENDER_LOOP>
-            </RENDER_IFNOTSET>
-            <div class="marginTop_10px formAccount_captcha formAccount_{captcha>error}">
-                <RENDER_CAPTCHA what="subscribeNewsForm" error="{captcha>error}"/>
-            </div>
-            <div class="">
-                <input type="submit" value="{i18n>send}"/>
-            </div>
-            <div id="sendMailConfirm">
-                <RENDER_VALUE what="i18n>sendMailConfirm"/>
-            </div>
-        </RENDER_FORM>
+            </RENDER_FORM>
+        </RENDER_NOTIF>
     </RENDER_IFNOTSET>
 </div>

@@ -1,0 +1,39 @@
+<div class="admin_selectLang">
+    <RENDER_JS>
+        Event.observe(window,'load',function(){
+            $$('.oneAvailableLanguage').each(function(el){
+                Event.observe(el,'change',function(){
+                    if(el.checked){
+                        $(el.id+'_default').style.display = '';
+                    }else{
+                        $(el.id+'_default').style.display = 'none';
+                    }
+                });
+            });
+        });
+    </RENDER_JS>
+    <div>
+        <RENDER_VALUE what="i18n:activatedLang"/>
+        <RENDER_LOOP what="langs">
+            <span class="oneAvailableLang" style="padding:0 6px;">
+                <input class="oneAvailableLanguage" type="checkbox" name="{selector:id}_enabled[{langs:lang}]" state="{langs:state}" id="availableLangs{langs:lang}"/>
+                <label for="availableLangs{langs:lang}">
+                    <img src="{langs:flag}" style="vertical-align:middle;"/>
+                    <RENDER_VALUE what="langs:languagename"/>
+                </label>
+            </span>
+        </RENDER_LOOP>
+    </div>
+    <div class="adminSeparator">
+        <RENDER_VALUE what="i18n:defaultLang"/>
+        <RENDER_LOOP what="langs">
+            <span class="oneLangForDefault" id="availableLangs{langs:lang}_default" style="display:{langs:display};padding:4px 6px;">
+                <input type="radio" name="{selector:id}_default" value="{langs:lang}" state="{langs:defaultState}" id="enabledLangs{langs:lang}"/>
+                <label for="enabledLangs{langs:lang}">
+                    <img src="{langs:flag}" style="vertical-align:middle;"/>
+                    <RENDER_VALUE what="langs:languagename"/>
+                </label>
+            </span>
+        </RENDER_LOOP>
+    </div>
+</div>

@@ -1,75 +1,96 @@
 <?php
+
 /**
- * @author Brice PARENT for Shopsailors
+ * @author Brice PARENT (Websailors) for Shopsailors
  * @copyright Shopsailors 2009
  * @license http://www.cecill.info
  * @version See version in the params/global.params.php file.
  * @package Shopsailors Core Classes
  */
-if(!defined('SH_MARKER')){header('location: directCallForbidden.php');}
+if( !defined( 'SH_MARKER' ) ) {
+    header( 'location: directCallForbidden.php' );
+}
 
 /**
  * Class that creates and manages image captchas, using The Kankrelune's captchas generator.
  */
 class sh_captcha extends sh_core {
-    protected $minimal = array('change' => true);
+
+    const CLASS_VERSION = '1.1.11.03.29';
+
+    protected $minimal = array( 'change' => true );
+    public $shopsailors_dependencies = array(
+        'sh_linker', 'sh_params', 'sh_db', 'sh_i18n', 'sh_renderer'
+    );
 
     const CAPTCHA_ERROR = 'Captcha_error';
+
+    public function construct() {
+        $installedVersion = $this->getClassInstalledVersion();
+        if( version_compare( $installedVersion, '1.1.11.03.29', '<=' ) ) {
+            $this->linker->renderer->add_render_tag( 'render_captcha', __CLASS__, 'render_captcha' );
+            $this->setClassInstalledVersion( self::CLASS_VERSION );
+        }
+    }
 
     /**
      * public function change
      *
      */
-    public function change(){
-        $form = $_POST['form'];
-        echo $this->getParam('imagePath').$form.'&id='.MD5(microtime());
+    public function change() {
+        $form = $_POST[ 'form' ];
+        echo $this->getParam( 'imagePath' ) . $form . '&id=' . MD5( microtime() );
     }
 
-    public function render_captcha($attributes = array()){
-        if(isset($attributes['what'])){
-            $what = $attributes['what'];
-        }else{
+    public function render_captcha( $attributes = array( ) ) {
+        if( isset( $attributes[ 'what' ] ) ) {
+            $what = $attributes[ 'what' ];
+        } else {
             return false;
         }
-        $error = trim($attributes['error']) != '';
+        if( isset( $attributes[ 'tabindex' ] ) ) {
+            $tabindex = $attributes[ 'tabindex' ];
+        } else {
+            $tabindex = null;
+        }
+        $error = trim( $attributes[ 'error' ] ) != '';
 
-        return $this->create($what,$error);
+        return $this->create( $what, $error, $tabindex );
     }
 
     /**
      * public function create
      */
-    public function create($form,$error = false){
-        $this->links->html->addScript('/'.__CLASS__.'/singles/captcha.js');
+    public function create( $form, $error = false, $tabindex = null ) {
+        $this->linker->html->addScript( '/' . __CLASS__ . '/singles/captcha.js' );
 
-        $uid = str_replace(' ','_',microtime());
-        $captcha['captcha']['image'] = $this->getParam('imagePath').$form.'&#38;id='.$uid;
-        $captcha['captcha']['name'] = 'captcha_'.$form;
-        $captcha['captcha']['form'] = $form;
-        $captcha['captcha']['change'] = $this->links->path->getUri('captcha/change/');
-        if($error){
-            $captcha['captcha']['error'] = 'input_error';
+        $uid = str_replace( ' ', '_', microtime() );
+        $captcha[ 'captcha' ][ 'image' ] = $this->getParam( 'imagePath' ) . $form . '&#38;id=' . $uid;
+        $captcha[ 'captcha' ][ 'name' ] = 'captcha_' . $form;
+        $captcha[ 'captcha' ][ 'form' ] = $form;
+        $captcha[ 'captcha' ][ 'tabindex' ] = $tabindex;
+        $captcha[ 'captcha' ][ 'change' ] = $this->linker->path->getUri( 'captcha/change/' );
+        if( $error ) {
+            $captcha[ 'captcha' ][ 'error' ] = 'input_error';
         }
 
-        $captcha['i18n'] = __CLASS__;
+        $captcha[ 'i18n' ] = __CLASS__;
 
-        $ret = $this->render('captcha',$captcha,false,false);
+        $ret = $this->render( 'captcha', $captcha, false, false );
         return $ret;
     }
 
     /**
      * public function verify
      */
-    public function verify($form){
-        if(isset($_POST['captcha'])){
-            $entered = $_POST['captcha'];
-        }else{
-            $entered = $_GET['captcha'];
+    public function verify( $form ) {
+        if( isset( $_POST[ 'captcha' ] ) ) {
+            $entered = $_POST[ 'captcha' ];
+        } else {
+            $entered = $_GET[ 'captcha' ];
         }
-        if(
-            trim($_SESSION[__CLASS__][$form]['captcha']) == '' ||
-            strtoupper($entered) != strtoupper($_SESSION[__CLASS__][$form]['captcha'])
-        ){
+        $realValue = $_SESSION[ __CLASS__ ][ $form ][ 'captcha' ];
+        if( trim( $realValue ) == '' || strtoupper( $entered ) != strtoupper( $realValue ) ) {
             return false;
         }
         return true;
@@ -80,14 +101,14 @@ class sh_captcha extends sh_core {
      * @param string $page The page we want to translate to uri
      * @return string|bool The uri, or false
      */
-    public function translatePageToUri($page){
-        list($class,$method,$id) = explode('/',$page);
-        if($method == 'change'){
-            $uri = '/'.$this->shortClassName.'/'.$this->getI18n('change_uri').'.php';
+    public function translatePageToUri( $page ) {
+        list($class, $method, $id) = explode( '/', $page );
+        if( $method == 'change' ) {
+            $uri = '/' . $this->shortClassName . '/' . $this->getI18n( 'change_uri' ) . '.php';
             return $uri;
         }
 
-        return parent::translatePageToUri($page);
+        return parent::translatePageToUri( $page );
     }
 
     /**
@@ -95,20 +116,21 @@ class sh_captcha extends sh_core {
      * @param string $page The page we want to translate to uri
      * @return string|bool The uri, or false
      */
-    public function translateUriToPage($uri){
-        if(preg_match('`/'.$this->shortClassName.'/'.$this->getI18n('change_uri').'\.php`',$uri)){
-            $page = $this->shortClassName.'/change/';
+    public function translateUriToPage( $uri ) {
+        if( preg_match( '`/' . $this->shortClassName . '/' . $this->getI18n( 'change_uri' ) . '\.php`', $uri ) ) {
+            $page = $this->shortClassName . '/change/';
             return $page;
         }
 
-        return parent::translateUriToPage($uri);
+        return parent::translateUriToPage( $uri );
     }
 
     /**
      * public function __tostring
      * Returns the name of the class
      */
-    public function __tostring(){
+    public function __tostring() {
         return get_class();
     }
+
 }

@@ -1,0 +1,15 @@
+
+<div>
+    <RENDER_IFNOTSET what="variants:none">
+        <select name="variant[{category:uid}]">
+            <RENDER_LOOP what="variants">
+                <option value="{variants:variant_id}" state="{variants:state}">
+                    <RENDER_VALUE what="variants:name"/>
+                </option>
+            </RENDER_LOOP>
+        </select>
+    </RENDER_IFNOTSET>
+    <RENDER_IFSET what="variants:none">
+        <input type="hidden" name="variant[{category:uid}]" value="0"/>
+    </RENDER_IFSET>
+</div>

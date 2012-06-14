@@ -3,62 +3,53 @@
         function changeTemplate(){
             checkedList=$$('input:checked');
             checked = checkedList[0].value;
-            if('<RENDER_VALUE what="template>original"/>' != checked){
-                /*alert("<RENDER_VALUE what="i18n>templateWasChanged"/>");*/
+            if('<RENDER_VALUE what="template:original"/>' != checked){
+                /*alert("<RENDER_VALUE what="i18n:templateWasChanged"/>");*/
                 $('templateChooser').submit();
             }
         }
     </RENDER_JS>
     <RENDER_FORM id="templateChooser">
         <div id="myRet"> </div>
-        <div class="form_box_container">
-            <RENDER_IFSET what="template>changed">
-                <div class="form_box_top">
-                    <h3 class="box_title"><RENDER_VALUE what="i18n>templateWasChanged_title"/></h3>
-                </div>
-                <div class="form_box_middle">
-                    <div class="form_box_content">
-                        <div class="formContent" style="text-align:center;">
-                            <img src="/templates/global/admin/icons/picto_caution.png" alt=""/>
-                        </div>
-                        <div class="formContent">
-                            <RENDER_VALUE what="i18n>templateWasChanged"/>
-                        </div>
+        <RENDER_IFSET what="template:changed">
+            <RENDER_ADMINBOX title="{i18n:templateWasChanged_title}">
+                <RENDER_ADMINBOXCONTENT>
+                    <div class="formContent" style="text-align:center;">
+                        <img src="/templates/global/admin/icons/picto_caution2.png" alt=""/>
                     </div>
-                </div>
-                <div class="form_box_bottom">
-                </div>
-            </RENDER_IFSET>
-            <div class="form_box_top">
-                <h3 class="box_title"><RENDER_VALUE what="i18n>titleTemplateSelector"/></h3>
-            </div>
-            <div class="form_box_middle">
-                <div class="form_box_content">
                     <div class="formContent">
-                        <RENDER_TABLE what="templates" cols="2" cellspacing="0">
-                            <div class="templateSelector_elements">
-                                <div>
-                                    <RENDER_RADIOBOX text="{templates>name}" name="template" state="{templates>state}" value="{templates>completeName}"/>
-                                    <RENDER_IFSET what="templates>firstSlide">
-                                        <a class="lightwindow page-options" href="{templates>firstSlide}" rel="templates[{templates>completeName}]" style="width:80px;">
-                                            <img src="{templates>thumbnail}" alt="{templates>name}" title="{templates>name}"/>
-                                        </a>
-                                        <RENDER_LOOP what="slides">
-                                            <a class="lightwindow hidden" href="{slides>src}" rel="templates[{templates>completeName}]" style="width:20px;"></a>
-                                        </RENDER_LOOP>
-                                    </RENDER_IFSET>
-                                    <RENDER_IFNOTSET what="templates>firstSlide">
-                                        <img src="{templates>thumbnail}" alt="{templates>name}" title="{templates>name}"/>
-                                    </RENDER_IFNOTSET>
-                                </div>
-                            </div>
-                        </RENDER_TABLE>
+                        <RENDER_VALUE what="i18n:templateWasChanged"/>
                     </div>
-                </div>
-            </div>
-            <div class="form_box_bottom">
-            </div>
-            <input type="button" value="{i18n>save}" onclick="changeTemplate();"/>
+                    <RENDER_IFSET what="template:menuDeactivated">
+                        <RENDER_VALUE what="i18n:menuDeactivated"/>
+                    </RENDER_IFSET>
+                </RENDER_ADMINBOXCONTENT>
+            </RENDER_ADMINBOX>
+        </RENDER_IFSET>
+        <RENDER_ADMINBOX title="{i18n:titleTemplateSelector}" size="xl">
+            <RENDER_ADMINBOXCONTENT>
+                <RENDER_TABLE what="templates" cols="4" cellspacing="0">
+                    <div class="templateSelector_elements">
+                        <div>
+                            <RENDER_RADIOBOX text="{templates:name}" name="template" state="{templates:state}" value="{templates:completeName}"/>
+                            <RENDER_IFSET what="templates:firstSlide">
+                                <a href="{templates:firstSlide}" rel="lightbox[{templates:completeName}]" style="width:80px;">
+                                    <img src="{templates:thumbnail}" alt="{templates:name}" title="{templates:name}"/>
+                                </a>
+                                <RENDER_LOOP what="slides">
+                                    <a href="{slides:src}" rel="lightbox[{templates:completeName}]" style="width:20px;display:none;"></a>
+                                </RENDER_LOOP>
+                            </RENDER_IFSET>
+                            <RENDER_IFNOTSET what="templates:firstSlide">
+                                <img src="{templates:thumbnail}" alt="{templates:name}" title="{templates:name}"/>
+                            </RENDER_IFNOTSET>
+                        </div>
+                    </div>
+                </RENDER_TABLE>
+            </RENDER_ADMINBOXCONTENT>
+        </RENDER_ADMINBOX>
+        <div class="tab_buttons">
+            <input type="button" value="{i18n:save}" onclick="changeTemplate();" class="tab_button btn_validate"/>
         </div>
     </RENDER_FORM>
 </div>

@@ -39,6 +39,7 @@ Write here a short description which will be used in the lists of articles.</div
     'contentlisteditor_list' => 'Click on the articles to add them in this list',
     'contentlisteditor_confirm'=>'Modifications were added. If you click on OK, they will be lost...\nIn order not to loose it, click on Cancel, validate the form (at the bottom), then click again on the link.',
     'contentlisteditor_listsTitle' => 'Avalaible list',
+    'avalaible_contents' => 'Avalaible contents :',
     'listName' => 'Name of the list: ',
     'newShortList_title' => 'New list',
     'newShortList' => 'Create a new list',
@@ -78,5 +79,20 @@ only open it to edit it.<br />
 To do so, go to the articles repository and select "modify", or follow the next
 link :',
 
-    'search_contentsTitle' => 'Pages contents'
+    'search_contentsTitle' => 'Pages contents',
+    
+    'action_delete' => 'Supprimer',
+
+    'deletePage_title' => 'Delete an article',
+    'delete_alert' => 'You are about to delete the following article : ',
+    'delete_dateInfo' => '&#160;created on&#160;',
+    'deletePage_isActive' => 'This article is active, it\'s visible on the site.<br />
+Check and delete every link that point to it. You have to check : 
+<ul>
+<li>links of the main menu</li>
+<li>links in lists of articles</li>
+<li>and links you could have created manually in other articles</li>
+</ul>
+If any visitor of your site has registered the url in his bookmarks, he would be redirected to an error page.',
+'readMore' => 'Read more',
 );

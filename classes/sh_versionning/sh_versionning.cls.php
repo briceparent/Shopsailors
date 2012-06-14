@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Brice PARENT for Shopsailors
+ * @author Brice PARENT (Websailors) for Shopsailors
  * @copyright Shopsailors 2009
  * @license http://www.cecill.info
  * @version See version in the params/global.params.php file.
@@ -12,6 +12,11 @@ if(!defined('SH_MARKER')) {header('location: directCallForbidden.php');}
  * Class that manages the packages versions.
  */
 class sh_versionning extends sh_core{
+    const CLASS_VERSION = '1.1.11.03.29';
+
+    public $shopsailors_dependencies = array(
+        'sh_linker','sh_params','sh_db'
+    );
     protected $enableDb = false;
     static $actualMajorVersion = 1;
 
@@ -65,7 +70,7 @@ class sh_versionning extends sh_core{
         if(is_null($packageName)){
             return $this->actualMajorVersion;
         }
-        $version = $this->links->params->get($packageName,'actualMajorVersion','');
+        $version = $this->linker->params->get($packageName,'actualMajorVersion','');
         return $version;
     }
 

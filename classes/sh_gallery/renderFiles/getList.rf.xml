@@ -1,0 +1,26 @@
+
+<div>
+    <RENDER_TABGROUP size="M" admin="admin">
+        <RENDER_TAB title="{i18n:add_edit_title}">
+            <RENDER_IFSET what="galleries">
+                <div class="editGalleries_explanations">
+                    <RENDER_VALUE what="i18n:edit_explanations"/>
+                </div>
+                <RENDER_LOOP what="galleries">
+                    <div class="editGalleries_oneGal">
+                        <a href="{galleries:link}"><RENDER_VALUE what="galleries:name"/></a>&#160; (<RENDER_VALUE what="galleries:images_count"/> images)
+                    </div>
+                </RENDER_LOOP>
+            </RENDER_IFSET>
+            <RENDER_IFNOTSET what="galleries">
+                <RENDER_VALUE what="i18n:no_gallery"/>
+            </RENDER_IFNOTSET>
+
+            <RENDER_FORM action="{new:action}">
+                <div class="tab_buttons">
+                    <input class="tab_button btn_add" type="submit" name="add" value="{i18n:new_gallery}"/>
+                </div>
+            </RENDER_FORM>
+        </RENDER_TAB>
+    </RENDER_TABGROUP>
+</div>

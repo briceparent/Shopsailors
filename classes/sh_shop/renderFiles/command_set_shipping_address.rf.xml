@@ -1,0 +1,54 @@
+
+<div>
+    <RENDER_IFSET what="error:exists">
+        <RENDER_NOTIF size="L" type="alert" title="{i18n:error_title}">
+            <div>
+                <RENDER_VALUE what="i18n:error_intro"/>
+            </div>
+            <RENDER_IFSET what="error:noshippingAddress">
+                <div class="italic">
+                    <RENDER_VALUE what="i18n:error_noShippingAddress"/>
+                </div>
+            </RENDER_IFSET>
+        </RENDER_NOTIF>
+    </RENDER_IFSET>
+    <NORENDER>Shipping address</NORENDER>
+    <div class="shipping_enterAdress">
+        <RENDER_VALUE what="i18n:shipping_enterAdress"/>
+    </div>
+    <div class="command_shipping_name">
+        <RENDER_VALUE what="i18n:command_shipping_name"/>
+        <br />
+        <input name="name" value="{shipping:name}" style="width:180px" pattern=".+ .+" class="autocheck" required="required"/>
+    </div>
+    <div class="command_shipping_address">
+        <RENDER_VALUE what="i18n:command_shipping_addressInput"/>
+        <br />
+        <textarea name="address" style="width: 350px;height:80px;">
+            <RENDER_VALUE what="shipping:address"/>
+        </textarea>
+    </div>
+    <div class="command_shipping_address_more">
+        <RENDER_VALUE what="i18n:command_shipping_addressInput_more"/>
+        <br />
+        <textarea name="address_more" style="width: 350px;height:120px;">
+            <RENDER_IFSET what="shipping:address_more">
+                <RENDER_VALUE what="shipping:address_more"/>
+            </RENDER_IFSET>
+            <RENDER_IFNOTSET what="shipping:address_more">
+                <RENDER_VALUE what="i18n:command_shipping_addressInput_more_prefill"/>
+            </RENDER_IFNOTSET>
+        </textarea>
+    </div>
+    <div class="command_shipping_zipCode">
+        <RENDER_VALUE what="i18n:command_shipping_zipCode"/>&#160;
+        <input name="zip" value="{shipping:zip}" style="width: 50px" pattern="[0-9 ]{5}" class="autocheck" required="required"/>
+    </div>
+    <div class="command_shipping_city">
+        <RENDER_VALUE what="i18n:command_shipping_city"/>
+        <br />
+        <input name="city" value="{shipping:city}" class="autocheck" required="required"/>
+    </div>
+
+    <input type="hidden" name="step" value="set_shipping_address"/>
+</div>

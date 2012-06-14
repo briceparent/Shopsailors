@@ -1,10 +1,17 @@
 <div>
-  <RENDER_FORM method="post" action="{font>addlink}" id="addFont" enctype="multipart/form-data" >
-    <input type="hidden" name="MAX_FILE_SIZE" value="3500000" />
-    <RENDER_VALUE what="i18n>truetype"/><br />
-    <RENDER_VALUE what="i18n>copyright"/><br /><br />
-    <RENDER_VALUE what="i18n>fileorzip"/><br />
-    <RENDER_VALUE what="i18n>addText"/> :  <input type="file" id="font" name="font"/><br />
-    <input type="submit" value="{i18n>send}"/>
-</RENDER_FORM>
+    <RENDER_FORM method="post" action="{font:addlink}" id="addFont" enctype="multipart/form-data" >
+        <RENDER_ADMINBOX title="{i18n:addFontTitle}">
+            <RENDER_ADMINBOXCONTENT>
+                <input type="hidden" name="MAX_FILE_SIZE" value="3500000" />
+                <RENDER_VALUE what="i18n:truetype"/><br />
+                <RENDER_VALUE what="i18n:copyright"/><br /><br />
+                <RENDER_VALUE what="i18n:fileorzip"/><br />
+                <RENDER_VALUE what="i18n:addText"/> :  <input type="file" id="font" name="font"/><br />
+            </RENDER_ADMINBOXCONTENT>
+
+        </RENDER_ADMINBOX>
+        <div class="tab_buttons">
+            <input type="submit" value="{i18n:send}" onclick="sh_popup.wait('Generating the font\'s files...')" class="tab_button btn_validate"/>
+        </div>
+    </RENDER_FORM>
 </div>

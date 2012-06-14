@@ -10,21 +10,36 @@ Si vous n\'avez pas d\'identifiants, nous vous conseillons donc:&#160;
 <li>Puis d\'envoyer votre nouvel identifiant à l\'administrateur du site, de
 manière à ce qu\'il vous ouvre l\'accès.</li>
 </ul>',
+    'connectionLinkText' => 'Se connecter',
 
-    'client_identification_title_step1' => 'Identification - Etape 1:&#160;',
-    'client_identification_title_step2' => 'Identification - Etape 2:&#160;',
+    'myAccount'=>'Mon compte',
+    'password'=>'Mot de passe',
+    'verificationPhrase'=>'Phrase de vérification',
+
+    'client_identification_title_step1' => 'Identification - Etape&#160;1:',
+    'client_identification_title_step2' => 'Identification - Etape&#160;2:',
     'client_identification_passPhrase' => 'Pour que vous soyez certain que vous êtes bien
 sur un site du réseau Websailors, voici votre phrase de vérification&#160;:',
     'client_username' => 'Identifiant:&#160;',
     'client_password'=>'Mot de passe:&#160;',
     'password_forgotten' => 'Mot de passe oublié?',
     'create_account' => 'Créer un compte',
+    'noAccount' => 'Vous n\'avez pas encore de compte?',
     'WRONG_DATA'=> 'L\'identifiant et le mot de passe ne concordent pas.',
     'SITE_NOT_ALLOWED'=>'Ce site n\'a pas accès à la base de données clients de Websailors',
     'ERROR_USING_FORM'=>'Il y a eu une erreur.<br />Merci de contacter votre administrateur.',
     'WEBSAILORS_USERNAME_NOT_ALLOWED'=>'Votre identifiant Websailors n\'est pas autorisé à accéder à ce site',
     'ACCOUNT_NOT_ACTIVATED'=>'Votre compte n\'a pas été activé.<br /> Pour ce faire, vous devez confirmer en cliquant sur le lien du mail d\'activation<br />
     que avez reçu à l\'adresse que vous avez spécifiée lors de votre inscription.',
+    'accountCreated' => 'Compte crée avec succès',
+    'createAccount_error_captcha' => 'Le texte de vérification a mal été recopié.',
+    'createAccount_error_name' => 'Le nom est un champs obligatoire.',
+    'createAccount_error_lastname' => 'Le prénom est un champs obligatoire.',
+    'createAccount_error_phone' => 'Le numéro de téléphone n\'est pas reconnu. Merci de le saisir sous la forme +123456789 ou directement 123456789.',
+    'createAccount_error_mail' => 'L\'adresse email saisie n\'est pas correcte.',
+    'createAccount_error_login_too_short' => 'Le nom d\'utilisateur doit faire au moins 3 caractères.',
+    'createAccount_error_password_too_short' => 'Le mot de passe doit faire au moins 5 caractères.',
+    'createAccount_error_passwords_different' => 'Les mots de passes doivent être identiques.',
 
     'passwordForgotten_response_title' => 'Mot de passe oublié',
     'passwordForgotten_response_text' => 'Un nouveau mot de passe a été généré.<br />
@@ -34,13 +49,14 @@ restera utilisable.<br /><br />
 Dès lors que vous utiliserez ce nouveau mot de passe, l\'ancien sera détruit.',
     'passwordForgotten_response_text_notfound' => 'L\'adresse email que vous avez entrée
 n\'est associée à aucun compte Websailors.',
+    'passwordForgotten_title' => 'Mot de passe oublié',
     'passwordForgotten_email' => 'Entrez ici l\'adresse email associée à votre compte Websailors&#160;:',
     'mail_temporaryPassword_title' => 'Websailors - Nouveau mot de passe',
     'mail_temporaryPassword' => 'Bonjour,<br />
 Vous avez demandé un nouveau mot de passe pour vous connecter aux sites du réseau Websailors.<br />
 <br />
-Votre nouveau mot de passe est: <RENDER_VALUE what="password>new"/><br />
-Vous pouvez l\'utiliser dès maintenant, et sur tout le réseau Websailors.<br /><br />
+Votre nouveau mot de passe est: <RENDER_VALUE what="password:new"/><br />
+Vous pouvez l\'utiliser dès maintenant.<br /><br />
 Ce mot de passe n\'est valable que 48h. Passé ce délai, si vous ne l\'avez pas utilisé,
 il vous faudra faire la demande à nouveau.<br/>
 Notez que dès lors que vous aurez utilisé ce nouveau mot de passe une fois, il remplacera l\'ancien.<br /><br />
@@ -64,12 +80,27 @@ L\'équipe de Websailors.',
     'failuresIp' => 'Adresse IP',
     'connectedAsAdmin' => 'Vous êtes connecté en tant qu\'administrateur du site.',
     'connectedAsMaster' => 'Vous êtes connecté en tant qu\'administrateur du réseau de sites.',
-    'loginNotFound' => '<span class="formAccount_error">Votre identifiant n\'est pas enregistré, ou le compte n\'a pas été validé
+    'loginNotFound' => '<span>Votre identifiant n\'est pas enregistré, ou le compte n\'a pas été validé
 en cliquant sur le lien reçu par mail.</span><br /><br />
 Veuillez donc vérifier:
 <ul><li>Que votre compte Websailors existe bien et que l\'identifiant correspond bien
 à celui qui vous est parvenu par mail lors de la création du compte.</li>
 <li>Que vous avez bien suivi le lien le lien de confirmation présent dans ce même mail.</li></ul>',
+    
+    'connect_cookie' => 'Rester enregistré (cookie)',
+    'connect_cookie_explanations' => '
+        <div>
+        Cette fonctionnalité permet de placer un cookie (fichier) sur votre ordinateur faisant en sorte
+        que vous n\'ayez pas à saisir vos identifiants à chaque passage sur ce site.<br />
+        Ce cookie a une durée de vie limitée. Si il n\'est pas utilisé pendant une période continue de 3 mois,
+        il est automatiquement supprimé.<br />
+        Si vous cliquez sur le lien de déconnexion, le cookie sera aussi supprimé.
+        </div>
+',
+    'connected_using_cookie' => '
+        Vous êtes connecté en tant que <span class="bold">[NAME]</span>.<br />
+        Si ce n\'est pas vous, veuillez <a href="/user/disconnect.php">cliquer ici</a> pour vous déconnecter.
+',
 
     'privateAccess' => 'Accès privé',
     'privateAccess_input' => 'Rendre privé l\'accès au site',
@@ -88,21 +119,23 @@ ou d\'y supprimer une adresse (une adresse par ligne).
 
     'createAccount' => 'Créer un compte',
     'alertAccount' => 'Une erreur est survenue lors de l\'inscription&#160;: <br />Vérifiez que tous les champs soient correctement remplis. ',
-    'stepOne' => 'Etape 1: Vos coordonnées&#160;:&#160;',
-    'stepTwo' => 'Etape 2: Choix de vos codes d\'accès&#160;:&#160;',
+    'stepOne' => 'Etape 1&#160;: Vos coordonnées&#160;',
+    'stepTwo' => 'Etape 2&#160;: Choix de vos codes d\'accès&#160;',
     'accountName' => 'Nom&#160;:&#160;',
     'accountCity' => 'Ville&#160;:&#160;',
-    'accountZipCode' => 'Code Postal&#160;:&#160;',
+    'accountZipCode' => 'Code&#160;Postal&#160;:&#160;',
     'accountLastname' => 'Prénom&#160;:&#160;',
     'accountPhone' => 'Téléphone&#160;:&#160;',
     'accountAddress' => 'Adresse&#160;:&#160;',
-    'addressNote' => 'Ce champs est facultatif.',
-    'accountEmail' => 'Adresse électronique&#160;:&#160;',
+    'optional' => 'Ce champs est facultatif.',
+    'accountEmail' => 'E-mail&#160;:&#160;',
     'login' => 'Choisissez un identifiant&#160;:&#160;',
-    'password' => 'Choisissez un mot de passe&#160;:&#160;',
+    'yourLogin' => 'Identifiant&#160;:&#160;',
+    'password' => 'Choisissez un mot&#160;de&#160;passe&#160;:&#160;',
     'notification' => '(5 caractères minimum)',
-    'passwordConfirm' => ' Confirmez votre mot de passe&#160;:&#160;',
+    'passwordConfirm' => ' Confirmez le mot&#160;de&#160;passe&#160;:&#160;',
     'verification' => 'Phrase de vérification&#160;:&#160;',
+    'backToAccount' => 'Retour à l\'espace client',
 
     'createAccount_name' => 'Entrez ici votre nom de famille.',
     'createAccount_lastName' => 'Entrez ici votre prénom.',
@@ -183,5 +216,45 @@ Pour vous y connecter, il vous suffit d\'accéder au site  <a href="{client>site
 et de vous connecter avec vos identifiants Websailors.<br /><br />
 Cordialement,<br />
 L\'équipe de Websailors',
+
+    'editProfile_rights' => '<div>
+Les données recueillies ici sont destinées à Websailors, qui se charge de leur traitement.<br />
+Ces données sont conservées pendant une durée d\'un an après votre dernière connexion.
+Elles ne sont diffusées aux sites du réseau que lorsque vous vous connectez sur un de leur
+site et que vous souscrivez à des services (achat en ligne, inscription à une newsletter, etc).<br />
+Cette page vous permet de faire valoir vos droits de rectification de vos données personnelles.<br />
+Pour supprimer complètement votre compte, n\'hésitez pas à contacter Websailors.
+</div>',
+
+    'WRONG_PASSWORD' => 'Le mot de passe entré est incorrect.',
+    'WRONG_PASSWORD_FORMAT' => 'Le nouveau mot de passe doit être composé d\'au moins 6 caractères.',
+    'WRONG_PASSWORD_COPY' => 'Le nouveau mot de passe a mal été recopié.',
+
+    'notifTitle' => 'Message',
+    'yourDatasTabTitle' => 'Vos coordonnées',
+    'connectionTabTitle' => 'Connexion',
+    'favoritesTabTitle' => 'Favoris',
+    
+    'whatIsVerificationPhrase' => '<div>Vos identifiants de connexion étant utilisables depuis de multiples
+sites, nous vous donnons ici un moyen de vous assurer que le site sur lequel
+vous vous connectez appartient bien au réseau, et n\'est donc pas en train
+d\'essayer de récupérer vos identifiants.<br />
+Chaque fois que vous aurez à entrer votre mot de passe, la phrase ci-dessous
+vous sera afichée.<br />
+Si ce n\'est pas le cas, n\'entrez pas votre mot de passe avant d\'avoir bien vérifié que ce site est le bon
+(nom de domaine).
+</div>',
+    'editPassphrase' => 'Modifier votre phrase de vérification',
+    'editPassWord' => 'Modifier votre mot de passe',
+    'phoneNotProvided' => 'Vous n\'avez pas fourni votre numéro de téléphone',
+    'addressNotProvided' => 'Vous n\'avez pas fourni votre adresse',
+    'editDatas' => 'Modifier vos coordonnées',
+    'noFavorites' => 'Vous n\'avez enregistré aucun favoris pour ce site.',
+    'modificationsSaved' => 'Vos modifications ont bien été prises en compte.',
+    'password_allSitesModif' => 'Note : Lorsque vous modifiez votre mot de passe sur un des sites du réseau Websailors,
+                        celui-ci sera modifié pour l\'ensemble des sites.',
+    'datas_allSitesModif' => 'Note : Lorsque vous modifiez vos coordonnées sur un des sites du réseau Websailors,
+                        celles-ci seront modifiées pour l\'ensemble des sites.<br /><br />
+                        Informatique et Libertés : Ce site respecte entièrement les disposition de la CNIL.',
 
 );

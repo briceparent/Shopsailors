@@ -1,0 +1,78 @@
+<div>
+        <RENDER_ADMINBOX title="{i18n:inactiveProducts}">
+    <RENDER_JS>
+        function switch_state(id){
+            new Ajax.Request(
+                '<RENDER_VALUE what="pages:switchState"/>',
+                {
+                method:'get' ,
+                parameters: {id: id},
+                onSuccess: function(transport) {
+                    if(transport.responseText == 'true'){
+                        $('state_switcher_'+id).src="/templates/global/admin/icons/picto_validate2.png";
+                    }else{
+                        $('state_switcher_'+id).src="/templates/global/admin/icons/picto_validate2_bw.png";
+                    }
+                }
+            });
+        }
+    </RENDER_JS>
+
+    <table class="inactiveProducts" cellspacing="0" cellpadding="2">
+        <tr>
+            <th class="borderBottom_66">&#160;</th>
+            <th class="borderBottom_66 borderLeft_66 borderTop_66">
+                <RENDER_VALUE what="i18n:productsTable_name"/>
+            </th>
+            <th class="borderBottom_66 borderLeft_66 borderTop_66">
+                <RENDER_VALUE what="i18n:productsTable_desc"/>
+            </th>
+            <RENDER_IFSET what="constants:showQuantity">
+                <th class="borderBottom_66 borderLeft_66 borderTop_66">
+                    <RENDER_VALUE what="i18n:productsTable_stock"/>
+                </th>
+            </RENDER_IFSET>
+            <th class="borderBottom_66 borderLeft_66 borderTop_66 borderRight_66">
+                <RENDER_VALUE what="i18n:productsTable_price"/>
+            </th>
+            <th>&#160;</th>
+        </tr>
+        <RENDER_LOOP what="products">
+            <tr>
+                <td class="table_preview borderLeft_66 borderBottom_66">
+                    <img src="{products:image}" alt="navigator_preview"/>
+                </td>
+                <td class="borderLeft_66 borderBottom_66 ">
+                    <div class="navigator_table_name">
+                        <RENDER_VALUE what="products:name"/>
+                    </div>
+                    <div class="navigator_table_reference">
+                        <RENDER_VALUE what="products:reference"/>
+                    </div>
+                </td>
+                <td class="borderLeft_66 borderBottom_66 ">
+                    <RENDER_VALUE what="products:shortDescription"/>
+                </td>
+                <RENDER_IFSET what="constants:showQuantity">
+                    <td class="borderLeft_66 borderBottom_66  navigator_table_stock">
+                        <RENDER_VALUE what="products:stock"/>
+                    </td>
+                </RENDER_IFSET>
+                <td class="borderLeft_66 borderBottom_66 borderRight_66  navigator_table_price">
+                    <span class="nobr"><RENDER_VALUE what="products:price"/></span>
+                </td>
+                <td class="nobr picto_table">
+                    <a href="{products:editLink}">
+                        <img src="/templates/global/admin/icons/picto_modify2.png" class="onePicto" alt="{i18n:pictoModify}" title="{i18n:pictoModify}"/>
+                    </a>
+                    <span onclick="switch_state({products:id});">
+                        <img id="state_switcher_{products:id}" src="/templates/global/admin/icons/picto_validate2_bw.png" class="onePicto pointer" alt="{i18n:pictoActivate}" title="{i18n:pictoActivate}"/>
+                    </span>
+
+                </td>
+            </tr>
+        </RENDER_LOOP>
+    </table>
+
+        </RENDER_ADMINBOX>
+</div>

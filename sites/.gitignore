@@ -1,5 +1,7 @@
 *
-!.gitignore
-!shopsailors
-!domains_resolver.php
-list.php
+
+- site_model/*
+- masterServer_model/*
+- .gitignore
+- domains_resolver.php
+- owner_switcher.sh

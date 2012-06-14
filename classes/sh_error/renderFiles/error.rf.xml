@@ -1,29 +1,32 @@
 <div class="errorMessage_container">
-    <div class="error_top">
-    </div>
-    <div class="error_middle">
-        <div class="error_content">
-            <RENDER_IFSET what="global>prepared">
-                <RENDER_VALUE what="i18n>error_intro"/><br />
-                <RENDER_VALUE what="global>page"/><br /><br />
+    <RENDER_NOTIF size="M">
+           <div class="error_content">
+            <RENDER_IFSET what="global:prepared">
+                <RENDER_VALUE what="i18n:error_intro"/><br />
+                <RENDER_VALUE what="global:page"/><br /><br />
 
-                <RENDER_VALUE what="i18n>error_description"/><br />
-                <RENDER_VALUE what="global>description"/><br /><br />
+                <RENDER_VALUE what="i18n:error_description"/><br />
+                <RENDER_VALUE what="global:description"/><br /><br />
 
-                <RENDER_VALUE what="i18n>error_alternative"/><br />
+                <RENDER_IFSET what="links:connect">
+                    <RENDER_VALUE what="i18n:pleaseConnect"/><br />
+                    <RENDER_VALUE what="links:connect"/><br /><br />
+                </RENDER_IFSET>
+
             </RENDER_IFSET>
-            <RENDER_IFNOTSET what="global>prepared">
-                <RENDER_VALUE what="i18n>error_not_prepared"/>
+            <RENDER_IFNOTSET what="global:prepared">
+                <RENDER_VALUE what="i18n:error_not_prepared"/>
             </RENDER_IFNOTSET>
-            <RENDER_LOOP what="history">
-                <div>
-                    <a href="{history>link}">
-                        <RENDER_VALUE what="history>shownLink"/>
-                    </a>
-                </div>
-            </RENDER_LOOP>
+            <RENDER_IFSET what="history:set">
+                <RENDER_VALUE what="i18n:error_alternative"/><br />
+                <RENDER_LOOP what="history">
+                    <div>
+                        <a href="{history:link}">
+                            <RENDER_VALUE what="history:shownLink"/>
+                        </a>
+                    </div>
+                </RENDER_LOOP>
+            </RENDER_IFSET>
         </div>
-    </div>
-    <div class="error_bottom">
-    </div>
+    </RENDER_NOTIF>
 </div>

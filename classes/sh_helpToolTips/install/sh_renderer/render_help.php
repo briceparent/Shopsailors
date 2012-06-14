@@ -1,2 +1,0 @@
-sh_helpToolTips
-render_help

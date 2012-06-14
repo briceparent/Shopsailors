@@ -1,0 +1,9 @@
+<div>
+    <RENDER_NOTIF size="L" type="" title="{i18n:notifications_title}">
+        <ul>
+            <RENDER_LOOP what="messages">
+                <li><RENDER_VALUE what="messages:content"/></li>
+            </RENDER_LOOP>
+        </ul>
+    </RENDER_NOTIF>
+</div>

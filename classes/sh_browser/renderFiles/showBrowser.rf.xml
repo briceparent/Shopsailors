@@ -1,8 +1,13 @@
 <span class="browser_show">
-    <RENDER_IFSET what="js>insert">
+    <RENDER_IFSET what="js:insert">
         <script type="text/javascript" src="/sh_browser/singles/getBrowser.js"/>
     </RENDER_IFSET>
-    <RENDER_TAG type="div" what="args>list">
-        <RENDER_VALUE what="i18n>showBrowser"/>
+    <RENDER_TAG type="{args:tag}" what="args:list">
+        <RENDER_IFNOTSET what="link:text">
+            <RENDER_VALUE what="i18n:showBrowser"/>
+        </RENDER_IFNOTSET>
+        <RENDER_IFSET what="link:text">
+            <RENDER_VALUE what="link:text"/>
+        </RENDER_IFSET>
     </RENDER_TAG>
 </span>

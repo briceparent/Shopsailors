@@ -1,0 +1,6 @@
+
+<div>
+    <RENDER_LOOP what="users">
+        <img src="{users:image}.resized.109.109.png" alt="{users:alias}" title="{users:alias}"/>
+    </RENDER_LOOP>
+</div>

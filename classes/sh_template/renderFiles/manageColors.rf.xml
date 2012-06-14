@@ -1,0 +1,104 @@
+<div>
+    <RENDER_FORM id="manageColors">
+        <RENDER_TABGROUP size="XL" validate="{i18n:validate}">
+            <RENDER_TAB title="Images et arrières plans">
+                <div>
+                    <RENDER_LOOP what="images">
+                        <fieldset style="display:inline-block;width:242px;">
+                            <legend>
+                                <RENDER_VALUE what="images:name"/>
+                            </legend>
+                            <RENDER_IFNOTSET what="images:select">
+                                <RENDER_COLORPICKER value="{images:color}" name="images[{images:id}]" id="color_{images:id}"/>
+                            </RENDER_IFNOTSET>
+                            <RENDER_IFSET what="images:select">
+                                <RENDER_COLORPICKER value="{images:color}" name="images[{images:id}]" id="color_{images:id}"/>
+                                <select name="selection[{images:id}]" id="selection_{images:id}">
+                                    <RENDER_LOOP what="list">
+                                        <option value="{list:image}" state="{list:state}">
+                                            <RENDER_VALUE what="list:name"/>
+                                        </option>
+                                    </RENDER_LOOP>
+                                </select>
+                            </RENDER_IFSET>
+                        </fieldset>
+                    </RENDER_LOOP>
+                </div>
+            </RENDER_TAB>
+            <RENDER_TAB title="Menus">
+                <div>
+                    <RENDER_LOOP what="menus">
+                        <RENDER_IFNOTSET what="menus:isSpacer">
+                            <fieldset style="display:inline-block;width:242px;">
+                                <legend>
+                                    <RENDER_VALUE what="menus:name"/>
+                                </legend>
+                                <RENDER_COLORPICKER value="{menus:color}" name="menus[{menus:id}]" id="color_{menus:id}" onchange="menus_oneColorHasCHanged(\'{menus:id}\');"/>
+                                <span id="sample_text_{menus:id}" style="color:#{menus:color}">Shopsailors</span>
+                            </fieldset>
+                        </RENDER_IFNOTSET>
+                        <RENDER_IFSET what="menus:isSpacer">
+                            <hr />
+                        </RENDER_IFSET>
+                    </RENDER_LOOP>
+                </div>
+            </RENDER_TAB>
+            <RENDER_TAB title="Textes">
+                <div style="width:800px;">
+                    <RENDER_LOOP what="texts">
+                        <RENDER_IFNOTSET what="texts:isSpacer">
+                            <fieldset style="display:inline-block;width:242px;">
+                                <legend>
+                                    <RENDER_VALUE what="texts:name"/>
+                                </legend>
+                                <RENDER_COLORPICKER value="{texts:color}" name="texts[{texts:id}]" id="color_{texts:id}" onchange="texts_oneColorHasCHanged(\'{texts:id}\');"/>
+                                <span id="sample_text_{texts:id}" style="color:#{texts:color}">Shopsailors</span>
+                            </fieldset>
+                        </RENDER_IFNOTSET>
+                        <RENDER_IFSET what="texts:isSpacer">
+                            <hr />
+                        </RENDER_IFSET>
+                    </RENDER_LOOP>
+                </div>
+                
+            </RENDER_TAB>
+        </RENDER_TABGROUP>
+        <div class="tab_buttons">
+            <input type="button" value="{i18n:preview}" onclick="showIframePreview();" class="tab_button btn_preview"/>
+        </div>
+    </RENDER_FORM>
+    <script>
+        
+    function images_oneSelectionHasCHanged(element){
+        var selection = $('selection_'+element).value;
+        var url = $('preview_image_'+element).alt.replace("SELECTION",selection);
+        $('preview_image_'+element).src = url + "?colorize=" + $('color_'+element).value;
+    }
+    function images_oneColorHasCHanged_withSelect(element){
+        images_oneSelectionHasCHanged(element);
+    }
+    
+    function texts_oneColorHasCHanged(element){
+        $('sample_text_'+element).style.color = '#'+$('color_'+element).value;
+    }
+    
+    function menus_oneColorHasCHanged(element){
+        $('sample_text_'+element).style.color = '#'+$('color_'+element).value;
+    }
+    
+    function showIframePreview(){
+        var formDatas = $('manageColors').serialize();
+        $('preview_iframe').src="/contact/show.php?temp_session=<RENDER_VALUE what="session:temp"/>&#38;"+formDatas;
+        $('preview_iframe').style.display='block';
+    }
+    </script>
+    <style>
+    #preview_iframe {
+        -moz-transform: scale(0.64, 0.64) translate(-27%, -25%);
+        transform: scale(0.65, 0.65) translate(-26%, -10%);
+        border: solid #ccc 10px;
+    }    
+    </style>
+
+    <iframe id="preview_iframe" src="/index.php?temp_session={session:temp}" width="1400" height="1000" scrolling="no" border="0" style="display:none;"></iframe>
+</div>

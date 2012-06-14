@@ -7,9 +7,9 @@ if(!defined('SH_MARKER'))
 header('location: directCallForbidden.php');
 
 $this->default = array(
-    'class'=>'content',
+    'class'=>'contact',
     'action'=>'show',
-    'id'=>1,
-    'link'=>'1.php',
+    'id'=>null,
+    'link'=>'contact/show.php',
     'sitemap'=>array('priority'=>1),
 );

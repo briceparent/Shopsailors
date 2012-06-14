@@ -1,189 +1,165 @@
 <div class="shipMode_container">
-    <div class="notif_container">
-        <RENDER_IFSET what="moreThanOne>shipModes">
+    <RENDER_NOTIF size="L" title="{i18n:shipModes_title}">
+        <RENDER_IFSET what="moreThanOne:shipModes">
             <NORENDER>There is more than 1 ship modes, the user has to select one</NORENDER>
-                <div class="notifL_top">
-                </div>
-                <div class="notifL_middle">
-                    <div class="notifL_content">
-                        <div class="shipMode_chooseMode">
-                            <RENDER_VALUE what="i18n>chooseShippingMode"/>
-                        </div>
-                        <table cellspacing="0" class="border-top border-left border-right">
-                            <RENDER_LOOP what="shipModes">
-                                <tr>
-                                    <td class="shipMode_image border-bottom border-right">
-                                        <img src="{shipModes>logo}" alt="logo: {shipModes>name}" title="logo: {shipModes>name}"/>
-                                    </td>
-                                    <td class="shipMode_nameDesc_container border-bottom border-right">
-                                        <div class="shipMode_name">
-                                            <RENDER_VALUE what="shipModes>name"/>
-                                        </div>
-                                        <div class="shipMode_description">
-                                            <RENDER_VALUE what="shipModes>description"/>
-                                        </div>
-                                    </td>
-                                    <td class="shipMode_price border-bottom">
-                                        <span class="nobr"><RENDER_VALUE what="shipModes>price"/></span>
-                                    </td>
-                                </tr>
-                            </RENDER_LOOP>
-                            <RENDER_IFSET what="comeTakeIt>activated">
-                                <NORENDER>The customer may also come and take the product</NORENDER>
-                                <tr>
-                                    <td class="shipMode_image border-bottom border-right">
-                                        <img src="/images/shared/icons/comeAndTakeIt.png" alt="logo: {i18n>chooseToComeAndTakeIt}" title="logo: {i18n>chooseToComeAndTakeIt}"/>
-                                    </td>
-                                    <td class="shipMode_nameDescCome_container border-bottom border-right">
-                                        <div class="shipMode_name">
-                                            <RENDER_VALUE what="i18n>chooseToComeAndTakeIt"/>
-                                        </div>
-                                        <div class="shipMode_description">
-                                            <RENDER_IFSET what="comeTakeIt_singleAddress>id">
-                                                <NORENDER>There is only 1 address, so we just display it</NORENDER>
-                                                <RENDER_VALUE what="i18n>comeTakeIt_singleAddress"/>
-                                                <div class="shipMode_address">
-                                                    <RENDER_VALUE what="comeTakeIt_singleAddress>addressMultiline"/>
-                                                </div>
-                                            </RENDER_IFSET>
-                                            <RENDER_IFNOTSET what="comeTakeIt_singleAddress>id">
-                                                <NORENDER>There is more than 1 address, so the user has to choose one of them</NORENDER>
-                                                <RENDER_VALUE what="i18n>comeTakeIt_youCanChooseAddress"/><br />
-                                                <RENDER_LOOP what="comeTakeIt_addresses">
-                                                    <div class="shipMode_list">
-                                                        <RENDER_VALUE what="comeTakeIt_addresses>address"/>
-                                                    </div>
-                                                </RENDER_LOOP>
-                                            </RENDER_IFNOTSET>
-                                        </div>
-                                    </td>
-                                    <td class="shipMode_price border-bottom">
-                                        <RENDER_IFSET what="comeTakeIt>price">
-                                            <span class="nobr"><RENDER_VALUE what="comeTakeIt>price"/></span>
-                                        </RENDER_IFSET>
-                                        <RENDER_IFNOTSET what="comeTakeIt>price">
-                                            <RENDER_VALUE what="i18n>free"/>
-                                        </RENDER_IFNOTSET>
-                                    </td>
-                                </tr>
-                           </RENDER_IFSET>
-                        </table>
-                    </div>
-                </div>
-                <div class="notifL_bottom">
-                </div>
-        </RENDER_IFSET>
-        <RENDER_IFNOTSET what="moreThanOne>shipModes">
-            <RENDER_IFSET what="comeTakeIt>activated">
-                <NORENDER>The customer has to go and take it right at a given address</NORENDER>
-                <div class="notifM_top">
-                </div>
-                <div class="notifM_middle">
-                    <div class="notifM_content">
-                        <RENDER_IFSET what="comeTakeIt_singleAddress>id">
-                            <NORENDER>There is only 1 address, so we just display it</NORENDER>
-                            <div class="">
-                                <RENDER_VALUE what="i18n>comeTakeIt_singleAddress"/>
-                            </div>
-                            <div class="shipMode_address">
-                                <RENDER_VALUE what="comeTakeIt_singleAddress>addressMultiline"/>
-                            </div>
-                            <RENDER_IFSET what="comeTakeIt>price">
-                                <div class="shipMode_severalAddress_price">
-                                    <RENDER_VALUE what="i18n>comeTakeIt_cost"/>
-                                </div>
-                            </RENDER_IFSET>
-                            <RENDER_IFNOTSET what="comeTakeIt>price">
-                                <div class="shipMode_severalAddress_price">
-                                    <RENDER_VALUE what="i18n>comeTakeIt_free"/>
-                                </div>
-                            </RENDER_IFNOTSET>
-                        </RENDER_IFSET>
-                        <RENDER_IFNOTSET what="comeTakeIt_singleAddress>id">
-                            <NORENDER>There is more than 1 address, so the user has to choose one of them</NORENDER>
-                            <div class="">
-                                <RENDER_VALUE what="i18n>comeTakeIt_youCanChooseAddress"/>
-                            </div>
-                                <RENDER_LOOP what="comeTakeIt_addresses">
-                                    <div class="shipMode_list">
-                                        <RENDER_VALUE what="comeTakeIt_addresses>address"/>
-                                    </div>
-                                </RENDER_LOOP>
-                                <RENDER_IFSET what="comeTakeIt>price">
-                                    <div class="shipMode_severalAddress_price">
-                                        <RENDER_VALUE what="i18n>comeTakeIt_cost"/>
-                                    </div>
-                                </RENDER_IFSET>
-                                <RENDER_IFNOTSET what="comeTakeIt>price">
-                                    <div class="shipMode_severalAddress_price">
-                                        <RENDER_VALUE what="i18n>comeTakeIt_free"/>
-                                    </div>
-                                </RENDER_IFNOTSET>
-                        </RENDER_IFNOTSET>
-                    </div>
-                </div>
-                <div class="notifM_bottom">
-                </div>
-            </RENDER_IFSET>
-            <RENDER_IFNOTSET what="comeTakeIt>activated">
-                <NORENDER>There is only 1 ship mode, so the user has just to confirm</NORENDER>
-                <div class="notifM_top">
-                </div>
-                <div class="notifM_middle">
-                    <div class="notifM_content">
-                        <div class="">
-                            <RENDER_VALUE what="i18n>shipper_is"/>&#160;
-                            <span class="shipMode_name_oneShipper">
-                                <RENDER_VALUE what="shipMode>name"/>
-                            </span>
-                            <div class="shipMode_image_oneShipper">
-                                <img src="{shipMode>logo}"/>
+            <div class="shipMode_chooseMode">
+                <RENDER_VALUE what="i18n:chooseShippingMode"/>
+            </div>
+            <table cellspacing="0" class="border-top border-left border-right">
+                <RENDER_LOOP what="shipModes">
+                    <tr>
+                        <td class="shipMode_image border-bottom border-right">
+                            <img src="{shipModes:logo}" alt="logo: {shipModes:name}" title="logo: {shipModes:name}"/>
+                        </td>
+                        <td class="shipMode_nameDesc_container border-bottom border-right">
+                            <div class="shipMode_name">
+                                <RENDER_VALUE what="shipModes:name"/>
                             </div>
                             <div class="shipMode_description">
-                                <RENDER_VALUE what="shipMode>description"/>
+                                <RENDER_VALUE what="shipModes:description"/>
                             </div>
-                            <div class="shipMode_cost">
-                                <RENDER_VALUE what="i18n>comeTakeIt_cost"/>
+                        </td>
+                        <td class="shipMode_price border-bottom">
+                            <span class="nobr"><RENDER_VALUE what="shipModes:price"/></span>
+                        </td>
+                    </tr>
+                </RENDER_LOOP>
+                <RENDER_IFSET what="comeTakeIt:activated">
+                    <NORENDER>The customer may also come and take the product</NORENDER>
+                    <tr>
+                        <td class="shipMode_image border-bottom border-right">
+                            <img src="/images/shared/icons/comeAndTakeIt.png" alt="logo: {i18n:chooseToComeAndTakeIt}" title="logo: {i18n:chooseToComeAndTakeIt}"/>
+                        </td>
+                        <td class="shipMode_nameDescCome_container border-bottom border-right">
+                            <div class="shipMode_name">
+                                <RENDER_VALUE what="i18n:chooseToComeAndTakeIt"/>
                             </div>
-                        </div>
+                            <div class="shipMode_description">
+                                <RENDER_IFSET what="comeTakeIt_singleAddress:id">
+                                    <NORENDER>There is only 1 address, so we just display it</NORENDER>
+                                    <RENDER_VALUE what="i18n:comeTakeIt_singleAddress"/>
+                                    <div class="shipMode_address">
+                                        <RENDER_VALUE what="comeTakeIt_singleAddress:addressMultiline"/>
+                                    </div>
+                                </RENDER_IFSET>
+                                <RENDER_IFNOTSET what="comeTakeIt_singleAddress:id">
+                                    <NORENDER>There is more than 1 address, so the user has to choose one of them</NORENDER>
+                                    <RENDER_VALUE what="i18n:comeTakeIt_youCanChooseAddress"/><br />
+                                    <RENDER_LOOP what="comeTakeIt_addresses">
+                                        <div class="shipMode_list">
+                                            <RENDER_VALUE what="comeTakeIt_addresses:address"/>
+                                        </div>
+                                    </RENDER_LOOP>
+                                </RENDER_IFNOTSET>
+                            </div>
+                        </td>
+                        <td class="shipMode_price border-bottom">
+                            <RENDER_IFSET what="comeTakeIt:price">
+                                <span class="nobr"><RENDER_VALUE what="comeTakeIt:price"/></span>
+                            </RENDER_IFSET>
+                            <RENDER_IFNOTSET what="comeTakeIt:price">
+                                <RENDER_VALUE what="i18n:free"/>
+                            </RENDER_IFNOTSET>
+                        </td>
+                    </tr>
+               </RENDER_IFSET>
+            </table>
+        </RENDER_IFSET>
+        <RENDER_IFNOTSET what="moreThanOne:shipModes">
+            <RENDER_IFSET what="comeTakeIt:activated">
+                <NORENDER>The customer has to go and take it right at a given address</NORENDER>
+                <RENDER_IFSET what="comeTakeIt_singleAddress:id">
+                    <NORENDER>There is only 1 address, so we just display it</NORENDER>
+                    <div class="">
+                        <RENDER_VALUE what="i18n:comeTakeIt_singleAddress"/>
                     </div>
-                </div>
-                <div class="notifM_bottom">
+                    <div class="shipMode_address">
+                        <RENDER_VALUE what="comeTakeIt_singleAddress:addressMultiline"/>
+                    </div>
+                    <RENDER_IFSET what="comeTakeIt:price">
+                        <div class="shipMode_severalAddress_price">
+                            <RENDER_VALUE what="i18n:comeTakeIt_cost"/>
+                        </div>
+                    </RENDER_IFSET>
+                    <RENDER_IFNOTSET what="comeTakeIt:price">
+                        <div class="shipMode_severalAddress_price">
+                            <RENDER_VALUE what="i18n:comeTakeIt_free"/>
+                        </div>
+                    </RENDER_IFNOTSET>
+                </RENDER_IFSET>
+                <RENDER_IFNOTSET what="comeTakeIt_singleAddress:id">
+                    <NORENDER>There is more than 1 address, so the user has to choose one of them</NORENDER>
+                    <div class="">
+                        <RENDER_VALUE what="i18n:comeTakeIt_youCanChooseAddress"/>
+                    </div>
+                        <RENDER_LOOP what="comeTakeIt_addresses">
+                            <div class="shipMode_list">
+                                <RENDER_VALUE what="comeTakeIt_addresses:address"/>
+                            </div>
+                        </RENDER_LOOP>
+                        <RENDER_IFSET what="comeTakeIt:price">
+                            <div class="shipMode_severalAddress_price">
+                                <RENDER_VALUE what="i18n:comeTakeIt_cost"/>
+                            </div>
+                        </RENDER_IFSET>
+                        <RENDER_IFNOTSET what="comeTakeIt:price">
+                            <div class="shipMode_severalAddress_price">
+                                <RENDER_VALUE what="i18n:comeTakeIt_free"/>
+                            </div>
+                        </RENDER_IFNOTSET>
+                </RENDER_IFNOTSET>
+            </RENDER_IFSET>
+            <RENDER_IFNOTSET what="comeTakeIt:activated">
+                <NORENDER>There is only 1 ship mode, so the user has just to confirm</NORENDER>
+                <div>
+                    <RENDER_VALUE what="i18n:shipper_is"/>&#160;
+                    <span class="shipMode_name_oneShipper">
+                        <RENDER_VALUE what="shipMode:name"/>
+                    </span>
+                    <div class="shipMode_image_oneShipper">
+                        <img src="{shipMode:logo}"/>
+                    </div>
+                    <div class="shipMode_description">
+                        <RENDER_VALUE what="shipMode:description"/>
+                    </div>
+                    <div class="shipMode_cost">
+                        <RENDER_VALUE what="i18n:comeTakeIt_cost"/>
+                    </div>
                 </div>
             </RENDER_IFNOTSET>
         </RENDER_IFNOTSET>
-        <NORENDER>Taux de réduction appliqués sur frais de livraison</NORENDER>
-        <RENDER_IFSET what="display>discounts">
-            <div class="ship_discountContainer">
-                <div class="ship_discountIntro">
-                    <RENDER_VALUE what="i18n>ship_discountIntro"/>
-                </div>
-                <div class="ship_discountApplied">
-                    <RENDER_IFSET what="discount0>activated">
-                        <div>
-                            <RENDER_VALUE what="i18n>ship_discount0"/>
-                        </div>
-                    </RENDER_IFSET>
-                    <RENDER_IFSET what="discount1>activated">
-                        <div>
-                            <RENDER_VALUE what="i18n>ship_discount1"/>
-                        </div>
-                    </RENDER_IFSET>
-                    <RENDER_IFSET what="discount2>activated">
-                        <div>
-                            <RENDER_VALUE what="i18n>ship_discount2"/>
-                        </div>
-                    </RENDER_IFSET>
-                </div>
-                <RENDER_IFSET what="display>moreThan1discount">
-                    <div class="ship_discountMentions1">
-                        <RENDER_VALUE what="i18n>ship_theBiggestdiscountMakesTheLaw"/>
+    </RENDER_NOTIF>
+    <NORENDER>Taux de réduction appliqués sur frais de livraison</NORENDER>
+    <RENDER_IFSET what="display:discounts">
+        <div class="ship_discountContainer">
+            <div class="ship_discountIntro">
+                <RENDER_VALUE what="i18n:ship_discountIntro"/>
+            </div>
+            <div class="ship_discountApplied">
+                <RENDER_IFSET what="discount0:activated">
+                    <div>
+                        <RENDER_VALUE what="i18n:ship_discount0"/>
                     </div>
-                    <div class="ship_discountMentions2">
-                        <RENDER_VALUE what="i18n>ship_discountNotAccumulative"/>
+                </RENDER_IFSET>
+                <RENDER_IFSET what="discount1:activated">
+                    <div>
+                        <RENDER_VALUE what="i18n:ship_discount1"/>
+                    </div>
+                </RENDER_IFSET>
+                <RENDER_IFSET what="discount2:activated">
+                    <div>
+                        <RENDER_VALUE what="i18n:ship_discount2"/>
                     </div>
                 </RENDER_IFSET>
             </div>
-        </RENDER_IFSET>
-    </div>
+            <RENDER_IFSET what="display:moreThan1discount">
+                <div class="ship_discountMentions1">
+                    <RENDER_VALUE what="i18n:ship_theBiggestdiscountMakesTheLaw"/>
+                </div>
+                <div class="ship_discountMentions2">
+                    <RENDER_VALUE what="i18n:ship_discountNotAccumulative"/>
+                </div>
+            </RENDER_IFSET>
+        </div>
+    </RENDER_IFSET>
 </div>

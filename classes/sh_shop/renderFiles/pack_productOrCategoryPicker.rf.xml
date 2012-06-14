@@ -1,0 +1,24 @@
+<div id="picker">
+    <style type="text/css">
+        #picker{
+        height:400px;
+        overflow:auto;
+        }
+        #picker .foldable_categories{
+        margin-left:10px;
+        max-height:120px;
+        overflow:auto;
+        }
+    </style>
+    <RENDER_LOOP what="categories">
+        <div class="categoryPicker">
+            <div onclick="unfold({categories:id})">
+                <img src="/images/shared/icons/picto_unfold.png" alt="Déplier" title="déplier"/>
+                <span><RENDER_VALUE what="categories:name"/></span>
+            </div>
+            <div id="category_{categories:id}" class="foldable_categories"></div>
+        </div>
+        <img class="selectCat" src="/images/shared/icons/picto_validate_small.png" alt="Choisir" title="Choisir" onclick="chooseProductOrCategory_done('c{categories:id} - {categories:name}')"/>
+        <div class="clear"></div>
+    </RENDER_LOOP>
+</div>

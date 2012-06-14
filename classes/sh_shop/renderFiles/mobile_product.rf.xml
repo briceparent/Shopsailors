@@ -1,0 +1,61 @@
+<div>
+    <div style="margin:3px;">
+        <a href="{product:categoryLink}">
+            Aller à la catégorie
+        </a>
+    </div>
+    <NORENDER>product_details</NORENDER>
+    <div style="border:1px solid grey;width:94%;background-color:white;padding:3%;">
+        <div style="font-weight:bold;float:right;">
+            <RENDER_VALUE what="product:price"/>
+        </div>
+        <img src="{product:image}.resized.75.75.png" alt="product_preview" width="75" height="75" style="float:left;"/>
+        <div>
+            <RENDER_VALUE what="i18n:reference_title"/>&#160;<RENDER_VALUE what="product:reference"/>
+        </div>
+        <div>
+            <RENDER_VALUE what="product:description"/>
+        </div>
+    </div>
+    <div style="clear:both"> </div>
+    <div>
+        <RENDER_LOOP what="productImages">
+            <img src="{productImages:src}.resized.50.50.png" alt="" style="float:left;margin:5px;"/>
+        </RENDER_LOOP>
+    </div>
+    <div style="clear:both"> </div>
+    <NORENDER>navigator_productCategory</NORENDER>
+    <div style="margin-top:20px;">
+        <div>
+            <RENDER_VALUE what="i18n:inSameCategory"/>
+        </div>
+        <div style="float:left;margin-right:5px;text-align:center;">
+            <RENDER_IFSET what="pagenavigation:previous_link">
+                <a href="{pagenavigation:previous_link}">
+                    <img src="images/shared/variations/{constants:variation}/navigation/model1_previous.png" alt="{i18n:nav_previous}"/>
+                </a>
+            </RENDER_IFSET>
+            <RENDER_IFNOTSET what="pagenavigation:previous_link">
+                <img src="images/shared/variations/{constants:variation}/navigation/model1_noprevious.png" alt="{i18n:nav_previous}"/>
+            </RENDER_IFNOTSET>
+        </div>
+        <RENDER_LOOP what="category_elements">
+            <div style="float:left;margin-right:5px;text-align:center;width:100px;">
+                <img src="{category_elements:image}.resized.50.50.png" width="50" height="50"/><br />
+                <a href ="{category_elements:link}">
+                    <RENDER_VALUE what="category_elements:name"/>
+                </a>
+            </div>
+        </RENDER_LOOP>
+
+        <div style="float:left;text-align:center;">
+            <RENDER_IFSET what="pagenavigation:next_link">
+                <a href="{pagenavigation:next_link}"><img src="images/shared/variations/{constants:variation}/navigation/model1_next.png" alt="{i18n:nav_next}"/></a>
+            </RENDER_IFSET>
+            <RENDER_IFNOTSET what="pagenavigation:next_link">
+                <img src="images/shared/variations/{constants:variation}/navigation/model1_nonext.png" alt="{i18n:nav_nonext}"/>
+            </RENDER_IFNOTSET>
+        </div>
+        <div style="clear:both"> </div>
+    </div>
+</div>

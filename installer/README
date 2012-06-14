@@ -1,0 +1,77 @@
+/********************************************************************\
+
+                            SHOPSAILORS
+
+                               ****
+                               ****
+                               ****
+                **             ****             **
+              ******       ************        *****
+               ******* ******************** *******
+                 ********************************
+                   ********    *****   ********
+                  **********  ******  **********
+                 ********************************
+                ******   ****************   ******
+               *******  ******************   ******
+        **************************************************
+        **************************************************
+                ******   ****************    ******
+                ******   ****************   ******
+                 ********************************
+                  *********    *****   *********
+                   *********** ***** ***********
+                **********************************
+               ******   ******************   *******
+               ****          *********         *****
+                               ****
+                               ****
+                               ****
+
+\********************************************************************/
+
+Shopsailors is an open source content manager system, specially focussed
+on online stores.
+
+It is licensed under the french GNU/GPL equivalent license CeCILL.
+
+To run, it needs :
+- php 5.3 with 
+    - gd
+    - mcrypt
+    - mod_rewrite
+- mysql 5
+- htaccess support
+
+Its properties are :
+- No other sofware than Firefox needed for the administration
+- Really simple to use and manage
+- Supports easily built extensions
+- Supports really easily integrated templates. The websites are completely skinable
+- Every template support the generation of 180 variations of colors
+- Multi site (a single installation may run any number of website)
+- Multi languages
+- No back office (the administration is made right from the website)
+- Images menu generator
+- xml -> html renderer
+- free content pages editor
+- free content pages lists editor
+- complete shop pages with
+    - unlimited number and deepness for the categories
+    - unlimited number for the products
+    - different versions for the products
+    - payment modes
+    - shipment modes
+- newsletter generator system (design and sending)
+- many improvements for tinymce (plugin)
+- and many more...
+
+It uses the following libraries : 
+- Prototype (licence MIT)
+- Scriptaculous (license in the source folder, in the javascript class)
+- TinyMCE (GNU LGPL V2)
+- Plugin AdvImageScale for TinyMCE (GNU LGPL)
+- PHPMailer (GNU LGPL V2)
+- Captcha Visuelle, by Kankrelune, with his autorisation
+- CrossFade (license in the source folder, in the diaporama class)
+- FastInit (license in the source folder, in the diaporama class)

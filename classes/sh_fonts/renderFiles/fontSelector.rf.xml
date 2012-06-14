@@ -1,16 +1,13 @@
 <span class="fontSelector">
-    <select id="{font>id}" name="{font>name}" onchange="this.style.background=this.options[this.selectedIndex].style.background;">
+    <select id="{font:id}" name="{font:name}" onchange="this.style.background=this.options[this.selectedIndex].style.background;">
         <RENDER_LOOP what="fonts">
-            <option id="{fonts>name}" value="{fonts>name}" state="{fonts>state}" style="border:1px solid black;margin-top:5px;background:transparent url({fonts>preview}) no-repeat bottom left; height:16px; width:300px;">
-                <NORENDER>
-                    <RENDER_VALUE what="fonts>name"/>
-                </NORENDER>
+            <option id="{fonts:name}" value="{fonts:name}" state="{fonts:state}" style="border:1px solid black;margin-top:5px;background:transparent url({fonts:preview}) no-repeat bottom left; height:16px; width:300px;">
             </option>
         </RENDER_LOOP>
     </select>
     <script type="text/javascript">
-        fontSelectorId="<RENDER_VALUE what="font>id"/>";
-        fontSelected="<RENDER_VALUE what="font>selected"/>";
+        fontSelectorId="<RENDER_VALUE what="font:id"/>";
+        fontSelected="<RENDER_VALUE what="font:selected"/>";
         $(fontSelectorId).style.background=$(fontSelectorId).options[fontSelected].style.background;
     </script>
 </span>

@@ -1,0 +1,26 @@
+<div>
+    <RENDER_JS>
+        var i18n_already_done_title = '<RENDER_VALUE what="i18n:already_done_title"/>';
+        i18n_already_done_content = '<RENDER_VALUE what="i18n:already_done_content"/>';
+        i18n_completed = '<RENDER_VALUE what="i18n:completed"/>';
+        i18n_generating = '<RENDER_VALUE what="i18n:generating"/>';
+    </RENDER_JS>
+    <RENDER_ADMINBOX title="{i18n:createThumbnails_title}">
+        <RENDER_ADMINBOXCONTENT>
+            <RENDER_VALUE what="i18n:variationsCreator"/>
+            <select name="template" id="template">
+                <RENDER_LOOP what="templates">
+                    <option value="{templates:id}">
+                        <RENDER_VALUE what="templates:name"/>
+                    </option>
+                </RENDER_LOOP>
+            </select>
+            <input type="button" value="{i18n:generate}" onclick="createThumbnailsFor($('template').value);"/>
+        </RENDER_ADMINBOXCONTENT>
+    </RENDER_ADMINBOX>
+    <div id="progress" style="display:none;">
+        <RENDER_NOTIF size="M" type="alert">
+            <div id="progressContent">...</div>
+        </RENDER_NOTIF>
+    </div>
+</div>

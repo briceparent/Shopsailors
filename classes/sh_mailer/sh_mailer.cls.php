@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Brice PARENT for Shopsailors
+ * @author Brice PARENT (Websailors) for Shopsailors
  * @copyright Shopsailors 2009
  * @license http://www.cecill.info
  * @version See version in the params/global.params.php file.
@@ -9,16 +9,30 @@
 if(!defined('SH_MARKER')){header('location: directCallForbidden.php');}
 
 class sh_mailer extends sh_core{
+    const CLASS_VERSION = '1.1.12.03.06';
+
+    public $shopsailors_dependencies = array(
+        'sh_linker','sh_params','sh_db'
+    );
     public $minimal = array('cron_job'=>true,'getForSending'=>true);
     protected $internalMailer = null;
     protected $externalMailer = null;
 
     public function construct(){
+        $installedVersion = $this->getClassInstalledVersion();
+        if($installedVersion != self::CLASS_VERSION){
+            if( version_compare( $installedVersion, '1.1.12.03.06' ) < 0 ) {
+                $this->helper->addClassesSharedMethods('sh_cron', '', __CLASS__);
+                $this->linker->params->updateParams(__CLASS__);
+            }
+            $this->setClassInstalledVersion(self::CLASS_VERSION);
+        }
+        
         $internalMailerFile = dirname(__FILE__).'/mailers/'.$this->getParam('mailers>internal>file');
         if(file_exists($internalMailerFile)){
             include($internalMailerFile);
             $mailer = $this->getParam('mailers>internal>name');
-            $this->internalMailer = $this->links->$mailer;
+            $this->internalMailer = $this->linker->$mailer;
         }else{
             echo 'the file '.$internalMailerFile.' does not exist<br />';
             return false;
@@ -30,12 +44,32 @@ class sh_mailer extends sh_core{
                 include($externalMailerFile);
             }
             $mailer = $this->getParam('mailers>external>name');
-            $this->externalMailer = $this->links->$mailer;
+            $this->externalMailer = $this->linker->$mailer;
             return true;
         }
         // We didn't find the params for the external mailer, so we use the internal
         $this->externalMailer = $this->internalMailer;
         return false;
+    }
+    
+    public function default_send($to,$title,$content){
+        $mailer = $this->get();
+        if($mailer->checkAddress($to)) {
+            $mailObject = $mailer->em_create();
+
+            $mailer->em_addSubject(
+                $mailObject,
+                $title
+            );
+            $mailer->em_addContent($mailObject,$content);
+
+            if(!$mailer->em_send($mailObject,array(array($to)))) {
+                // Error sending the email
+                return array('error'=>'error_sending_mail');
+            }
+            return true;
+        }
+        return array('error'=>'error_in_destination');
     }
 
     /**
@@ -66,7 +100,7 @@ class sh_mailer extends sh_core{
         }elseif($mailer == $intMailer || $mailer == SH_CUSTOM_PREFIX.$intMailer){
             $usedMailer = $this->get(false);
         }else{
-            $this->links->path->error(404);
+            $this->linker->path->error(404);
         }
         // We decode in order to use iso-8859-1 charset
         echo $usedMailer->nl_getContent($id,false);
@@ -82,7 +116,7 @@ class sh_mailer extends sh_core{
     }
 
     public function cleanContent($content){
-        $domain = $this->links->path->getBaseUri();
+        $domain = $this->linker->path->getBaseUri();
         preg_match_all(
             '`( (src|background)="(https?://)?)(\.\.+\/)*([^"]*")`',
             $content,
@@ -102,7 +136,72 @@ class sh_mailer extends sh_core{
         $postContent = '</body></html>';
         return utf8_decode($preContent.$content.$postContent);
     }
-    
+
+
+    /**
+     * Declares a public address to a page in a specific mailer.
+     * That page may be accessed for a certain time only.
+     * @param int $mailer The id of the bank to make the call to.
+     * @param str $method The method to call on the bank $bank.
+     * @param int $id Optional. The id of the page to call (like class/method/id).
+     * Defaults to 0.
+     * @param int $time The amount of time the page may be called, in seconds.
+     * Defaults to 1209600 seconds, which is 2 weeks.
+     */
+    public function setCallPage($mailer,$method,$id = 0,$eraseDelay = 1209600){
+        $callPageFile = SH_SITE_FOLDER.__CLASS__.'/callPage.params.php';
+        $this->linker->params->addElement($callPageFile,true);
+        $timeStamp = date('U',mktime(date('H'),date('i'),date('s') + $delay,date('m'),date('d'),date('Y')));
+        
+        $session = rand(1000,100000);
+        while($this->linker->params->get($callPageFile,'callPage>'.$session,false)){
+            $session = rand(1000,100000);
+        }
+        $eraseDelay = date(
+            'U',
+            mktime(
+                date('h'),date('i'),date('s')+$time,date('m'),date('d'),date('Y')
+            )
+        );
+
+        $this->linker->params->set(
+            $callPageFile,
+            'callPage>'.$session,
+            array(
+                'mailer'=>$mailer,
+                'method'=>$method,
+                'id'=>$id,
+                'eraseDate'=>$eraseDelay
+            )
+        );
+        
+        $this->linker->params->write($callPageFile);
+        $link = $this->translatePageToUri('/callPage/'.$session);
+        return $link;
+    }
+
+    public function callPage(){
+        $this->debug(__FUNCTION__, 3, __LINE__);
+        $id = $this->linker->path->page['id'];
+        $callPageFile = SH_SITE_FOLDER.__CLASS__.'/callPage.params.php';
+        $this->linker->params->addElement($callPageFile,true);
+        echo $id;
+        $session = $this->linker->params->get($callPageFile,'callPage>'.$id,false);
+        if($session){
+            echo '<div>$session = '.nl2br(str_replace(' ','&#160;',htmlspecialchars(print_r($session,true)))).'</div>';
+            if($this->linker->method_exists($session['mailer'],$session['method'])){
+                $mailer = $session['mailer'];
+                $method = $session['method'];
+                return $this->linker->$mailer->$method($session['id'],$id);
+            }
+        }
+        return false;
+    }
+
+    public function resetCallPage(){
+
+    }
+
     /**
      * Returns the uri from the given page
      * @param string $page The page we want to translate to uri
@@ -119,7 +218,7 @@ class sh_mailer extends sh_core{
             return '/'.$this->shortClassName.'/'.$method.'.php';
         }
         $withId = array(
-            'manageLists','removeList','createNewsletter','show','delete'
+            'manageLists','removeList','createNewsletter','show','delete','callPage'
         );
         if(in_array($method,$withId)){
             return '/'.$this->shortClassName.'/'.$method.'/'.$id.'.php';
@@ -143,7 +242,7 @@ class sh_mailer extends sh_core{
                 return $this->shortClassName.'/'.$matches[1].'/';
             }
             $withId = array(
-                'manageLists','removeList','createNewsletter','show','delete'
+                'manageLists','removeList','createNewsletter','show','delete','callPage'
             );
             if(in_array($matches[1],$withId)){
                 return $this->shortClassName.'/'.$matches[1].'/'.$matches[3];
@@ -212,6 +311,7 @@ abstract class sh_mailsenders extends sh_core{
     const ERROR_NL_NOMORECREDITS = 3304;
     const ERROR_NL_REPLYTOISFROM = ERROR_EM_REPLYTOISFROM;
     const ERROR_NL_DOESNOTEXIST = 3305;
+    const ERROR_NL_ALREADYSENT = 3206;
 
     const ERROR_NL_ADDRESSERROR = 3400;
 
@@ -255,6 +355,14 @@ abstract class sh_mailsenders extends sh_core{
         }
         return $this->getI18n('error_'.$id);
     }
+    
+    public function clean_html_content($html){
+        $rootDir = $this->linker->path->getBaseUri();
+        // We replace the local images pathes (those without a http://) with absolute ones.
+        $regexp = '`(<img [^>]*src=)"(\/[^"]+)"`';
+        $replaceWith = '$1"'.$rootDir.'$2"';
+        return preg_replace($regexp, $replaceWith, $html);
+    }
 
     abstract public function cron_job($time);
     
@@ -295,6 +403,7 @@ abstract class sh_mailsenders extends sh_core{
     abstract public function ml_getName($mailingList);
     abstract public function ml_getByName($name);
     abstract public function ml_delete($mailingList);
+    abstract public function ml_addAddresses($mailingList,$addressesArray);
     abstract public function ml_addAddress($mailingList,$address);
     abstract public function ml_editAddress($mailingList,$oldAddress,$newAddress);
     abstract public function ml_removeAddress($mailingList,$address);

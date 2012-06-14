@@ -1,0 +1,32 @@
+<div class="priceExplanation">
+    <RENDER_IFSET what="active:priceFor1">
+        <div class="priceDetails">
+            Prix unitaire :
+            <span class="bold">
+                <RENDER_VALUE what="active:priceFor1"/>
+            </span>
+            <RENDER_IFSET what="active:thereIsAReduction">
+                au lieu de
+                <span class="lineThrough">
+                    <RENDER_VALUE what="active:normalPriceFor1"/>
+                </span>
+            </RENDER_IFSET>
+        </div>
+    </RENDER_IFSET>
+    <div class="priceTotal">
+        Total :
+        <span class="bold">
+            <RENDER_VALUE what="active:priceForAll"/>
+        </span>
+        <RENDER_IFSET what="active:thereIsAReduction">
+            au lieu de
+            <span class="lineThrough">
+                <RENDER_VALUE what="active:normalPriceForAll"/>
+            </span>
+        </RENDER_IFSET>
+    </div>
+    <RENDER_IFSET what="active:thereIsAReduction">
+        Soit une réduction de 
+        <span class="bold"><RENDER_VALUE what="active:reduction"/></span>!
+    </RENDER_IFSET>
+</div>

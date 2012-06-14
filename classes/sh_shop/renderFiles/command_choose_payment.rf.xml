@@ -1,0 +1,14 @@
+<div>
+    <NORENDER>Payment mode</NORENDER>
+    <div>
+        <RENDER_NOTIF size="M" title="{i18n:payment_title}">
+            <RENDER_VALUE what="i18n:choose_paymentModes"/>
+            <RENDER_LOOP what="paymentModes">
+                <hr />
+                <div style="margin-top:15px;">
+                    <RENDER_VALUE what="paymentModes:form"/>
+                </div>
+            </RENDER_LOOP>
+        </RENDER_NOTIF>
+    </div>
+</div>

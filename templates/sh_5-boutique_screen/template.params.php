@@ -18,6 +18,11 @@ $this->values = array (
   'menusDescription'=>array(
         0=>'principal'
     ),
+    'palettes' => array(
+        'headline' => 'headline.php',
+        'title' => 'title.php',
+        'tables_border' => 'tables_border.php',
+    ),
   'menuButtons' =>
     array (
         1 =>
@@ -26,21 +31,45 @@ $this->values = array (
       'totalWidth' => 875,
       'textHeight' => 18,
       'expand' => false,
-      'type' => 'btn_transp',
+      'type' => 'btn_alpha_white',
       'font' => 'FreeFontBold.ttf',
-      'textColor' => ''
+      'textColor' => '',
+      'hasSubmenus' => true,
+            'renderFile' => 'horizontal',
+            'fonts' =>
+            array (
+                'Aarvark_Cafe.ttf'=>SH_FONTS_FOLDER.'Aarvark_Cafe.ttf',
+                'Abduction2002.ttf'=>SH_FONTS_FOLDER.'Abduction2002.ttf',
+                'Alpine_Regular.ttf'=>SH_FONTS_FOLDER.'Alpine_Regular.ttf',
+                'designer.ttf'=>SH_FONTS_FOLDER.'designer.ttf',
+                'FreeFont.ttf'=>SH_FONTS_FOLDER.'FreeFont.ttf',
+                'FreeFontBold.ttf'=>SH_FONTS_FOLDER.'FreeFontBold.ttf',
+                'FreeFontBoldOblique.ttf'=>SH_FONTS_FOLDER.'FreeFontBoldOblique.ttf',
+                'FreeFontOblique.ttf'=>SH_FONTS_FOLDER.'FreeFontOblique.ttf',
+                'FreeFontSerif.ttf'=>SH_FONTS_FOLDER.'FreeFontSerif.ttf',
+                'FreeFontSerifBold.ttf'=>SH_FONTS_FOLDER.'FreeFontSerifBold.ttf',
+                'FreeFontSerifBoldOblique.ttf'=>SH_FONTS_FOLDER.'FreeFontSerifBoldOblique.ttf',
+                'FreeFontSerifOblique.ttf'=>SH_FONTS_FOLDER.'FreeFontSerifOblique.ttf',
+                'Hall_Fetica_Decompose.ttf'=>SH_FONTS_FOLDER.'Hall_Fetica_Decompose.ttf',
+                'Hall_Fetica_Decompose_Italic.ttf'=>SH_FONTS_FOLDER.'Hall_Fetica_Decompose_Italic.ttf',
+                'LatiniaBlack.ttf'=>SH_FONTS_FOLDER.'LatiniaBlack.ttf',
+                'Little_Lord_Fontleroy.ttf'=>SH_FONTS_FOLDER.'Little_Lord_Fontleroy.ttf',
+                'MiddleSaxonyText.ttf'=>SH_FONTS_FOLDER.'MiddleSaxonyText.ttf',
+                'Vera.ttf'=>SH_FONTS_FOLDER.'Vera.ttf',
+                'VeraBold.ttf'=>SH_FONTS_FOLDER.'VeraBold.ttf',
+                'VeraBoldOblique.ttf'=>SH_FONTS_FOLDER.'VeraBoldOblique.ttf',
+                'VeraSe.ttf'=>SH_FONTS_FOLDER.'VeraSe.ttf',
+                'VeraSeBd.ttf'=>SH_FONTS_FOLDER.'VeraSeBd.ttf',
+            ),
         ),
-    'font' => NULL,
     ),
-  'fonts' =>
-    array (
-        0 => 'Aarvark_Cafe.ttf',
-        1 => 'Hall_Fetica_Decompose.ttf',
-        2 => 'Hall_Fetica_Decompose_Italic.ttf',
-        3 => 'FreeFontBold.ttf',
-        4 => 'VeraBold.ttf',
-        5 => 'VeraSeBd.ttf',
+    'renderFiles' => array(
+        'sh_forum_profile' => 'sh_forum/profile.rf.xml',
+        'sh_forum_render_lastTopics_page' => 'sh_forum/render_lastTopics_page.rf.xml',
     ),
+    /*'css' => array(
+        'sh_shop' => 'sh_shop.css'
+    ),*/
   'sh_shop'=>array(
         'categoriesListing' => array(
             'categoriesNumber' => 10
@@ -61,7 +90,4 @@ $this->values = array (
             'productsNumber' => 4
         )
     ),
-  'defaultBuilder' => 'btn_transp',
-  'defaultFont' => 'FreeFontBold.ttf',
-  'contact'=>array('renderFile'=>'show_bgNotif')
 );

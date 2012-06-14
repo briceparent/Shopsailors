@@ -1,0 +1,45 @@
+<div>
+    <RENDER_IFSET what="category:parentLink">
+        <div style="margin:3px;">
+            <a href="{category:parentLink}">
+                Aller à la catégorie mère
+            </a>
+        </div>
+    </RENDER_IFSET>
+    <NORENDER>active category</NORENDER>
+    <div style="border:1px solid grey;width:94%;background-color:white;padding:3%;">
+        <img src="{category:image}.resized.75.75.png" alt="navigator_preview" width="75" height="75" style="float:left;padding-right:5px;"/>
+        <RENDER_VALUE what="category:description"/>
+    </div>
+    <div style="clear:both"> </div>
+    
+    <RENDER_IFNOTSET what="category_elements:empty">
+        <div class="selectAcategory">
+            <RENDER_VALUE what="i18n:selectAcategory"/>
+        </div>
+
+        <NORENDER>list of the subcategories</NORENDER>
+        <RENDER_LOOP what="category_elements">
+            <div style="border:1px solid grey;width:94%;background-color:white;padding:3%;margin-top:8px;height:75px;overflow:hidden;">
+                <a href="{category_elements:link}">
+                    <img src="{category_elements:image}.resized.50.75.png" alt="category_image" width="50" height="75" style="float:left;padding-right:5px;"/>
+                </a>
+                <div style="font-weight:bold;">
+                    <a href="{category_elements:link}"><RENDER_VALUE what="category_elements:name"/></a>
+                </div>
+                <div>
+                    <RENDER_VALUE what="category_elements:shortDescription"/>
+                </div>
+            </div>
+            <div style="clear:both"> </div>
+        </RENDER_LOOP>
+    </RENDER_IFNOTSET>
+    
+    <NORENDER>navigator_emptyCategory</NORENDER>
+    <RENDER_IFSET what="category_elements:empty">
+        <div>
+            <RENDER_VALUE what="i18n:emptyCategory"/>
+        </div>
+    </RENDER_IFSET>
+    
+</div>

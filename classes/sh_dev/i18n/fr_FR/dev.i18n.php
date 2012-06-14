@@ -44,6 +44,7 @@ vraiment.',
 seront désactivées)',
     'E_STRICT_activated'=>'Erreurs de type E_STRICT',
     'E_WARNING_activated'=>'Erreurs de type E_WARNING',
+    'E_DEPRECATED_activated'=>'Erreurs de types E_DEPRECATED',
     'E_NOTICE_activated'=>'Erreurs de types E_NOTICE',
 
 

@@ -22,3 +22,9 @@ function diapoStartStop(diapo){
     }
 
 }
+function diapoNext(diapo){
+    cf[diapo].next();
+}
+function diapoPrevious(diapo){
+    cf[diapo].previous();
+}

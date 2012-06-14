@@ -1,2 +1,0 @@
-sh_browser
-render_multipleImagesSelector

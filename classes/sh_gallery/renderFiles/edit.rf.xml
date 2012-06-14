@@ -1,0 +1,15 @@
+
+<div>
+    <RENDER_FORM id="edit_gallery">
+        <RENDER_TABGROUP size="M" validate="{i18n:save}" admin="admin">
+            <RENDER_TAB title="{i18n:gallery_settings}">
+                Titre de la galerie :
+                <br />
+                <RENDER_I18NINPUT class="sh_gallery" i18n="{gallery:title}" name="title"/>
+                <br />
+                Contenu de la galerie : <br />
+                <RENDER_MULTIPLEIMAGESSELECTOR name="images" value="{gallery:images}" folder="site"/>
+            </RENDER_TAB>
+        </RENDER_TABGROUP>
+    </RENDER_FORM>
+</div>

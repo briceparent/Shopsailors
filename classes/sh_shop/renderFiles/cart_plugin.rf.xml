@@ -1,0 +1,25 @@
+<span>
+    <soan id="cart_plugin_content">
+        <a href="{cart:link}">Votre panier</a></soan>
+    <script>
+        var cart_plugin_content_automatic = $('cart_plugin_content').innerHTML;
+        
+        function cart_update_plugin_content(){
+            $('cart_plugin_content').innerHTML = 'Chargement du total du panier, merci de patienter.';
+            new Ajax.Request(
+                '/shop/get_cart_plugin_ajax.php',
+                {         
+                    onSuccess: function(transport) {
+                        $('cart_plugin_content').innerHTML = transport.responseText;
+                    },
+                    onComplete: function(transport) {
+                        if(transport.status != 200){
+                            $('cart_plugin_content').innerHTML = cart_plugin_content_automatic;
+                        }
+                    }
+                }
+            );
+        }
+        cart_update_plugin_content();
+    </script>
+</span>

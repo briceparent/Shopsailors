@@ -1,2 +1,0 @@
-sh_diaporama
-render_diaporamaFromList

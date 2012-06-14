@@ -1,2 +1,0 @@
-sh_datePicker
-render_datePicker

@@ -1,0 +1,5 @@
+<div>
+    <RENDER_VALUE what="i18n:shipping_not_needed"/>
+
+    <input type="hidden" name="step" value="set_shipper"/>
+</div>

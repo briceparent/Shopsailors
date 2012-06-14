@@ -1,8 +1,17 @@
-<div class="form_box_container edit_legacyContainer">
+
+<div>
     <RENDER_FORM id="legacy_edit">
-        <RENDER_VALUE what="i18n>description"/>
-        <RENDER_HELP what="{i18n>help}"/>
-        <RENDER_WEDITOR content="{legacy>content}" name="legacy" class="content_editor"/>
-        <input type="submit" value="{i18n>save}"/>
+        <RENDER_ADMINBOX title="{i18n:title}" size="l">
+            <RENDER_ADMINBOXCONTENT>
+                <div class="legacy_editText">
+                    <RENDER_VALUE what="i18n:description"/>
+                    <RENDER_HELP what="{i18n:help}"/>
+                </div>
+                <RENDER_WEDITOR content="{legacy:content}" name="legacy" class="content_editor"/>
+            </RENDER_ADMINBOXCONTENT>
+        </RENDER_ADMINBOX>
+        <div class="tab_buttons">
+            <input type="submit" value="{i18n:save}" class="tab_button btn_validate"/>
+        </div>
     </RENDER_FORM>
 </div>

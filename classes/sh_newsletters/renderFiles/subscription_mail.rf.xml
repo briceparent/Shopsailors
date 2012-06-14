@@ -1,11 +1,11 @@
 <div>
     Bonjour,<br />
     Vous souhaitez vous inscrire à la newsletter du site
-    <a href="{confirmation>site}"><RENDER_VALUE what="confirmation>site"/></a>,
+    <a href="{confirmation:site}"><RENDER_VALUE what="confirmation:site"/></a>,
     et nous vous en remercions.<br />
     Pour confirmer votre adresse email, il vous suffit de cliquer sur le lien suivant :
     <br />
-    <a href="{confirmation>link}">Confirmer votre inscription</a>
+    <a href="{confirmation:link}">Confirmer votre inscription</a>
     <br />
     Ce lien est valable 15 jours à compter de l'envoi de ce mail. Passé ce délai,
     pour vous y inscrire, il vous faudra à nouveau remplir le formulaire
@@ -19,7 +19,7 @@
     Si vous ne pouvez pas cliquer sur le lien "Confirmer votre inscription" 
     ci-dessus, vous pouvez valider votre adresse email en allant à l'adresse
     suivante :<br />
-    <RENDER_VALUE what="confirmation>link"/><br /><br /><br />
+    <RENDER_VALUE what="confirmation:link"/><br /><br /><br />
     NB : Si vous n'avez pas demandé à vous inscrire à cette newsletter, vous n'avez
     rien à faire. Sans cette validation, aucun autre mail ne vous sera envoyé, et
     votre adresse sera supprimée de notre historique sous quinze jours.<br />

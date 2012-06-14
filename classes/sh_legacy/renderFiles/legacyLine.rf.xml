@@ -1,11 +1,19 @@
 <div id="site_copyrights">
     <RENDER_LOOP what="links">
-        <RENDER_VALUE what="links>separator"/>
-        <RENDER_VALUE what="links>textBefore"/>
-        <a href="{links>link}">
-            <RENDER_VALUE what="links>text"/>
-        </a>
-        <RENDER_VALUE what="links>textAfter"/>
+        <RENDER_VALUE what="links:separator"/>
+        <RENDER_VALUE what="links:textBefore"/>
+        <RENDER_IFSET what="links:target">
+            <a target="{links:target}" href="{links:link}">
+                <RENDER_VALUE what="links:text"/>
+            </a>
+        </RENDER_IFSET>
+        <RENDER_IFNOTSET what="links:target">
+            <a href="{links:link}">
+                <RENDER_VALUE what="links:text"/>
+            </a>
+        </RENDER_IFNOTSET>
+        <RENDER_VALUE what="links:textAfter"/>
     </RENDER_LOOP><br />
-    <RENDER_VALUE what="i18n>createWithShopsailors"/>
+    <RENDER_VALUE what="i18n:createWithShopsailors"/>
+    <RENDER_VALUE what="added:text"/>
 </div>

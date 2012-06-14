@@ -1,0 +1,43 @@
+
+<RENDER_FORM id="bank_manager">
+    <RENDER_IFSET what="message:text">
+        <RENDER_NOTIF size="L" type="alert">
+            <RENDER_VALUE what="message:text"/>
+        </RENDER_NOTIF>
+    </RENDER_IFSET>
+    <RENDER_TABGROUP size="L" validate="{i18n:save}" admin="admin">
+        <RENDER_TAB title="{i18n:settings}">
+            <RENDER_CHECKBOX text="{i18n:activated}" name="active" state="{bank:state}" help="{i18n:activated_explanation}"/>
+            <hr />
+            <RENDER_VALUE what="i18n:phone_number"/>
+            <input class="autocheck" type="phone" name="phone" required="required" value="{bank:phone}"/>
+            <br />
+            <RENDER_VALUE what="i18n:email"/>
+            <input class="autocheck" type="email" name="email" required="required" value="{bank:email}"/>
+            <hr />
+            <RENDER_VALUE what="i18n:describeMode"/>
+            <br />
+            <RENDER_I18NTEXTAREA class="sh_payment" i18n="{bank:description}" name="description"/>
+            <hr />
+            <RENDER_VALUE what="i18n:extraTextForBill"/>
+            <RENDER_HELP>
+                <RENDER_VALUE what="i18n:extraTextForBill_explanations"/>
+            </RENDER_HELP>
+            <br />
+            <RENDER_I18NTEXTAREA class="sh_payment" i18n="{bank:extraTextForBill}" name="extraTextForBill"/>
+        </RENDER_TAB>
+        <NORENDER>
+    
+            <RENDER_TAB title="{i18n:mails}">
+                <RENDER_VALUE what="i18n:mails_intro"/>
+                <br />
+                <textarea name="mail_model" required="required" style="width:100%;height:140px;resize: vertical;">
+                    <RENDER_VALUE what="bank:mail_model"/>
+                </textarea>
+                <br />
+                <RENDER_VALUE what="i18n:mails_text_symbols"/>
+
+            </RENDER_TAB>
+        </NORENDER>
+    </RENDER_TABGROUP>
+</RENDER_FORM>

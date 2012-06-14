@@ -1,0 +1,153 @@
+
+<div id="forum_show">
+    <RENDER_FORUM_MENUBAR/>
+    <RENDER_BREADCRUMBS what="nav_levels"/>
+    
+    <div class="forum_topic_notify_me">
+        <RENDER_IFSET what="user:notify_me">
+            <a href="{links:notify_me}">
+                <RENDER_VALUE what="i18n:notify_me"/>
+            </a>
+        </RENDER_IFSET>
+        <RENDER_IFSET what="user:dont_notify_me">
+            <a href="{links:notify_me}" class="stopNotif">
+                <RENDER_VALUE what="i18n:dont_notify_me"/>
+            </a>
+        </RENDER_IFSET>
+    </div>
+    <RENDER_CACHE class="sh_forum" part="topic_{topic:id}_{topic:moderate}">
+        <div class="topicContent">
+            <table>
+                <tr>
+                    <td class="topic_userInfo">
+                        <a href="/forum/profile/{topic:opener_id}.php">
+                            <img style="width:100px;height:100px;" src="{topic:image}.resized.100.100.png"/>
+                        </a>
+                        <div class="{topic:user_groups}">
+                            <a href="/forum/profile/{topic:opener_id}.php">
+                                <RENDER_VALUE what="topic:alias"/>
+                            </a>
+                        </div>
+                        <div class="topic_userGroup">
+                            <RENDER_VALUE what="topic:user_groups"/>
+                        </div>
+                    </td>    
+                    <td class="topicText">
+                        <div>
+                            <p>
+                                <RENDER_VALUE what="topic:content"/>
+                            </p>
+                        </div>
+                        <div class="topicSignature">
+                            <div class="{topic:user_groups}">
+                                <RENDER_VALUE what="topic:signature"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>    
+                <tr>
+                    <td colspan="2">
+                        <div class="alertModerator">
+                            <RENDER_IFNOTSET what="topic:moderate">
+                                <a href="{topic:alertLink}">
+                                    <RENDER_VALUE what="i18n:alertModerator"/>
+                                </a>
+                            </RENDER_IFNOTSET>
+                            <RENDER_IFSET what="topic:moderate">
+                                <a href="{topic:moderateLink}">
+                                    <RENDER_VALUE what="i18n:moderate_topic"/>
+                                </a>
+                                -
+                                <a href="{topic:moveLink}">
+                                    <RENDER_VALUE what="i18n:move_topic"/>
+                                </a>
+                            </RENDER_IFSET>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <ul class="forum_contents">
+            <RENDER_VALUE what="posts:contents"/>
+        </ul>
+    </RENDER_CACHE>
+    <RENDER_IFSET what="rights:post">
+        <fieldset class="forum_addTopic" id="post_answer">
+            <legend>
+                <RENDER_VALUE what="i18n:newAnswer"/>
+            </legend>
+            <RENDER_IFSET what="user:noProfile">
+                <RENDER_VALUE what="i18n:new_post_editProfile"/>
+                <a href="{user:editProfileLink}">
+                    <RENDER_VALUE what="user:editProfileLink"/>
+                </a>
+            </RENDER_IFSET>
+            <RENDER_IFNOTSET what="user:noProfile">
+                <RENDER_FORM id="new_post">
+                    <div id="answerToField">
+                        <RENDER_VALUE what="i18n:answerTo"/>
+                        <input name="new[parent]" value="{answerTo:post_number}" id="answerTo" style="width:35px;"/>
+                    </div>
+                    <table cellpadding="8" cellspacing="8">
+                        <tr>
+                            <td>
+                                <RENDER_VALUE what="i18n:title"/>
+                            </td>
+                            <td>
+                                <input name="new[title]" value="{form:title}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <RENDER_VALUE what="i18n:text"/>
+                            </td>
+                            <td>
+                                <RENDER_WEDITOR style="width:350px;" name="new[text]" type="forum">
+                                    <RENDER_VALUE what="form:text"/>
+                                </RENDER_WEDITOR>
+                            </td>
+                        </tr>
+                    </table>
+                    <RENDER_IFSET what="conditions:file">
+                        <div class="forum_conditions">
+                            <input type="checkbox" name="accept_conditions" state="{form:accept_conditions}"/>
+                            <RENDER_VALUE what="i18n:accept_conditions"/>
+                        </div>
+                    </RENDER_IFSET>
+                    <RENDER_IFSET what="user:requiresCaptcha">
+                        <RENDER_VALUE what="i18n:noConnected_captcha"/>
+                        <br />
+                        <RENDER_CAPTCHA what="new_post"/>
+                    </RENDER_IFSET>
+                    <div class="tab_buttons">
+                        <input class="tab_button btn_validate" type="submit" name="submit" value="{i18n:send}"/>
+                    </div>
+                </RENDER_FORM>
+            </RENDER_IFNOTSET>
+        </fieldset>
+    </RENDER_IFSET>
+    <RENDER_IFNOTSET what="rights:post">
+        <div class="noForumRights">
+            <RENDER_IFSET what="user:connected">
+                Vos droits sont insuffisants pour participer à cette discussion.
+            </RENDER_IFSET>
+            <RENDER_IFNOTSET what="user:connected">
+                <RENDER_VALUE what="i18n:noForumRights"/>
+                <a href="{links:connection}">
+                    <RENDER_VALUE what="i18n:connectionLink"/>
+                </a>
+            </RENDER_IFNOTSET>
+        </div>
+    </RENDER_IFNOTSET>
+    <RENDER_ENDJS>
+        $('answerToField').style.display = 'none';
+        $$('.postAnswer a').each(function(el){
+            Event.observe(el,'click',function(event){
+                event.stop();
+                var post_number = el.href.substring(el.href.indexOf("=") + 1);
+                $('answerTo').value=post_number;
+                $('answerToField').style.display = 'block';
+            });
+        });
+    </RENDER_ENDJS>
+</div>
