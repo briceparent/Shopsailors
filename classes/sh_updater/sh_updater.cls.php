@@ -33,28 +33,8 @@ class sh_updater extends sh_core {
         $installedVersion = $this->getClassInstalledVersion();
 
         if( $installedVersion != self::CLASS_VERSION ) {
-            if( version_compare( $installedVersion, '1.1.11.03.28' ) < 0 ) {
-                $this->helper->addClassesSharedMethods( 'sh_masterServer', '', __CLASS__ );
-            }
-            if( version_compare( $installedVersion, '1.1.12.05.29.4' ) < 0 ) {
-                // We move every custom class from SH_CLASS_FOLDER to SH_CUSTOM_CLASS_FOLDER
-                $this->helper->createDir( SH_CUSTOM_CLASS_FOLDER );
-                foreach( scandir( SH_CLASS_FOLDER ) as $oneFolder ) {
-                    if( substr( $oneFolder, 0, strlen( SH_CUSTOM_PREFIX ) ) == SH_CUSTOM_PREFIX ) {
-                        rename( SH_CLASS_FOLDER . $oneFolder, SH_CUSTOM_CLASS_FOLDER . $oneFolder );
-                        echo $oneFolder.'<br />';
-                    }
-                }
-                // We move every custom class from SH_TEMPLATE_FOLDER to SH_CUSTOM_TEMPLATE_FOLDER
-                $this->helper->createDir( SH_CUSTOM_TEMPLATE_FOLDER );
-                foreach( scandir( SH_CLASS_FOLDER ) as $oneFolder ) {
-                    if( substr( $oneFolder, 0, strlen( SH_CUSTOM_PREFIX ) ) == SH_CUSTOM_PREFIX ) {
-                        rename( SH_CLASS_FOLDER . $oneFolder, SH_CUSTOM_CLASS_FOLDER . $oneFolder );
-                        echo $oneFolder.'<br />';
-                    }
-                }
-            }
 
+            $this->helper->addClassesSharedMethods( 'sh_masterServer', '', __CLASS__ );
             // We construct all classes, in case any of them still needs to be updated
             $order = array(
                 'db', 'path', 'renderer', 'wEditor', 'captcha', 'flash', 'video', 'sound', 'html', 'i18n', 'form_elements',
@@ -64,25 +44,19 @@ class sh_updater extends sh_core {
                 $this->linker->$one;
             }
 
-            $classes = array_merge( scandir( SH_CLASS_FOLDER ), scandir( SH_CUSTOM_CLASS_FOLDER ) );
+            $classes = scandir( SH_CLASS_FOLDER );
             $forLater = array( );
             foreach( $classes as $class ) {
-                $classFolder = '';
-                if( substr( $class, 0, strlen( SH_PREFIX ) ) == SH_PREFIX ) {
-                    $classFolder = SH_CLASS_FOLDER . $class . '/';
-                    $now = true;
-                } else if( substr( $class, 0, strlen( SH_CUSTOM_PREFIX ) ) == SH_CUSTOM_PREFIX ) {
-                    $classFolder = SH_CUSTOM_CLASS_FOLDER . $class . '/';
-                    $now = false;
-                }
-                if( !empty( $classFolder ) && file_exists( $classFolder . $class . '.cls.php' ) ) {
-                    $may_be_updated = !file_exists( $classFolder . '/doesnt_extend_core.php' );
-                    $may_be_updated = $may_be_updated && !file_exists( $classFolder . '/is_abstract.php' );
+                if( substr( $class, 0, 1 ) != '.' ) {
+                    if( file_exists( SH_CLASS_FOLDER . $class . '/' . $class . '.cls.php' ) ) {
+                        $may_be_updated = !file_exists( SH_CLASS_FOLDER . $class . '/doesnt_extend_core.php' );
+                        $may_be_updated = $may_be_updated && !file_exists( SH_CLASS_FOLDER . $class . '/is_abstract.php' );
                     if( $may_be_updated ) {
-                        if( $now ) {
+                            if( substr( $class, 0, strlen( SH_PREFIX ) ) == SH_PREFIX ) {
                             $this->linker->$class;
-                        } else {
-                            $forLater[ ] = $class;
+                            } elseif( substr( $class, 0, strlen( SH_PREFIX ) ) == SH_PREFIX ) {
+                                $forLater[] = $class;
+                            }
                         }
                     }
                 }

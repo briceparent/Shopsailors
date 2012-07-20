@@ -478,9 +478,8 @@ class sh_i18n extends sh_core {
                 return $ret;
             }
         }
-        $classPath = $this->linker->$className->getClassFolder();
-        if( file_exists( $classPath . 'i18n/default.php' ) ) {
-            include( $classPath . 'i18n/default.php');
+        if( file_exists( SH_CLASS_FOLDER . $className . '/i18n/default.php' ) ) {
+            include(SH_CLASS_FOLDER . $className . '/i18n/default.php');
             if( $defaultLang != $lang ) {
                 return $this->get( $className, $varName, $defaultLang );
             }
@@ -585,10 +584,9 @@ class sh_i18n extends sh_core {
      */
     protected function readLangFile( $class, $lang = null ) {
         $this->debug( 'We look for the translation files for the class "' . $class . '"', 2, __LINE__ );
-        $classPath = $this->linker->$class->getClassFolder();
         if( is_null( $lang ) ) {
             $lang = $this->getLang();
-            if( !is_dir( $classPath ) && !is_dir( $class ) ) {
+            if( !is_dir( SH_CLASS_FOLDER . $class ) && !is_dir( $class ) ) {
                 $this->debug( 'The folder that should contain the lang files for class "' . $class . '" was not found',
                               0, __LINE__ );
                 return false;
@@ -597,7 +595,7 @@ class sh_i18n extends sh_core {
         if( is_dir( $class ) ) {
             $folder = $class . '/' . $lang;
         } else {
-            $folder = $classPath . '/i18n/' . $lang;
+            $folder = SH_CLASS_FOLDER . $class . '/i18n/' . $lang;
         }
         $this->debug( 'Looking for "' . $folder . '" ', 1, __LINE__ );
         if( !is_dir( $folder ) ) {
@@ -648,7 +646,7 @@ class sh_i18n extends sh_core {
         if( is_array( $langs ) && count( $langs ) > 0 ) {
             foreach( $langs as $oneLang ) {
                 // We get the value, replacing " with its equivalent char code
-                $value = str_replace( '"', '&#34;', $this->db_get( $class, $i18n, $oneLang, &$qry ) );
+                $value = str_replace( '"', '&#34;', $this->db_get( $class, $i18n, $oneLang, $qry ) );
                 $thisArgs = ' name="' . $name . '[' . $oneLang . ']" value="' . $value . '"';
                 $thisArgs .= ' style="background:#ffffff url(/images/shared/flags/' . $oneLang . '_small.png) no-repeat top left;padding-left:20px;' . $width . '"';
                 $thisArgs .= ' class="' . $id . ' form_i18n_input"';

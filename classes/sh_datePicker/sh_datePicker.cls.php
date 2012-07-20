@@ -28,13 +28,12 @@ class sh_datePicker extends sh_core {
 
     const FROM = '(=1900,=1,=1)';
     const TO = '(=2050,=12,=31)';
-    
     const HIDE_TODAY = 1;
     const SHOW_SECONDS = 2;
     const IS_FROM = 4;
     const IS_TO = 8;
-    
-    protected $scriptAdded =false;
+
+    protected $scriptAdded = false;
 
     public function construct() {
         $installedVersion = $this->getClassInstalledVersion();
@@ -74,12 +73,12 @@ class sh_datePicker extends sh_core {
             } elseif( $matches[ 3 ] == '-' ) {
                 $month = self::$month;
                 for( $a = 0; $a < $matches[ 4 ]; $a++ ) {
-                    $month = $this->getPreviousMonth( &$year, $month );
+                    $month = $this->getPreviousMonth( $year, $month );
                 }
             } else {
                 $month = self::$month;
                 for( $a = 0; $a < $matches[ 4 ]; $a++ ) {
-                    $month = $this->getNextMonth( &$year, $month );
+                    $month = $this->getNextMonth( $year, $month );
                 }
             }
             // Day
@@ -88,12 +87,12 @@ class sh_datePicker extends sh_core {
             } elseif( $matches[ 5 ] == '-' ) {
                 $day = self::$day;
                 for( $a = 0; $a < $matches[ 6 ]; $a++ ) {
-                    $day = $this->getPreviousDay( &$year, &$month, $day );
+                    $day = $this->getPreviousDay( $year, $month, $day );
                 }
             } else {
                 $day = self::$day;
                 for( $a = 0; $a < $matches[ 6 ]; $a++ ) {
-                    $day = $this->getNextDay( &$year, &$month, $day );
+                    $day = $this->getNextDay( $year, $month, $day );
                 }
             }
             return array( 'year' => $year, 'month' => $month, 'day' => $day );
@@ -102,7 +101,7 @@ class sh_datePicker extends sh_core {
 
     public function render_datePicker( $attributes = array( ) ) {
         $lang = $this->linker->i18n->getLang();
-        $lang = array_shift(explode('_',$lang));
+        $lang = array_shift( explode( '_', $lang ) );
 
         if( isset( $attributes[ 'name' ] ) ) {
             $name = $attributes[ 'name' ];
@@ -136,14 +135,14 @@ class sh_datePicker extends sh_core {
         } else {
             $to = $this->toDateArray( self::TO );
         }
-        
+
         if( isset( $attributes[ 'onchange' ] ) ) {
-            $values['datePicker']['callback'] = $attributes[ 'onchange' ];
+            $values[ 'datePicker' ][ 'callback' ] = $attributes[ 'onchange' ];
         }
 
         $_SESSION[ __CLASS__ ][ $id ][ 'from' ] = $from;
         $_SESSION[ __CLASS__ ][ $id ][ 'to' ] = $to;
-        
+
 
         if( $value == '' ) {
             $value = date( 'Y-m-d' );
@@ -160,32 +159,37 @@ class sh_datePicker extends sh_core {
         $values[ 'datePicker' ][ 'month' ] = $month;
         $values[ 'datePicker' ][ 'day' ] = $day;
 
-        $values[ 'from' ][ 'date' ] = $from[ 'year' ] . '-' . str_pad( $from[ 'month' ], 2,'0', STR_PAD_LEFT ) . '-' . str_pad( $from[ 'day' ], 2,'0', STR_PAD_LEFT );
-        $values[ 'to' ][ 'date' ] = $to[ 'year' ] . '-' . str_pad( $to[ 'month' ], 2,'0', STR_PAD_LEFT )  . '-' . str_pad( $to[ 'day' ], 2,'0', STR_PAD_LEFT ) ;
+        $values[ 'from' ][ 'date' ] = $from[ 'year' ] . '-' . str_pad( $from[ 'month' ], 2, '0', STR_PAD_LEFT ) . '-' . str_pad( $from[ 'day' ],
+                                                                                                                                 2,
+                                                                                                                                 '0',
+                                                                                                                                 STR_PAD_LEFT );
+        $values[ 'to' ][ 'date' ] = $to[ 'year' ] . '-' . str_pad( $to[ 'month' ], 2, '0', STR_PAD_LEFT ) . '-' . str_pad( $to[ 'day' ],
+                                                                                                                           2,
+                                                                                                                           '0',
+                                                                                                                           STR_PAD_LEFT );
 
         if( isset( $attributes[ 'type' ] ) && $attributes[ 'type' ] == 'month' ) {
             $ret = $this->render( 'sh_datePicker_month', $values, false, false );
             return $ret;
         }
-        
-        if(!$this->scriptAdded){
-            if(sh_html::$willRender){
+
+        if( !$this->scriptAdded ) {
+            if( sh_html::$willRender ) {
                 $this->linker->html->addScript( '/' . __CLASS__ . '/singles/date-picker-v5/datepicker.packed.js' );
                 $this->linker->html->addCSS( '/' . __CLASS__ . '/singles/sh_datePicker.css' );
-            }else{
-                $values['scripts'][]['src'] = '/' . __CLASS__ . '/singles/date-picker-v5/datepicker.packed.js';
-                $values['style'][]['href'] = '/' . __CLASS__ . '/singles/sh_datePicker.css';
-
+            } else {
+                $values[ 'scripts' ][ ][ 'src' ] = '/' . __CLASS__ . '/singles/date-picker-v5/datepicker.packed.js';
+                $values[ 'style' ][ ][ 'href' ] = '/' . __CLASS__ . '/singles/sh_datePicker.css';
             }
             $this->scriptAdded = true;
         }
         $ret = $this->render( 'sh_datePicker', $values, false, false );
-        
+
         return $ret;
     }
-    
-    public function form_verifier_content($data){
-        $data = $data['y'].'-'.$data['m'].'-'.$data['d'];
+
+    public function form_verifier_content( $data ) {
+        $data = $data[ 'y' ] . '-' . $data[ 'm' ] . '-' . $data[ 'd' ];
         return $data;
     }
 
@@ -212,42 +216,42 @@ class sh_datePicker extends sh_core {
     public function dateAndTimeToLocal( $completeDate = '', $asString = false, $settings = 0 ) {
         if( empty( $completeDate ) ) {
             $onlyDate = date( 'Y-m-d' );
-            if($settings & self::SHOW_SECONDS){
+            if( $settings & self::SHOW_SECONDS ) {
                 $returnTime = date( 'H:i:s' );
-            }else{
+            } else {
                 $returnTime = date( 'H:i' );
             }
         } else {
             list($onlyDate, $returnTime) = explode( ' ', $completeDate );
-            $time = explode(':',$returnTime);
-            $returnTime = $time[0].':'.$time[1];
-            if($settings & self::SHOW_SECONDS){
-                if(isset($time[2])){
-                    $returnTime = ':'.$time[2];
-                }else{
+            $time = explode( ':', $returnTime );
+            $returnTime = $time[ 0 ] . ':' . $time[ 1 ];
+            if( $settings & self::SHOW_SECONDS ) {
+                if( isset( $time[ 2 ] ) ) {
+                    $returnTime = ':' . $time[ 2 ];
+                } else {
                     $returnTime = ':00';
                 }
             }
         }
         $returnDate = $this->dateToLocal( $onlyDate );
         if( $asString ) {
-            if($settings & self::IS_FROM){
+            if( $settings & self::IS_FROM ) {
                 $suf = '_from';
-            }elseif($settings & self::IS_TO){
+            } elseif( $settings & self::IS_TO ) {
                 $suf = '_to';
             }
             if( $onlyDate == date( 'Y-m-d' ) ) {
-                if($settings & self::HIDE_TODAY){
-                    $model = $this->getI18n( 'date_and_time_format_today_hidden'.$suf );
-                }else{
-                    $model = $this->getI18n( 'date_and_time_format_today'.$suf );
+                if( $settings & self::HIDE_TODAY ) {
+                    $model = $this->getI18n( 'date_and_time_format_today_hidden' . $suf );
+                } else {
+                    $model = $this->getI18n( 'date_and_time_format_today' . $suf );
                 }
                 return str_replace( array( '{date}', '{time}' ), array( $returnDate, $returnTime ), $model );
             } elseif( $onlyDate == date( 'Y-m-d', mktime( 0, 0, 0, date( m ), date( 'd' ) - 1, date( 'Y' ) ) ) ) {
-                $model = $this->getI18n( 'date_and_time_format_yesterday'.$suf );
+                $model = $this->getI18n( 'date_and_time_format_yesterday' . $suf );
                 return str_replace( array( '{date}', '{time}' ), array( $returnDate, $returnTime ), $model );
             } else {
-                $model = $this->getI18n( 'date_and_time_format'.$suf );
+                $model = $this->getI18n( 'date_and_time_format' . $suf );
                 return str_replace( array( '{date}', '{time}' ), array( $returnDate, $returnTime ), $model );
             }
         }
@@ -335,12 +339,8 @@ class sh_datePicker extends sh_core {
         // previous month
         if( $firstDay > 1 ) {
             $newYear = $year;
-            $previousMonth = $this->getPreviousMonth(
-                &$newYear, $month
-            );
-            $prevNumberOfDays = $this->getNumberOfDaysInMonth(
-                $newYear, $previousMonth
-            );
+            $previousMonth = $this->getPreviousMonth( $newYear, $month );
+            $prevNumberOfDays = $this->getNumberOfDaysInMonth( $newYear, $previousMonth );
 
             for( $a = 1; $a < $firstDay; $a++ ) {
                 $cpt++;
@@ -403,9 +403,7 @@ class sh_datePicker extends sh_core {
         while( ($cpt % 7) > 0 ) {
             $cpt++;
             $newYear = $year;
-            $nextMonth = $this->getnextMonth(
-                &$newYear, $month
-            );
+            $nextMonth = $this->getnextMonth( $newYear, $month );
             if( !$this->isToday( $newYear, $nextMonth, $a ) ) {
                 $addToClass = '';
             } else {
@@ -446,7 +444,7 @@ class sh_datePicker extends sh_core {
      * @return int The number of the month (from 1 to 12). To know the year,
      * $year has to be passed by reference.
      */
-    protected function getPreviousMonth( $year, $month ) {
+    protected function getPreviousMonth( &$year, $month ) {
         if( $month == 1 ) {
             $month = 13;
             $year -= 1;
@@ -463,9 +461,9 @@ class sh_datePicker extends sh_core {
      * @return int The number of the day (from 1 to 31). To know the month and
      * year, $month and $year have to be passed by references.
      */
-    protected function getPreviousDay( $year, $month, $day ) {
+    protected function getPreviousDay( &$year, &$month, $day ) {
         if( $day == 1 ) {
-            $month = $this->getPreviousMonth( &$year, $month );
+            $month = $this->getPreviousMonth( $year, $month );
             $numberOfDays = $this->getNumberOfDaysInMonth( $year, $month );
             $day = $numberOfDays + 1;
         }
@@ -481,10 +479,10 @@ class sh_datePicker extends sh_core {
      * @return int The number of the day (from 1 to 31). To know the month and
      * year, $month and $year have to be passed by references.
      */
-    protected function getNextDay( $year, $month, $day ) {
+    protected function getNextDay( &$year, &$month, $day ) {
         $numberOfDays = $this->getNumberOfDaysInMonth( $year, $month );
         if( $day == $numberOfDays ) {
-            $month = $this->getNextMonth( &$year, $month );
+            $month = $this->getNextMonth( $year, $month );
             $day = 0;
         }
         return $day + 1;
@@ -498,7 +496,7 @@ class sh_datePicker extends sh_core {
      * @return int The number of the month (from 1 to 12). To know the year,
      * $year has to be passed by reference.
      */
-    protected function getNextMonth( $year, $month ) {
+    protected function getNextMonth( &$year, $month ) {
         if( $month == 12 ) {
             $month = 0;
             $year += 1;

@@ -810,7 +810,7 @@ class sh_rights extends sh_core {
 
     public function setUserRights( $page, $rights, $user_id = null ) {
         $this->debug( __FUNCTION__ . '();', 2, __LINE__ );
-        $page_id = $this->getPageId( &$page );
+        $page_id = $this->getPageId( $page );
         if( $page_id != self::METHOD_NOT_LISTED ) {
             if( $page_id == self::ERROR_PAGE_NOT_FOUND ) {
                 // We have to insert the page
@@ -830,7 +830,7 @@ class sh_rights extends sh_core {
 
     public function setGroupRights( $page, $rights, $group_id ) {
         $this->debug( __FUNCTION__ . '();', 2, __LINE__ );
-        $page_id = $this->getPageId( &$page );
+        $page_id = $this->getPageId( $page );
         if( $page_id != self::METHOD_NOT_LISTED ) {
             if( $page_id == self::ERROR_PAGE_NOT_FOUND ) {
                 // We have to insert the page
@@ -944,7 +944,7 @@ class sh_rights extends sh_core {
      * If set to <b>false</b>, if the page class/method/id, will look for the page class/method/ .
      * @return int|str Returns the page id (integer) or an error constant if there is an error.
      */
-    protected function getPageId( $page, $fromMethodIfNotFound = false ) {
+    protected function getPageId( &$page, $fromMethodIfNotFound = false ) {
         static $pages_ids = array( );
         static $pages_ids_fromMethodEventually = array( );
         $this->debug( __FUNCTION__ . '(' . $page . ', ' . $fromMethodIfNotFound . ');', 2, __LINE__ );

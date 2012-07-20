@@ -186,7 +186,7 @@ class sh_db extends sh_core {
             // We have to ask the class to construct the db.
             if( $this->linker->method_exists( $shortClassName, 'constructDb' ) ) {
                 $this->linker->$shortClassName->constructDb();
-                $this->execute( $element, $qryName, $replacements, &$qry, true );
+                $this->execute( $element, $qryName, $replacements, $qry, true );
             }
         }
         $qry = $element . '->query(' . $qryName . ') : ' . "\n" . $qry;

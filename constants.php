@@ -30,15 +30,13 @@ define('SH_ROOT_FOLDER',dirname(__FILE__).'/');
 define('SH_ROOT_PATH','/');
 
 /**
- * Constant for the shared and custom classes folders
+ * Constant for the classes/ folder
  */
 define('SH_CLASS_FOLDER',SH_ROOT_FOLDER.'classes/');
-define('SH_CUSTOM_CLASS_FOLDER',SH_CLASS_FOLDER.'custom/'); /* If you change this, make sure you update the .htaccess the same way */
 /**
- * Constant for the shared and custom classes folders - Without the path to shopsailors
+ * Constant for the classes/ folder - Without the path to shopsailors
  */
 define('SH_CLASS_PATH',SH_ROOT_PATH.'classes/');
-define('SH_CUSTOM_CLASS_PATH',SH_CLASS_PATH.'custom/');
 
 /**
  * Constant for the include/ folder
@@ -50,15 +48,13 @@ define('SH_INCLUDE_FOLDER',SH_ROOT_FOLDER.'include/');
 define('SH_INCLUDE_PATH',SH_ROOT_PATH.'include/');
 
 /**
- * Constants for the shared and custom templates' folders
+ * Constant for the templates/ folder
  */
 define('SH_TEMPLATE_FOLDER',SH_ROOT_FOLDER.'templates/');
-define('SH_CUSTOM_TEMPLATE_FOLDER',SH_TEMPLATE_FOLDER);
 /**
- * Constant for the shared and custom templates' folders - Without the path to shopsailors
+ * Constant for the templates/ folder - Without the path to shopsailors
  */
 define('SH_TEMPLATE_PATH',SH_ROOT_PATH.'templates/');
-define('SH_CUSTOM_TEMPLATE_PATH',SH_TEMPLATE_PATH);
 
 /**
  * Constant for the site/ folder

@@ -106,7 +106,7 @@ class sh_linker{
         }
         // Custom classes
         $class = trim(preg_replace('`^('.SH_CUSTOM_PREFIX.')?(.+)$`',SH_CUSTOM_PREFIX.'$2',$objectName));
-        if(is_dir(SH_CUSTOM_CLASS_FOLDER.$class) || class_exists($class)){
+        if(is_dir(SH_CLASS_FOLDER.$class) || class_exists($class)){
             return $class;
         }
         echo __CLASS__.'::'.__LINE__.' : No object named "'.$objectName.'" was found!<br/>';

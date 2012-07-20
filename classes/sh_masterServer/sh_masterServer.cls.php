@@ -89,7 +89,7 @@ class sh_masterServer extends sh_core{
         $this->masterUrl = 'http://'.SH_MASTERSERVER_DOMAIN;
     }
     public function getMasterServerUrl(){
-        return 'http://'.$this->getParam('master_domain','').'/';
+        return $this->masterUrl.'/';
     }
 
     public function request($page,$params,$splitReturn = true){

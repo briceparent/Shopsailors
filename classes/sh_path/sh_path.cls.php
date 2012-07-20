@@ -184,7 +184,7 @@ class sh_path extends sh_core{
                 'page'=>$data
             );
         }
-        if(SH_MASTERSERVER){
+        if(SH_MASTERSERVER && !SH_MASTERISUSER){
             // We check if the page that is called may be called on a master server
             if(!$this->linker->masterServer->isPathAllowed($this->linker->cleanObjectName($parts[0]),$parts[1])){
                 header('HTTP/1.1 403 Forbidden');

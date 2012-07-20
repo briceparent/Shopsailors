@@ -2,9 +2,9 @@
 
 /**
  * @author Brice PARENT (Websailors) for Shopsailors
- * @copyright Shopsailors 2009
+ * @copyright Shopsailors 2012
  * @license http://www.cecill.info
- * @version See version in the params/global.params.php file.
+ * @version See version in self::CLASS_VERSION
  * @package Shopsailors Core Classes
  */
 if( !defined( 'SH_MARKER' ) ) {
@@ -13,7 +13,7 @@ if( !defined( 'SH_MARKER' ) ) {
 
 class sh_user extends sh_core {
 
-    const CLASS_VERSION = '1.1.12.02.02';
+    const CLASS_VERSION = '1.1.12.07.20';
 
     public $shopsailors_dependencies = array(
         'sh_linker', 'sh_params', 'sh_db'
@@ -66,6 +66,7 @@ class sh_user extends sh_core {
 
     public function construct() {
         $installedVersion = $this->getClassInstalledVersion();
+        
         if( $installedVersion != self::CLASS_VERSION ) {
             // The class datas are not in the same version as this file, or don't exist (installation)
             $this->linker->db->updateQueries( __CLASS__ );
@@ -97,6 +98,13 @@ class sh_user extends sh_core {
             }
             if( version_compare( $installedVersion, '1.1.12.02.02', '<' ) ) {
                 $this->helper->addClassesSharedMethods( 'sh_events', 'onAfterBaseConstruction', __CLASS__ );
+            }
+            if( version_compare( $installedVersion, '1.1.12.07.20', '<' ) ) {
+                $this->db_execute( 'create_table_users', array( ) );
+                $this->db_execute( 'create_table_connections_failures', array( ) );
+                $this->db_execute( 'create_table_connections_successes', array( ) );
+                $this->db_execute( 'remove_case_in_logins', array( ) );
+                $this->db_execute( 'create_cookies_table', array( ) );
             }
             $this->setClassInstalledVersion( self::CLASS_VERSION );
         }

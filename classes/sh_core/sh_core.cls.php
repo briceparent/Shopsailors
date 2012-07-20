@@ -71,8 +71,6 @@ abstract class sh_core {
     protected static $needs_params = true;
     protected static $needs_db = true;
     protected static $needs_form_verifier = true;
-    protected $isCustomClass = false;
-    protected $classFolder = '';
     private $paramsFile = '';
     private $paramsBase = '';
     private $i18nClassName = '';
@@ -135,19 +133,7 @@ abstract class sh_core {
         self::$instances[ $class ] = $this;
         $className = $this->__tostring();
         $this->className = $className;
-        if( substr( $className, 0, strlen( SH_PREFIX ) ) != SH_PREFIX ) {
-            $this->isCustomClass = true;
-            $this->shortClassName = str_replace( SH_CUSTOM_PREFIX, '', $className );
-        } else {
-            $this->shortClassName = str_replace( SH_PREFIX, '', $className );
-        }
-
-        if( $this->isCustomClass ) {
-            $this->classFolder = SH_CUSTOM_CLASS_FOLDER . $this->__tostring() . '/';
-        } else {
-            $this->classFolder = SH_CLASS_FOLDER . $this->__tostring() . '/';
-        }
-
+        $this->shortClassName = str_replace( SH_PREFIX, '', $className );
         if( isset( $_SESSION[ 'core' ][ $this->className ][ 'version' ] ) ) {
             // We check if an update has been made
             if( $_SESSION[ 'core' ][ $this->className ][ 'version' ] != $this::CLASS_VERSION ) {
@@ -157,7 +143,7 @@ abstract class sh_core {
         if( $this->shortClassName != 'helper' ) {
             $this->helper = $this->linker->helper;
         }
-
+        $this->shortClassName = str_replace( SH_CUSTOM_PREFIX, '', $this->shortClassName );
         $this->linker->$className = $this;
         if( $className::$needs_params ) {
             $this->paramsFile = $className;
@@ -175,14 +161,6 @@ abstract class sh_core {
         }
         $this->debugger = new sh_debugger;
         $_SESSION[ 'core' ][ $this->className ][ 'version' ] = $this::CLASS_VERSION;
-    }
-
-    /**
-     * Gets the class' folder (like /[path_to_shopsailors]/classes/[classname]/)
-     * @return str The class folder
-     */
-    public function getClassFolder() {
-        return $this->classFolder;
     }
 
     /**
@@ -528,7 +506,7 @@ abstract class sh_core {
      */
     protected function getSinglePath( $fromRoot = false ) {
         if( $fromRoot ) {
-            return $this->classFolder . 'singles/';
+            return SH_CLASS_FOLDER . $this->className . '/singles/';
         }
         return '/' . $this->className . '/singles/';
     }
@@ -896,13 +874,13 @@ abstract class sh_core {
                 $filePath = '!^!';
             }
 
-            if( file_exists( $this->classFolder . $filePath ) ) {
+            if( file_exists( SH_CLASS_FOLDER . $this->__tostring() . '/' . $filePath ) ) {
                 $ret = $renderer->render(
-                    $this->classFolder . $filePath, $values, $debug
+                    SH_CLASS_FOLDER . $this->__tostring() . '/' . $filePath, $values, $debug
                 );
-            } elseif( file_exists( $this->classFolder . $file ) ) {
+            } elseif( file_exists( SH_CLASS_FOLDER . $this->__tostring() . '/' . $file ) ) {
                 $ret = $renderer->render(
-                    $this->classFolder . $file, $values, $debug
+                    SH_CLASS_FOLDER . $this->__tostring() . '/' . $file, $values, $debug
                 );
             } else {
                 $ret = $renderer->render( $file, $values, $debug );

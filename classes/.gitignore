@@ -1,14 +1,2 @@
-old_*
-*/install
-
-shared
-sh_logoCreator
-sh_phpMailer_old
-sh_mailing
-sh_mails
-sh_variations
-sh_votes
-sh_schedule
-/old_sh_index_lvdc/
-/old_sh_map/
 /custom/
+/cm_*

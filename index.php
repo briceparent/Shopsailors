@@ -40,11 +40,8 @@ if(isset($_GET['robots']) && $_GET['robots'] == 'robots'){
 
 // Creates the autoload function that will help finding the classes
 function __autoload($className) {
-    if(substr($className,0,strlen(SH_PREFIX)) == SH_PREFIX && file_exists(SH_CLASS_FOLDER.$className .'/'.$className.'.cls.php')){
+    if(file_exists(SH_CLASS_FOLDER.$className .'/'.$className.'.cls.php')){
         include_once (SH_CLASS_FOLDER.$className .'/'.$className.'.cls.php');
-    }
-    if(substr($className,0,strlen(SH_CUSTOM_PREFIX)) == SH_CUSTOM_PREFIX && file_exists(SH_CUSTOM_CLASS_FOLDER.$className .'/'.$className.'.cls.php')){
-        include_once (SH_CUSTOM_CLASS_FOLDER.$className .'/'.$className.'.cls.php');
     }
     return true;
 }
