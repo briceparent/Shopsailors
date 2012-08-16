@@ -183,6 +183,10 @@ class sh_path extends sh_core{
                 'id'=>$parts[2],
                 'page'=>$data
             );
+            $this->linker->html->addToBody('class', 'pages_'.$this->page['element']);
+            $this->linker->html->addToBody('class', 'pages_'.$this->page['element'].'_'.$this->page['action']);
+            $this->linker->html->addToBody('class', 'pages_'.$this->page['element'].'_'.$this->page['action'].'_'.$this->page['id']);
+            
         }
         if(SH_MASTERSERVER && !SH_MASTERISUSER){
             // We check if the page that is called may be called on a master server
