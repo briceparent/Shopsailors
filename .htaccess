@@ -1,17 +1,12 @@
 AddDefaultCharset UTF-8
 
-php_value upload_max_filesize 40M
-php_value post_max_size 40M
-
 RewriteEngine On
 
 RewriteRule /?tests/.* - [L]
 
 RewriteRule /?403/.* - [L]
 
-RewriteRule /?(.*)captcha\.gif /$1captcha.php
-
-RewriteRule ^/?([^/]+/singles/.+) /classes/$1 [L]
+RewriteRule ^/?([a-zA-Z0-9_-]+/singles)/(.*) /classes/$1/$2 [L]
 
 RewriteRule ^/?(templates/[a-zA-Z0-9_-]+/variations/CSS/)(.+)/(.+\.css) /$1$3.php?variation=$2
 
