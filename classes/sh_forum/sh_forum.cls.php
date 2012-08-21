@@ -16,7 +16,7 @@ if( !defined( 'SH_MARKER' ) ) {
  */
 class sh_forum extends sh_core {
 
-    const CLASS_VERSION = '1.1.12.03.09';
+    const CLASS_VERSION = '1.1.12.08.17';
 
     public $users_images_folder = '';
     public $users_images_path = '';
@@ -287,6 +287,9 @@ class sh_forum extends sh_core {
             if( version_compare( $installedVersion, '1.1.12.03.09', '<' ) ) {
                 $this->linker->renderer->add_render_tag( 'render_forum_menuBar', __CLASS__, 'render_menuBar' );
             }
+            if( version_compare( $installedVersion, '1.1.12.08.17', '<' ) ) {
+                $this->helper->addClassesSharedMethods( 'sh_site', 'sharedSettings', __CLASS__ );
+            }
 
             $this->setClassInstalledVersion( self::CLASS_VERSION );
         }
@@ -316,6 +319,20 @@ class sh_forum extends sh_core {
         } else {
             $this->userGroups[ ] = self::GROUPS_DISCONNECTED;
         }
+    }
+
+    public function getSharedSettings() {
+        $values[ 'settings' ][ 'active' ] = $this->getParam( 'active', false ) ? 'checked' : '';
+        $return = array(
+            'title' => $this->getI18n( 'className'),
+            'form' => $this->render( 'sharedSettingsForm', $values, false, false )
+        );
+        return $return;
+    }
+
+    public function setSharedSetting() {
+        $this->setParam( 'active', isset( $_POST[ 'forum' ][ 'active' ] ) );
+        $this->writeParams();
     }
 
     public function cron_job( $type ) {

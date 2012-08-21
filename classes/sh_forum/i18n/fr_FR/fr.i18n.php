@@ -5,6 +5,11 @@ $i18n = array(
     'action_manageGroup_0' => 'Nouveau groupe',
     'action_manageGroup' => 'Modifier le groupe {name}',
     'action_subject' => 'Sujet : {name}',
+        
+    'share_settings_forum_active' => 'Activer le module',
+    'share_settings_forum_active_explanations' => '<div>Ce module met en place un forum administrable sur votre site.<br />
+        Il contient entre autres les fonctionnalités suivantes : arborescence complète des catégories et sujets, 
+        fiches de profiles, modération, mots interdits, messagerie privée, etc.</div>',
     
     'manage_general_title' => 'Général',
     'manage_activateForum' => 'Activer le forum',
