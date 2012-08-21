@@ -1,5 +1,18 @@
 
 <div>
+    <RENDER_ADMINBOX title="{i18n:newsPage_list_title}">
+        <RENDER_ADMINBOXCONTENT>
+            <ul>
+                <RENDER_LOOP what="all_news">
+                    <li>
+                        <a href="{all_news:link}">
+                            <RENDER_VALUE what="all_news:title"/>
+                        </a>
+                    </li>
+                </RENDER_LOOP>
+            </ul>
+        </RENDER_ADMINBOXCONTENT>
+    </RENDER_ADMINBOX>
     <RENDER_FORM id="news_edit">
         <RENDER_TABGROUP size="XL" validate="{i18n:save}" admin="admin">
             <NORENDER>FIRST TAB</NORENDER>
@@ -39,9 +52,10 @@
                                 <option value="50">50</option>
                             </select>
                             <script type="text/javascript">
-                                var number_by_page = '<RENDER_VALUE what="news:number_by_page"/>';
+                                var number_by_page = '
+                                <RENDER_VALUE what="news:number_by_page"/>';
                                 if(number_by_page == ''){
-                                    number_by_page = 16;
+                                number_by_page = 16;
                                 }
                                 $('number_by_page').value = number_by_page;
                             </script>

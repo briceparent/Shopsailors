@@ -41,8 +41,22 @@
                         </td>
                     </tr>
                 </table>
-                <div class="adminSeparator"></div>
-                <RENDER_CHECKBOX text="{i18n:isNews}" name="isNews" state="{content:isNews}" help="{i18n:isNews_explanations}"/>
+                
+                <RENDER_IFSET what="content:news_module_active">
+                    <div class="adminSeparator"></div>
+                    <RENDER_VALUE what="i18n:show_in_news"/>
+
+                    <select name="isNews">
+                        <option value="0"><RENDER_VALUE what="i18n:show_in_news_none"/></option>
+                        <RENDER_LOOP what="news">
+                            <option value="{news:id}" state="{news:state}">
+                                <RENDER_VALUE what="news:id"/> : 
+                                <RENDER_VALUE what="news:title"/>
+                            </option>
+                        </RENDER_LOOP>
+                    </select>
+                </RENDER_IFSET>
+                
                 <div class="adminSeparator"></div>
                 <table>
                     <tr>

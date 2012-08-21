@@ -1,6 +1,10 @@
 <?php
 $i18n = array(
     'className' => 'Pages de contenus et listes',
+    'admin_manage_news' => 'Gérer les fils d\'actualités',
+    'admin_new_content' => 'Nouvel article',
+    'admin_list_all_contents' => 'Tous les articles',
+    'admin_new_contents_list' => 'Listes d\'articles',
 
     'rights_className' => 'Contenus et listes',
     'rights_show_all'=>'Affichage de toutes les pages de contenus',
@@ -11,8 +15,6 @@ $i18n = array(
     'rights_edit_one'=>'Edition de la page "[PAGE_NAME]"',
     'rights_editShortList_all'=>'Modification de toutes les listes de pages',
     'rights_editShortList_one'=>'Edition de la liste de pages "[PAGE_NAME]"',
-    
-    
 
     'display' => 'Affichage : ',
 
@@ -101,7 +103,18 @@ Dans tous les cas, si des utilisateurs de votre site ont enregistré l\'adresse
 de cette liste d\'articles, par exemple dans leurs favoris, s\'ils essaient à nouveau d\'y
 accéder, une page signalant que la page recherchée n\'existe pas ou plus sera
 affichée.',
-
+    
+    'news_category_title'=>'Fil d\'actualités',
+    'share_settings_news_active' => 'Activer le module',
+    'share_settings_news_active_explanations' => '<div>Ce module vous permet de lister vos articles dans des listes 
+        d\'articles triées automatiquement par date.<br />
+        Vous pouvez ajouter ou modifier les différents fils d\'actualités à partir de la page suivante : <br />
+        Panneau d\'administration → Contenu → Gérer les fils d\'actualités
+        </div>',
+    
+    'show_in_news'=>'Afficher cet article dans le fil d\'actualités suivant : ',
+    'show_in_news_none'=>'Aucun',  
+    
     'search_contentsTitle' => 'Pages de contenus',
 
     'action_delete' => 'Supprimer',
@@ -138,6 +151,8 @@ affichée.',
     'facebook_articles' => 'Articles',
 
     'newsPage_title' => 'Fil d\'actualités',
+    'newsPage_list_title' => 'Fils d\'actualités existants',
+    'newsPage_new_title' => 'Nouveau fil d\'actualité',
     'publicationDate' => 'Publié le&#160;',
     'news_edit_boxTitle' => 'Edition du fil d\'actualité',
     'news_edit_title' => 'Titre du fil d\'actualité : ',

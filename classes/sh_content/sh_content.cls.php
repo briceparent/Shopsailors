@@ -16,7 +16,7 @@ if( !defined( 'SH_MARKER' ) ) {
  */
 class sh_content extends sh_core {
 
-    const CLASS_VERSION = '1.1.11.07.14.2';
+    const CLASS_VERSION = '1.1.12.08.21';
 
     protected $minimal = array( 'delete' => true );
     protected static $usesRightsManagement = true;
@@ -28,11 +28,13 @@ class sh_content extends sh_core {
         'sh_admin', 'sh_browser', 'sh_css', 'sh_html', 'sh_events', 'sh_cron', 'sh_helper'
     );
     public $callWithoutId = array(
-        'showList', 'news', 'news_edit'
+        'showList'
     );
     public $callWithId = array(
-        'editShortList', 'shortList', 'show', 'delete', 'edit'
+        'editShortList', 'shortList', 'show', 'delete', 'edit', 'news', 'news_edit'
     );
+    
+    protected $news_is_active = false;
 
     public function construct() {
         $installedVersion = $this->getClassInstalledVersion( __CLASS__ );
@@ -71,8 +73,34 @@ class sh_content extends sh_core {
                     SH_IMAGES_FOLDER . 'site/', sh_browser::ALL
                 );
             }
+            if( version_compare( $installedVersion, '1.1.12.08.20', '<' ) ) {
+                $this->db_execute( 'modify_table_2', array( ) );
+                $params = $this->getParam( 'news>0', array( ) );
+                $this->setParam( 'news>1', $params );
+                $this->removeParam( 'news>0' );
+                $this->writeParams();
+            }
+            if( version_compare( $installedVersion, '1.1.12.08.21', '<' ) ) {
+                $this->helper->addClassesSharedMethods( 'sh_site', 'sharedSettings', __CLASS__ );
+            }
             $this->setClassInstalledVersion( self::CLASS_VERSION );
         }
+        $this->news_is_active = $this->getParam( 'news_module_active', true );
+    }
+
+    public function getSharedSettings() {
+        $values[ 'settings' ][ 'active' ] = $this->getParam( 'news_module_active', true ) ? 'checked' : '';
+        $return = array(
+            'title' => $this->getI18n( 'news_category_title' ),
+            'form' => $this->render( 'sharedSettingsForm', $values, false, false )
+        );
+        return $return;
+    }
+
+    public function setSharedSetting() {
+        $this->setParam( 'news_module_active', isset( $_POST[ 'content' ][ 'news_active' ] ) );
+        $this->writeParams();
+        $this->news_is_active = $this->getParam( 'news_module_active', true );
     }
 
     public function searcher_refresh_content() {
@@ -96,12 +124,17 @@ class sh_content extends sh_core {
         } else {
             $count = $attributes[ 'count' ];
         }
+        if( !isset( $attributes[ 'id' ] ) ) {
+            $id = '1';
+        } else {
+            $id = $attributes[ 'id' ];
+        }
 
         $values[ 'news_general' ][ 'style' ] = $attributes[ 'style' ];
         $values[ 'news_general' ][ 'id' ] = $attributes[ 'id' ];
         $values[ 'news_general' ][ 'class' ] = $attributes[ 'class' ];
 
-        $values[ 'news' ] = $this->db_execute( 'getNews', array( 'count' => $count ) );
+        $values[ 'news' ] = $this->db_execute( 'getNews', array( 'news_id' => $id, 'count' => $count ) );
         if( !empty( $values[ 'news' ] ) ) {
             foreach( $values[ 'news' ] as $newsId => $news ) {
                 $values[ 'news' ][ $newsId ][ 'title' ] = $this->getI18n( $news[ 'title' ] );
@@ -122,16 +155,16 @@ class sh_content extends sh_core {
 
     public function admin_getMenuContent() {
         $adminMenu[ 'Contenu' ][ ] = array(
-            'link' => 'content/edit/0', 'text' => 'Nouvel article', 'icon' => 'picto_add.png'
+            'link' => 'content/edit/0', 'text' => $this->getI18n( 'admin_new_content' ), 'icon' => 'picto_add.png'
         );
         $adminMenu[ 'Contenu' ][ ] = array(
-            'link' => 'content/news_edit/', 'text' => 'Gérer le fil d\'actualité', 'icon' => 'picto_list.png'
+            'link' => 'content/news_edit/0', 'text' => $this->getI18n( 'admin_manage_news' ), 'icon' => 'picto_list.png'
         );
         $adminMenu[ 'Contenu' ][ ] = array(
-            'link' => 'content/showList/', 'text' => 'Tous les articles', 'icon' => 'picto_details.png'
+            'link' => 'content/showList/', 'text' => $this->getI18n( 'admin_list_all_contents' ), 'icon' => 'picto_details.png'
         );
         $adminMenu[ 'Contenu' ][ ] = array(
-            'link' => 'content/editShortList/0', 'text' => 'Listes d\'articles', 'icon' => 'picto_list.png'
+            'link' => 'content/editShortList/0', 'text' => $this->getI18n( 'admin_new_contents_list' ), 'icon' => 'picto_list.png'
         );
 
         return $adminMenu;
@@ -193,7 +226,6 @@ class sh_content extends sh_core {
     }
 
     public function showList() {
-        $this->debug( __FUNCTION__ . '();', 2, __LINE__ );
         $this->linker->html->setTitle( $this->getI18n( 'list_description' ) );
         if( isset( $_GET[ 'delete' ] ) ) {
             $id = ( int ) $_GET[ 'delete' ];
@@ -261,7 +293,6 @@ class sh_content extends sh_core {
     }
 
     public function shortList() {
-        $this->debug( __FUNCTION__ . '();', 2, __LINE__ );
         $id = ( int ) $this->linker->path->page[ 'id' ];
         if( $id != '' ) {
             $this->linker->admin->insertPage(
@@ -339,7 +370,6 @@ class sh_content extends sh_core {
     }
 
     public function editShortList() {
-        $this->debug( __FUNCTION__ . '();', 2, __LINE__ );
         $this->onlyAdmin();
         $this->helper->isAdminPage( true );
 
@@ -492,8 +522,6 @@ class sh_content extends sh_core {
      * public function show
      */
     public function show() {
-        $this->debug( __FUNCTION__ . '();', 2, __LINE__ );
-
         $id = ( int ) $this->linker->path->page[ 'id' ];
 
         if( $id != '' ) {
@@ -556,7 +584,6 @@ class sh_content extends sh_core {
     }
 
     public function delete() {
-        $this->debug( __FUNCTION__ . '();', 2, __LINE__ );
         $this->onlyAdmin();
         $this->helper->isAdminPage( true );
 
@@ -601,8 +628,6 @@ class sh_content extends sh_core {
      * public function edit
      */
     public function edit() {
-        $this->debug( __FUNCTION__ . '();', 2, __LINE__ );
-
         $this->onlyAdmin();
         $this->helper->isAdminPage( true );
         $id = ( int ) $this->linker->path->page[ 'id' ];
@@ -650,7 +675,7 @@ class sh_content extends sh_core {
             if( $id == 0 ) {
                 $this->db_execute( 'create', array( ) );
                 $id = $this->db_insertId();
-                $isNew = true;
+                $isNew = 0;
             }
             $newAndNotActive = $this->save( $id, $isNew );
         }
@@ -701,20 +726,35 @@ class sh_content extends sh_core {
             $content[ 'content' ][ 'showtitle' ] = $this->addChecked(
                 $content[ 'content' ][ 'showTitle' ]
             );
-            $content[ 'content' ][ 'isNews' ] = $this->addChecked(
-                $content[ 'content' ][ 'isNews' ]
-            );
+            $content[ 'content' ][ 'isNews' ] = $content[ 'content' ][ 'isNews' ];
         }
-        //sh_diaporama::addToPreviews('content_editor');
+
+        $news = $this->getParam( 'news', array( ) );
+        foreach( $news as $newsId => $newsContent ) {
+            $content[ 'news' ][ $newsId ][ 'id' ] = $newsId;
+            $content[ 'news' ][ $newsId ][ 'title' ] = $this->getI18n( $newsContent[ 'title' ] );
+            if( $newsId == $content[ 'content' ][ 'isNews' ] ) {
+                $content[ 'news' ][ $newsId ][ 'state' ] = 'selected';
+            }
+        }
+        $content[ 'content' ][ 'news_module_active' ] = $this->getParam( 'news_module_active', true );
+
         $this->render( 'edit', $content );
     }
 
+    /**
+     * Edits the news passed as id in the url.
+     */
     public function news_edit() {
         $this->onlyAdmin();
         $this->helper->isAdminPage( true );
 
-        $id = 0;
+        $id = ( int ) $this->linker->path->page[ 'id' ];
+
         if( $this->formSubmitted( 'news_edit' ) ) {
+            if( $id == 0 ) {
+                $id = count( $this->getParam( 'news' ) ) + 1;
+            }
             // getting the i18n ids for the title, the intro, and SEO
             $title = $this->getParam( 'news>' . $id . '>title', 0 );
             $intro = $this->getParam( 'news>' . $id . '>intro', 0 );
@@ -737,15 +777,31 @@ class sh_content extends sh_core {
                 )
             );
             $this->writeParams();
+            $this->linker->path->redirect( __CLASS__, 'news', $id );
         }
 
-        $values[ 'news' ] = $this->getParam( 'news>' . $id, array( ) );
+        $values[ 'all_news' ][0]['title'] = $this->getI18n('newsPage_new_title');
+        $values[ 'all_news' ][0]['link'] = $this->linker->path->getLink( __CLASS__.'/'.__FUNCTION__.'/0');
+        
+        $all_news = $this->getParam( 'news', array( ) );
+        foreach($all_news as $oneNewsId=>$oneNews){
+            $values[ 'all_news' ][$oneNewsId]['title'] = $this->getI18n($oneNews['title']);
+            $values[ 'all_news' ][$oneNewsId]['link'] = $this->linker->path->getLink( __CLASS__.'/'.__FUNCTION__.'/'.$oneNewsId);
+        }
+        $values[ 'news' ] = $all_news[ $id ];
 
         $this->render( 'news_edit', $values );
     }
 
+    /**
+     * Shows the news passed as id in the url.
+     */
     public function news() {
-        $id = 0;
+        if(!$this->news_is_active){
+            $this->linker->path->error(404);
+        }
+        $id = ( int ) $this->linker->path->page[ 'id' ];
+
         $params = $this->getParam( 'news>' . $id, array( ) );
 
         $values[ 'new' ][ 'title' ] = $this->getI18n( $params[ 'title' ] );
@@ -768,7 +824,8 @@ class sh_content extends sh_core {
         }
         $this->linker->html->setMetaDescription( $meta );
 
-        $values[ 'news' ] = $this->db_execute( 'getNews', array( 'count' => $number_by_page ) );
+        $values[ 'news' ] = $this->db_execute( 'getNews', array( 'news_id' => $id, 'count' => $number_by_page ) );
+
         if( is_array( $values[ 'news' ] ) ) {
             foreach( $values[ 'news' ] as $newsId => $oneNews ) {
                 $values[ 'news' ][ $newsId ][ 'title' ] = $this->getI18n( $oneNews[ 'title' ] );
@@ -780,24 +837,14 @@ class sh_content extends sh_core {
         $this->render( 'news', $values );
     }
 
-    /**
-     * protected function addChecked
-     *
-     */
     protected function addChecked( $condition ) {
-        $this->debug( __FUNCTION__ . '();', 2, __LINE__ );
         if( $condition == 1 ) {
             return 'checked';
         }
         return '';
     }
 
-    /**
-     * protected function checkedToBinary
-     *
-     */
     protected function checkedToBinary( $element ) {
-        $this->debug( __FUNCTION__ . '();', 2, __LINE__ );
         if( isset( $_POST[ $element ] ) ) {
             return '1';
         }
@@ -805,10 +852,12 @@ class sh_content extends sh_core {
     }
 
     /**
-     * protected function save
+     * This method saves the content $id
+     * @param int $id The id of the content
+     * @param int $isNew The number of the news list, or 0 if not a news
+     * @return bool true 
      */
-    protected function save( $id, $isNew = false ) {
-        $this->debug( __FUNCTION__ . '();', 2, __LINE__ );
+    protected function save( $id, $isNew = 0 ) {
         // We create a backup for this new version
         $this->helper->writeArrayInFile(
             SH_SITE_FOLDER . __CLASS__ . '/backups/' . $id . '/' . date( 'Ymd-His' ) . '.php', 'backup', $_POST, false
@@ -817,7 +866,7 @@ class sh_content extends sh_core {
         $active = $this->checkedToBinary( 'active' );
         $showTitle = $this->checkedToBinary( 'showTitle' );
         $showDate = $this->checkedToBinary( 'showDate' );
-        $isNews = $this->checkedToBinary( 'isNews' );
+        $isNews = $_POST[ 'isNews' ];
 
         list($element) = $this->db_execute( 'getWithInactive', array( 'id' => $id ) );
         $i18nTitle = $this->setI18n( $element[ 'title' ], $_POST[ 'title' ] );
@@ -1075,8 +1124,6 @@ class sh_content extends sh_core {
         }
         return false;
     }
-
-    /* FACEBOOK */
 
     public function facebook_getModules() {
         // There are 2 modules, 1 for the categories, and 1 for the products

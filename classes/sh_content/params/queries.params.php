@@ -32,7 +32,7 @@ $this->queries = array(
             FROM
             ###content
             WHERE `active` = "1"
-            AND `isNews` = TRUE
+            AND `isNews` = "{news_id}"
             ORDER BY `timestamp` DESC
             LIMIT {count};',
         'type' =>'get'
@@ -196,6 +196,11 @@ $this->queries = array(
     'modify_table_1' => array(
         'query' => '
                 ALTER TABLE `###content` ADD `isNews` BOOLEAN NOT NULL DEFAULT \'0\' AFTER `id` ;',
+        'type' =>'insert'
+    ),
+    'modify_table_2' => array(
+        'query' => '
+                ALTER TABLE `content` CHANGE `isNews` `isNews` INT NOT NULL DEFAULT \'0\' ;',
         'type' =>'insert'
     ),
 );
