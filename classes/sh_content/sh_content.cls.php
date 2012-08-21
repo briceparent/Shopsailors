@@ -754,6 +754,10 @@ class sh_content extends sh_core {
         if( $this->formSubmitted( 'news_edit' ) ) {
             if( $id == 0 ) {
                 $id = count( $this->getParam( 'news' ) ) + 1;
+                
+                $this->addToSitemap(
+                    $this->shortClassName . '/news/' . $id, 0.6
+                );
             }
             // getting the i18n ids for the title, the intro, and SEO
             $title = $this->getParam( 'news>' . $id . '>title', 0 );
@@ -982,7 +986,14 @@ class sh_content extends sh_core {
                 );
             }
         }
-        $this->addToSitemap( $this->shortClassName . '/news/', 0.8 );
+        $news = $this->getParam( 'news' );
+        if( is_array( $news ) ) {
+            foreach( array_keys( $news ) as $oneNews ) {
+                $this->addToSitemap(
+                    $this->shortClassName . '/news/' . $oneNews, 0.6
+                );
+            }
+        }
         return true;
     }
 
@@ -1003,6 +1014,14 @@ class sh_content extends sh_core {
         if( $action == 'show' ) {
             list($title) = $this->db_execute( 'getTitleWithInactive', array( 'id' => $id ) );
             $title = $this->getI18n( $title[ 'title' ] );
+            if( $forUrl ) {
+                return $title;
+            }
+            $name = str_replace(
+                array( '{id}', '{link}', '{title}' ), array( $id, $link, $title ), $name
+            );
+        }elseif( $action == 'news' ) {
+            $title = $this->getI18n( $this->getParam( 'news>' . $id . '>title', 0 ));
             if( $forUrl ) {
                 return $title;
             }
@@ -1039,90 +1058,6 @@ class sh_content extends sh_core {
             return $name;
         }
         return $this->__toString() . '->' . $action . '->' . $id;
-    }
-
-    /**
-     * Returns the uri from the given page
-     * @param string $page The page we want to translate to uri
-     * @return string|bool The uri, or false
-     */
-    public function translatePageToUri( $page ) {
-        list($class, $method, $id) = explode( '/', $page );
-        if( $method == 'editShortList' ) {
-            if( $id == 0 ) {
-                return '/' . $this->shortClassName . '/editShortList/' . $id . '-new.php';
-            }
-            $name = $this->getParam( 'list>' . $id . '>name' );
-            $realName = urlencode( trim( $this->getI18n( $name ) ) );
-            if( $realName != '' ) {
-                $realName = '-' . $realName;
-            }
-            return '/' . $this->shortClassName . '/editShortList/' . $id . $realName . '.php';
-        }
-        if( $method == 'shortList' && $id > 0 ) {
-            $name = $this->getParam( 'list>' . $id . '>name' );
-            $realName = urlencode( trim( $this->getI18n( $name ) ) );
-            if( $realName != '' ) {
-                $realName = '-' . $realName;
-            }
-            return '/' . $this->shortClassName . '/shortList/' . $id . $realName . '.php';
-        }
-        if( $method == 'show' && $id != 0 ) {
-            list($title) = $this->db_execute( 'getTitle', array( 'id' => $id ), $qry );
-            $title = urlencode( $this->getI18n( $title[ 'title' ] ) );
-            if( trim( $title ) != '' ) {
-                $realName = '-' . $title;
-            } else {
-                $realName = '';
-            }
-            return '/' . $this->shortClassName . '/show/' . $id . $realName . '.php';
-        }
-        if( $method == 'delete' && $id != 0 ) {
-            return '/' . $this->shortClassName . '/delete/' . $id . '.php';
-        }
-        if( $method == 'showList' ) {
-            return '/' . $this->shortClassName . '/showList.php';
-        }
-        if( $method == 'edit' ) {
-            if( $id != 0 ) {
-                list($title) = $this->db_execute( 'getTitle', array( 'id' => $id ) );
-                $title = urlencode( $this->getI18n( $title[ 'title' ] ) );
-                if( !empty( $title ) ) {
-                    $title = '-' . $title;
-                }
-            }
-            return '/' . $this->shortClassName . '/edit/' . $id . $title . '.php';
-        }
-        return false;
-    }
-
-    /**
-     * Returns the page from the given uri
-     * @param string $page The page we want to translate to uri
-     * @return string|bool The uri, or false
-     */
-    public function translateUriToPage( $uri ) {
-        if( preg_match( '`/' . $this->shortClassName . '/([^/]+)(/([0-9]+)(-[^/]+)?)?\.php`', $uri, $matches ) ) {
-            if( $matches[ 1 ] == 'editShortList' ) {
-                return $this->shortClassName . '/editShortList/' . $matches[ 3 ];
-            }
-            if( $matches[ 1 ] == 'shortList' ) {
-                return $this->shortClassName . '/shortList/' . $matches[ 3 ];
-            }
-            if( $matches[ 1 ] == 'show' ) {
-                return $this->shortClassName . '/show/' . $matches[ 3 ];
-            }
-            if( $matches[ 1 ] == 'edit' ) {
-                return $this->shortClassName . '/edit/' . $matches[ 3 ];
-            }
-            if( $matches[ 1 ] == 'delete' ) {
-                return $this->shortClassName . '/delete/' . $matches[ 3 ];
-            }
-        }
-        if( $uri == '/' . $this->shortClassName . '/showList.php' ) {
-            return $this->shortClassName . '/showList/';
-        }
-        return false;
     }
 
     public function facebook_getModules() {

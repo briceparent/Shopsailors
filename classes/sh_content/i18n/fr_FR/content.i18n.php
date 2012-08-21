@@ -45,6 +45,7 @@ l\'image par défaut, celle-ci ne sera tout simplement pas affichée dans ces pa
     'summary_explanation' => '<div>
 Entrez ici une description courte qui servira dans les listes d\'articles.</div>',
     'save' => 'Enregistrer',
+    'action_news'=>'Fil d\'actu n°{id} : "{title}"',
     'action_show'=>'Article n°{id} : "{title}"',
     'edit_this_page'=>'Modifier cet article',
     'new_page_title'=>'Nouvel article',
