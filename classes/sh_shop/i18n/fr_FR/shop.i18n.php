@@ -182,6 +182,18 @@ de passer des commandes, mais servira uniquement de vitrine en ligne..
     'showDeliveriesMode' => 'Afficher les modes de livraisons.',
     'command_mail' => 'Indiquez la ou les adresses mail auxquelles vous desirez recevoir les ordres de commandes.',
     'command_mailNote' => 'Si vous saisissez plusieurs adresses, passez à la ligne pour chacunes d\'elles.',
+    
+    'share_settings_shop_active' => 'Activer le module',
+    'share_settings_shop_active_explanations' => '<div>Ce module vous permet de présenter vos produits et peut vous permettre 
+        de les mettre en vente sur votre site.<br />
+        Il contient entre autres les fonctionnalités suivantes : arborescence complète des catégories et produits, lots
+        de produits, promotions, variantes de produits, etc.</div>',
+    'share_settings_shop_payment' => 'Activer le paiement en ligne',
+    'share_settings_shop_payment_explanations' => '<div>Ce module requiert l\'activation du module précédent.<br />
+        Il vous permet de vendre les produits de votre boutique.<br />
+        Il contient un panier enregistrable, la gestion de plusieurs modes de paiements et modes de livraison,
+        la création et l\'envoi automatique des factures, etc.</div>',
+    
 // Box Prices
     'prices_Title' => 'Affichage des prix',
     'prices_showCurrency' => 'Devise utilisée&#160;:',

@@ -16,7 +16,7 @@ if( !defined( 'SH_MARKER' ) ) {
  */
 class sh_shop extends sh_core {
 
-    const CLASS_VERSION = '1.1.12.03.22';
+    const CLASS_VERSION = '1.1.12.08.17';
 
     public $shopsailors_dependencies = array(
         'sh_linker', 'sh_params', 'sh_db', 'sh_browser', 'sh_helper', 'sh_site', 'searcher', 'i18n'
@@ -119,7 +119,7 @@ class sh_shop extends sh_core {
      * Initiates the object
      */
     public function construct() {
-        if( $this->linker->user->isMasterServer( false ) ) {
+        if( $this->linker->user->isMasterServer( false ) && !SH_MASTERISUSER ) {
             // No need for this class on a masterServer
             return true;
         }
@@ -298,6 +298,9 @@ class sh_shop extends sh_core {
                     );
                 }
             }
+            if( version_compare( $installedVersion, '1.1.12.08.17', '<' ) ) {
+                $this->helper->addClassesSharedMethods( 'sh_site', 'sharedSettings', __CLASS__ );
+            }
             $this->setClassInstalledVersion( self::CLASS_VERSION );
         }
 
@@ -374,6 +377,25 @@ class sh_shop extends sh_core {
 
         $this->linker->html->addSpecialContents( 'shop_cart_content', $this->get_cart_plugin() );
         return true;
+    }
+
+    public function getSharedSettings() {
+        $values[ 'settings' ][ 'active' ] = $this->getParam( 'activateShop', true ) ? 'checked' : '';
+        $values[ 'settings' ][ 'payment' ] = $this->getParam( 'selling>activated', false ) ? 'checked' : '';
+        $return = array(
+            'title' => 'Vitrine / Boutique en ligne',
+            'form' => $this->render( 'sharedSettingsForm', $values, false, false )
+        );
+        return $return;
+    }
+
+    public function setSharedSetting() {
+        $this->setParam( 'activateShop', isset( $_POST[ 'shop' ][ 'active' ] ) );
+        if( !$_POST[ 'shop' ][ 'active' ] ) {
+            unset( $_POST[ 'shop' ][ 'payment' ] );
+        }
+        $this->setParam( 'selling>activated', isset( $_POST[ 'shop' ][ 'payment' ] ) );
+        $this->writeParams();
     }
 
     public function template_change( $template ) {
