@@ -169,7 +169,8 @@ class sh_site extends sh_core {
      * @param str $event The event that braught us to here.
      * @param str $folder The name of the folder in which the change occured.
      * @return bool Always returns true.
-     */public function onChangeLogo($event, $folder) {
+     */
+    public function onChangeLogo($event, $folder) {
         $this->debug(__METHOD__, 2, __LINE__);
         if($folder != SH_IMAGES_FOLDER.'logo/') {
             return false;
@@ -241,6 +242,10 @@ class sh_site extends sh_core {
         $this->onlyAdmin(true);
         $formResult = $this->formSubmitted('paramsEditor');
         if($formResult === true) {
+            $formClasses = $this->helper->getClassesSharedMethods(__CLASS__, 'sharedSettings');
+            foreach($formClasses as $class){
+                $formContent = $this->linker->$class->setSharedSetting();
+            }
             // Gets the new values for i18n
             $allowedI18n = array_keys($_POST['change_site_languages_enabled']);
             $defaultI18n = $_POST['change_site_languages_default'];
@@ -279,6 +284,14 @@ class sh_site extends sh_core {
             $this->getParam('langs'),
             $this->getParam('lang')
         );
+        
+        $formClasses = $this->helper->getClassesSharedMethods(__CLASS__, 'sharedSettings');
+        foreach($formClasses as $class){
+            $formContent = $this->linker->$class->getSharedSettings();
+            if(!empty($formContent)){
+                $values['modules'][] = $formContent;
+            }
+        }
 
         $values['favicon']['changer'] = $this->linker->favicon->getChanger();
 

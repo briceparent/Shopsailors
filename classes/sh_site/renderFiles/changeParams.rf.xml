@@ -190,6 +190,16 @@
                 <RENDER_VALUE what="i18nClass:activeLanguages"/>
             </RENDER_TAB>
 
+            <RENDER_TAB title="{i18n:modulesBox}">
+                <RENDER_VALUE what="i18n:modulesBox_intro"/>
+                <RENDER_LOOP what="modules">
+                    <h4 style="margin-top:15px;">
+                        <RENDER_VALUE what="modules:title"/>
+                    </h4>
+                    <RENDER_VALUE what="modules:form"/>
+                </RENDER_LOOP>
+            </RENDER_TAB>
+
             <RENDER_TAB title="{i18n:otherBox}">
                 <RENDER_VALUE what="i18n:analytics"/>&#160;
                 <RENDER_HELP what="{i18n:analytics_explanation}"/><br />

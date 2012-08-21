@@ -38,6 +38,10 @@ d\'éditer cette image directement depuis leurs sites.</div>',
 'i18nBox'=>'Langues du site',
 'active_languages'=>'Liste des langues disponibles: ',
 'default_language'=>'Langue par défaut: ',
+    
+'modulesBox' => 'Modules',
+'modulesBox_intro' => 'Pour activer des modules, il suffit de les cocher ici.<br />Une page d\'administration (au 
+    minimum) sera ajoutée dans votre panneau d\'administration',
 
 'otherBox'=>'Autres paramètres',
 'analytics'=>'Statistiques Google Analytics',
