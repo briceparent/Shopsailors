@@ -50,6 +50,9 @@ class sh_newsletters extends sh_core {
                     mkdir( NEWSLETTERS_PARAMSFOLDER );
                 }
             }
+            if( version_compare( $installedVersion, '1.1.12.08.21', '<' ) ) {
+                $this->helper->addClassesSharedMethods( 'sh_site', 'sharedSettings', __CLASS__ );
+            }
             $this->setClassInstalledVersion( self::CLASS_VERSION );
         }
         self::$todaysFolder = date( 'Y/m/d' );
@@ -57,6 +60,21 @@ class sh_newsletters extends sh_core {
         $this->renderer_addConstants(
             $this->constants, true
         );
+    }
+
+    public function getSharedSettings() {
+        $values[ 'settings' ][ 'active' ] = $this->getParam( 'module_active', false ) ? 'checked' : '';
+        $return = array(
+            'title' => $this->getI18n( 'title' ),
+            'form' => $this->render( 'sharedSettingsForm', $values, false, false )
+        );
+        return $return;
+    }
+
+    public function setSharedSetting() {
+        $this->setParam( 'module_active', isset( $_POST[ 'newsletters' ][ 'active' ] ) );
+        $this->writeParams();
+        $this->news_is_active = $this->getParam( 'module_active', true );
     }
 
     public function master_getMenuContent() {

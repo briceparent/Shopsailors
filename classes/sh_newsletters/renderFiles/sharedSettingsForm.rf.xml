@@ -1,3 +1,3 @@
 <div>
-    <RENDER_CHECKBOX text="{i18n:share_settings_forum_active}"  id="forum_active"  name="forum[active]"  state="{settings:active}"  help="{i18n:share_settings_forum_active_explanations}"/>
+    <RENDER_CHECKBOX text="{i18n:share_settings_newsletters_active}"  id="newsletters_active"  name="newsletters[active]"  state="{settings:active}"  help="{i18n:share_settings_newsletters_active_explanations}"/>
 </div>
