@@ -5719,7 +5719,9 @@ class sh_shop extends sh_core {
         $values[ 'content' ][ 'shipping_address' ] = $_SESSION[ __CLASS__ ][ 'shipping_address' ];
         $values[ 'content' ][ 'billing_address' ] = $_SESSION[ __CLASS__ ][ 'billing_address' ];
         $values[ 'content' ][ 'billing_mail' ] = $_SESSION[ __CLASS__ ][ 'billing_mail' ];
+        $values[ 'content' ][ 'billing_phone' ] = $_SESSION[ __CLASS__ ][ 'billing_phone' ];
         $values[ 'content' ][ 'paymentMode' ] = $_SESSION[ __CLASS__ ][ 'paymentMode' ];
+        $values[ 'content' ][ 'extra_datas' ] = $this->command_get_extra_stored_datas();
         $this->linker->params->set( $pendingFile, 'command', $values );
         $this->linker->params->set( $pendingFile, 'command>submit_date', date( 'U' ) );
         $this->linker->params->write( $pendingFile );
@@ -6438,9 +6440,14 @@ class sh_shop extends sh_core {
     public function command_success( $session ) {
         unset( $_SESSION[ __CLASS__ ][ 'cart' ] );
         unset( $_SESSION[ __CLASS__ ][ 'cart_external' ] );
+        unset( $_SESSION[ __CLASS__ ][ 'command' ] );
+        $this->render( 'command_mailSent', array( ) );
     }
 
     public function command_validated( $session, $bank_code = 0 ) {
+        file_put_contents( SH_SITE_FOLDER . __CLASS__ . '/temp_debug_brice.txt',
+                           "session : $session\nbank_code : $bank_code\nFile to remove : " .
+            SH_SITE_FOLDER . __CLASS__ . '/commands/pending/' . $session . '.params.php' );
         if( file_exists( SH_SITE_FOLDER . __CLASS__ . '/commands/validated/' . $session . '.params.php' ) ) {
             $this->render( 'command_already_sent' );
             return true;
@@ -7114,6 +7121,8 @@ class sh_shop extends sh_core {
             'address' => $address,
             'mail' => $command[ 'content' ][ 'billing_mail' ]
         );
+        $datas[ 'phone' ] = $command[ 'content' ][ 'billing_phone' ];
+        $datas[ 'mail' ] = $command[ 'content' ][ 'billing_mail' ];
         if( $user ) {
             $datas[ 'client' ][ 'id' ] = $user[ 'id' ];
             $datas[ 'client' ][ 'address' ] .= "\n" . 'N° client : ' . $user[ 'id' ];
@@ -7201,7 +7210,7 @@ class sh_shop extends sh_core {
 
         $datas[ 'date' ] = date( 'Y-m-d H:i:s' );
 
-        $datas[ 'extra_stored_datas' ] = $this->command_get_extra_stored_datas();
+        $datas[ 'extra_stored_datas' ] = $command[ 'content' ][ 'extra_datas' ];
 
         $this->linker->events->onSendCommand( $datas );
 
