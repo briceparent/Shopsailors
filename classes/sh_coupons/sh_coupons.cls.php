@@ -63,23 +63,21 @@ class sh_coupons extends sh_core {
 
     public function admin_getMenuContent() {
         $adminMenu = array( );
-        $adminMenu[ 'Boutique' ][ ] = array(
-            'link' => 'coupons/list/',
-            'text' => 'Liste des coupons',
-            'icon' => 'picto_modify.png'
-        );
+        if($this->linker->shop->isActivated() && $this->may_be_used){
+            $adminMenu[ 'Boutique' ][ ] = array(
+                'link' => 'coupons/list/',
+                'text' => 'Liste des coupons',
+                'icon' => 'picto_modify.png'
+            );
+        }
         return $adminMenu;
     }
     
     public function sitemap_renew() {
-        $this->addToSitemap( $this->shortClassName . '/homePage/', 1 );
         return true;
     }
 
     public function getPageName( $action, $id, $forUrl = false ) {
-        if( $action == 'homePage' ) {
-            return 'Page d\'accueil personnalisée de Sceau Numérique';
-        }
         return false;
     }
     
