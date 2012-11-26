@@ -90,11 +90,14 @@ class sh_payment extends sh_core {
     }
 
     public function admin_getMenuContent() {
-        $adminMenu[ 'Boutique' ][ ] = array(
-            'link' => 'payment/manual_collector/',
-            'text' => 'Encaissements manuels',
-            'icon' => 'picto_money.png'
-        );
+        $adminMenu = array();
+        if($this->linker->shop->isActivated()){
+            $adminMenu[ 'Boutique' ][ ] = array(
+                'link' => 'payment/manual_collector/',
+                'text' => 'Encaissements manuels',
+                'icon' => 'picto_money.png'
+            );
+        }
         return $adminMenu;
     }
 
