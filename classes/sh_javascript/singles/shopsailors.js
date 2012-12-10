@@ -69,6 +69,9 @@ var sh_popupClass = new Class.create({
             if(params.textarea != undefined){
                 this.textarea = params.textarea;
             }
+            
+            this.onShow = params.onShow == undefined?function(){}:params.onShow;
+            this.afterHide = params.afterHide == undefined?function(){}:params.afterHide;
         }
     },
     resizeToContent: function(){
@@ -113,7 +116,9 @@ var sh_popupClass = new Class.create({
             title: this.title,
             width: this.width,
             closeValue: '',
-            overlayClose: true
+            overlayClose: true,
+            onShow:this.onShow,
+            afterHide:this.afterHide
         });
     },
     hide: function() {
@@ -136,7 +141,9 @@ var sh_popupClass = new Class.create({
         Modalbox.show(content, {
             title: this.title,
             width: this.width,
-            overlayClose: false
+            overlayClose: false,
+            onShow:this.onShow,
+            afterHide:this.afterHide
         });
     },
     confirm: function(content, params){
@@ -158,10 +165,8 @@ var sh_popupClass = new Class.create({
             width: this.width,
             overlayClose: false,
             closeValue: '',
-            onShow:function(){
-            },
-            afterHide:function(){
-            }
+            onShow:this.onShow,
+            afterHide:this.afterHide
         });
     },
     prompt: function(content, value, params){
@@ -189,10 +194,8 @@ var sh_popupClass = new Class.create({
             width: this.width,
             overlayClose: false,
             closeValue: '',
-            onShow:function(){
-            },
-            afterHide:function(){
-            }
+            onShow:this.onShow,
+            afterHide:this.afterHide
         });
     },
     setPromptValue: function(value){
@@ -247,7 +250,6 @@ var sh_popinClass = new Class.create({
     },
     show: function(content, params) {
         this._setParams(params);
-
         Dialog.alert(
         {
             url: this.url
