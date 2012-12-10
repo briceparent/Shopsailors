@@ -206,7 +206,7 @@
 
                 <NORENDER>FIFTH TAB - VARIANTS</NORENDER>
                 <script type="text/javascript" src="/sh_shop/singles/productEditor.js"/>
-                <RENDER_TAB title="{i18n:productEditor_variantsTitle}">
+                <RENDER_TAB title="{i18n:productEditor_variantsTitle}" id="variants_tab">
                     <div class="admin_blueLink">
                         <RENDER_CHECKBOX id="hasVariants" onclick="sh_shop_toggleVariants();" name="variants[hasVariants]" state="{product:hasVariants}" text="{i18n:productEditor_hasVariants}" help="{i18n:hasVariants_explanation}"/>
                     </div>
@@ -214,114 +214,134 @@
                         <RENDER_CHECKBOX id="variantsChangeRef" onclick="sh_shop_toggleVariants();" name="variants[changeRef]" state="{product:variants_change_ref}" text="{i18n:productEditor_variantsChangeRef}"/>
                         <RENDER_CHECKBOX id="variantsChangePrice" onclick="sh_shop_toggleVariants();" name="variants[changePrice]" state="{product:variants_change_price}" text="{i18n:productEditor_variantsChangePrice}"/>
                         <RENDER_CHECKBOX id="variantsChangeStock" onclick="sh_shop_toggleVariants();" name="variants[changeStock]" state="{product:variants_change_stock}" text="{i18n:productEditor_variantsChangeStock}"/>
-                        <div class="adminSeparator"></div>
-                        <RENDER_VALUE what="i18n:cutomProperties_used"/>
-                        <RENDER_TABLE cols="5" what="customProperties">
-                            <input type="checkbox" name="variants[ActivatedCP][{customProperties:id}]" state="{customProperties:variant_state}" onchange="clickedElement = this;variants_enable_change();" id="{customProperties:id}" class="allowedCustomPropertiesForVariants" disabled="disabled"/>
-                            <label for="{customProperties:id}">
-                                <RENDER_VALUE what="customProperties:name"/>
-                            </label>
-                        </RENDER_TABLE>
                         <div style="display:none;">
-                            <RENDER_LOOP what="customProperties">
-                                <table id="model_{customProperties:id}">
-                                    <tr>
-                                        <td>
-                                            <RENDER_VALUE what="customProperties:name"/> :
-                                        </td>
-                                        <td>
-                                            <select name="variants[variant_{customProperties:id}][]">
-                                                <RENDER_LOOP what="values">
-                                                    <option value="{values:id}">
-                                                        <RENDER_VALUE what="values:value"/>
-                                                    </option>
-                                                </RENDER_LOOP>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </RENDER_LOOP>
-                            <table id="model_stock">
-                                <tr>
-                                    <td>Stock : </td>
+                            <div class="adminSeparator"></div>
+                            <RENDER_VALUE what="i18n:cutomProperties_used"/>
+                            <RENDER_TABLE cols="5" what="customProperties">
+                                <input type="checkbox" name="variants[ActivatedCP][{customProperties:id}]" state="{customProperties:variant_state}" onchange="clickedElement = this;variants_enable_change();" id="{customProperties:id}" class="allowedCustomPropertiesForVariants" disabled="disabled"/>
+                                <label for="{customProperties:id}">
+                                    <RENDER_VALUE what="customProperties:name"/>
+                                </label>
+                            </RENDER_TABLE>
+                        </div>
+                        <div style="display:none;">
+                            <table>
+                                <tr id="model_customProperties">
+                                    <RENDER_LOOP what="customProperties">
+                                        <RENDER_IFSET what="customproperties:variant_state">
+                                            <td>
+                                                <select name="variants[variant_{customProperties:id}][]">
+                                                    <RENDER_LOOP what="values">
+                                                        <option value="{values:id}">
+                                                            <RENDER_VALUE what="values:value"/>
+                                                        </option>
+                                                    </RENDER_LOOP>
+                                                </select>
+                                            </td>
+                                        </RENDER_IFSET>
+                                    </RENDER_LOOP>
                                     <td>
                                         <input class="variant_stock" name="variants[variant_stock][]" value="{variants:stock}" style="width:40px;"/>
                                     </td>
-                                </tr>
-                            </table>
-                            <table id="model_price">
-                                <tr>
-                                    <td>Prix : </td>
                                     <td>
-                                        <input class="variant_price" name="variants[variant_price][]" value="{variants:price}"/>
+                                        <input class="variant_ref" name="variants[variant_ref][]" value="{variants:ref}" style="width:140px;"/>
                                     </td>
-                                </tr>
-                            </table>
-                            <table id="model_ref">
-                                <tr>
-                                    <td>Référence : </td>
                                     <td>
-                                        <input class="variant_ref" name="variants[variant_ref][]" value="{variants:ref}"/>
+                                        <input class="variant_price" name="variants[variant_price][]" value="{variants:price}" style="width:60px;"/>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                         <div class="admin_blueLink underline marginTop_5px" id="allowModifyProps" onclick="variants_enable_change(this);">
-                        Modifier les propriétés personnalisées utilisables
+                            Modifier les propriétés personnalisées utilisables
                         </div>
                         <div class="adminSeparator"></div>
                         <fieldset>
-                            <legend>Variantes existantes : </legend>
-                            <RENDER_CSS>
-                            #variants li{
-                            border:1px solid grey;
-                            margin-top:4px;
-                            }
-                            </RENDER_CSS>
-                            <ol id="variants">
-                                <RENDER_LOOP what="variants">
-                                    <li>
-                                        <table>
+                            <legend>Variantes : </legend>
+                            
+                            <table cellpadding="5">
+                                <tbody id="variants">
+                                    <tr>
+                                        <RENDER_LOOP what="customproperties">
+                                            <RENDER_IFSET what="customproperties:variant_state">
+                                                <th>
+                                                    <RENDER_VALUE what="customproperties:name"/>
+                                                </th>
+                                            </RENDER_IFSET>
+                                        </RENDER_LOOP>
+                                        <th>Stock</th>
+                                        <th>Ref</th>
+                                        <th>Prix</th>
+                                    </tr>
+                                    <RENDER_LOOP what="variants">
+                                        <tr class="oneVariant">
                                             <RENDER_LOOP what="properties">
-                                                <tr>
-                                                    <td>
-                                                        <RENDER_VALUE what="properties:name"/> :
-                                                    </td>
-                                                    <td>
-                                                        <RENDER_VALUE what="properties:value"/>
-                                                        <input type="hidden" name="variants[variant_{properties:id}][]" value="{properties:value_id}"/>
-                                                    </td>
-                                                </tr>
+                                                <td>
+                                                    <RENDER_VALUE what="properties:value"/>
+                                                    <input type="hidden" name="variants[variant_{properties:id}][]" value="{properties:value_id}"/>
+                                                </td>
                                             </RENDER_LOOP>
-                                            <tr>
-                                                <td>Stock : </td>
-                                                <td>
-                                                    <input class="variant_stock" name="variants[variant_stock][{variants:id}]" value="{variants:stock}" style="width:40px;"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Référence : </td>
-                                                <td>
-                                                    <input class="variant_ref" name="variants[variant_ref][{variants:id}]" value="{variants:ref}"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Prix : </td>
-                                                <td>
-                                                    <input class="variant_price" name="variants[variant_price][{variants:id}]" value="{variants:price}"/>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                </RENDER_LOOP>
-                            </ol>
+                                            <td>
+                                                <input class="variant_stock" name="variants[variant_stock][{variants:id}]" value="{variants:stock}" style="width:40px;"/>
+                                            </td>
+                                            <td>
+                                                <input class="variant_ref" name="variants[variant_ref][{variants:id}]" value="{variants:ref}" style="width:140px;"/>
+                                            </td>
+                                            <td>
+                                                <input class="variant_price" name="variants[variant_price][{variants:id}]" value="{variants:price}" style="width:60px;"/>
+                                            </td>
+                                        </tr>
+                                    </RENDER_LOOP>
+                                </tbody>
+                            </table>
                         </fieldset>
+
                         <fieldset>
-                            <legend>Ajouter une variante : </legend>
+                            <legend>Ajouter</legend>
                             <div class="tab_buttons left">
-                                <input type="button" value="Ajouter" onclick="add_variant();" class="tab_button btn_add"/>
+                                <input type="button" value="Ajouter une variante" onclick="add_variant();" class="tab_button btn_add"/>
+                                <input type="button" value="Génération auto." onclick="add_all_variants();" class="tab_button btn_add"/>
+                            </div>
+                            <div style="display:none;" id="variants_create_all">
+                                Sélectionner toutes les propriétés qui doivent être proposées, et les montants à ajouter au prix de base
+                                pour chacune.
+                                <RENDER_LOOP what="customProperties">
+                                    <table>
+                                        <tr>
+                                            <th colspan="2">
+                                                <input name="{customProperties:id}" type="checkbox" id="cp_m_{customProperties:id}" onchange="variants_auto_check_cp(this);"/>
+                                                <label for="cp_m_{customProperties:id}">
+                                                    <RENDER_VALUE what="customProperties:name"/>
+                                                </label>
+                                                <input type="hidden" id="cp_{customProperties:id}_name" value="{customProperties:name}"/>
+                                            </th>
+                                        </tr>
+
+                                        <RENDER_LOOP what="values">
+                                            <tr class="cp_m_{customProperties:id}_tr" style="display:none">
+                                                <td>&#160;&#160;&#160;&#160;
+                                                    <input class="cp_creator" name="{customProperties:id}_{values:id}" type="checkbox" id="cp_m_{customProperties:id}_{values:id}"/>
+                                                    <input type="hidden" id="cp_{customProperties:id}_{values:id}_name" value="{values:value}"/>
+                                                    
+                                                    <label for="cp_m_{customProperties:id}_{values:id}">
+                                                        <RENDER_VALUE what="values:value"/>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    +
+                                                    <input id="cp_m_{customProperties:id}_{values:id}_priceToAdd" value="0" style="width:60px;"/>€
+                                                </td>
+                                            </tr>
+                                        </RENDER_LOOP>
+                                    </table>
+                                </RENDER_LOOP>
+                                <div class="tab_buttons">
+                                    <input class="tab_button btn_validate" type="button" value="{i18n:send}" onclick="create_all_variants();"/>
+                                </div>
+
                             </div>
                         </fieldset>
+                        <div id="okokok"></div>
                     </div>
                 </RENDER_TAB>
             </RENDER_IFSET>
@@ -361,16 +381,16 @@
             </RENDER_TAB>
             <RENDER_ENDJS>
                 $$('.discountSelector').each(function(el){
-                    Event.observe(el,'change',function(){
-                        if(el.value != 'none'){
-                            $('discounts_selected').checked = true;
-                        }
-                    });
+                Event.observe(el,'change',function(){
+                if(el.value != 'none'){
+                $('discounts_selected').checked = true;
+                }
+                });
                 });
                 var discountValues = 
                 <RENDER_VALUE what="discountValues:json"/>;
                 discountValues.each(function(el){
-                    $(el.input).value=el.value;
+                $(el.input).value=el.value;
                 });
 
             </RENDER_ENDJS>
@@ -397,15 +417,15 @@
     <RENDER_CSS>
         #promo_editor,
         .admin_fieldset_content{
-            display:none;
+        display:none;
         }
     </RENDER_CSS>
     <script type="text/javascript">
         function promo_display(promoForm){
-            $$('.admin_fieldset_content').each(function(el){
-                el.style.display = 'none';
-            });
-            $(promoForm).style.display = 'block';
+        $$('.admin_fieldset_content').each(function(el){
+        el.style.display = 'none';
+        });
+        $(promoForm).style.display = 'block';
         }
     </script>
 </div>

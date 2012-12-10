@@ -1301,10 +1301,10 @@ class sh_shop extends sh_core {
             }
 
             $values[ 'customProperty' ][ 'newLink' ] = $this->linker->path->getLink(
-                '/' . __FUNCTION__ . '/0'
+                __CLASS__.'/' . __FUNCTION__ . '/0'
             );
             $values[ 'customProperty' ][ 'pageLink' ] = $this->linker->path->getLink(
-                '/' . __FUNCTION__ . '/' . $id
+                __CLASS__.'/' . __FUNCTION__ . '/' . $id
             );
         }
         $values[ 'customPropertyValues' ][ 'val_new' ][ 'name' ] = 0;
@@ -5750,7 +5750,7 @@ class sh_shop extends sh_core {
                         $toDecimals = $this->getParam( 'currencies>' . $currency . '>toDecimals', 100 );
                         $priceInDecimal = $_SESSION[ __CLASS__ ][ 'command' ][ 'total' ][ 'paid' ] * $toDecimals;
                         $bank->payment_setPrice( $payment, $price, $priceInDecimal );
-                        $values[ 'paymentModes' ][ $key ][ 'form' ] = $bank->payment_action( $payment );
+                        $values[ 'paymentModes' ][ $key ][ 'form' ] = $bank->payment_action( $payment, $paymentId );
                         $activePaymentMode = $key;
                     } else {
                         unset( $values[ 'paymentModes' ][ $key ] );
