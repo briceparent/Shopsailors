@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+    <head>
+        <title>Websailors</title>
+        <base href="/"/>
+        <meta name="description" content="Websailors"/>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" media="screen" type="text/css" href="/templates/global/admin.css"></link>
+        <link rel="stylesheet" media="screen" type="text/css" href="/CSS/default/main.css"></link>
+    <RENDER_SCRIPT file="PROTOTYPE" direct="direct"/>
+    <RENDER_SCRIPT file="SCRIPTACULOUSONLY" direct="direct"/>
+    <RENDER_SCRIPT file="MODALBOX_JS" direct="direct"/>
+    <RENDER_SCRIPT file="MODALBOX_CSS" direct="direct"/>
+    <RENDER_SCRIPT file="SHOPSAILORS_JS" direct="direct"/>
+    <script type="text/javascript">
+
+
+        function send(){
+            if($('productToInsert').value){
+                window.opener.tinymce_insertShopProduct($('productToInsert').value,$('productToInsert_name').value);
+                window.close ();
+            }
+        }
+        
+    </script>
+    <style type="text/css">
+        table{
+            font-size: inherit;
+        }
+        .action_icon{
+            width:18px;
+        }
+    </style>
+</head>
+<body>
+    <form id="chooseProduct" onsubmit="send();return false;">
+        <div style="margin-top:10px;"></div>
+        <RENDER_ADMINBOX title="{i18n:styleEditor_title}" size="L">
+            <RENDER_VALUE what="shop:productChooser"/>
+            <input id="productToInsert" name="productToInsert" style="display:none"/>
+            <input id="productToInsert_name" name="productToInsert_name" style="display:none"/>
+            
+            <div class="tab_buttons">
+                <input class="tab_button btn_validate" type="submit" name="submit" value="{i18n:send}"/>
+            </div>
+
+        </RENDER_ADMINBOX>
+    </form>
+</body>
+</html>

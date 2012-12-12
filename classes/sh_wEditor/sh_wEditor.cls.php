@@ -21,12 +21,12 @@ class sh_wEditor extends sh_core{
     protected $minimal = array(
         'chooseLink'=>true,'addBlock'=>true,'image'=>true,'addStyle'=>true,'getStyles'=>true,
         'insertVideo'=>true,'insertDiaporama'=>true,'insertFlash'=>true,'chooseStyle'=>true,
-        'getNewStyleId'=>true,'getStyle'=>true,'chooseCalendar'=>true
+        'getNewStyleId'=>true,'getStyle'=>true,'chooseCalendar'=>true,'insert_shop_product'=>true
     );
 
     public $callWithId = array('updateStyle');
     public $callWithoutId = array(
-        'addStyle','getStyles','getNewStyleId','getStyle','chooseCalendar'
+        'addStyle','getStyles','getNewStyleId','getStyle','chooseCalendar','insert_shop_product'
     );
     const DEFAULT_TYPE = 'advanced';
     protected $rendering = false;
@@ -148,6 +148,12 @@ class sh_wEditor extends sh_core{
         $datas = $this->linker->diaporama->getList(true);
         $datas['head']['tooltip'] = $this->linker->helpToolTips->getJavascript();
         echo $this->render('insertDiaporama',$datas,false,false);
+        return true;
+    }
+
+    public function insert_shop_product(){
+        $datas['shop']['productChooser'] = $this->linker->shop->getProductsListForWEditor('productToInsert');
+        echo $this->render('insertShopProduct',$datas,false,false);
         return true;
     }
 

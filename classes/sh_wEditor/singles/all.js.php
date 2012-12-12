@@ -39,7 +39,7 @@ advimagescale_url_width_key:'width',
 advimagescale_url_height_key:'height',
 paste_auto_cleanup_on_paste : true,
 theme_advanced_buttons1 : "myListBox,removeformat,|,"
-    +"bold,italic,|,imageInserter,image,|,calendarInserter,diaporamaInserter,soundInserter,videoInserter,|,hr,|,"
+    +"bold,italic,|,imageInserter,image,|,shopProductInserter,calendarInserter,diaporamaInserter,soundInserter,videoInserter,|,hr,|,"
     +"undo,redo,|,justifyleft,justifycenter,justifyright,justifyfull",
 theme_advanced_buttons2 : "tablecontrols,|,linkInserter,link,unlink,|,"
     +"charmap,|,bullist,"
@@ -53,7 +53,8 @@ extended_valid_elements : "img[mce_noresize|longdesc|usemap|src|border|alt=|titl
     +"render_diaporama[name|width|height|class|float],"
     +"render_sound[file],"
     +"render_calendarbox[id,date],"
-    +"render_video[file|width|height]",
+    +"render_video[file|width|height],"
+    +"render_shopproduct[id]",
 content_css : "/sh_wEditor/singles/defaultStyles.css",
 relative_urls : false,
 force_br_newlines : false,
