@@ -3,6 +3,7 @@
 $i18n = array(
     'className' => 'Boutique',
     'mainCategory_name' => 'La boutique',
+    'addToCart_embedded' => 'Ajout au panier',
     'mainCategory_description' => 'Vous trouverez ici toutes les catégories de produits en vente sur ce site.',
     'mainCategory_shortDescription' => 'Toutes les catégories de la boutique',
     'cartPlugin_content' => 'Votre panier : ',

@@ -117,6 +117,15 @@ class sh_error extends sh_core {
     public function prepare() {
         $_SESSION[ __CLASS__ ][ 'prepared' ] = true;
     }
+    
+    public function error_reporting($level = null){
+        if(is_null($level)){
+            $level = E_ALL + ~E_NOTICE + ~E_DEPRECATED;
+        }
+        error_reporting($level);
+        ini_set('display_errors', true);
+        ini_set('html_errors', true);
+    }
 
     /**
      * Returns the uri from the given page

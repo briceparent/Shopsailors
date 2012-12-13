@@ -1,0 +1,35 @@
+<div style="text-align:left;">
+    <script>
+        function loadProducts(cat){
+        var link = 
+        <RENDER_VALUE what="auto:page_short" quotes='"'/>;
+        new Ajax.Updater('products', link, {
+        parameters: { cat: cat }
+        });
+        }
+        function selectProduct(product,div){
+            $$('.products').each(function(el){
+                el.style.fontWeight = 'normal';
+            });
+            div.style.fontWeight = 'bold';
+            $(
+                <RENDER_VALUE what="field:id" quotes='"'/>
+            ).value = product;
+            $(
+                <RENDER_VALUE what="field:id" quotes='"'/>+'_name'
+            ).value = div.innerHTML;
+        }
+    </script>
+    <div style="padding:10px 20px;">
+    <select>
+        <RENDER_LOOP what="categories">
+            <option onclick="loadProducts({categories:id});">
+                <RENDER_VALUE what="categories:name"/>
+            </option>
+        </RENDER_LOOP>
+    </select>
+    </div>
+    <div id="products" style="height:350px;overflow:auto;">
+            
+    </div>
+</div>

@@ -39,17 +39,6 @@ $this->queries = array(
             WHERE `active` = TRUE;',
         'type' =>'get'
     ),
-    'product_get_price' => array(
-        'query' => 'SELECT
-            `price`,
-            `hasVariants`,
-            `variants_change_price`
-            FROM
-            ###shop_products
-            WHERE `id` = "{id}"
-            LIMIT 1;',
-        'type' =>'get'
-    ),
     'product_get_name' => array(
         'query' => 'SELECT
             `name`
@@ -701,6 +690,27 @@ $this->queries = array(
             LIMIT 1;',
         'type' =>'get'
     ),
+    'product_get_normal_price' => array(
+        'query' => 'SELECT
+            `price`,
+            `hasVariants`,
+            `variants_change_price`
+            FROM
+            ###shop_products
+            WHERE `id` = "{id}"
+            LIMIT 1;',
+        'type' =>'get'
+    ),
+    'variant_get_normal_price' => array(
+        'query' => 'SELECT
+            `price`
+            FROM
+            ###shop_products_variants
+            WHERE `product_id` = "{product_id}"
+            AND `variant_id` = "{variant_id}"
+            LIMIT 1;',
+        'type' =>'get'
+    ),
     'product_get_price' => array(
         'query' => 'SELECT
             `price`,
@@ -960,6 +970,18 @@ $this->queries = array(
             WHERE `customProperties` LIKE "{customProperty_id}:%"
             OR `customProperties` LIKE "%|{customProperty_id}:%"
             ;',
+        'type' =>'get'
+    ),
+    'variant_get_by_cp' => array(
+        'query' => 'SELECT
+            spv.`variant_id`
+            FROM
+            ###shop_products_variants AS spv
+            INNER JOIN ###shop_products AS sp ON sp.`id` = spv.`product_id`
+            WHERE sp.`hasVariants` AND
+            spv.`product_id` = "{product_id}" AND
+            spv.`customProperties` = "{cp}"
+            LIMIT 1;',
         'type' =>'get'
     ),
     'product_get_variant_if_any' => array(
