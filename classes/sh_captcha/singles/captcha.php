@@ -18,7 +18,6 @@
   * It now can be read more easy.
   * - This file is now encoded as UTF8 (so some changes were made on french accents)
   */
-
 /************************************************** Configuration **************************************************/
 $chars = 'ABCDEFGHKMNPRTUVWX3689';		// liste des charactère (certain caractères ne sont pas présents pour éviter les confusions)
 $nbChar = 5;					// nombre de charactères du code
