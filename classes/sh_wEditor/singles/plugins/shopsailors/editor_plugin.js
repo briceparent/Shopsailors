@@ -157,6 +157,16 @@ function updateCustomStyles(){
                 popupBrowser.parameters.set('element','0');
                 popupBrowser.open();
             });
+            ed.addCommand('mceshopProductInserter', function() {
+                ed.windowManager.open({
+                    file :'/wEditor/insert_shop_product.php',
+                    width : 650,
+                    height : 500,
+                    inline : 1
+                }, {
+                    plugin_url : url
+                });
+            });
             ed.addCommand('mcevideoInserter', function() {/*Launches the browser*/
                 video = prompt(tinyMCE.activeEditor.getLang('shopsailors.youtube_video_id'));
                 if(video){
@@ -180,7 +190,6 @@ function updateCustomStyles(){
                     }
 
                 });
-                alert('2');
 
                 ed.execCommand(
                     'mceInsertContent',
@@ -216,6 +225,11 @@ function updateCustomStyles(){
                 title : tinyMCE.activeEditor.getLang('shopsailors.style_title'),
                 cmd : 'mceshopsailorsStyle',
                 image : url + '/img/styleInserter.gif'
+            });
+            ed.addButton('shopProductInserter', {
+                title : tinyMCE.activeEditor.getLang('shopsailors.shopProduct_title'),
+                cmd : 'mceshopProductInserter',
+                image : url + '/img/shopProductInserter.gif'
             });
             ed.addButton('imageInserter', {
                 title : tinyMCE.activeEditor.getLang('shopsailors.imageInserter_title'),
@@ -312,6 +326,13 @@ function updateCustomStyles(){
                         },'Un render flash');
 
                         dom.replace(el,n);
+                    }else if(dom.getAttrib(n, 'src') == tinymce_ShopProductImage()){
+                        product = dom.getAttrib(n, 'title');
+                        el = dom.create('RENDER_SHOPPRODUCT', {
+                            'id' : product
+                        },'Un render shopProduct');
+
+                        dom.replace(el,n);
                     }
                 });
             });
@@ -321,7 +342,21 @@ function updateCustomStyles(){
             ed.onSetContent.add(function(ed, o) {
                 // Called when the form is loading
                 var dom = ed.dom;
-                var sound, calendar, date, video, diaporama, flashFile, el, width, height;
+                var id, sound, calendar, date, video, diaporama, flashFile, el, width, height;
+                each(dom.select('RENDER_SHOPPRODUCT', o.node), function(n) {
+                    if(dom.getAttrib(n, 'id')){
+                        id = dom.getAttrib(n, 'id');
+                        el = dom.create(
+                            'img',
+                            {
+                                'src' : tinymce_ShopProductImage(),
+                                'title' : id,
+                                'mce_noresize' : "1"
+                            }
+                            );
+                        dom.replace(el,n);
+                    }
+                });
                 each(dom.select('RENDER_SOUND', o.node), function(n) {
                     if(dom.getAttrib(n, 'file')){
                         sound = dom.getAttrib(n, 'file');
@@ -519,6 +554,20 @@ function tinymce_insertLink(link){
 
 function tinymce_insert(img, id, width, height){
     tinyMCE.execCommand('mceInsertContent',false,'<img src="' + img + '" width="'+width+'" height="'+height+'" />');
+}
+
+function tinymce_ShopProductImage(){
+    return '/images/shared/icons/picto_cart.png';
+}
+function tinymce_createShopProductTag(product){
+    return '<img mce_noresize="1" src="'+tinymce_ShopProductImage()+'" title="'+product+'"/>';
+}
+function tinymce_insertShopProduct(id){
+    tinyMCE.execCommand(
+        'mceInsertContent',
+        false,
+        tinymce_createShopProductTag(id)
+        );
 }
 
 function tinymce_soundImage(){

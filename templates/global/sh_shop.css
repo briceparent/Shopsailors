@@ -505,7 +505,7 @@ body.Internet_Explorer_7_0 .main_preview img{
     text-align: left;
 }
 .shop_table_preview img{
-    height: 60px;
+    width: 50px;
 }
 .shop_totalCart{
     margin-left: auto;
@@ -771,3 +771,74 @@ body.Internet_Explorer_7_0 .main_preview img{
     width:32px;
     margin: 0 8px;
 }
+
+/* Embedded products (inside wEditors) */
+body.pages_content_show #MB_frame {
+  box-shadow: 0 0 5px #333;
+  -moz-box-shadow: 0 0 5px #333;
+  -webkit-box-shadow: 0 0 5px #333;
+    
+}
+body.pages_content_show #MB_header {
+ background-color: #000;
+}
+body.pages_content_show #MB_caption {
+  font-size: 20px;
+  color: #CCC;
+  text-align: center;
+  font-weight:bold;
+  text-shadow: 0 0 3px #999;
+  -moz-text-shadow: 0 0 3px #999;
+  -webkit-text-shadow: 0 0 3px #999;
+}
+
+body #MB_content .rSP_product_preview{
+    width: 222px;
+    margin-right: 10px;
+    position:absolute;
+    left:0;
+}
+body #MB_content .rSP_product_preview img{
+    width: 222px;
+    box-shadow: 0 0 2px #222;
+    -moz-box-shadow: 0 0 2px #222;
+    -webkit-box-shadow: 0 0 2px #222;
+}
+body #MB_content .rSP_product_preview_small img{
+    width:auto;
+    margin:5px;
+}
+
+ body #MB_content .rSP_product_details{
+    margin-left:235px;
+    width: 640px;
+    font-size: 16px;
+    min-height: 300px;
+}
+ body #MB_content .rSP_product_details .rSP_element{
+     margin-bottom: 10px;
+     padding-bottom: 10px;
+     border-bottom: 1px solid #ccc;
+ }
+ body #MB_content .rSP_product_details .rSP_productName{
+     display:none;
+ }
+ 
+ body #MB_content .rSP_product_details .rSP_note{
+     color: #999;
+     font-style: italic;
+     font-size: 12px;
+ }
+ body #MB_content .rSP_product_details .rSP_description{
+     font-size: 12px;
+     color: #333;
+ }
+ body #MB_content .rSP_product_details .rSP_total{
+     min-height:40px;
+ }
+ body #MB_content .rSP_product_details .discountContainer .discount_desc{
+     font-size: 12px;
+     font-weight: bold;
+     color: #333;
+     margin-top:5px;
+ }

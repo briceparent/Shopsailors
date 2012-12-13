@@ -1,0 +1,7 @@
+<div>
+    <RENDER_LOOP what="products">
+        <div class="products" style="clear:both;padding:4px 20px;cursor:pointer" onclick="selectProduct({products:id},this);">
+            <RENDER_VALUE what="products:name"/>
+        </div>
+    </RENDER_LOOP>
+</div>

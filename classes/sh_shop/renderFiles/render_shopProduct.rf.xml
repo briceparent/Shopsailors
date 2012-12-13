@@ -1,0 +1,85 @@
+<span class="rSP_embeddedButton_container">
+    <span class="rSP_embeddedButton">
+        <a onclick="rSP_product_buy({product:id});return false;" href="{shop:page}">
+            <img src="/images/shared/icons/picto_cart.png" class="active" alt="Ajout au panier" title="{i18n:buy}"/>
+        </a>
+    </span>
+    <div id="rSP_popup_{product:id}" style="display:none;">
+        <form name="rSP_addCart_{product:id}">
+            <div class="rSP_product_preview">
+                <img src="{product:image}.resized.222.222.png" alt="main_preview" id="rSP_product_preview_image_{product:id}"/>
+                <br />
+                <div class="rSP_product_preview_small">
+                    <img src="{product:image}.resized.45.45.png" alt="main_preview" onmouseover="$('rSP_product_preview_image_{product:id}').src=this.src.replace(/45/g,222);"/>
+                    <RENDER_LOOP what="images">
+                        <img src="{images:src}.resized.45.45.png" alt="small_preview" onmouseover="$('rSP_product_preview_image_{product:id}').src=this.src.replace(/45/g,222);"/>
+                    </RENDER_LOOP>
+                </div>
+            </div>
+            <div class="rSP_product_details">
+                <div class="rSP_element rSP_productName">
+                    <RENDER_VALUE what="product:name"/>
+                </div>
+                <div class="rSP_element rSP_description">
+                    <RENDER_VALUE what="product:description"/>
+                </div>
+
+                <div class="rSP_element rSP_quantity">
+                    <RENDER_VALUE what="i18n:quantity"/>&#160;: 
+                    <input id="product_quantity_{product:id}_origin" value="1" name="quantity" onkeyup="rSP_product_getNewPrices('{product:id}');" style="width:40px;"/>
+                </div>
+                <RENDER_LOOP what="discounts">
+                    <div class="rSP_element discountContainer">
+                        <div class="discount_title">
+                            <RENDER_VALUE what="discounts:title"/>
+                        </div>
+                        <div class="discount_desc">
+                            <RENDER_VALUE what="discounts:description_product"/>
+                        </div>
+                    </div>
+                </RENDER_LOOP>
+                <RENDER_LOOP what="variantstypes">
+                    <div class="rSP_element">
+                        <RENDER_VALUE what="variantstypes:name"/>&#160;: 
+                        <select class="variant_element_{product:id}_origin" name="variant_{variantstypes:value}_origin" onchange="rSP_product_getNewPrices('{product:id}');">
+                            <RENDER_LOOP what="values">
+                                <option value="{values:value}">
+                                    <RENDER_VALUE what="values:name"/>
+                                </option>
+                            </RENDER_LOOP>
+                        </select>
+                    </div>
+                </RENDER_LOOP>
+                <div class="rSP_element rSP_total">
+                    <div id="product_price_complete_{product:id}_origin"></div>
+                </div>
+                <div class="rSP_element center">
+                    Ajouter au panier et ...
+                    <br />
+                    <div class="tab_buttons">
+                        <input class="tab_button btn_add" type="submit" name="submit" value="continuer vos achats" onclick="rSP_addToCart('{product:id}',false);return false;"/>
+                    </div>
+                    <div class="tab_buttons">
+                        <input class="tab_button btn_validate" type="submit" name="submit" value="commander" onclick="rSP_addToCart('{product:id}',true);return false;"/>
+                    </div>
+                </div>
+                <div class="tab_buttons">
+                    <input class="tab_button btn_cancel" type="submit" name="submit" value="Annuler" onclick="sh_popup.hide();return false;"/>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </form>
+    </div>
+
+    <RENDER_ENDJS>
+        var addToCartEmbedded_i18n = 
+        <RENDER_VALUE what="i18n:addToCart_embedded" quotes="'"/>+' : [PRODUCT]';
+        if(embeddedProduct_productPages == undefined){
+        var embeddedProduct_productPages = new Array();
+        }
+        embeddedProduct_productPages[
+        <RENDER_VALUE what="product:id"/>] = 
+        <RENDER_VALUE what="shop:page" quotes='"'/>;
+                 
+    </RENDER_ENDJS>
+</span>

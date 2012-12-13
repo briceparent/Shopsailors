@@ -616,6 +616,8 @@ abstract class sh_banks extends sh_core {
     abstract public function payment_setCurrency( $payment, $currency );
 
     abstract public function payment_setCountry( $payment, $country );
+    
+    public function payment_setCustomerMail( $payment, $mail ) {}
 
     abstract public function payment_setSuccessPage( $payment, $page );
 

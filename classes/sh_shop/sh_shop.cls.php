@@ -16,7 +16,7 @@ if( !defined( 'SH_MARKER' ) ) {
  */
 class sh_shop extends sh_core {
 
-    const CLASS_VERSION = '1.1.12.08.17';
+    const CLASS_VERSION = '1.1.12.12.10';
 
     public $shopsailors_dependencies = array(
         'sh_linker', 'sh_params', 'sh_db', 'sh_browser', 'sh_helper', 'sh_site', 'searcher', 'i18n'
@@ -300,6 +300,9 @@ class sh_shop extends sh_core {
             }
             if( version_compare( $installedVersion, '1.1.12.08.17', '<' ) ) {
                 $this->helper->addClassesSharedMethods( 'sh_site', 'sharedSettings', __CLASS__ );
+            }
+            if( version_compare( $installedVersion, '1.1.12.12.10', '<' ) ) {
+                $this->linker->renderer->add_render_tag( 'render_shopproduct', __CLASS__, 'render_shopproduct' );
             }
             $this->setClassInstalledVersion( self::CLASS_VERSION );
         }
@@ -1207,7 +1210,6 @@ class sh_shop extends sh_core {
         $useCaseAsCP = $this->db_execute( 'customProperty_checkUseCases', array( 'customProperty_id' => $id ), $qry );
         if( empty( $useCaseAsCP ) ) {
             // We may delete it
-            $this->linker->db->updateQueries( __CLASS__ );
             // We get the i18n to remove
             list($cp) = $this->db_execute( 'customProperty_get', array( 'id' => $id ) );
             $this->removeI18n( $cp[ 'name' ] );
@@ -1720,7 +1722,6 @@ class sh_shop extends sh_core {
             if( !is_array( $_POST[ 'category_category' ] ) ) {
                 $_POST[ 'category_category' ] = array( );
             }
-            $this->linker->db->updateQueries( __CLASS__ );
             $categoryNewDatas = array(
                 'id' => $id,
                 'name' => $name,
@@ -2144,13 +2145,12 @@ class sh_shop extends sh_core {
             $productDatas[ 'product' ][ 'variantsChangePrice' ] = true;
         }
         if( $price[ 'discount_id' ] > 0 ) {
-            if( $product[ 'variants_change_price' ] ) {
+            list($normalPrice) = $this->db_execute(
+                'product_get_normal_price', array( 'id' => $id), $qry
+            );
+            if( $normalPrice[ 'hasVariants' ] && $normalPrice[ 'variants_change_price' ] ) {
                 list($normalPrice) = $this->db_execute(
-                    'variant_get_price', array( 'product' => $id, 'quantity' => 1, 'variant' => $variant ), $qry
-                );
-            } else {
-                list($normalPrice) = $this->db_execute(
-                    'product_get_price', array( 'product' => $id, 'quantity' => 1, 'variant' => $variant ), $qry
+                    'variant_get_normal_price', array( 'product_id' => $id, 'variant_id' => $variant ), $qry
                 );
             }
         }
@@ -2277,6 +2277,7 @@ class sh_shop extends sh_core {
             }
             $hideNullQuantityProducts = $this->getParam( 'hideNullQuantityProducts', false );
             $variantsDatas = array( );
+            $variantsTypes = array( );
             foreach( $variants as $variantId => $variant ) {
                 $showLink = true;
                 if( $product[ 'variants_change_stock' ] && !$variant[ 'stock' ] ) {
@@ -2303,6 +2304,16 @@ class sh_shop extends sh_core {
                     list($oneCpVariantId, $oneCpVariantValue) = explode( ':', $oneCpVariant );
                     list($variantFieldName) = $this->db_execute( 'customProperty_get_name',
                                                                  array( 'id' => $oneCpVariantId ) );
+                    if(!isset($variantsTypes[ $oneCpVariantId ])){
+                        $variantsTypes[ $oneCpVariantId ] = array(
+                            'name' => $this->getI18n( $variantFieldName[ 'name' ] ) ,
+                            'value' => $oneCpVariantId,
+                        );
+                    }
+                    $variantsTypes[ $oneCpVariantId ]['values'][$oneCpVariantValue] = array(
+                        'name' => $this->getI18n( $oneCpVariantValue ),
+                        'value' => $oneCpVariantValue
+                    );
 
                     $variantsDatas[ 'title' ] .= $separatorTitle . $this->getI18n( $variantFieldName[ 'name' ] ) . ' : ' . $this->getI18n( $oneCpVariantValue );
                     $variantsDatas[ 'name' ] .= $separatorName . $this->getI18n( $variantFieldName[ 'name' ] ) . ' : ' . $this->getI18n( $oneCpVariantValue );
@@ -2338,6 +2349,8 @@ class sh_shop extends sh_core {
                 ksort( $productDatas[ 'variants' ] );
             }
         }
+        $productDatas['variantsTypes'] = $variantsTypes;
+        $productDatas['shop']['page'] = $this->linker->path->getLink( __CLASS__ . '/showProduct/' . $id );
 
         // We manage the custom properties, if any
         $customProperties = $this->db_execute( 'product_get_customProperties_withStructure',
@@ -2433,6 +2446,31 @@ class sh_shop extends sh_core {
             'paid' => $price[ 'taxed' ]
         );
     }
+    
+    public function shallWe_render_shopproduct( $attributes = array( ) ) {
+        $this->isRenderingWEditor = $this->isRenderingWEditor || $this->linker->wEditor->isRendering();
+        $rep = !$this->isRenderingWEditor;
+        return $rep;
+    }
+    
+    public function render_shopproduct($attributes){
+        if( isset( $attributes[ 'id' ] ) ) {
+            $id = $attributes[ 'id' ];
+        } else {
+            return false;
+        }
+        $this->linker->html->addScript( '/' . __CLASS__ . '/singles/embedded_product.js' );
+        $values = $this->get_product_contents( $id, $variant, $quantity );
+        foreach($values['product']['images'] as $oneImage){
+            $values['images'][]['src'] = $oneImage;
+        }
+        $this->linker->admin->insert(
+            '<a href="' . $this->linker->path->getLink( 'shop/editProduct/' . $id ) . '">Modifier "'.$id.' - '.$values['product']['name'].'"</a>',
+                                                        'Boutique', 'picto_modify.png'
+        );
+        
+        return $this->render('render_shopProduct', $values,false,false);
+    }
 
     /**
      * Called directly by the end user.
@@ -2465,10 +2503,20 @@ class sh_shop extends sh_core {
             }
         }
 
-        $quantity = 1;
         $quantity = max( ( int ) $_POST[ 'quantity' ], ( int ) $_GET[ 'quantity' ] );
         if( !isset( $_POST[ 'variant' ] ) && !isset( $_GET[ 'variant' ] ) ) {
             $variant = 0;
+        } elseif( $_GET['variant'] == 'splitted' || $_POST['variant'] == 'splitted' ){
+            // We should get the variant id by its values
+            $variantValues = '';$separator = '';
+            foreach($_POST as $name=>$value){
+                if(substr($name,0,8) == 'variant_'){
+                    $variantValues .= $separator.substr($name,8).':'.$value;
+                    $separator = '|';
+                }
+            }
+            $r = $this->db_execute('variant_get_by_cp', array('product_id'=>$id,'cp'=>$variantValues));
+            $variant = $r[0]['variant_id'];
         } else {
             $variant = max( ( int ) $_POST[ 'variant' ], ( int ) $_GET[ 'variant' ] );
         }
@@ -2476,10 +2524,18 @@ class sh_shop extends sh_core {
             $quantity = 1;
         }
         if( isset( $_POST[ 'ajax' ] ) ) {
-            echo '<script type="text/javascript">';
-            echo '$("quantity").value = ' . $quantity . ';' . "\n";
-            echo '</script>';
+            if(isset($_POST['quantityElement'])){
+                $quantityElement = $_POST['quantityElement'];
+            }else{
+                $quantityElement = 'quantity';
+            }
             echo $this->getPriceExplanation( $id, $variant, $quantity );
+            echo '<script type="text/javascript">';
+            echo '$("'.$quantityElement.'").value = ' . $quantity . ';' . "\n";
+            echo '</script>';
+            if(isset($_POST['variantElement'])){
+                echo '<input type="hidden" id="'.$_POST['variantElement'].'" value="'.$variant.'"/>';
+            }
             exit;
         }
 
@@ -4075,6 +4131,32 @@ class sh_shop extends sh_core {
             );
         }
         return $categories;
+    }
+    
+    public function getProductsListForWEditor($field){
+        $values['field']['id'] = $field;
+        if(!isset($_POST['cat'])){
+            $values['categories'] = $this->getAllCategoriesList();
+            $values['link']['base'] = $_SERVER['REQUEST_URI'];
+            return $this->render( 'productsListForWeditor', $values, false, false);
+        }
+        
+        $products = $this->db_execute(
+            'category_get_products',
+            array(
+            'category_id' => (int) $_POST['cat']
+            )
+        );
+        if( !empty( $products ) ) {
+            foreach( $products as $product ) {
+                $values['products'][ $product[ 'product_id' ] ] = array(
+                    'id' => $product[ 'product_id' ],
+                    'name' => $this->getProductName( $product[ 'product_id' ] )
+                );
+            }
+        }
+        echo $this->render( 'productsListForWeditor_products', $values, false, false);
+        exit;
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
@@ -5750,6 +5832,7 @@ class sh_shop extends sh_core {
                         $toDecimals = $this->getParam( 'currencies>' . $currency . '>toDecimals', 100 );
                         $priceInDecimal = $_SESSION[ __CLASS__ ][ 'command' ][ 'total' ][ 'paid' ] * $toDecimals;
                         $bank->payment_setPrice( $payment, $price, $priceInDecimal );
+                        $bank->payment_setCustomerMail( $payment, $_SESSION[ __CLASS__ ][ 'billing_mail' ] );
                         $values[ 'paymentModes' ][ $key ][ 'form' ] = $bank->payment_action( $payment, $paymentId );
                         $activePaymentMode = $key;
                     } else {
@@ -6706,11 +6789,6 @@ class sh_shop extends sh_core {
                 $this->db_execute( 'prices_cache_update', $replacements );
             }
         }
-
-        $this->linker->db->updateQueries( __CLASS__ );
-
-
-
 
         if( is_null( $cachePriceFor ) ) {
             // We remove all the cached prices
