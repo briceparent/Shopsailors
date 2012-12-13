@@ -16,7 +16,7 @@ if( !defined( 'SH_MARKER' ) ) {
  */
 class sh_captcha extends sh_core {
 
-    const CLASS_VERSION = '1.1.11.03.29';
+    const CLASS_VERSION = '1.1.12.11.26';
 
     protected $minimal = array( 'change' => true );
     public $shopsailors_dependencies = array(
@@ -27,8 +27,13 @@ class sh_captcha extends sh_core {
 
     public function construct() {
         $installedVersion = $this->getClassInstalledVersion();
-        if( version_compare( $installedVersion, '1.1.11.03.29', '<=' ) ) {
-            $this->linker->renderer->add_render_tag( 'render_captcha', __CLASS__, 'render_captcha' );
+        if($installedVersion != self::CLASS_VERSION){
+            if( version_compare( $installedVersion, '1.1.11.03.29', '<=' ) ) {
+                $this->linker->renderer->add_render_tag( 'render_captcha', __CLASS__, 'render_captcha' );
+            }
+            if( version_compare( $installedVersion, '1.1.12.11.26', '<=' ) ) {
+                symlink('./captcha.php', dirname(__FILE__).'/singles/captcha.gif');
+            }
             $this->setClassInstalledVersion( self::CLASS_VERSION );
         }
     }
