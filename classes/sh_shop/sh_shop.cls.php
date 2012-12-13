@@ -5832,6 +5832,7 @@ class sh_shop extends sh_core {
                         $toDecimals = $this->getParam( 'currencies>' . $currency . '>toDecimals', 100 );
                         $priceInDecimal = $_SESSION[ __CLASS__ ][ 'command' ][ 'total' ][ 'paid' ] * $toDecimals;
                         $bank->payment_setPrice( $payment, $price, $priceInDecimal );
+                        $bank->payment_setCustomerMail( $payment, $_SESSION[ __CLASS__ ][ 'billing_mail' ] );
                         $values[ 'paymentModes' ][ $key ][ 'form' ] = $bank->payment_action( $payment, $paymentId );
                         $activePaymentMode = $key;
                     } else {
