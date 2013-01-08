@@ -87,5 +87,4 @@
         <RENDER_VALUE what="shop:page" quotes='"'/>;
                  
     </RENDER_ENDJS>
-    <RENDER_DEBUGALL/>
 </span>
