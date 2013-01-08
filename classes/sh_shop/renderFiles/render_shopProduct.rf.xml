@@ -10,10 +10,15 @@
                 <img src="{product:image}.resized.222.222.png" alt="main_preview" id="rSP_product_preview_image_{product:id}"/>
                 <br />
                 <div class="rSP_product_preview_small">
-                    <img src="{product:image}.resized.45.45.png" alt="main_preview" onmouseover="$('rSP_product_preview_image_{product:id}').src=this.src.replace(/45/g,222);"/>
-                    <RENDER_LOOP what="images">
-                        <img src="{images:src}.resized.45.45.png" alt="small_preview" onmouseover="$('rSP_product_preview_image_{product:id}').src=this.src.replace(/45/g,222);"/>
-                    </RENDER_LOOP>
+                     <RENDER_IFNOTSET what="product:images">
+                         <img src="{product:image}.resized.45.45.png" alt="{product:name}"/>
+                     </RENDER_IFNOTSET>
+                     <RENDER_IFSET what="product:images">
+                    <img src="{product:image}.resized.45.45.png" alt="{product:name}" onmouseover="$('rSP_product_preview_image_{product:id}').src=this.src.replace(/45/g,222);"/>
+                        <RENDER_LOOP what="images">
+                            <img src="{images:src}.resized.45.45.png" alt="small_preview" onmouseover="$('rSP_product_preview_image_{product:id}').src=this.src.replace(/45/g,222);"/>
+                        </RENDER_LOOP>
+                    </RENDER_IFSET>
                 </div>
             </div>
             <div class="rSP_product_details">
@@ -82,4 +87,5 @@
         <RENDER_VALUE what="shop:page" quotes='"'/>;
                  
     </RENDER_ENDJS>
+    <RENDER_DEBUGALL/>
 </span>

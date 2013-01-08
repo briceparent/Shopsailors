@@ -2249,7 +2249,7 @@ class sh_shop extends sh_core {
             'seo_titleBar' => $this->getI18n( $product[ 'seo_titleBar' ] ),
             'seo_metaDescription' => $this->getI18n( $product[ 'seo_metaDescription' ] ),
             'image' => $product[ 'image' ],
-            'images' => explode( '|', $product[ 'images' ] ),
+            'images' => $product[ 'images' ]!=''? explode( '|', $product[ 'images' ] ):array(),
             'price' => $price,
             'hasDiscount' => $hasDiscount,
             'hasVariants' => $product[ 'hasVariants' ]
