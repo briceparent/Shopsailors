@@ -15,7 +15,7 @@ body{
 
 #header{
     background: transparent url(/images/template/bg_head.png) repeat-x bottom center;
-    height: 110px;
+    height: 100px;
 }
 #header #logoContainer{width: 950px;margin: 0 auto;}
 
