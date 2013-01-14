@@ -4,7 +4,7 @@
 /*Template.rf.xml classes*/
 *{outline:0 none}
 body{
-    background: hex@background url(/images/template/gradient_white.png) repeat-x center 140px ;
+    background: hex@background url(/images/template/gradient_white.png) repeat-x center 100px ;
     font-family: Arial,sans-serif;
     font-size: 12px;
     color: #333333;
@@ -14,8 +14,8 @@ body{
 }
 
 #header{
-    background: transparent url(/images/template/bg_head.png) repeat-x top center;
-    height: 140px;
+    background: transparent url(/images/template/bg_head.png) repeat-x bottom center;
+    height: 100px;
 }
 #header #logoContainer{width: 950px;margin: 0 auto;}
 
