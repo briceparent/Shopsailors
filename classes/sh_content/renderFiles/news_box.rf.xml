@@ -12,7 +12,9 @@
                     <RENDER_VALUE what="news:date"/>
                 </div>
                 <div class="news_one_image">
-                    <img src="{news:image}" alt="{news:title}"/>
+                    <a href="{news:link}">
+                        <img src="{news:image}" alt="{news:title}"/>
+                    </a>
                 </div>
                 <div class="news_one_content">
                     <RENDER_VALUE what="news:summary"/>
