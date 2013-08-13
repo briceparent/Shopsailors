@@ -787,7 +787,258 @@ class sh_helper extends sh_core {
 
 }
 
+
+
+
+
 class sh_price {
+
+    protected $taxDetails = array( );
+    protected $price = array( );
+    protected $taxIncluded = false;
+    protected $taxRate = null;
+    protected $untaxedPrice = 0;
+    protected $taxedPrice = 0;
+    protected $taxAmount = 0;
+    protected $givenPrice = 0;
+
+    const TAX_MODE_INCLUDED = true;
+    const TAX_MODE_EXCLUDE = false;
+
+    /**
+     * An array containing all the datas
+     */
+    const ALL = 'all';
+    /**
+     * The price with no tax
+     */
+    const PRICE_UNTAXED = 'untaxed';
+    /**
+     * The price taxes includes
+     */
+    const PRICE_TAXED = 'taxed';
+    /**
+     * The amount of taxes in the price
+     */
+    const TAX_AMOUNT = 'tax';
+    /**
+     * The tax rate, from 0 to 1
+     */
+    const TAX_RATE = 'rate';
+    /**
+     * true if the taxes are includes, false if not
+     */
+    const TAX_TYPE = 'type';
+    /**
+     * The id of the error
+     */
+    const ERROR = 'error';
+
+    protected $ready = false;
+    protected $error = false;
+    const ERROR_NONE = false;
+    /**
+     * This error occurs when the tax rate is not between 0 and 1.
+     */
+    const ERROR_TAX_NOT_IN_RANGE = 1;
+    /**
+     * This error occurs if the price is set as untaxed and the tax rate is 100%, because the untaxed can only be 0€
+     */
+    const ERROR_CANT_BE_BASED_ON_UNTAXED_WHEN_ONLY_TAXES = 2;
+    /**
+     * This error occurs when we try to calculate something when the calculation can't be done (like missing the taxRate)
+     */
+    const ERROR_NOT_READY = 3;
+    const ERROR_DIVISION_BY_ZERO = 4;
+    /**
+     * The tax rate can't be calculated (maybe because tax included price equals to zero)<br />
+     * The process continues without modifying the tax rate.
+     */
+    const ERROR_CANT_CALCULATE_TAX_RATE = 5;
+
+    /**
+     * Sets the basic datas for a price
+     * @param bool $taxeIncluded True if the price $price includes taxes, false if not.
+     * @param float $taxRate The tax rate (as a float number, 0.2 for 20% taxes).
+     * @param float $price The price, with or without tax, depending on $taxeIncluded.
+     */
+    public function __construct( $taxeIncluded, $taxRate, $price ) {
+        if( $taxRate < 0 || $taxRate > 1 ) {
+            $this->error = self::ERROR_TAX_NOT_IN_RANGE;
+            return false;
+        }
+        $this->setTaxIncluded( $taxeIncluded );
+        $this->setTaxRate( $taxRate );
+        $this->setPrice( $price );
+
+        $this->taxDetails[ $taxRate ] = $this->taxedPrice - $this->untaxedPrice;
+    }
+
+    public function get( $what = self::ALL ) {
+        if( $this->ready ) {
+            if( $what == self::ALL ) {
+                return $this->price;
+            }
+            return $this->price[ $what ];
+        }
+        $this->error = self::ERROR_NOT_READY;
+        return false;
+    }
+
+    public function isReady() {
+        $this->ready = !is_null( $this->taxRate );
+        return $this->ready;
+    }
+
+    protected function calculate() {
+        if( !$this->isReady() ) {
+            $this->error = self::ERROR_NOT_READY;
+            return false;
+        }
+        if( $this->error ) {
+            return $this->error;
+        }
+        if( $this->taxIncluded == self::TAX_MODE_INCLUDED ) {
+//		$ht = $ttc / 1+$rate;
+            //$this->untaxedPrice = $this->taxedPrice * (1 - $this->taxRate);
+            $this->untaxedPrice = $this->taxedPrice / (1 + $this->taxRate);
+	    /*if($_SERVER['REMOTE_ADDR'] == '78.235.24.1331'){
+		    echo 'HT = '.$this->untaxedPrice.' = '.$this->taxedPrice.' / '.(1 + $this->taxRate).'<br />';
+		    foreach(debug_backtrace() as $element){
+			echo '<b>'.basename($element['file']).':'.$element['line'].'</b> : '.$element['class'].$element['type'].$element['function'].'(';
+			$sep = '';
+			foreach($element['args'] as $arg){
+				if(gettype($arg) != "object" ){
+					echo $sep.$arg;
+				}else{
+					echo $sep.'[object '.get_class($arg).']';
+				}
+				$sep = ', ';
+			}
+			echo ')<br />';
+		    }
+		echo '<hr />';
+	    }/**/
+        } elseif( $this->taxRate < 1 ) {
+            //$this->taxedPrice = $this->untaxedPrice / (1 - $this->taxRate);
+            $this->taxedPrice = $this->untaxedPrice * (1 + $this->taxRate);
+        } else {
+            $this->error = self::ERROR_CANT_BE_BASED_ON_UNTAXED_WHEN_ONLY_TAXES;
+            $this->ready = false;
+            return false;
+        }
+        $this->taxAmount = $this->taxedPrice - $this->untaxedPrice;
+        $this->preparePrice();
+        return $this->price;
+    }
+
+    protected function preparePrice() {
+        $this->price = array(
+            self::PRICE_UNTAXED => $this->untaxedPrice,
+            self::PRICE_TAXED => $this->taxedPrice,
+            self::TAX_AMOUNT => ($this->taxedPrice - $this->untaxedPrice),
+            self::TAX_RATE => $this->taxRate,
+            self::TAX_TYPE => $this->taxIncluded,
+            self::ERROR => $this->error
+        );
+    }
+
+    protected function setPrice( $price ) {
+        if( $this->taxIncluded ) {
+            $this->taxedPrice = $price;
+        } else {
+            $this->untaxedPrice = $price;
+        }
+        return $this->calculate();
+    }
+
+    protected function setTaxRate( $taxRate ) {
+        $this->taxRate = $taxRate;
+        if( $this->taxExcluded && $this->taxRate == 1 ) {
+            $this->error = self::ERROR_CANT_BE_BASED_ON_UNTAXED_WHEN_ONLY_TAXES;
+            return false;
+        }
+        return $this->calculate();
+    }
+
+    public function setAmounts( $untaxedPrice, $taxedPrice ) {
+        $this->untaxedPrice = $untaxedPrice;
+        $this->taxedPrice = $taxedPrice;
+        if( $taxedPrice == 0 ) {
+            $this->error = self::ERROR_CANT_CALCULATE_TAX_RATE;
+        } else {
+            $this->taxRate = $taxedPrice / $untaxedPrice - 1;
+        }
+        return $this->calculate();
+    }
+
+    protected function setTaxIncluded( $status ) {
+        $this->taxIncluded = $status;
+        if( $this->taxExcluded && $this->taxRate == 1 ) {
+            $this->error = self::ERROR_CANT_BE_BASED_ON_UNTAXED_WHEN_ONLY_TAXES;
+            return false;
+        }
+        if( $this->ready ) {
+            return $this->calculate();
+        }
+        return true;
+    }
+
+    public function reverse() {
+        $this->untaxedPrice = - $this->untaxedPrice;
+        $this->taxedPrice = - $this->taxedPrice;
+        $this->calculate();
+        return $this;
+    }
+
+    public function add( sh_price $price ) {
+        $newUntaxedPrice = $this->untaxedPrice + $price->get( self::PRICE_UNTAXED );
+        $newTaxedPrice = $this->taxedPrice + $price->get( self::PRICE_TAXED );
+	    
+        $this->setAmounts( $newUntaxedPrice, $newTaxedPrice );
+
+        if( !isset( $this->taxDetails[ $price->get( self::TAX_RATE ) ] ) ) {
+            $this->taxDetails[ $price->get( self::TAX_RATE ) ] = 0;
+        }
+        $this->taxDetails[ $price->get( self::TAX_RATE ) ] += $price->get( self::PRICE_TAXED ) - $price->get( self::PRICE_UNTAXED );
+        return $this;
+    }
+
+    public function remove( sh_price $price, $allowNegativeReturns = true ) {
+        $tmpPrice = clone $price;
+        $tmpPrice->reverse();
+        $ret = $this->add( $tmpPrice );
+        unset( $tmpPrice );
+        return $ret;
+    }
+
+    public function multiply( $factor ) {
+        $newUntaxedPrice = $this->untaxedPrice * $factor;
+        $newTaxedPrice = $this->taxedPrice * $factor;
+        $this->setAmounts( $newUntaxedPrice, $newTaxedPrice );
+
+        // We should mulpiply by $factor every tax entry
+        foreach( $this->taxDetails as $taxRate => $taxAmount ) {
+            $this->taxDetails[ $taxRate ] *= $taxAmount;
+        }
+        return $this;
+    }
+
+    public function divide( $number ) {
+        if( $number == 0 ) {
+            $this->error = self::ERROR_DIVISION_BY_ZERO;
+            return false;
+        }
+        $factor = 1 / $number;
+        return $this->multiply( $factor );
+    }
+
+}
+
+
+
+
+class sh_price_old_with_error_in_tva_calculation {
 
     protected $taxDetails = array( );
     protected $price = array( );

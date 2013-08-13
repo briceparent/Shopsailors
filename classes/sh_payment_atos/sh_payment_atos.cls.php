@@ -386,7 +386,7 @@ abstract class sh_payment_atos extends sh_banks {
         return true;
     }
 
-    public function payment_action( $payment ) {
+    public function payment_action( $payment, $order_id = '' ) {
         $this->debug( __FUNCTION__, 2, __LINE__ );
         // Setting the parametters
         $successSession = $this->linker->payment->setCallPage(
@@ -423,6 +423,11 @@ abstract class sh_payment_atos extends sh_banks {
         $parm.= ' normal_return_url=' . $baseUri . $this->successUrl;
         $parm.= ' automatic_response_url=' . $baseUri . $this->autoresponseUrl;
         $parm.= ' header_flag=no';
+        if($order_id == ''){
+            $order_id = 'order_'.$payment;
+        }
+        $parm.= ' order_id='.$order_id;
+        
         // Path to the binary file
         $path_bin = dirname( __FILE__ ) . '/request';
 

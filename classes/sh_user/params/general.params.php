@@ -14,8 +14,6 @@ $this->general = array (
   'master' => 
   array (
     'site' => 'websailors',
-    'devUrl' => 'http://dev.websailors.fr/',
-    'prodUrl' => 'http://www.websailors.fr/',
     'connectionPage' => 'user/tryToConnect.php',
     'createAccount' => 'user/createAccount.php',
     'getUserData' => 'user/getUserData.php',
@@ -29,9 +27,7 @@ $this->general = array (
     array (
       0 => 'localhost',
       1 => '127.0.0.1',
-      2 => '88.191.80.65',
-      3 => '88.191.116.222',
-      4 => '84.246.225.159',
+      2 => $_SERVER['SERVER_ADDR'],
     ),
   ),
   'version' => '1.09.118.1',

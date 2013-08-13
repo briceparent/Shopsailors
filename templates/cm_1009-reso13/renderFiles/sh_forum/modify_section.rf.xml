@@ -1,0 +1,52 @@
+
+<div>
+    <RENDER_CSS>
+        body #topTitle_container{display:none}
+        #tmpContent #forum_menu{display:block}
+    </RENDER_CSS>
+    <fieldset class="forum_addCat">
+        <legend>
+            <RENDER_VALUE what="i18n:newCat"/>
+        </legend>
+        <RENDER_FORM id="modify_section" type="file">
+            <table cellpadding="8" cellspacing="8">
+                <tr>
+                    <td>
+                        <RENDER_VALUE what="i18n:catName"/>
+                    </td>
+                    <td>
+                        <input name="name" value="{old:name}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <RENDER_VALUE what="i18n:catText"/>
+                    </td>
+                    <td>
+                        <textarea name="text" style="width:400px;height:70px;">
+                            <RENDER_VALUE what="old:text"/>
+                        </textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="{old:image}"/>
+                    </td>
+                    <td>
+                        Remplacer par <input type="file" name="new[image]"/> (laissez vide pour conserver l'image actuelle)
+                    </td>
+                </tr>
+            </table>
+            <RENDER_IFSET what="user:requiresCaptcha">
+                <div class="addCat_captcha">
+                    <RENDER_VALUE what="i18n:noConnected_captcha"/>
+                    <br />
+                    <RENDER_CAPTCHA what="new_section"/>
+                </div>
+            </RENDER_IFSET>
+            <div class="tab_buttons">
+                <input class="tab_button btn_validate" type="submit" name="submit" value="{i18n:send}"/>
+            </div>
+        </RENDER_FORM>
+    </fieldset>
+</div>

@@ -1,0 +1,34 @@
+
+<div>
+    <RENDER_CSS>
+        #tmpContent #topTitle_container{display:none}
+        #tmpContent #forum_menu{display:block}
+    </RENDER_CSS>
+    <RENDER_FORM id="topic_move">
+        <fieldset class="forum_addTopic">
+            <legend>
+                <RENDER_VALUE what="topic:id"/>
+                -
+                <RENDER_VALUE what="topic:title"/>
+            </legend>
+            <RENDER_VALUE what="topic:content"/>
+        </fieldset>
+        <div id="topic_move_dest">
+            <RENDER_VALUE what="i18n:move_topic_to"/>
+            <br />
+            <select name="newSection">
+                <RENDER_LOOP what="categories">
+                    <option value="{categories:id}" state="{categories:state}">
+                        <RENDER_VALUE what="categories:id"/>
+                    -
+                        <RENDER_MODIFYVALUE what="categories:name" method="cut|50|word|ellipsis" new="temp:catName"/><RENDER_VALUE what="temp:catName"/>
+                    </option>
+                </RENDER_LOOP>
+            </select>
+        </div>
+        
+        <div class="admin_buttons">
+            <input name="validate" class="admin_button admin_validate" type="submit" value="{i18n:move_topic_action}" />
+        </div>
+    </RENDER_FORM>
+</div>

@@ -51,6 +51,7 @@ class sh_shop extends sh_core {
     );
 
     // Constants
+
     const I18N_NAME = 1;
     const I18N_REFERENCE = 2;
     const I18N_DESCRIPTION = 3;
@@ -61,7 +62,6 @@ class sh_shop extends sh_core {
     const I18N_BILLHEADLINE = 8;
     const I18N_BILLFOOTER = 9;
     const I18N_BILLCUSTOMERSERVICE = 10;
-
     const EXTERNAL_REMOVE_PRODUCT_FROM_CART = 'remove_from_cart';
 
     static $default_logo = '';
@@ -72,8 +72,10 @@ class sh_shop extends sh_core {
     protected $sellingActivated = false;
 
     // Monney variables - (default to french format)
+
     const TAXES_INCLUDED = 'TTC';
     const TAXES_EXCLUDED = 'HT';
+
     protected $decimals = 2;
     protected $decSeparator = ',';
     protected $thousSeparator = ' ';
@@ -86,14 +88,11 @@ class sh_shop extends sh_core {
     protected $activateShop = false;
 
     const ARG_PRODUCTLISTTYPE = 'product_list_type';
-
     const ROUND_TO_LOWER = 1;
     const ROUND_TO_NEARER = 2;
     const ROUND_TO_UPPER = 3;
-
     const CATEGORIES_CATEGORY = 1;
     const PRODUCTS_CATEGORY = 2;
-
     const EXTERNAL_PRODUCT_PRICE = 'price';
     const EXTERNAL_PRODUCT_IMAGE = 'image';
     const EXTERNAL_PRODUCT_NAME = 'name';
@@ -103,11 +102,9 @@ class sh_shop extends sh_core {
     const EXTERNAL_PRODUCT_LINK = 'link';
     const EXTERNAL_PRODUCT_TAXRATE = 'taxRate';
     const EXTERNAL_PRODUCT_NEEDS_SHIPMENT = 'needsShipment';
-
     const CUSTOMPROPERTIES_UNSHOWN = 'unshown';
     const CUSTOMPROPERTIES_EMPTY = 'empty';
     const CUSTOMPROPERTIES_EMPTY_DB = 0;
-
     const PRODUCT_IS_A_PACK = 'product_is_a_pack';
 
     //////////////////////////////////////////////////////////////////////////////////////
@@ -1303,10 +1300,10 @@ class sh_shop extends sh_core {
             }
 
             $values[ 'customProperty' ][ 'newLink' ] = $this->linker->path->getLink(
-                __CLASS__.'/' . __FUNCTION__ . '/0'
+                __CLASS__ . '/' . __FUNCTION__ . '/0'
             );
             $values[ 'customProperty' ][ 'pageLink' ] = $this->linker->path->getLink(
-                __CLASS__.'/' . __FUNCTION__ . '/' . $id
+                __CLASS__ . '/' . __FUNCTION__ . '/' . $id
             );
         }
         $values[ 'customPropertyValues' ][ 'val_new' ][ 'name' ] = 0;
@@ -2146,7 +2143,7 @@ class sh_shop extends sh_core {
         }
         if( $price[ 'discount_id' ] > 0 ) {
             list($normalPrice) = $this->db_execute(
-                'product_get_normal_price', array( 'id' => $id), $qry
+                'product_get_normal_price', array( 'id' => $id ), $qry
             );
             if( $normalPrice[ 'hasVariants' ] && $normalPrice[ 'variants_change_price' ] ) {
                 list($normalPrice) = $this->db_execute(
@@ -2304,13 +2301,13 @@ class sh_shop extends sh_core {
                     list($oneCpVariantId, $oneCpVariantValue) = explode( ':', $oneCpVariant );
                     list($variantFieldName) = $this->db_execute( 'customProperty_get_name',
                                                                  array( 'id' => $oneCpVariantId ) );
-                    if(!isset($variantsTypes[ $oneCpVariantId ])){
+                    if( !isset( $variantsTypes[ $oneCpVariantId ] ) ) {
                         $variantsTypes[ $oneCpVariantId ] = array(
-                            'name' => $this->getI18n( $variantFieldName[ 'name' ] ) ,
+                            'name' => $this->getI18n( $variantFieldName[ 'name' ] ),
                             'value' => $oneCpVariantId,
                         );
                     }
-                    $variantsTypes[ $oneCpVariantId ]['values'][$oneCpVariantValue] = array(
+                    $variantsTypes[ $oneCpVariantId ][ 'values' ][ $oneCpVariantValue ] = array(
                         'name' => $this->getI18n( $oneCpVariantValue ),
                         'value' => $oneCpVariantValue
                     );
@@ -2349,8 +2346,8 @@ class sh_shop extends sh_core {
                 ksort( $productDatas[ 'variants' ] );
             }
         }
-        $productDatas['variantsTypes'] = $variantsTypes;
-        $productDatas['shop']['page'] = $this->linker->path->getLink( __CLASS__ . '/showProduct/' . $id );
+        $productDatas[ 'variantsTypes' ] = $variantsTypes;
+        $productDatas[ 'shop' ][ 'page' ] = $this->linker->path->getLink( __CLASS__ . '/showProduct/' . $id );
 
         // We manage the custom properties, if any
         $customProperties = $this->db_execute( 'product_get_customProperties_withStructure',
@@ -2421,7 +2418,7 @@ class sh_shop extends sh_core {
         }
         foreach( $_SESSION[ __CLASS__ ][ 'cart' ] as $oneProduct => $quantity ) {
             list($product, $variant) = explode( '|', $oneProduct );
-            if( empty( $variant ) ) {
+            if( $variant === '' ) {
                 $variant = null;
             }
             $totalPrice->add(
@@ -2446,14 +2443,14 @@ class sh_shop extends sh_core {
             'paid' => $price[ 'taxed' ]
         );
     }
-    
+
     public function shallWe_render_shopproduct( $attributes = array( ) ) {
         $this->isRenderingWEditor = $this->isRenderingWEditor || $this->linker->wEditor->isRendering();
         $rep = !$this->isRenderingWEditor;
         return $rep;
     }
-    
-    public function render_shopproduct($attributes){
+
+    public function render_shopproduct( $attributes ) {
         if( isset( $attributes[ 'id' ] ) ) {
             $id = $attributes[ 'id' ];
         } else {
@@ -2461,15 +2458,15 @@ class sh_shop extends sh_core {
         }
         $this->linker->html->addScript( '/' . __CLASS__ . '/singles/embedded_product.js' );
         $values = $this->get_product_contents( $id, $variant, $quantity );
-        foreach($values['product']['images'] as $oneImage){
-            $values['images'][]['src'] = $oneImage;
+        foreach( $values[ 'product' ][ 'images' ] as $oneImage ) {
+            $values[ 'images' ][ ][ 'src' ] = $oneImage;
         }
         $this->linker->admin->insert(
-            '<a href="' . $this->linker->path->getLink( 'shop/editProduct/' . $id ) . '">Modifier "'.$id.' - '.$values['product']['name'].'"</a>',
+            '<a href="' . $this->linker->path->getLink( 'shop/editProduct/' . $id ) . '">Modifier "' . $id . ' - ' . $values[ 'product' ][ 'name' ] . '"</a>',
                                                         'Boutique', 'picto_modify.png'
         );
-        
-        return $this->render('render_shopProduct', $values,false,false);
+
+        return $this->render( 'render_shopProduct', $values, false, false );
     }
 
     /**
@@ -2506,17 +2503,18 @@ class sh_shop extends sh_core {
         $quantity = max( ( int ) $_POST[ 'quantity' ], ( int ) $_GET[ 'quantity' ] );
         if( !isset( $_POST[ 'variant' ] ) && !isset( $_GET[ 'variant' ] ) ) {
             $variant = 0;
-        } elseif( $_GET['variant'] == 'splitted' || $_POST['variant'] == 'splitted' ){
+        } elseif( $_GET[ 'variant' ] == 'splitted' || $_POST[ 'variant' ] == 'splitted' ) {
             // We should get the variant id by its values
-            $variantValues = '';$separator = '';
-            foreach($_POST as $name=>$value){
-                if(substr($name,0,8) == 'variant_'){
-                    $variantValues .= $separator.substr($name,8).':'.$value;
+            $variantValues = '';
+            $separator = '';
+            foreach( $_POST as $name => $value ) {
+                if( substr( $name, 0, 8 ) == 'variant_' ) {
+                    $variantValues .= $separator . substr( $name, 8 ) . ':' . $value;
                     $separator = '|';
                 }
             }
-            $r = $this->db_execute('variant_get_by_cp', array('product_id'=>$id,'cp'=>$variantValues));
-            $variant = $r[0]['variant_id'];
+            $r = $this->db_execute( 'variant_get_by_cp', array( 'product_id' => $id, 'cp' => $variantValues ) );
+            $variant = $r[ 0 ][ 'variant_id' ];
         } else {
             $variant = max( ( int ) $_POST[ 'variant' ], ( int ) $_GET[ 'variant' ] );
         }
@@ -2524,17 +2522,17 @@ class sh_shop extends sh_core {
             $quantity = 1;
         }
         if( isset( $_POST[ 'ajax' ] ) ) {
-            if(isset($_POST['quantityElement'])){
-                $quantityElement = $_POST['quantityElement'];
-            }else{
+            if( isset( $_POST[ 'quantityElement' ] ) ) {
+                $quantityElement = $_POST[ 'quantityElement' ];
+            } else {
                 $quantityElement = 'quantity';
             }
             echo $this->getPriceExplanation( $id, $variant, $quantity );
             echo '<script type="text/javascript">';
-            echo '$("'.$quantityElement.'").value = ' . $quantity . ';' . "\n";
+            echo '$("' . $quantityElement . '").value = ' . $quantity . ';' . "\n";
             echo '</script>';
-            if(isset($_POST['variantElement'])){
-                echo '<input type="hidden" id="'.$_POST['variantElement'].'" value="'.$variant.'"/>';
+            if( isset( $_POST[ 'variantElement' ] ) ) {
+                echo '<input type="hidden" id="' . $_POST[ 'variantElement' ] . '" value="' . $variant . '"/>';
             }
             exit;
         }
@@ -4132,30 +4130,29 @@ class sh_shop extends sh_core {
         }
         return $categories;
     }
-    
-    public function getProductsListForWEditor($field){
-        $values['field']['id'] = $field;
-        if(!isset($_POST['cat'])){
-            $values['categories'] = $this->getAllCategoriesList();
-            $values['link']['base'] = $_SERVER['REQUEST_URI'];
-            return $this->render( 'productsListForWeditor', $values, false, false);
+
+    public function getProductsListForWEditor( $field ) {
+        $values[ 'field' ][ 'id' ] = $field;
+        if( !isset( $_POST[ 'cat' ] ) ) {
+            $values[ 'categories' ] = $this->getAllCategoriesList();
+            $values[ 'link' ][ 'base' ] = $_SERVER[ 'REQUEST_URI' ];
+            return $this->render( 'productsListForWeditor', $values, false, false );
         }
-        
+
         $products = $this->db_execute(
-            'category_get_products',
-            array(
-            'category_id' => (int) $_POST['cat']
+            'category_get_products', array(
+            'category_id' => ( int ) $_POST[ 'cat' ]
             )
         );
         if( !empty( $products ) ) {
             foreach( $products as $product ) {
-                $values['products'][ $product[ 'product_id' ] ] = array(
+                $values[ 'products' ][ $product[ 'product_id' ] ] = array(
                     'id' => $product[ 'product_id' ],
                     'name' => $this->getProductName( $product[ 'product_id' ] )
                 );
             }
         }
-        echo $this->render( 'productsListForWeditor_products', $values, false, false);
+        echo $this->render( 'productsListForWeditor_products', $values, false, false );
         exit;
     }
 
@@ -4860,6 +4857,9 @@ class sh_shop extends sh_core {
         // We check it it was added by php (shop->addToCart()), a GET or a POST request
         if( !is_null( $product ) ) {
             // called by php
+            if( isset( $_POST[ 'variant' ] ) ) {
+                $variant = $_POST[ 'variant' ];
+            }
             if( !is_null( $variant ) || $variant === 0 ) {
                 $isVariant = true;
                 $product .= '|' . $variant;
@@ -4868,6 +4868,9 @@ class sh_shop extends sh_core {
             // request
             $quantity = 1;
             list($product, $variant) = explode( '_', $_GET[ 'product' ] );
+            if( isset( $_POST[ 'variant' ] ) ) {
+                $variant = $_POST[ 'variant' ];
+            }
             $isVariant = !empty( $variant ) || $variant === '0';
             if( $isVariant ) {
                 $product .= '|' . $variant;
@@ -5773,6 +5776,9 @@ class sh_shop extends sh_core {
 
     public function command_choose_payment() {
         $this->linker->html->setTitle( $this->getI18n( 'choose_payment_title' ) );
+        //unset($_SESSION[ __CLASS__ ][ 'cart' ]);
+        //unset($_SESSION[ __CLASS__ ][ 'cart_external' ]);
+        //exit;
         $values[ 'summary' ][ ][ 'content' ] = $this->command_set_shipper_summary();
 
         $values[ 'summary' ][ ][ 'content' ] = $this->command_set_billing_address_summary();
@@ -5804,6 +5810,44 @@ class sh_shop extends sh_core {
         $values[ 'content' ][ 'billing_phone' ] = $_SESSION[ __CLASS__ ][ 'billing_phone' ];
         $values[ 'content' ][ 'paymentMode' ] = $_SESSION[ __CLASS__ ][ 'paymentMode' ];
         $values[ 'content' ][ 'extra_datas' ] = $this->command_get_extra_stored_datas();
+        
+        // Extra texts
+        $classes = $this->get_shared_methods( 'billing_extra_texts' );
+        foreach( $classes as $class ) {
+            $temp = $this->linker->$class->billing_extra_texts();
+            if( !empty( $temp ) ) {
+                $values[ 'content' ]['extra_texts'][ ] = $temp;
+            }
+        }
+        $classes = $this->get_shared_methods( 'billing_extra_texts_mail' );
+        foreach( $classes as $class ) {
+            $temp = $this->linker->$class->billing_extra_texts_mail();
+            if( !empty( $temp ) ) {
+                $values[ 'content' ]['billing_extra_texts_mail'][ ] = $temp;
+            }
+        }
+        $classes = $this->get_shared_methods( 'billing_extra_docs_mail' );
+        foreach( $classes as $class ) {
+            $temp = $this->linker->$class->billing_extra_docs_mail();
+            if( !empty( $temp ) ) {
+                $values[ 'content' ]['billing_extra_docs_mail'][ ] = $temp;
+            }
+        }
+        $classes = $this->get_shared_methods( 'billing_extra_texts_mail_customer' );
+        foreach( $classes as $class ) {
+            $temp = $this->linker->$class->billing_extra_texts_mail_customer();
+            if( !empty( $temp ) ) {
+                $values[ 'content' ]['billing_extra_texts_mail_customer'][ ] = $temp;
+            }
+        }
+        $classes = $this->get_shared_methods( 'billing_extra_docs_mail_customer' );
+        foreach( $classes as $class ) {
+            $temp = $this->linker->$class->billing_extra_docs_mail_customer();
+            if( !empty( $temp ) ) {
+                $values[ 'content' ]['billing_extra_docs_mail_customer'][ ] = $temp;
+            }
+        }
+        
         $this->linker->params->set( $pendingFile, 'command', $values );
         $this->linker->params->set( $pendingFile, 'command>submit_date', date( 'U' ) );
         $this->linker->params->write( $pendingFile );
@@ -5811,6 +5855,70 @@ class sh_shop extends sh_core {
 
         // Payment modes
         $activated = $this->getParam( 'payment>modes', array( ) );
+
+        $total = 0;
+        // Listing the products
+        $products = array( );
+        foreach( $values[ 'content' ][ 'cart_external' ] as $id => $product ) {
+            $className = $product[ 'class' ];
+            $class = $this->linker->$className;
+            $shortId = $product[ 'id' ];
+            $price = $class->cart_getProductData( $shortId, self::EXTERNAL_PRODUCT_PRICE );
+            $products[ ] = array(
+                'name' => $class->cart_getProductData( $shortId, self::EXTERNAL_PRODUCT_NAME ),
+                'shortDescription' => $class->cart_getProductData( $shortId, self::EXTERNAL_PRODUCT_SHORTDESCRIPTION ),
+                'quantity' => $product[ 'qty' ],
+                'priceOnly' => $price,
+                'totalPrice' => $price * $product[ 'qty' ],
+            );
+            $total += $price * $product[ 'qty' ];
+        }
+        foreach( $values[ 'content' ][ 'cart' ] as $askedId => $quantity ) {
+            list($id, $variant) = explode( '|', $askedId );
+
+            // We verify if we the product [still] exists
+            if( $this->productExists( $id ) ) {
+                $addToDescription = '';
+
+                list($product) = $this->db_execute( 'product_get', array( 'id' => $id ) );
+
+                // We update the product datas with the variant's if needed
+                if( $product[ 'hasVariants' ] ) {
+                    list($variant) = $this->db_execute( 'product_get_variant',
+                                                        array( 'product_id' => $id, 'variant_id' => $variant ) );
+                    if( $product[ 'variants_change_price' ] ) {
+                        // We don't use the global price, but the variant's one
+                        $product[ 'price' ] = $variant[ 'price' ];
+                    }
+                    if( $product[ 'variants_change_ref' ] ) {
+                        // We don't use the global ref, but the variant's one
+                        $product[ 'reference' ] = $variant[ 'ref' ];
+                    }
+                    $cps = $this->variantCP_explode( $variant[ 'customProperties' ] );
+
+                    foreach( $cps as $cp ) {
+                        $addToDescription .= '<br />' . $cp[ 'name' ] . ' : ' . $cp[ 'value' ];
+                    }
+                }
+                $products[ ] = array(
+                    'name' => $this->getI18n( $product[ 'name' ] ),
+                    'shortDescription' => $this->getI18n( $product[ 'shortDescription' ] ) . $addToDescription,
+                    'quantity' => $quantity,
+                    'priceOnly' => $product[ 'price' ],
+                    'totalPrice' => $product[ 'price' ] * $quantity
+                );
+                $total += $product[ 'price' ] * $quantity;
+            }
+        }
+        if( $total < $_SESSION[ __CLASS__ ][ 'command' ][ 'total' ][ 'paid' ] ) {
+            $products[ ] = array(
+                'name' => 'Frais divers (dont port)',
+                'shortDescription' => '',
+                'quantity' => 1,
+                'priceOnly' => $_SESSION[ __CLASS__ ][ 'command' ][ 'total' ][ 'paid' ] - $total,
+                'totalPrice' => $_SESSION[ __CLASS__ ][ 'command' ][ 'total' ][ 'paid' ] - $total
+            );
+        }
 
         if( is_array( $values[ 'paymentModes' ] ) ) {
             foreach( $values[ 'paymentModes' ] as $key => $paymentMode ) {
@@ -5833,7 +5941,12 @@ class sh_shop extends sh_core {
                         $priceInDecimal = $_SESSION[ __CLASS__ ][ 'command' ][ 'total' ][ 'paid' ] * $toDecimals;
                         $bank->payment_setPrice( $payment, $price, $priceInDecimal );
                         $bank->payment_setCustomerMail( $payment, $_SESSION[ __CLASS__ ][ 'billing_mail' ] );
+                        $bank->payment_setBillingData( $payment, $values[ 'content' ][ 'billing_address' ] );
+
+                        $bank->payment_setCartContents( $payment, $products );
+
                         $values[ 'paymentModes' ][ $key ][ 'form' ] = $bank->payment_action( $payment, $paymentId );
+
                         $activePaymentMode = $key;
                     } else {
                         unset( $values[ 'paymentModes' ][ $key ] );
@@ -6108,12 +6221,15 @@ class sh_shop extends sh_core {
                     // We go to next step
                     $increment = 1;
                     $nextStep = $this->command_available_actions[ $activeStepId + $increment ];
+                    $tryNext = false;
                     if( $nextStep == 'set_shipping_address' && !$needShipment ) {
+                        $tryNext = true;
                         $increment++;
                     }
-                    if( $nextStep == 'set_external_datas' && !$this->command_areThereExternalDatas() ) {
+                    if( ($nextStep == 'set_external_datas' || $tryNext) && !$this->command_areThereExternalDatas() ) {
                         $increment++;
                     }
+
                     $nextStep = $this->command_available_actions[ $activeStepId + $increment ];
                 } else {
                     // We go to previous step
@@ -6528,9 +6644,7 @@ class sh_shop extends sh_core {
     }
 
     public function command_validated( $session, $bank_code = 0 ) {
-        file_put_contents( SH_SITE_FOLDER . __CLASS__ . '/temp_debug_brice.txt',
-                           "session : $session\nbank_code : $bank_code\nFile to remove : " .
-            SH_SITE_FOLDER . __CLASS__ . '/commands/pending/' . $session . '.params.php' );
+
         if( file_exists( SH_SITE_FOLDER . __CLASS__ . '/commands/validated/' . $session . '.params.php' ) ) {
             $this->render( 'command_already_sent' );
             return true;
@@ -6541,8 +6655,8 @@ class sh_shop extends sh_core {
         $pendingFile = SH_SITE_FOLDER . __CLASS__ . '/commands/pending/' . $session . '.params.php';
         $this->linker->params->addElement( $pendingFile, true );
         $command = $this->linker->params->get( $pendingFile, 'command', 'deleted' );
-        $command[ 'content' ][ 'paymentMode' ] = $bank_code;
         if( $command != 'deleted' ) {
+            $command[ 'content' ][ 'paymentMode' ] = $bank_code;
             $this->sendCommand( $session, $command );
             unlink( $pendingFile );
             return true;
@@ -7222,42 +7336,11 @@ class sh_shop extends sh_core {
         $billColor = $this->getParam( 'billColor', 0 );
         $datas[ 'fillColor' ] = $this->getParam( 'billColors>' . $billColor );
 
-        // Extra texts
-        $classes = $this->get_shared_methods( 'billing_extra_texts' );
-        foreach( $classes as $class ) {
-            $temp = $this->linker->$class->billing_extra_texts();
-            if( !empty( $temp ) ) {
-                $datas[ 'extra_texts' ][ ] = $temp;
-            }
-        }
-        $classes = $this->get_shared_methods( 'billing_extra_texts_mail' );
-        foreach( $classes as $class ) {
-            $temp = $this->linker->$class->billing_extra_texts_mail();
-            if( !empty( $temp ) ) {
-                $datas[ 'extra_texts_mail' ][ ] = $temp;
-            }
-        }
-        $classes = $this->get_shared_methods( 'billing_extra_docs_mail' );
-        foreach( $classes as $class ) {
-            $temp = $this->linker->$class->billing_extra_docs_mail();
-            if( !empty( $temp ) ) {
-                $datas[ 'extra_docs_mail' ][ ] = $temp;
-            }
-        }
-        $classes = $this->get_shared_methods( 'billing_extra_texts_mail_customer' );
-        foreach( $classes as $class ) {
-            $temp = $this->linker->$class->billing_extra_texts_mail_customer();
-            if( !empty( $temp ) ) {
-                $datas[ 'extra_texts_mail_customer' ][ ] = $temp;
-            }
-        }
-        $classes = $this->get_shared_methods( 'billing_extra_docs_mail_customer' );
-        foreach( $classes as $class ) {
-            $temp = $this->linker->$class->billing_extra_docs_mail_customer();
-            if( !empty( $temp ) ) {
-                $datas[ 'extra_docs_mail_customer' ][ ] = $temp;
-            }
-        }
+        $datas[ 'extra_texts' ] = $command[ 'content' ]['extra_texts'];
+        $datas[ 'billing_extra_texts_mail' ] = $command[ 'content' ]['billing_extra_texts_mail'];
+        $datas[ 'billing_extra_docs_mail' ] = $command[ 'content' ]['billing_extra_docs_mail'];
+        $datas[ 'billing_extra_texts_mail_customer' ] = $command[ 'content' ]['billing_extra_texts_mail_customer'];
+        $datas[ 'billing_extra_docs_mail_customer' ] = $command[ 'content' ]['billing_extra_docs_mail_customer'];
 
         $fileNames = SH_SITE_FOLDER . __CLASS__ . '/commands/';
         $fileNames .= date( 'y' ) . '/' . date( 'm' ) . '/' . date( 'd' ) . '/' . date( 'H-i-s' ) . '-';
@@ -7271,7 +7354,9 @@ class sh_shop extends sh_core {
         $fileNames .= $cpt;
 
         $commandListFile = SH_SITE_FOLDER . __CLASS__ . '/commands/list.php';
-        include($commandListFile);
+        if( file_exists( $commandListFile ) ) {
+            include($commandListFile);
+        }
 
         $customBillId = $this->getCustomBillId();
         $commandList[ $customBillId ] = str_replace(

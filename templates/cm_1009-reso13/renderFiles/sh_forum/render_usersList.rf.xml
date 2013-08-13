@@ -1,0 +1,34 @@
+
+<div>
+    <RENDER_LOOP what="users">
+        <RENDER_IFSET what="users:first">
+            <div class="oneIntervenant" style="position:absolute;width:310px;height:100px;">
+                <img src="{users:image}.resized.110.110.png" style="float:left;"/>
+                <div class="oneIntervenant_desc"><RENDER_VALUE what="users:description_homepage"/></div>
+            </div>
+        </RENDER_IFSET>
+        <RENDER_IFNOTSET what="users:first">
+            <div class="oneIntervenant" style="display:none;position:absolute;width:310px;height:100px;">
+                <img src="{users:image}.resized.110.110.png" style="float:left;"/>
+                <div class="oneIntervenant_desc"><RENDER_VALUE what="users:description_homepage"/></div>
+            </div>
+        </RENDER_IFNOTSET>
+    </RENDER_LOOP>
+    <RENDER_ENDJS>
+        var intervenants = $$('.oneIntervenant');
+        var intervenants_count = intervenants.length;
+        var activeShownIntervenant = 0;
+        new PeriodicalExecuter(
+            function(pe) {
+                Effect.Fade(intervenants[activeShownIntervenant], { duration: 0.5 });
+                activeShownIntervenant += 1;
+                if(activeShownIntervenant == intervenants_count){
+                    activeShownIntervenant = 0;
+                }
+                Effect.Appear(intervenants[activeShownIntervenant], { duration: 0.5 });
+            }, 
+            5
+        );
+        
+    </RENDER_ENDJS>
+</div>

@@ -1,0 +1,118 @@
+
+<div id="contact">
+    <h2 class="contactIntro">
+        <RENDER_VALUE what="contact:intro"/>
+    </h2>
+    <div id="contactForm">
+        <div id="contactData_container">
+            <RENDER_IFSET what="sendMail:status">
+                <h3>
+                    <RENDER_VALUE what="i18n:status"/>
+                </h3>
+                <div class="important">
+                    <RENDER_VALUE what="sendMail:status"/>
+                </div>
+            </RENDER_IFSET>
+            <div class="contact_address">
+                <RENDER_IFSET what="contact:address">
+                    <h3>
+                        <RENDER_VALUE what="i18n:address"/>
+                    </h3>
+                    <div id="test_address">
+                        <RENDER_VALUE what="contact:address"/>
+                    </div>
+                </RENDER_IFSET>
+            </div>
+            <br />
+            <div class="contact_phone">
+                <RENDER_IFSET what="contact:phone">
+                    <h3>
+                        <RENDER_VALUE what="i18n:phone"/>
+                    </h3>
+                    <div>
+                        <RENDER_LOOP what="phone">
+                            <div>
+                                <RENDER_VALUE what="phone:name"/> : 
+                                <RENDER_VALUE what="phone:value"/>
+                            </div>
+                        </RENDER_LOOP>
+                    </div>
+                </RENDER_IFSET>
+            </div>
+            <br />
+            <div class="contact_mail">
+                <RENDER_IFSET what="contact:mail">
+                    <h3>
+                        <RENDER_VALUE what="i18n:mail"/>
+                    </h3>
+                    <div>
+                        <RENDER_LOOP what="mail">
+                            <div>
+                                <RENDER_VALUE what="mail:name"/> :
+                                <a href="MAILTO:{mail:value}" class="grey_link">
+                                    <RENDER_VALUE what="mail:value"/>
+                                </a>
+                            </div>
+                        </RENDER_LOOP>
+                    </div>
+                </RENDER_IFSET>
+            </div>
+        </div>
+        <div id="sendMail">
+            <RENDER_IFSET what="contact:sendMail">
+                <RENDER_FORM id="sendMail" >
+                    <h3>
+                        <RENDER_VALUE what="i18n:send_a_mail"/>
+                    </h3>
+                    <table cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td colspan="2">
+                                <RENDER_VALUE what="i18n:name"/>
+                                <br/>
+                                <input class="autocheck" placeholder="{i18n:input_mandatory}" required="required" name="name" value="{previous:name}" style="width:340px"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <RENDER_VALUE what="i18n:phone"/>
+                                <br/>
+                                <input class="autocheck" placeholder="{i18n:input_optional}" pattern="\+?[0-9 \.-]{6,}" name="phone" value="{previous:phone}"/>
+                            </td>
+                            <td>
+                                <RENDER_VALUE what="i18n:mail"/>
+                                <br/>
+                                <input class="autocheck" placeholder="{i18n:input_mandatory}" required="required" type="email" name="mail" value="{previous:mail}"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="margin-top:-10px;font-size:12px;" class="noteText">
+                        <RENDER_VALUE what="i18n:required"/>
+                    </div>
+                    <div id="messageContainer">
+                        <RENDER_VALUE what="i18n:content"/> 
+                        <br />
+                        <textarea required="required" name="content" placeholder="{i18n:input_mandatory}" class="mailContent">
+                            <RENDER_VALUE what="previous:content"/>
+                        </textarea>
+                    </div>
+                    <div class="contact_submitCaptcha">
+                        <RENDER_CAPTCHA what="sendMail" error="{captcha:error}"/>
+                        <input class="submitMessage" type="submit" value="{i18n:send}"/>
+                    </div>
+                </RENDER_FORM>
+            </RENDER_IFSET>
+        </div>
+    </div>
+    <h2 class="contactIntro">
+        Situer le Centre Chirurgical Coelioscopique Aixois (clinique Axium)
+    </h2>
+        
+        <div id="contact_mapContainer">
+        <RENDER_MAP id="lvdc_mapContact" lat="43.5345669960" lng="5.4357832050" zoom="12" width="947" height="480" type="hybrid"/>
+        <RENDER_MAPMARKER map="lvdc_mapContact" lat="43.5345669960" lng="5.4357832050" title="Clinique Axium" open="open">
+            <div class="bold" style="color: #660000;">CCCA - Clinique Axium</div>
+            <div>42 Avenue de Lattre de Tassigny</div>
+            <div style="margin-bottom:10px;">13090 Aix-en-Provence</div>
+        </RENDER_MAPMARKER>
+        </div>
+</div>

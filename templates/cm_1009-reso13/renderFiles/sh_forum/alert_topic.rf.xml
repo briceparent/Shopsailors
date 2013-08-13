@@ -1,0 +1,30 @@
+
+<div id="forum_show">
+    <RENDER_CSS>
+        #tmpContent #topTitle_container{display:none}
+        #tmpContent #forum_menu{display:block}
+    </RENDER_CSS>
+    <fieldset class="forum_addTopic">
+        <RENDER_FORM id="alert_topic">
+            <div class="alertIntro">
+            <RENDER_VALUE what="i18n:alert_intro"/>
+            </div>
+            <hr />
+            <div id="alert_messageTitle">
+                <span><RENDER_VALUE what="i18n:alert_messageTitle"/></span><RENDER_VALUE what="topic:title"/>
+            </div>
+            <hr />
+            <div id="alert_messageContent">
+                <span><RENDER_VALUE what="i18n:alert_messageContent"/></span><div><RENDER_VALUE what="topic:content"/></div>
+            </div>
+            <hr />
+            <div id="alert_messageExplanation">
+            <RENDER_VALUE what="i18n:alert_explanation"/>
+            </div>
+            <textarea style="width:450px;height:100px;" name="reason"></textarea>
+            <div class="tab_buttons">
+                <input class="tab_button btn_validate" type="submit" name="submit" value="{i18n:send}"/>
+            </div>
+        </RENDER_FORM>
+    </fieldset>
+</div>

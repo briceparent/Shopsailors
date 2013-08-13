@@ -1,20 +1,10 @@
-<RENDER_FORM id="bank_manager" enctype="multipart/form-data">
+<RENDER_FORM id="bank_manager">
     <RENDER_IFSET what="message:text">
         <RENDER_NOTIF size="L" type="alert">
             <RENDER_VALUE what="message:text"/>
         </RENDER_NOTIF>
     </RENDER_IFSET>
-    <RENDER_IFSET what="error:error_wrong_certif_file">
-        <RENDER_NOTIF title="{i18n:errorTitle}" type="alert" size="M">
-            <RENDER_VALUE what="i18n:error_not_a_certificate"/>
-        </RENDER_NOTIF>
-    </RENDER_IFSET>
-    <RENDER_IFSET what="error:error_sending_certif">
-        <RENDER_NOTIF title="{i18n:errorTitle}" type="alert" size="M">
-            <RENDER_VALUE what="i18n:error_sending_certificate"/>
-        </RENDER_NOTIF>
-    </RENDER_IFSET>
-    <RENDER_ADMINBOX title="{bank:name}">
+    <RENDER_ADMINBOX title="CM-CIC P@iement">
         <RENDER_ADMINBOXCONTENT>
             <RENDER_CHECKBOX text="{i18n:activated}" name="active" state="{bank:state}" help="{i18n:activated_explanation}"/>
             <table>
@@ -26,33 +16,54 @@
                     <td>
                         <select name="currency">
                             <RENDER_LOOP what="currencies">
-                                <option value="{currencies:name}" state="{currencies:state}">
-                                    <RENDER_VALUE what="currencies:name"/> -
-                                    <RENDER_VALUE what="i18n:country_{currencies:name}"/>
+                                <option value="{currencies:code}" state="{currencies:state}">
+                                    <RENDER_VALUE what="i18n:code_{currencies:code}"/> -
+                                    <RENDER_VALUE what="i18n:country_{currencies:code}"/>
                                 </option>
                             </RENDER_LOOP>
                         </select>
                     </td>
                 </tr>
                 <tr>
-                    <td><RENDER_VALUE what="i18n:idPro"/></td>
-                    <td><input disabled="disabled"  value="{bank:merchant_id}"/></td>
+                    <td>
+                        <RENDER_VALUE what="i18n:mode"/>
+                        <RENDER_HELP what="{i18n:mode_explanations}"/>
+                    </td>
+                    <td>
+                        <select name="mode">
+                            <option value="test" state="{mode:test}">Mode de test</option>
+                            <option value="prod" state="{mode:prod}">Mode de production</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
-                    <td><RENDER_VALUE what="i18n:country"/></td>
-                    <td><input disabled="disabled" value="{bank:merchant_country}"/></td>
+                    <td>
+                        <RENDER_VALUE what="i18n:tpe"/>
+                        <RENDER_HELP what="{i18n:tpe_explanations}"/>
+                    </td>
+                    <td><input name="tpe" value="{bank:tpe}"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <RENDER_VALUE what="i18n:mac"/>
+                        <RENDER_HELP what="{i18n:mac_explanations}"/>
+                    </td>
+                    <td><input name="mac" value="{bank:mac}"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <RENDER_VALUE what="i18n:societe"/>
+                        <RENDER_HELP what="{i18n:societe_explanations}"/>
+                    </td>
+                    <td><input name="societe" value="{bank:societe}"/></td>
                 </tr>
             </table>
+            <input type="hidden" name="langue" value="{bank:langue}"/>
+            <input type="hidden" name="version" value="{bank:version}"/>
+            <div class="tab_buttons">
+                <input class="tab_button btn_validate" type="submit" name="submit" value="{i18n:send}"/>
+            </div>
+
         </RENDER_ADMINBOXCONTENT>
-    </RENDER_ADMINBOX>
-    <RENDER_ADMINBOX title="{i18n:certifTitle}">
-        <RENDER_ADMINBOXCONTENT>
-            <RENDER_VALUE what="i18n:certificate"/>
-            <RENDER_HELP what="{i18n:certificate_explanations}"/>
-            <input type="file" name="certif"/>
-        </RENDER_ADMINBOXCONTENT>
-    </RENDER_ADMINBOX>
-    <RENDER_ADMINBOX title="{i18n:submitTitle}">
-        <input type="submit" value="{i18n:submit}"/>
     </RENDER_ADMINBOX>
 </RENDER_FORM>

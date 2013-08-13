@@ -374,6 +374,11 @@ class sh_html extends sh_core {
         return $ret;
     }
 
+    /**
+     * Adds the content of $content to the $type argument of the body tag.
+     * @param str $type The argument (like style, class, id, etc).
+     * @param str $content The text to add
+     */
     public function addToBody($type,$content) {
         $this->debug('function : '.__FUNCTION__, 2, __LINE__);
         switch(strtolower($type)) {

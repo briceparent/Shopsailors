@@ -603,6 +603,14 @@ abstract class sh_banks extends sh_core {
         $this->debug( 'Payment id is ' . $id, 3, __LINE__ );
         return $id;
     }
+    
+    public function payment_setBillingData($payment, $billingData){
+        $this->billingData[ $payment ] = $billingData;
+    }
+    
+    public function payment_setCartContents($payment, $cartContents){
+        $this->cartContents[ $payment ] = $cartContents;
+    }
 
     /**
      * Sets the price of the payment
@@ -630,5 +638,7 @@ abstract class sh_banks extends sh_core {
     abstract public function payment_action( $payment );
 
     abstract public function payment_getTicket( $payment );
+    
+    public function payment_setCustomerShippingDatas( $payment, $shipToName, $shipToStreet1, $shipToStreet2, $shipToCity, $shipToZIP ) {}
     
 }

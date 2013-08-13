@@ -1,0 +1,13 @@
+<div>
+    <RENDER_CSS>
+        #tmpContent #topTitle_container{display:none}
+        #tmpContent #forum_menu{display:block}
+    </RENDER_CSS>
+    <RENDER_NOTIF size="M" title="{i18n:message_should_be_connected_title}">
+    <RENDER_VALUE what="i18n:message_should_be_connected"/>
+    <br /><br />
+    <a href="{link:back}">
+        <RENDER_VALUE what="i18n:message_should_be_connected_back"/>
+    </a>
+    </RENDER_NOTIF>
+</div>

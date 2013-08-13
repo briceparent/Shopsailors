@@ -1,0 +1,17 @@
+
+<div id="forumCat_createTopic" style="display:none;">
+    <div class="middle">
+        <div id="createTopic">Sélectionnez la catégorie dans laquelle vous souhaitez vous exprimer</div>
+        <RENDER_TABLE what="sections" cols="3">
+            <RENDER_IFSET what="sections:image">
+                <a class="image" href="{sections:link}#createTopicForm" title="{sections:name}">
+                    <img src="{sections:image}.resized.30.30.png" alt="{sections:name}" title="{sections:name}"/>
+                </a>
+                </RENDER_IFSET>
+                <a href="{sections:link}#createTopicForm" title="{sections:name}">
+                    <RENDER_MODIFYVALUE what="sections:name" method="cut|50|word|ellipsis" new="temp:value"/><RENDER_VALUE what="temp:value"/>
+                </a>
+                <div>Sujets&#160;:&#160;<RENDER_VALUE what="sections:topics"/></div>
+        </RENDER_TABLE>
+    </div>
+</div>

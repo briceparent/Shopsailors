@@ -30,6 +30,7 @@ $this->general = array (
         // Inserted here the list of host that may call the master servers on this installation
       //0 => 'localhost',
       //1 => '127.0.0.1',
+      2 => $_SERVER['SERVER_ADDR'],
     ),
   ),
   'version' => '1.09.118.1',

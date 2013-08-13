@@ -2,7 +2,7 @@
 
 /**
  * @author Brice PARENT for Shopsailors
- * @copyright Shopsailors 2009
+ * @copyright Shopsailors 2012
  * @license http://www.cecill.info
  * @version See sh_payment_cic::CLASS_VERSION
  * @package Shopsailors Core Classes
@@ -15,14 +15,15 @@ $paymentObject = sh_linker::getInstance()->payment;
 
 class sh_payment_cic extends sh_banks {
 
-    const CLASS_VERSION = '1.1.11.05.10';
+    const CLASS_VERSION = '1.1.12.12.12';
 
     protected $ready = false;
-    protected $bank_code = 0;
+    protected $bank_code = 30066;
     protected $payments = array( );
     protected $paymentConfirmPagesParams = null;
     protected $paymentsLogParams = null;
     protected $price = false;
+    protected $customer_mail = '';
     protected $successUrl = '';
     protected $failureUrl = '';
     protected $autoresponseUrl = '';
@@ -34,8 +35,10 @@ class sh_payment_cic extends sh_banks {
     protected $languages = array(
         'FR', 'EN', 'DE', 'IT', 'ES', 'NL', 'PT', 'SV'
     );
-    protected $lang = 'EN';
-    protected $customer_mail = '';
+    protected $lang = 'FR';
+    
+    const MODE_TEST = 'https://ssl.paiement.cic-banques.fr/test/paiement.cgi';
+    const MODE_PROD = 'https://ssl.paiement.cic-banques.fr/paiement.cgi';
 
     public function GetClassConstants() {
         $oClass = new ReflectionClass( $this );
@@ -43,13 +46,6 @@ class sh_payment_cic extends sh_banks {
     }
 
     public function construct() {
-        define ("CMCIC_CLE", "12345678901234567890123456789012345678P0");
-        define ("CMCIC_TPE", "0000001");
-        define ("CMCIC_VERSION", "3.0");
-        define ("CMCIC_SERVEUR", "https://ssl.paiement.cic-banques.fr/test/");
-        define ("CMCIC_CODESOCIETE", "71af122290dd4a29a033");
-        define ("CMCIC_URLOK", "http://www.websailors.fr/index.php?payment=ok");
-        define ("CMCIC_URLKO", "http://www.websailors.fr/index.php?payment=error");
         
         $installedVersion = $this->getClassInstalledVersion();
         if( $installedVersion != self::CLASS_VERSION ) {
@@ -59,22 +55,61 @@ class sh_payment_cic extends sh_banks {
                     mkdir( SH_SITE_FOLDER . __CLASS__ );
                 }
             }
+            if( version_compare( $installedVersion, '1.1.12.12.12' ) < 0 ) {
+                $this->helper->addClassesSharedMethods( 'sh_payment', 'banks', __CLASS__ );
+            }
             $this->setClassInstalledVersion( self::CLASS_VERSION );
         }
+        
+        if(strlen($this->getParam('tpe', '')) == 7 && strlen($this->getParam('mac', '')) == 40){
+            $this->ready = true;
+            $this->active = $this->getParam( 'active', false );
+        }
+        $this->currency = $this->getParam('currency', self::CUR_EUR);
     }
 
     public function payment_setLang( $lang ) {
-        if( in_array( $lang, $this->languages ) ) {
-            $this->lang = $lang;
+        if( !in_array( $lang, $this->languages ) ) {
+            $lang = 'FR';
         }
-        $this->lang = 'EN';
-    }
-
-    public function payment_setCustomerMail( $mail ) {
-        $this->customer_mail = $mail;
+        $this->lang = $lang;
     }
 
     public function manage( $message = '' ) {
+        if($this->formSubmitted( 'bank_manager')){
+            $this->setParam('currency', $_POST['currency']);
+            $this->setParam('mode', $_POST['mode']);
+            $this->setParam('tpe', $_POST['tpe']);
+            $this->setParam('mac', $_POST['mac']);
+            $this->setParam('societe', $_POST['societe']);
+            $this->setParam('langue', $_POST['langue']);
+            $this->setParam('version', $_POST['version']);
+            if(strlen($_POST['tpe']) == 7 && strlen($_POST['mac']) == 40){
+                $this->setParam( 'active', isset( $_POST[ 'active' ] ) );
+            }else{
+                $this->setParam( 'active', false );
+                $this->linker->html->addMessage('Les champs TPE et Code MAC sont obligatoires.');
+            }
+            $this->writeParams();
+        }
+        
+        if( $this->getParam( 'active', false ) ) {
+            $values[ 'bank' ][ 'state' ] = 'checked';
+        }
+        $activeCurrency = $this->getParam('currency', self::CUR_EUR);
+        foreach($this->currencies as $currency){
+            $values['currencies'][$currency]['code'] = $currency;
+            if($currency == $activeCurrency){
+                $values['currencies'][$currency]['state'] = 'selected';
+            }
+        }
+        $values['mode'][$this->getParam('mode', 'test')] = 'selected';
+        $values['bank']['tpe'] = $this->getParam('tpe', '');
+        $values['bank']['mac'] = $this->getParam('mac', '');
+        $values['bank']['societe'] = $this->getParam('societe', '');
+        $values['bank']['langue'] = $this->getParam('langue', '');
+        $values['bank']['version'] = $this->getParam('version', '');
+        $this->render('manage', $values);
     }
 
     public function cron_job( $time ) {
@@ -92,7 +127,7 @@ class sh_payment_cic extends sh_banks {
     public function payment_setPrice( $payment, $price, $decimalPrice ) {
         $this->debug( __FUNCTION__, 2, __LINE__ );
         if( $price > 0 ) {
-            $this->price = $price;
+            $this->price = substr($decimalPrice,0,-2).'.'.substr($decimalPrice,-2);
             return true;
         }
         return $this->setError( self::ERROR_NEGATIVE_PRICES_FORBIDDEN );
@@ -100,12 +135,10 @@ class sh_payment_cic extends sh_banks {
 
     public function payment_setCurrency( $payment, $currency ) {
         $this->debug( __FUNCTION__, 2, __LINE__ );
-        if( !in_array( $currency, $this->currencies ) ) {
+        if( $currency != $this->getParam('currency', self::CUR_EUR) ) {
             return $this->setError( self::ERROR_CUR_NOT_SUPPORTED );
         }
-        // Convert from currency id to currency name (3 chars)
-        $curCode = 'CUR_' . $currency;
-        $this->currency = self::$curCode;
+        $this->currency = $currency;
         return true;
     }
 
@@ -115,6 +148,11 @@ class sh_payment_cic extends sh_banks {
             return $this->setError( self::ERROR_COUNTRY_NOT_SUPPORTED );
         }
         $this->merchant_country = $merchant_country;
+    }
+    
+    public function payment_setCustomerMail( $payment, $mail ) {
+        $this->debug( __FUNCTION__ . '(' . $payment . ', ' . $page . ')', 2, __LINE__ );
+        $this->customer_mail = $mail;
     }
 
     public function payment_setFailurePage( $payment, $page ) {
@@ -141,13 +179,12 @@ class sh_payment_cic extends sh_banks {
     public function payment_setUnauthorizedPage( $payment, $page ) {
         $this->debug( __FUNCTION__ . '(' . $payment . ', ' . $page . ')', 2, __LINE__ );
         $this->linker->params->addElement( $this->paymentConfirmPagesParams, true );
-        $this->linker->params->set( $this->paymentConfirmPagesParams, 'payments>' . $payment . '>unauthorizedPage',
-                                    $page );
+        $this->linker->params->set( $this->paymentConfirmPagesParams, 'payments>' . $payment . '>unauthorizedPage', $page );
         $this->linker->params->write( $this->paymentConfirmPagesParams );
     }
 
     /**
-     * This method is called by the user when he clicks "cancel" on the bank's atos server.
+     * This method is called by the user when he clicks "cancel" on the bank's server.
      * @return * The return of the method called
      */
     public function payment_failure( $payment ) {
@@ -155,7 +192,7 @@ class sh_payment_cic extends sh_banks {
     }
 
     /**
-     * This method is called by the user when he clicks "back to the shop (after payment success)" on the bank's atos server.
+     * This method is called by the user when he clicks "back to the shop (after payment success)" on the bank's server.
      * @return * The return of the method called
      */
     public function payment_success( $payment ) {
@@ -170,49 +207,18 @@ class sh_payment_cic extends sh_banks {
     public function payment_autoresponse() {
         return true;
     }
+    
+    protected function prepare_CMCIC_module(){
+        include(dirname(__FILE__).'/CMCIC_Tpe.inc.php');
+        define ("CMCIC_CLE", $this->getParam( 'mac', ''));
+        define ("CMCIC_TPE", $this->getParam( 'tpe', ''));
+        define ("CMCIC_VERSION", $this->getParam( 'version', ''));
+        define ("CMCIC_SERVEUR", constant(strtoupper('MODE_'.$this->getParam( 'mode', ''))));
+        define ("CMCIC_CODESOCIETE", "71af122290dd4a29a033");
+    }
 
     public function payment_action( $payment ) {
         $this->debug( __FUNCTION__, 2, __LINE__ );
-
-        $sOptions = "";
-        $sReference = substr( md5( microtime() ), 0, 12 );
-        $sMontant = $this->price;
-        $sDevise = $this->currency;
-        $sTexteLibre = $payment;
-        $sDate = date( "d/m/Y:H:i:s" );
-        $sLangue = $this->lang;
-        $sEmail = $this->customer_mail;
-
-        $sNbrEch = "";
-        $sDateEcheance1 = "";$sMontantEcheance1 = "";
-        $sDateEcheance2 = "";$sMontantEcheance2 = "";
-        $sDateEcheance3 = "";$sMontantEcheance3 = "";
-        $sDateEcheance4 = "";$sMontantEcheance4 = "";
-
-        $oTpe = new CMCIC_Tpe( $sLangue );
-        $oHmac = new CMCIC_Hmac( $oTpe );
-
-        // Control String for support
-        $CtlHmac = sprintf( 
-            CMCIC_CTLHMAC, $oTpe->sVersion, $oTpe->sNumero,
-            $oHmac->computeHmac( 
-                sprintf( 
-                    CMCIC_CTLHMACSTR, $oTpe->sVersion, $oTpe->sNumero 
-                ) 
-            ) 
-        );
-
-        // Data to certify
-        $PHP1_FIELDS = sprintf( 
-            CMCIC_CGI1_FIELDS, $oTpe->sNumero, $sDate, $sMontant, $sDevise, $sReference,
-            $sTexteLibre, $oTpe->sVersion, $oTpe->sLangue, $oTpe->sCodeSociete, $sEmail, $sNbrEch,
-            $sDateEcheance1, $sMontantEcheance1, $sDateEcheance2, $sMontantEcheance2,
-            $sDateEcheance3, $sMontantEcheance3, $sDateEcheance4, $sMontantEcheance4, $sOptions 
-        );
-
-        // MAC computation
-        $sMAC = $oHmac->computeHmac( $PHP1_FIELDS );
-
         // Setting the parametters
         $successSession = $this->linker->payment->setCallPage(
             0, $this->bank_code, 'payment_success', $payment
@@ -234,11 +240,51 @@ class sh_payment_cic extends sh_banks {
         $this->autoresponseUrl = $this->linker->path->getLink(
             'payment/callPage/' . $autoresponseSession
         );
+        define ("CMCIC_URLOK", $this->successUrl);
+        define ("CMCIC_URLKO", $this->failureUrl);
+        
+        $this->prepare_CMCIC_module();
+        $sLangue = $this->lang;
+        $oTpe = new CMCIC_Tpe( $sLangue );
+        $oHmac = new CMCIC_Hmac( $oTpe );
+        
+        $sReference = substr( md5( microtime() ), 0, 12 );
+        $sMontant = $this->price;
+        $sDevise = $this->getI18n('code_'.$this->currency);
+        $sTexteLibre = 'Payment : '.$payment."\n".'Salt : '.md5(microtime().$payment);
+        $sDate = date( "d/m/Y:H:i:s" );
+        $sEmail = $this->customer_mail;
+
+        // Control String for support
+        $CtlHmac = sprintf( 
+            CMCIC_CTLHMAC, $oTpe->sVersion, $oTpe->sNumero,
+            $oHmac->computeHmac( 
+                sprintf( 
+                    CMCIC_CTLHMACSTR, $oTpe->sVersion, $oTpe->sNumero 
+                ) 
+            ) 
+        );
+
+        // Data to certify
+        $PHP1_FIELDS = sprintf( 
+            CMCIC_CGI1_FIELDS, $oTpe->sNumero, $sDate, $sMontant, $sDevise, $sReference,
+            $sTexteLibre, $oTpe->sVersion, $oTpe->sLangue, $oTpe->sCodeSociete, $sEmail, 
+            '', '', '', '', '','', '', '', '', '' 
+        );
+
+        // MAC computation
+        $sMAC = $oHmac->computeHmac( $PHP1_FIELDS );
 
         $baseUri = $this->linker->path->getBaseUri();
 
+        if($this->getParam('mode', 'test') == 'test'){
+            $values['payment']['url'] = self::MODE_TEST;
+        }else{
+            $values['payment']['url'] = self::MODE_PROD;
+        }
+        
         $values['payment']['version'] = $oTpe->sVersion;
-        $values['payment']['tpeVersion'] = $oTpe->sNumero;
+        $values['payment']['tpe'] = $oTpe->sNumero;
         $values['payment']['date'] = $sDate;
         $values['payment']['amount'] = $sMontant;
         $values['payment']['currency'] = $sDevise;
@@ -251,9 +297,8 @@ class sh_payment_cic extends sh_banks {
         $values['payment']['freeText'] = HtmlEncode($sTexteLibre);
         $values['payment']['email'] = $sEmail;
 
-        $rendered = $this->render( 'show', $values, false, false );
-        echo $rendered;
-        return true;
+        $rendered = $this->render( dirname( __FILE__ ) . '/renderFiles/show.rf.xml', $values, false, false );
+        return $rendered;    
     }
 
     public function payment_execute( $payment, $session ) {

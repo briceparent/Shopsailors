@@ -1,0 +1,9 @@
+<div id="searcher">
+    <form id="searcher_form" method="get" action="{search:action}">
+        <div>
+            <input name="value" class="searcher_input" style="width: 130px;" value="{i18n:enterSearch}" placeholder="{i18n:enterSearch}" onclick="if(this.value=='{i18n:enterSearch}'){this.value='';}"/>
+            <input type="image" class="searcher_image" style="width: 31px;" name="submit" src="/images/shared/icons/valid_blue.png" title="{i18n:search_image}"/>
+            <input type="hidden" name="submitImage" value="submit"/>
+        </div>
+    </form>
+</div>

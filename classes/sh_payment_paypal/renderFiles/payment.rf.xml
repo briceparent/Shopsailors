@@ -1,0 +1,57 @@
+
+<div>
+    <RENDER_CSS>
+        #payment_phoneNumber{
+            margin:5px 0;
+        }
+        #payment_phoneNumber span{
+            border: 1px solid red;
+            padding: 5px 8px;
+            font-weight:bold;
+            font-size:120%;
+            border-radius:5px;
+            text-shadow:1px 1px #CCC;
+        }
+        #payment_phoneNumber span a{
+            color:inherit;
+            
+        }
+        h3{
+        margin-bottom:8px;
+        }
+    </RENDER_CSS>
+    <h3>Fonctionnement :</h3>
+    Pour régler votre commande par téléphone, il vous suffit de téléphone au numéro suivant :
+    <div id="payment_phoneNumber">
+        <span>
+            Téléphone : 
+            <a href="tel:{payment:phone}"><RENDER_VALUE what="payment:phone"/></a>
+        </span>
+    </div>
+    <br />
+    Vous devrez alors donner le numéro de référence suivant : 
+    <div id="payment_phoneNumber">
+        <span>
+            Référence : 
+            <RENDER_VALUE what="payment:code"/>
+        </span>
+    </div>
+    <br />
+    <h3>Injoignable?</h3>
+    <RENDER_FORM id="payment_cant_reach">
+        <input type="hidden" name="ref" value="{payment:code}"/>
+        Si vous n'arrivez pas à nous joindre, laissez nous votre numéro de téléphone ci-dessous, 
+        nous vous rappelerons au plus tôt.<br />
+        <table style="width:400px;">
+            <tr>
+                <td style="text-align:left;">Numéro de téléphone : </td>
+                <td style="text-align:right;"><input pattern="\+?[0-9 .-]{6,}" class="autocheck"  required="required" name="phone" placeholder="Format : 0102030405"/></td>
+            </tr>
+        </table>
+        Message (horaires où vous êtes joignable, poste à demander, etc) :<br />
+        <textarea name="message" style="width:400px;height:100px;"></textarea><br />
+        <div class="tab_buttons left">
+            <input class="tab_button btn_validate" type="submit" name="submit" value="{i18n:send}"/>
+        </div>
+    </RENDER_FORM>
+</div>

@@ -1,0 +1,30 @@
+<div>
+
+    <RENDER_IFSET what="auto:user_connected">
+    <RENDER_CSS>
+        body #topTitle_container{display:none}
+        #tmpContent #forum_menu{display:block}
+    </RENDER_CSS>
+    </RENDER_IFSET>
+    <fieldset class="forum_privateMessage">
+        <legend style="margin-left:10px;padding:0 10px;">
+            <span style="font-weight:bold;">
+                Rédiger un message privé
+            </span>
+        </legend>
+    <RENDER_FORM id="message_write">
+        Destinataire du message : 
+        <span class="bold"><RENDER_VALUE what="dest:alias"/></span>
+        <br /><br />
+
+        Contenu du message : <br />
+        <textarea name="content" style="width:500px;height:100px;">
+
+        </textarea>
+
+        <div class="tab_buttons left">
+            <input class="tab_button btn_validate" type="submit" name="submit" value="{i18n:send}"/>
+        </div>
+    </RENDER_FORM>
+</fieldset>
+</div>

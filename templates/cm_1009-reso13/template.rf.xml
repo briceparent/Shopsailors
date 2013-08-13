@@ -1,0 +1,109 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{constants:xmllang}" lang="{constants:xmllang}">
+    <head>
+    <RENDER_VALUE what="head:content"/>
+</head>
+<RENDER_TAG type="body" what="body:data">
+    <RENDER_VALUE what="body:beginning"/>
+
+    <div id="tmp_background">
+        <div id="header">
+            <div id="headerContent">
+                <div id="btn_reso13_home">
+                    <a href="/index.php" title="Accueil Réso 13">
+                        <img src="/images/template/btn_logo.png" alt="Réso 13"/>
+                    </a>
+                </div>
+                <div class="menu_container">
+                    <RENDER_VALUE what="body:menu_1"/>
+                </div>
+                <div id="forumButton">
+                    <a href="/forum/lastTopics/30.php" title="Accéder au forum">
+                        <img src="/images/template/forum_button.png" alt="forum" title="Accéder au forum"/>
+                    </a>
+                </div>
+                <RENDER_VALUE what="body:searchEngine"/>
+            </div>
+        </div>
+        <div id="topTitle_container">
+            <h1 class="tmp_topTitle">
+                <RENDER_VALUE what="body:headline"/>
+            </h1>
+        </div>
+        <div id="tmpContent">
+            <div  class="mainh1_container">
+                <h1 title="{body:title}">
+                    <RENDER_MODIFYVALUE what="body:title" method="toLowerCase" new="bodyTitle:value"/>
+                    <RENDER_MODIFYVALUE what="bodyTitle:value" method="toUpperCase_firstLetter"/>
+                    <RENDER_MODIFYVALUE what="bodyTitle:value" method="cut|80|word|ellipsis"/>
+                    <RENDER_VALUE what="bodyTitle:value"/>
+                </h1>
+                <div id="backLink" style="display:none;"><a href="javascript:history.go(-1)">Page préc.</a></div>
+                <script type="text/javascript">
+                    $('backLink').style.display='block';
+                </script> 
+                <div id="connexionMainContainer">
+                    <RENDER_IFSET what="connect:link">
+                        <a class="reso_connection" href="{connect:link}"><RENDER_VALUE what="i18n:connectAccountClient"/></a>
+                    </RENDER_IFSET>
+                    <RENDER_IFSET what="disconnect:link">
+                        <a class="reso_myAccount" href="{profile:link}"><RENDER_VALUE what="i18n:profileAccountClient"/></a>
+                        <a class="reso_disconnect" href="{disconnect:link}" title="{i18n:disconnectAccountClient}"><img src="/images/template/btn_deconnection.png" alt="Déconnexion"/></a>
+                    </RENDER_IFSET>
+                </div>
+            </div> 
+            <div id="forum_menu">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td id="forum_menu_part1">
+                            <div class="forumMenu_btn" id="forumMenu_lastTopics"><a href="/forum/lastTopics/30.php" title="">Les 30 derrniers sujets</a></div>
+                            <div class="forum_menu_separator"></div>
+                            <div id="entryCategory_hide" style="display:none">
+                                <div class="forumMenu_btn" id="forumMenu_categories">Catégories</div>
+                                <div class="forum_menu_separator"></div>
+                            </div>
+                    <RENDER_IFSET what="disconnect:link">
+                        <div class="forumMenu_btn" id="forumMenu_myProfil"><a href="/forum/profile/{auto:user_id}.php" title="">Mon profil</a></div>
+                        <div class="forum_menu_separator"></div>
+                    </RENDER_IFSET>
+
+                    </td>
+                    <td id="entryCreateTopic_hide" style="display:none;width: 180px;">
+                        <div>
+                            <div id="forumMenu_createTopic">Créer un sujet</div>
+                        </div>                            
+                    </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="forumCat_menu_container">
+                <RENDER_FORUM_CATEGORY rf="forumMenu_categories"/> 
+                <RENDER_FORUM_CATEGORY rf="create_topic"/> 
+            </div> 
+            <script>
+                $('entryCategory_hide').style.display = 'block';
+                $('entryCreateTopic_hide').style.display = 'block';
+                $('forumCat_menu').style.display = 'none';
+                $('forumCat_menu').style.position = 'absolute';
+                $('forumCat_menu').style.marginTop = '-21px'
+                $('forumCat_createTopic').style.position = 'absolute';
+                $('forumCat_createTopic').style.marginTop = '-21px';
+                Event.observe('forumMenu_categories','click',function(){
+                 Effect.toggle('forumCat_menu','slide');   
+                });
+                Event.observe('forumMenu_createTopic','click',function(){
+                 Effect.toggle('forumCat_createTopic','slide');
+                         
+                });
+            </script>
+            <RENDER_VALUE what="body:content"/>
+            <RENDER_VALUE what="body:otherContents"/>
+            <div class="clearBoth" >
+            </div>
+        </div>
+        <div id="bottomContent">
+            <RENDER_VALUE what="body:copyrights"/>
+        </div>
+        <div class="clear"></div>
+    </div>
+</RENDER_TAG>
+</html>

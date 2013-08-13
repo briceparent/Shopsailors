@@ -1,0 +1,36 @@
+
+<div id="site_copyrights">
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                Réso 13 - Tous droits réservés / Réalisation :
+                <a href="http://www.websailors.fr" title="Websailors - conception web" target="blank">Websailors</a>&#160;-&#160;
+                <a href="http://www.ecoandcom.fr" title="Eco and com - communication" target="blank">Eco &#38; com</a>
+            </td>
+            <td class="right">
+                <a href="/legacy/show.php" title="mentions légales">Mentions Légales</a>&#160;
+                <a href="forum/show/2.php" title="Utilisation du forum">Utilisation du forum</a>
+            </td>
+        </tr>
+    </table>
+    <NORENDER>
+        <RENDER_LOOP what="links">
+            <RENDER_VALUE what="links:separator"/>
+            <RENDER_VALUE what="links:textBefore"/>
+            <RENDER_IFSET what="links:target">
+                <a target="{links:target}" href="{links:link}">
+                    <RENDER_VALUE what="links:text"/>
+                </a>
+            </RENDER_IFSET>
+            <RENDER_IFNOTSET what="links:target">
+                <a href="{links:link}">
+                    <RENDER_VALUE what="links:text"/>
+                </a>
+            </RENDER_IFNOTSET>
+            <RENDER_VALUE what="links:textAfter"/>
+        </RENDER_LOOP>
+        <br />
+        <RENDER_VALUE what="i18n:createWithShopsailors"/>
+        <RENDER_VALUE what="added:text"/>
+    </NORENDER>
+</div>

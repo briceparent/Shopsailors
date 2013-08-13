@@ -1,0 +1,41 @@
+
+<div id="forum_show">
+
+    <RENDER_CSS>
+        body #topTitle_container{display:none}
+        #tmpContent #forum_menu{display:block}
+    </RENDER_CSS>
+    <fieldset class="forum_addTopic">
+        <RENDER_FORM id="moderate_post">
+            <RENDER_VALUE what="i18n:moderate_post_action"/>
+            <RENDER_RADIOBOX name="action" value="delete" text="{i18n:moderate_post_action_delete}"/>
+            <RENDER_RADIOBOX state="checked" name="action" value="modify" text="{i18n:moderate_post_action_modify}"/>
+            <table cellpadding="8" cellspacing="8">
+                <tr>
+                    <td>
+                        <RENDER_VALUE what="i18n:title"/>
+                    </td>
+                    <td>
+                        <input name="new[title]" value="{post:title}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <RENDER_VALUE what="i18n:text"/>
+                    </td>
+                    <td>
+                        <RENDER_WEDITOR style="width:350px;" name="new[text]" type="forum">
+                            <RENDER_VALUE what="post:text"/>
+                        </RENDER_WEDITOR>
+                    </td>
+                </tr>
+            </table>
+            <div class="tab_buttons">
+                <input class="tab_button btn_cancel" type="submit" name="cancel" value="{i18n:cancel}"/>
+            </div>
+            <div class="tab_buttons">
+                <input class="tab_button btn_validate" type="submit" name="submit" value="{i18n:validate}"/>
+            </div>
+        </RENDER_FORM>
+    </fieldset>
+</div>

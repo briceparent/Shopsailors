@@ -1,0 +1,22 @@
+<div>
+    <div class="bold">
+        <RENDER_VALUE what="bank:name"/>
+    </div>
+    <style type="text/css">
+        #payment_by_phone{
+        text-align:center;
+        width: 100px;
+        margin-bottom:2px;
+        }
+        #payment_by_phone:hover{
+        margin-top:2px;
+        margin-bottom:0px;
+        }
+    </style>
+    <div id="payment_by_phone">
+        <a href="{payment:link}" onclick="this.Hide();">
+            <img src="{bank:logo}" alt="{bank:name}" title="{bank:name}"/>
+        </a>
+    </div>
+    <RENDER_VALUE what="payment:description"/>
+</div>

@@ -1,0 +1,110 @@
+<div id="profile_mainContainer">
+
+    <RENDER_IFSET what="auto:user_connected">
+    <RENDER_CSS>
+        body #topTitle_container{display:none}
+        #tmpContent #forum_menu{display:block}
+    </RENDER_CSS>
+    </RENDER_IFSET>
+    <RENDER_IFSET what="message:text">
+        <RENDER_NOTIF size="M" type="message" title="{i18n:notifTitle}">
+            <RENDER_VALUE what="i18n:modificationsSaved"/>
+        </RENDER_NOTIF>
+    </RENDER_IFSET>
+    <RENDER_TABGROUP size="XL">
+        <NORENDER>EXTERNAL TABS</NORENDER>
+        <RENDER_LOOP what="tabs">
+            <RENDER_TAB title="{tabs:title}" id="{tabs:uid}">
+                <RENDER_VALUE what="tabs:content"/>
+            </RENDER_TAB>
+        </RENDER_LOOP>
+        
+        <RENDER_TAB title="{i18n:yourDatasTabTitle}">
+            <table class="marginAuto" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="right top" style="width:50%;">
+                        <RENDER_VALUE what="i18n:yourLogin"/>
+                    </td>
+                    <td class="left bold">
+                        <RENDER_VALUE what="user:login"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right top">
+                        <RENDER_VALUE what="i18n:accountName"/>
+                    </td>
+                    <td class="left bold">
+                        <RENDER_VALUE what="user:name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right top">
+                        <RENDER_VALUE what="i18n:accountLastname"/>
+                    </td>
+                    <td class="left bold">
+                        <RENDER_VALUE what="user:lastName"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right top">
+                        <RENDER_VALUE what="i18n:accountEmail"/>
+                    </td>
+                    <td class="left bold">
+                        <RENDER_VALUE what="user:mail"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right top">
+                        <RENDER_VALUE what="i18n:accountPhone"/>
+                    </td>
+                    <td class="left bold">
+                        <RENDER_IFSET what="user:phone">
+                            <RENDER_VALUE what="user:phone"/>
+                        </RENDER_IFSET>
+                        <RENDER_IFNOTSET what="user:phone">
+                            <RENDER_VALUE what="i18n:phoneNotProvided"/>
+                        </RENDER_IFNOTSET>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right top">
+                        <RENDER_VALUE what="i18n:accountAddress"/>
+                    </td>
+                    <td class="left top bold">
+                        <RENDER_IFSET what="user:zip">
+                            <RENDER_VALUE what="user:address"/><br />
+                            <RENDER_VALUE what="user:zip"/>&#160;<RENDER_VALUE what="user:city"/>
+                        </RENDER_IFSET>
+                        <RENDER_IFNOTSET what="user:zip">
+                            <RENDER_VALUE what="i18n:addressNotProvided"/>
+                        </RENDER_IFNOTSET>
+                    </td>
+                </tr>
+            </table>
+            <div class="center" style="margin-top:15px;">
+                <a href="{links:editProfile}"><RENDER_VALUE what="i18n:editDatas"/></a>
+            </div>
+        </RENDER_TAB>
+
+        <NORENDER>ID, PASS, ETC...</NORENDER>
+        <RENDER_TAB title="{i18n:connectionTabTitle}">
+            <div class="center">
+                <RENDER_VALUE what="i18n:yourLogin"/>
+                <span class="bold"><RENDER_VALUE what="user:login"/></span>
+                <div>
+                    <RENDER_VALUE what="i18n:verificationPhrase"/>&#160;
+                    <span class="bold">"<RENDER_VALUE what="user:verification"/>"</span>
+                </div>
+            </div>
+            <div class="center" style="margin-top:15px;">
+                <a href="{links:editPassphrase}"><RENDER_VALUE what="i18n:editPassphrase"/></a><br />
+                <a href="{links:editPassword}"><RENDER_VALUE what="i18n:editPassWord"/></a>
+            </div>
+        </RENDER_TAB>
+
+        <NORENDER>FAVORIS...</NORENDER>
+        <RENDER_TAB title="{i18n:favoritesTabTitle}">
+            <RENDER_VALUE what="i18n:noFavorites"/>
+        </RENDER_TAB>
+    </RENDER_TABGROUP>
+</div>

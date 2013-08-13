@@ -7,5 +7,5 @@
 if(!defined('SH_MARKER')){header('location: directCallForbidden.php');}
 
 $this->general = array (
-'masters' => array(11070500001,12072000001),
+'masters' => array(12112600001),
 );
